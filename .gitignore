@@ -1,7 +1,7 @@
 # ================== Visual Studio cache ==================
 .vs/
 
-# User-specific files (mỗi máy 1 kiểu, không nên commit)
+# ================== User-specific files (mỗi máy 1 kiểu) ==================
 *.user
 *.rsuser
 *.suo
@@ -13,29 +13,51 @@
 **/bin/
 **/obj/
 
-# Các thư mục build thường gặp
-bin/
-obj/
-Debug/
-Release/
+# Thư mục build thường gặp
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
 x64/
 x86/
-ARM/
-ARM64/
-[Bb]uild/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
 [Ll]og/
+[Ll]ogs/
 [Tt]est[Rr]esult*/
 
 # Nếu có folder publish
 **/publish/
 
-# ================== NuGet / .NET packages ==================
-*.nupkg
+# ================== .NET Core / MSBuild ==================
 project.lock.json
 project.fragment.lock.json
 artifacts/
+*.binlog
+[Bb]uild[Ll]og.*
+
+# ================== Test frameworks ==================
+# MSTest
+[Tt]est[Rr]esult*/
+# NUnit
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+# Code coverage
+CodeCoverage/
+
+# ================== NuGet Packages ==================
+*.nupkg
+*.snupkg
 .nuget/
 packages/
+
+# ================== ASP.NET Scaffolding ==================
+ScaffoldingReadMe.txt
 
 # ================== Config (cân nhắc vì chứa secret) ==================
 # Nếu app có xài appsettings để chứa connection string / API key thì nên ignore
@@ -73,6 +95,8 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 
-# ================== Merge / backup rác ==================
+# ================== Merge / backup / temp ==================
 *.orig
 *.bak
+~$*
+*~
