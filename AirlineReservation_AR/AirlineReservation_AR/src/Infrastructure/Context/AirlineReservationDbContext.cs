@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using AirlineReservation.src.AirlineReservation.Domain.Entities;
-using AirlineReservation.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 
-namespace AirlineReservation.src.AirlineReservation.Infrastructure.Context
+namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context
 {
     public class AirlineReservationDbContext : DbContext
     {

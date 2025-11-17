@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AR_AirlineReservation.src.Presentation__Winform_.Assets.Icons
+namespace AR_AirlineReservation_AR.src.Presentation__Winform_.Assets.Icons
 {
     internal class Class1
     {

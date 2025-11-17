@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AR_AirlineReservation.src.Domain.Interfaces
+namespace AR_AirlineReservation_AR.src.Domain.Interfaces
 {
     internal class Class1
     {

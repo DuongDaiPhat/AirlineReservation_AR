@@ -1,6 +1,6 @@
-using AirlineReservation.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
-using AirlineReservation.src;
-using AirlineReservation.src.AirlineReservation.Shared.Utils;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
+using AirlineReservation_AR.src;
+using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 namespace AirlineReservation_AR
 {
     internal static class Program

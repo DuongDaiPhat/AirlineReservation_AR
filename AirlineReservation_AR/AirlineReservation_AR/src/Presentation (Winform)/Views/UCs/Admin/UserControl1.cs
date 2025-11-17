@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AR_AirlineReservation.src.Presentation__Winform_.Views.UCs.Admin
+namespace AR_AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 {
     public partial class UserControl1 : UserControl
     {

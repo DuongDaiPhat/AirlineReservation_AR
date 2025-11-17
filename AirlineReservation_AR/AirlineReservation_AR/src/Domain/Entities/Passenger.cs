@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AirlineReservation.src.AirlineReservation.Domain.Entities
+namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
 {
     public class Passenger
     {
