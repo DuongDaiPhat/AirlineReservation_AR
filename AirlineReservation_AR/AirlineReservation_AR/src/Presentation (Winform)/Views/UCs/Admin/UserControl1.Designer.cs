@@ -34,20 +34,22 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = AirlineReservation_AR.Properties.Resources.RobloxScreenShot20250516_104212114;
-            pictureBox1.Location = new Point(299, 152);
+            pictureBox1.Image = AirlineReservation_AR.Properties.Resources.theme;
+            pictureBox1.Location = new Point(500, 105);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(125, 62);
+            pictureBox1.Size = new Size(100, 50);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
             // UserControl1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Chocolate;
             Controls.Add(pictureBox1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "UserControl1";
-            Size = new Size(871, 355);
+            Size = new Size(762, 266);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
