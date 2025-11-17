@@ -1,0 +1,16 @@
+using System.Collections.Generic;
+
+namespace AirlineReservation.src.AirlineReservation.Domain.Entities
+{
+    public class BookingFlight
+    {
+        public int BookingFlightId { get; set; }
+        public int BookingId { get; set; }
+        public int FlightId { get; set; }
+        public string? TripType { get; set; }
+
+        public Booking Booking { get; set; } = null!;
+        public Flight Flight { get; set; } = null!;
+        public ICollection<Ticket> Tickets { get; set; } = new HashSet<Ticket>();
+    }
+}

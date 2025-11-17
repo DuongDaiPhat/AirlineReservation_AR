@@ -1,4 +1,5 @@
 ﻿//using AirlineReservation.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation.src.AirlineReservation.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,13 @@ namespace AirlineReservation.src.AirlineReservation.Shared.Utils
     {
         private static readonly string _connStr = "Server=ADMIN-PC;Database=demo;User Id=sa;Password=12345;TrustServerCertificate=True;";
 
-        //public static AirlineReservationDbContext GetDbContext()
-        //{
-        //    var options = new DbContextOptionsBuilder<AirlineReservationDbContext>()
-        //        .UseSqlServer(_connStr)
-        //        .Options;
+        public static AirlineReservationDbContext GetDbContext()
+        {
+            var options = new DbContextOptionsBuilder<AirlineReservationDbContext>()
+                .UseSqlServer(_connStr)
+                .Options;
 
-        //    return new AirlineReservationDbContext(options);
-        //}
+            return new AirlineReservationDbContext(options);
+        }
     }
 }
