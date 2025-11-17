@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+	<EnableWindowsFormsHighDpiAutoResizing>false</EnableWindowsFormsHighDpiAutoResizing>
+	<ApplicationHighDpiMode>DpiUnaware</ApplicationHighDpiMode>
   </PropertyGroup>
 
   <ItemGroup>
