@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using AirlineReservation_AR.src.Application.Interfaces;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 {
-    public class PermissionService : IPermissionService
+    public class PermissionService : IPermission
     {
         private readonly AirlineReservationDbContext _db;
 

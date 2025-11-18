@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using AirlineReservation_AR.Properties;
+using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
+using AirlineReservation_AR.src.Infrastructure.DI;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
 {
@@ -20,12 +22,13 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
     {
         private readonly Validation validation = new Validation();
         private readonly PasswordHasher hasher = new PasswordHasher();
-        //private readonly AirlineReservationDbContext dbContext;
+        private readonly AuthenticationController _controller;
 
         public SignInForm( )//AirlineReservationDbContext db)
         {
 
             InitializeComponent();
+            _controller = DIContainer.AuthController;
             //dbContext = db;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new Size(1280, 800);
@@ -62,10 +65,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             loading.Refresh();
 
             // 2. Truy vấn DB trong Task tránh UI bị đơ
-            //var user = await Task.Run(() =>
-            //{
-            //    return dbContext.Users.SingleOrDefault(t => t.Email == emailTB.Text.Trim());
-            //});
+            var user = await _controller.LoginAsync(emailTB.Text, passwordTB.Text);
 
             // 3. Đóng loading NGAY SAU KHI truy vấn xong
             loading.Close();
@@ -73,29 +73,29 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             loading = null;
 
             // 4. Xử lý kết quả
-            //if (user == null)
-            //{
-            //    var errorAnnouncement = new AnnouncementForm();
-            //    errorAnnouncement.SetAnnouncement("Error", "Email không tồn tại trong hệ thống.", false, null);
-            //    errorAnnouncement.ShowDialog();
-            //    return;
-            //}
+            if (user == null)
+            {
+                var errorAnnouncement = new AnnouncementForm();
+                errorAnnouncement.SetAnnouncement("Error", "Email không tồn tại trong hệ thống.", false, null);
+                errorAnnouncement.ShowDialog();
+                return;
+            }
 
-            //if (!hasher.VerifyPassword(passwordTB.Text, user.PasswordHash))
-            //{
-            //    var errorAnnouncement = new AnnouncementForm();
-            //    errorAnnouncement.SetAnnouncement("Error", "Sai mật khẩu.", false, null);
-            //    errorAnnouncement.ShowDialog();
-            //    return;
-            //}
+            if (!hasher.VerifyPassword(passwordTB.Text, user.PasswordHash))
+            {
+                var errorAnnouncement = new AnnouncementForm();
+                errorAnnouncement.SetAnnouncement("Error", "Sai mật khẩu.", false, null);
+                errorAnnouncement.ShowDialog();
+                return;
+            }
 
-            // 5. Thành công - chuyển sang Form1
-            //Form1 form1 = new Form1();
-            //var successAnnouncement = new AnnouncementForm();
-            //successAnnouncement.SetAnnouncement("Success", "Sign In Successful!", true, form1);
-            //successAnnouncement.ShowDialog();
+            //5.Thành công - chuyển sang Form1
+            Form1 form1 = new Form1();
+            var successAnnouncement = new AnnouncementForm();
+            successAnnouncement.SetAnnouncement("Success", "Sign In Successful!", true, form1);
+            successAnnouncement.ShowDialog();
 
-            //this.Hide();
+            this.Hide();
         }
 
         private void ForgotPS_Click(object sender, EventArgs e)

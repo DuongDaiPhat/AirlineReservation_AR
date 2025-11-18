@@ -61,7 +61,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
                 .OrderByDescending(n => n.CreatedAt);
 
             if (onlyUnread)
-                query = query.Where(n => !n.IsRead);
+                query = (IOrderedQueryable<Notification>)query.Where(n => !n.IsRead);
 
             return await query.ToListAsync();
         }

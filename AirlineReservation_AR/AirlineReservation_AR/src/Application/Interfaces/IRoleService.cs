@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AirlineReservation_AR.src.Application.Interfaces
 {
-    internal class IRoleService
+    internal interface IRoleService
     {
     }
 }

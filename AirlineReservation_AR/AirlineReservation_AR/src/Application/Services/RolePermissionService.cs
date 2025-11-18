@@ -1,5 +1,6 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Services;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Windows.Forms;
 
@@ -7,9 +8,9 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
 {
     public class RolePermissionService : IRolePermissionService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AirlineReservationDbContext _context;
 
-        public RolePermissionService(ApplicationDbContext context)
+        public RolePermissionService(AirlineReservationDbContext context)
         {
             _context = context;
         }
