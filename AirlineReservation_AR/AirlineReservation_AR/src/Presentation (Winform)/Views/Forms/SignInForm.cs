@@ -52,13 +52,27 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         private async void SignInBtn_Click(object sender, EventArgs e)
         {
             // 1. Validate thông tin đầu vào
-            if (emailTB.Text == "" && passwordTB.Text == "")
+            if (string.IsNullOrWhiteSpace(emailTB.Text) ||
+                string.IsNullOrWhiteSpace(passwordTB.Text))
             {
-                MessageBox.Show("Vui lòng điền thông tin yêu câu.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Vui lòng nhập email và mật khẩu.", "Lỗi",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (!validation.IsValidGoogleEmail(emailTB.Text)) return;
-            if (!validation.IsValidPassword(passwordTB.Text)) return;
+
+            if (!validation.IsValidGoogleEmail(emailTB.Text))
+            {
+                MessageBox.Show("Email không hợp lệ.", "Lỗi",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!validation.IsValidPassword(passwordTB.Text))
+            {
+                MessageBox.Show("Mật khẩu không hợp lệ.", "Lỗi",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             LoadingForm loading = new LoadingForm();
             loading.Show();

@@ -14,5 +14,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
         Task<bool> DeactivateUserAsync(Guid userId);
 
         Task<bool> UpdateProfileAsync(Guid userId, string? phone, string? gender, string? address);
+        Task<bool> AddUserRoleAsync(string userEmail, int newRoleId);
     }
 }

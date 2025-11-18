@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AirlineReservation_AR.Properties;
+using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
+using AirlineReservation_AR.src.Infrastructure.DI;
 //using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 //using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 
@@ -19,11 +21,13 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
     {
         private readonly Validation validation = new Validation();
         private readonly PasswordHasher hasher = new PasswordHasher();
-        //private readonly AirlineReservationDbContext dbContext;
-        public SignUpForm()//AirlineReservationDbContext db)
+        private readonly AuthenticationController _controller;
+        private readonly UserContrller _userContrller;
+        public SignUpForm()
         {
             InitializeComponent();
-            //dbContext = db;
+            _controller = DIContainer.AuthController;
+            _userContrller = DIContainer.UserContrller;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new Size(1280, 800);
             this.Load += SignUpForm_Load;
@@ -45,7 +49,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             this.Hide();
         }
 
-        private void SignUpBtn_Click(object sender, EventArgs e)
+        private async void SignUpBtn_Click(object sender, EventArgs e)
         {
             if (emailTB.Text == "" && userNameTB.Text == "" && numberTB.Text == "" && passwordTB.Text == "" && confirmPasswordTB.Text == "")
             {
@@ -61,49 +65,36 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
                 return;
             }
 
-            //using var db = Connection.GetDbContext();
-
             // 1. Tạo User mới
-            //var newUser = new User
-            //{
-            //    UserId = Guid.NewGuid(),
-            //    FullName = userNameTB.Text.Trim(),
-            //    Email = emailTB.Text.Trim(),
-            //    Phone = numberTB.Text.Trim(),
-            //    PasswordHash = hasher.HashPassword(passwordTB.Text),
-            //    CreatedAt = DateTime.Now,
-            //    IsActive = true,
-            //    IsVerified = false
-            //};
-            //db.Users.Add(newUser);
+            var user = await _controller.RegisterAsync(
+                userNameTB.Text,
+                emailTB.Text,
+                passwordTB.Text,
+                numberTB.Text);
 
-            // 2. Gán Role mặc định = 3 - Khách hàng
-            //var userRole = new UserRole
-            //{
-            //    UserId = newUser.UserId,
-            //    RoleId = 3,
-            //    AssignedAt = DateTime.Now,
-            //    AssignedBy = Guid.Parse("D3F9A7C2-8B1E-4F3A-9C2A-7E4F9A1B2C3D")
-            //};
-            //db.UserRoles.Add(userRole);
-
-            // 3. Lưu thay đổi vào DB
-            //db.SaveChanges();
-
-            // 4. Hộp thoại tb thành công 
-            DialogResult result = MessageBox.Show(
-                "Đăng ký thành công!",
-                "Thông báo",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
-
-            if (result == DialogResult.OK)
+            if (user == null)
             {
-                SignInForm signin = new SignInForm(); //db);
-                signin.Show();
-                this.Hide();
+                MessageBox.Show("Đăng ký thất bại! Vui lòng thử lại.",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+
+            var addRole = await _userContrller.AddUserRoleAsync(emailTB.Text, 3);
+            if (!addRole.Success)
+            {
+                MessageBox.Show("Đăng ký thành công nhưng không thể gán role người dùng.\n" +
+                                $"Lý do: {addRole.Message}",
+                                "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            MessageBox.Show("Đăng ký thành công!", "Thành công",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            //Điều hướng sang SignIn
+            SignInForm signin = new SignInForm();
+            signin.Show();
+            this.Hide();
         }
 
         private void showPassword_Click(object sender, EventArgs e)
