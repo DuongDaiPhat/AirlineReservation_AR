@@ -5,9 +5,9 @@ using System.Text;
 using BCrypt.Net;
 using System.Threading.Tasks;
 
-namespace AirlineReservation.src.AirlineReservation.Shared.Utils
+namespace AirlineReservation_AR.src.AirlineReservation.Shared.Utils
 {
-    internal class PasswordHasher
+    public class PasswordHasher
     {
         // Mã hóa mật khẩu
         public string HashPassword(string password)

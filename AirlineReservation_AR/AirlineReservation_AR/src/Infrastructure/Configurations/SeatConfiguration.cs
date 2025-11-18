@@ -1,8 +1,8 @@
-using AirlineReservation.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AirlineReservation.src.AirlineReservation.Domain.Entities
+namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
 {
     public class SeatConfiguration : IEntityTypeConfiguration<Seat>
     {

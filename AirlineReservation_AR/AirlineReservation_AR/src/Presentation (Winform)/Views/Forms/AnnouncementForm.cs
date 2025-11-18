@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using AirlineReservation_AR.Properties;
 
-namespace AirlineReservation.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
+namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
 {
     public partial class AnnouncementForm : Form
     {

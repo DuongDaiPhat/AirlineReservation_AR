@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AirlineReservation.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
+namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
 {
     public partial class ForgotPassword : Form
     {

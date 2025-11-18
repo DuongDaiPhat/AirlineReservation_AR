@@ -1,5 +1,5 @@
-﻿//using AirlineReservation.src.AirlineReservation.Infrastructure.Context;
-using AirlineReservation.src.AirlineReservation.Shared.Utils;
+﻿//using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using AirlineReservation_AR.Properties;
 
-namespace AirlineReservation.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
+namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
 {
     public partial class SignInForm : Form
     {

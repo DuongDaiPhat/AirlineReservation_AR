@@ -1,8 +1,8 @@
-using AirlineReservation.src.AirlineReservation.Domain.Entities;
-using AirlineReservation.src.AirlineReservation.Shared.Utils;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 using Microsoft.EntityFrameworkCore;
 
-namespace AirlineReservation.src.AirlineReservation.Infrastructure.Context
+namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context
 {
     public static class SeedData
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace AirlineReservation.src.AirlineReservation.Domain.Entities
+namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
 {
     public class Notification
     {

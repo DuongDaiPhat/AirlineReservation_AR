@@ -1,4 +1,4 @@
-﻿using AirlineReservation.src.AirlineReservation.Shared.Utils;
+﻿using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
@@ -10,10 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AirlineReservation_AR.Properties;
-//using AirlineReservation.src.AirlineReservation.Domain.Entities;
-//using AirlineReservation.src.AirlineReservation.Infrastructure.Context;
+//using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+//using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 
-namespace AirlineReservation.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
+namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
 {
     public partial class SignUpForm : Form
     {

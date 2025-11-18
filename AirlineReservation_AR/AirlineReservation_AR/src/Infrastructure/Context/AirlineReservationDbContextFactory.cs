@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
-namespace AirlineReservation.src.AirlineReservation.Infrastructure.Context
+namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context
 {
     public class AirlineReservationDbContextFactory : IDesignTimeDbContextFactory<AirlineReservationDbContext>
     {

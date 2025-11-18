@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AR_AirlineReservation.src.Application.Services
+namespace AirlineReservation_AR.src.Application.Services
 {
-    internal class Class1
+    internal class ServiceServices
     {
     }
 }

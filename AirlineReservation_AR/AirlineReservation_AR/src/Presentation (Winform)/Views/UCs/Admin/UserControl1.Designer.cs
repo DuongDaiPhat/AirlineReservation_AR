@@ -1,4 +1,4 @@
-﻿namespace AR_AirlineReservation.src.Presentation__Winform_.Views.UCs.Admin
+﻿namespace AR_AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 {
     partial class UserControl1
     {

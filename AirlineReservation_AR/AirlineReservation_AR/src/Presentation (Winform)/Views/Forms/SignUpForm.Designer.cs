@@ -1,5 +1,5 @@
 ﻿using AirlineReservation_AR.Properties;
-namespace AirlineReservation.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
+namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
 {
     partial class SignUpForm
     {

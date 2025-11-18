@@ -1,5 +1,5 @@
-﻿//using AirlineReservation.src.AirlineReservation.Infrastructure.Context;
-using AirlineReservation.src.AirlineReservation.Infrastructure.Context;
+﻿//using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirlineReservation.src.AirlineReservation.Shared.Utils
+namespace AirlineReservation_AR.src.AirlineReservation.Shared.Utils
 {
     internal class Connection
     {

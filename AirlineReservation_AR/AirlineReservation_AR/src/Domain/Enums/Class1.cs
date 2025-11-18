@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AR_AirlineReservation.src.Domain.Enums
+namespace AR_AirlineReservation_AR.src.Domain.Enums
 {
     internal class Class1
     {
