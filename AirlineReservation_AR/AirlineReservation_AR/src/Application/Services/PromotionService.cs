@@ -1,6 +1,7 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Services;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
 {
-    public class PromotionService : IPromotionService
+    public class PromotionService : IPromotion
     {
         private readonly AirlineReservationDbContext _context;
 

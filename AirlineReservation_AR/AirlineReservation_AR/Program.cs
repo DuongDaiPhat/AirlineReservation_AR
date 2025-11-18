@@ -1,6 +1,7 @@
 using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src;
 using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
+using AirlineReservation_AR.src.Infrastructure.DI;
 namespace AirlineReservation_AR
 {
     internal static class Program
@@ -14,7 +15,7 @@ namespace AirlineReservation_AR
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            using var db = Connection.GetDbContext();
+            DIContainer.Init();
             Application.Run(new SignInForm());
         }
     }

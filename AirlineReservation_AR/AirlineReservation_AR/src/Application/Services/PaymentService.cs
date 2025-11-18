@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 {
-    public class PaymentService : IPaymentService
+    public class PaymentService : IPaymenService
     {
         private readonly AirlineReservationDbContext _db;
 

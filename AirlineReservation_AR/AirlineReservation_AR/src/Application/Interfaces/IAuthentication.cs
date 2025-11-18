@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AirlineReservation_AR.src.Application.Interfaces
 {
-    internal interface IAuthentication
+    public interface IAuthentication
     {
         Task<User?> LoginAsync(string email, string password);
 
