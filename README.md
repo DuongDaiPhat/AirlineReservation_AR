@@ -21,8 +21,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/DuongDaiPhat/Airline-Reservation-">
-    <img src="https://github.com/DuongDaiPhat/Airline-Reservation-/blob/main/Images/finallogo.png" alt="Logo" width="350 px" height="120 px">
+  <a href="https://github.com/DuongDaiPhat/AirlineReservation_AR">
+    <img src="https://github.com/DuongDaiPhat/AirlineReservation_AR/blob/main/Images/finallogo.png" alt="Logo" width="350 px" height="120 px">
   </a>
 
   <h2 align="center">Airline-Reservation-System</h2>
@@ -30,14 +30,14 @@
   <p align="center">
     Airline Reservation System is a complete solution that centrally manages flights, bookings, tickets, and passengers with accuracy and ease!
     <br />
-    <a href="https://github.com/DuongDaiPhat/Airline-Reservation-"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/DuongDaiPhat/AirlineReservation_AR"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/DuongDaiPhat/Airline-Reservation-">View Demo</a>
+    <a href="https://github.com/DuongDaiPhat/AirlineReservation_AR">View Demo</a>
     &middot;
-    <a href="https://github.com/DuongDaiPhat/Airline-Reservation-/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/DuongDaiPhat/AirlineReservation_AR/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
-    <a href="https://github.com/DuongDaiPhat/Airline-Reservation-/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/DuongDaiPhat/AirlineReservation_AR/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -136,14 +136,6 @@ _Below is an example of how you can instruct your audience on installing and set
    ```sh
    dotnet restore
    ```
-4. Install required NuGet dependencies (if they are not restored automatically, install manually)
-   ```sh
-   dotnet add package Microsoft.EntityFrameworkCore --version 8.0.20
-   dotnet add package Microsoft.EntityFrameworkCore.Design --version 8.0.20
-   dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 8.0.20
-   dotnet add package Microsoft.EntityFrameworkCore.Tools --version 8.0.20
-   dotnet add package MaterialSkin.2 --version 2.3.1
-   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -193,8 +185,8 @@ If you have a suggestion that would make this better, please fork the repo and c
 
 ### Top contributors:
 
-<a href="https://github.com/DuongDaiPhat/Airline-Reservation-/graphs/contributors">
-  <img src="https://github.com/DuongDaiPhat/Airline-Reservation-/blob/main/Images/team.png" alt="team image" width="330 px" height="70 px"/>
+<a href="https://github.com/DuongDaiPhat/AirlineReservation_AR/graphs/contributors">
+  <img src="https://github.com/DuongDaiPhat/AirlineReservation_AR/blob/main/Images/team.png" alt="team image" width="330 px" height="70 px"/>
 </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -217,7 +209,7 @@ My Name - [DuongDaiPhat](https://github.com/DuongDaiPhat)
 
 [![Email](https://img.shields.io/badge/Email-duongphat521%40gmail.com-red?style=for-the-badge&logo=gmail&logoColor=white)](mailto:duongphat521@gmail.com) 
 
-Project Link: [Airline Reservation on GitHub](https://github.com/DuongDaiPhat/Airline-Reservation-)
+Project Link: [Airline Reservation on GitHub](https://github.com/DuongDaiPhat/AirlineReservation_AR)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -257,19 +249,19 @@ Resources and tools that were helpful during the development of this project:
 [ef]: https://img.shields.io/badge/Entity%20Framework-512BD4?style=for-the-badge&logo=dotnet&logoColor=white  
 [ef-url]: https://learn.microsoft.com/ef/  
 
-[contributors-shield]: https://img.shields.io/github/contributors/DuongDaiPhat/Airline-Reservation-.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/DuongDaiPhat/AirlineReservation_AR.svg?style=for-the-badge
 [contributors-url]: https://github.com/DuongDaiPhat/Airline-Reservation-/graphs/contributors
 
 [forks-shield]: https://img.shields.io/github/forks/DuongDaiPhat/Airline-Reservation-.svg?style=for-the-badge
-[forks-url]: https://github.com/DuongDaiPhat/Airline-Reservation-/network/members
+[forks-url]: https://github.com/DuongDaiPhat/AirlineReservation_AR/network/members
 
-[stars-shield]: https://img.shields.io/github/stars/DuongDaiPhat/Airline-Reservation-.svg?style=for-the-badge
-[stars-url]: https://github.com/DuongDaiPhat/Airline-Reservation-/stargazers
+[stars-shield]: https://img.shields.io/github/stars/DuongDaiPhat/AirlineReservation_AR.svg?style=for-the-badge
+[stars-url]: https://github.com/DuongDaiPhat/AirlineReservation_AR/stargazers
 
-[issues-shield]: https://img.shields.io/github/issues/DuongDaiPhat/Airline-Reservation-.svg?style=for-the-badge
-[issues-url]: https://github.com/DuongDaiPhat/Airline-Reservation-/issues
+[issues-shield]: https://img.shields.io/github/issues/DuongDaiPhat/AirlineReservation_AR.svg?style=for-the-badge
+[issues-url]: https://github.com/DuongDaiPhat/AirlineReservation_AR/issues
 
-[license-shield]: https://img.shields.io/github/license/DuongDaiPhat/Airline-Reservation-.svg?style=for-the-badge
-[license-url]: https://github.com/DuongDaiPhat/Airline-Reservation-/blob/master/LICENSE
+[license-shield]: https://img.shields.io/github/license/DuongDaiPhat/AirlineReservation_AR.svg?style=for-the-badge
+[license-url]: https://github.com/DuongDaiPhat/AirlineReservation_AR/blob/master/LICENSE
 
 [product-screenshot]: images/screenshot.png
