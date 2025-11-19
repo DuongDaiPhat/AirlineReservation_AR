@@ -46,6 +46,16 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context
                 new SeatClass
                 {
                     SeatClassId = 2,
+                    ClassName = "Premium Economy",
+                    DisplayName = "Premium Economy",
+                    PriceMultiplier = 1.25m,
+                    BaggageAllowanceKg = 25,
+                    CabinBaggageAllowanceKg = 8,
+                    Description = "Extra legroom and comfort compared to standard economy"
+                },
+                new SeatClass
+                {
+                    SeatClassId = 3,
                     ClassName = "Business",
                     DisplayName = "Business",
                     PriceMultiplier = 1.75m,
@@ -55,7 +65,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context
                 },
                 new SeatClass
                 {
-                    SeatClassId = 3,
+                    SeatClassId = 4,
                     ClassName = "First",
                     DisplayName = "First",
                     PriceMultiplier = 2.50m,
@@ -68,9 +78,9 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context
                 new User
                 {
                     UserId = Guid.Parse("d3f9a7c2-8b1e-4f3a-9c2a-7e4f9a1b2c3d"),
-                    FullName = "ADMIN",
-                    Email = "admin@gmail.com",
-                    Phone = "0999999999",
+                    FullName = "Admin System",
+                    Email = "adminsystem@gmail.com",
+                    Phone = "+84901234567",
                     PasswordHash = hasher.HashPassword("Admin@12345"),
                     IsVerified = true,
                     IsActive = true,
