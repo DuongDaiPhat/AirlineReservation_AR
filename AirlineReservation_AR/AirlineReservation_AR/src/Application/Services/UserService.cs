@@ -65,5 +65,37 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             await _db.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> AddUserRoleAsync(string userEmail, int newRoleId)
+        {
+            try
+            {
+                var user = await _db.Users
+                    .FirstOrDefaultAsync(u => u.Email == userEmail);
+
+                if (user == null)
+                    return false;
+
+                //  Check user đã có role này chưa
+                var hasRole = await _db.UserRoles
+                    .AnyAsync(ur => ur.UserId == user.UserId && ur.RoleId == newRoleId);
+                if (hasRole)
+                    return false;
+
+                var userRole = new UserRole
+                {
+                    UserId = user.UserId,
+                    RoleId = newRoleId,
+                    AssignedAt = DateTime.UtcNow,
+                };
+                await _db.UserRoles.AddAsync(userRole);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex) { 
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
     }
 }
