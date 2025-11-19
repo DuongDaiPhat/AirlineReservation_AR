@@ -1,4 +1,6 @@
-﻿namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
+﻿using Guna.UI2.WinForms;
+
+namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
     partial class UC_FlightSearch
     {
@@ -16,14 +18,16 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UC_FlightSearch));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -37,30 +41,36 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             pnlMain = new Panel();
-            pnlSearchContainer = new Guna.UI2.WinForms.Guna2Panel();
+            pnlSearchContainer = new Guna2Panel();
             lblTitle = new Label();
             pnlTripType = new Panel();
-            guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
-            btnRoundTrip = new Guna.UI2.WinForms.Guna2Button();
+            guna2Button1 = new Guna2Button();
+            btnRoundTrip = new Guna2Button();
             pnlLabels = new Panel();
-            guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            guna2CustomCheckBox1 = new Guna.UI2.WinForms.Guna2CustomCheckBox();
+            guna2HtmlLabel1 = new Guna2HtmlLabel();
+            guna2CustomCheckBox1 = new Guna2CustomCheckBox();
             lblFrom = new Label();
             lblTo = new Label();
             lblDate = new Label();
             pnlInputs = new Panel();
-            guna2DateTimePicker1 = new Guna.UI2.WinForms.Guna2DateTimePicker();
-            cboFrom = new Guna.UI2.WinForms.Guna2ComboBox();
-            btnSwap = new Guna.UI2.WinForms.Guna2CircleButton();
-            cboTo = new Guna.UI2.WinForms.Guna2ComboBox();
-            dtpStart = new Guna.UI2.WinForms.Guna2DateTimePicker();
-            btnSearch = new Guna.UI2.WinForms.Guna2Button();
-            cboSeatClass = new Guna.UI2.WinForms.Guna2ComboBox();
-            cboPassenger = new Guna.UI2.WinForms.Guna2ComboBox();
+            panelReturnCalendar = new Guna2Panel();
+            cboFrom = new Guna2ComboBox();
+            btnSwap = new Guna2CircleButton();
+            cboTo = new Guna2ComboBox();
+            btnSearch = new Guna2Button();
+            btnStartDate = new Guna2Button();
+            btnReturnDate = new Guna2Button();
+            panelStartCalendar = new Guna2Panel();
+            cboSeatClass = new Guna2ComboBox();
+            cboPassenger = new Guna2ComboBox();
             flowDeals = new FlowLayoutPanel();
+            flowStartDays = new FlowLayoutPanel();
+            flowReturnDays = new FlowLayoutPanel();
             pnlMain.SuspendLayout();
             pnlSearchContainer.SuspendLayout();
             pnlTripType.SuspendLayout();
@@ -90,12 +100,12 @@
             pnlSearchContainer.Controls.Add(pnlInputs);
             pnlSearchContainer.Controls.Add(cboSeatClass);
             pnlSearchContainer.Controls.Add(cboPassenger);
-            pnlSearchContainer.CustomizableEdges = customizableEdges22;
+            pnlSearchContainer.CustomizableEdges = customizableEdges26;
             pnlSearchContainer.Location = new Point(132, 39);
             pnlSearchContainer.Name = "pnlSearchContainer";
             pnlSearchContainer.ShadowDecoration.BorderRadius = 16;
             pnlSearchContainer.ShadowDecoration.Color = Color.FromArgb(0, 0, 0);
-            pnlSearchContainer.ShadowDecoration.CustomizableEdges = customizableEdges23;
+            pnlSearchContainer.ShadowDecoration.CustomizableEdges = customizableEdges27;
             pnlSearchContainer.ShadowDecoration.Depth = 20;
             pnlSearchContainer.ShadowDecoration.Enabled = true;
             pnlSearchContainer.ShadowDecoration.Shadow = new Padding(0, 0, 8, 8);
@@ -214,6 +224,7 @@
             guna2CustomCheckBox1.UncheckedState.BorderRadius = 2;
             guna2CustomCheckBox1.UncheckedState.BorderThickness = 0;
             guna2CustomCheckBox1.UncheckedState.FillColor = Color.FromArgb(125, 137, 149);
+            guna2CustomCheckBox1.Click += guna2CustomCheckBox1_Click;
             // 
             // lblFrom
             // 
@@ -251,46 +262,30 @@
             // pnlInputs
             // 
             pnlInputs.BackColor = Color.Transparent;
-            pnlInputs.Controls.Add(guna2DateTimePicker1);
             pnlInputs.Controls.Add(cboFrom);
             pnlInputs.Controls.Add(btnSwap);
             pnlInputs.Controls.Add(cboTo);
-            pnlInputs.Controls.Add(dtpStart);
             pnlInputs.Controls.Add(btnSearch);
+            pnlInputs.Controls.Add(btnStartDate);
+            pnlInputs.Controls.Add(btnReturnDate);
+            pnlInputs.Controls.Add(panelStartCalendar);
+            pnlInputs.Controls.Add(panelReturnCalendar);
             pnlInputs.Location = new Point(19, 186);
             pnlInputs.Name = "pnlInputs";
             pnlInputs.Size = new Size(1120, 130);
             pnlInputs.TabIndex = 3;
             // 
-            // guna2DateTimePicker1
+            // panelReturnCalendar
             // 
-            guna2DateTimePicker1.Animated = true;
-            guna2DateTimePicker1.BackColor = Color.Transparent;
-            guna2DateTimePicker1.BorderColor = Color.FromArgb(220, 220, 220);
-            guna2DateTimePicker1.BorderRadius = 10;
-            guna2DateTimePicker1.BorderThickness = 1;
-            guna2DateTimePicker1.Checked = true;
-            guna2DateTimePicker1.Cursor = Cursors.Hand;
-            guna2DateTimePicker1.CustomFormat = "dd MMM yyyy";
-            guna2DateTimePicker1.CustomizableEdges = customizableEdges7;
-            guna2DateTimePicker1.FillColor = Color.White;
-            guna2DateTimePicker1.FocusedColor = Color.FromArgb(0, 164, 239);
-            guna2DateTimePicker1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            guna2DateTimePicker1.ForeColor = Color.FromArgb(50, 50, 50);
-            guna2DateTimePicker1.Format = DateTimePickerFormat.Custom;
-            guna2DateTimePicker1.HoverState.BorderColor = Color.FromArgb(0, 164, 239);
-            guna2DateTimePicker1.Location = new Point(829, 0);
-            guna2DateTimePicker1.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
-            guna2DateTimePicker1.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
-            guna2DateTimePicker1.Name = "guna2DateTimePicker1";
-            guna2DateTimePicker1.ShadowDecoration.BorderRadius = 10;
-            guna2DateTimePicker1.ShadowDecoration.Color = Color.FromArgb(0, 164, 239);
-            guna2DateTimePicker1.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            guna2DateTimePicker1.ShadowDecoration.Depth = 8;
-            guna2DateTimePicker1.Size = new Size(177, 50);
-            guna2DateTimePicker1.TabIndex = 4;
-            guna2DateTimePicker1.TextOffset = new Point(10, 0);
-            guna2DateTimePicker1.Value = new DateTime(2025, 11, 22, 0, 0, 0, 0);
+            panelReturnCalendar.BorderRadius = 12;
+            panelReturnCalendar.CustomizableEdges = customizableEdges20;
+            panelReturnCalendar.FillColor = Color.White;
+            panelReturnCalendar.Location = new Point(295, 77);
+            panelReturnCalendar.Name = "panelReturnCalendar";
+            panelReturnCalendar.ShadowDecoration.CustomizableEdges = customizableEdges21;
+            panelReturnCalendar.Size = new Size(350, 280);
+            panelReturnCalendar.TabIndex = 0;
+            panelReturnCalendar.Visible = false;
             // 
             // cboFrom
             // 
@@ -298,7 +293,7 @@
             cboFrom.BackColor = Color.Transparent;
             cboFrom.BorderColor = Color.FromArgb(220, 220, 220);
             cboFrom.BorderRadius = 10;
-            cboFrom.CustomizableEdges = customizableEdges9;
+            cboFrom.CustomizableEdges = customizableEdges7;
             cboFrom.DrawMode = DrawMode.OwnerDrawFixed;
             cboFrom.DropDownStyle = ComboBoxStyle.DropDownList;
             cboFrom.FocusedColor = Color.FromArgb(0, 164, 239);
@@ -311,7 +306,7 @@
             cboFrom.Name = "cboFrom";
             cboFrom.ShadowDecoration.BorderRadius = 10;
             cboFrom.ShadowDecoration.Color = Color.FromArgb(0, 164, 239);
-            cboFrom.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            cboFrom.ShadowDecoration.CustomizableEdges = customizableEdges8;
             cboFrom.Size = new Size(280, 36);
             cboFrom.TabIndex = 5;
             cboFrom.TextOffset = new Point(10, 0);
@@ -336,7 +331,7 @@
             btnSwap.ImageSize = new Size(25, 25);
             btnSwap.Location = new Point(295, 0);
             btnSwap.Name = "btnSwap";
-            btnSwap.ShadowDecoration.CustomizableEdges = customizableEdges11;
+            btnSwap.ShadowDecoration.CustomizableEdges = customizableEdges9;
             btnSwap.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             btnSwap.Size = new Size(40, 40);
             btnSwap.TabIndex = 1;
@@ -348,7 +343,7 @@
             cboTo.BackColor = Color.Transparent;
             cboTo.BorderColor = Color.FromArgb(220, 220, 220);
             cboTo.BorderRadius = 10;
-            cboTo.CustomizableEdges = customizableEdges12;
+            cboTo.CustomizableEdges = customizableEdges10;
             cboTo.DrawMode = DrawMode.OwnerDrawFixed;
             cboTo.DropDownStyle = ComboBoxStyle.DropDownList;
             cboTo.FocusedColor = Color.FromArgb(0, 164, 239);
@@ -361,42 +356,10 @@
             cboTo.Name = "cboTo";
             cboTo.ShadowDecoration.BorderRadius = 10;
             cboTo.ShadowDecoration.Color = Color.FromArgb(0, 164, 239);
-            cboTo.ShadowDecoration.CustomizableEdges = customizableEdges13;
+            cboTo.ShadowDecoration.CustomizableEdges = customizableEdges11;
             cboTo.Size = new Size(280, 36);
             cboTo.TabIndex = 6;
             cboTo.TextOffset = new Point(10, 0);
-            // 
-            // dtpStart
-            // 
-            dtpStart.Animated = true;
-            dtpStart.BackColor = Color.Transparent;
-            dtpStart.BorderColor = Color.FromArgb(220, 220, 220);
-            dtpStart.BorderRadius = 10;
-            dtpStart.BorderThickness = 1;
-            dtpStart.Checked = true;
-            dtpStart.Cursor = Cursors.Hand;
-            dtpStart.CustomFormat = "dd MMM yyyy";
-            dtpStart.CustomizableEdges = customizableEdges14;
-            dtpStart.FillColor = Color.White;
-            dtpStart.FocusedColor = Color.FromArgb(0, 164, 239);
-            dtpStart.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dtpStart.ForeColor = Color.FromArgb(50, 50, 50);
-            dtpStart.Format = DateTimePickerFormat.Custom;
-            dtpStart.HoverState.BorderColor = Color.FromArgb(0, 164, 239);
-            dtpStart.Location = new Point(645, 0);
-            dtpStart.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
-            dtpStart.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
-            dtpStart.Name = "dtpStart";
-            dtpStart.ShadowDecoration.BorderRadius = 10;
-            dtpStart.ShadowDecoration.Color = Color.FromArgb(0, 164, 239);
-            dtpStart.ShadowDecoration.CustomizableEdges = customizableEdges15;
-            dtpStart.ShadowDecoration.Depth = 8;
-            dtpStart.Size = new Size(178, 50);
-            dtpStart.TabIndex = 3;
-            dtpStart.TextOffset = new Point(10, 0);
-            dtpStart.Value = new DateTime(2025, 11, 22, 0, 0, 0, 0);
-            dtpStart.Enter += Input_Enter;
-            dtpStart.Leave += Input_Leave;
             // 
             // btnSearch
             // 
@@ -405,7 +368,7 @@
             btnSearch.BorderColor = Color.Gray;
             btnSearch.BorderRadius = 12;
             btnSearch.Cursor = Cursors.Hand;
-            btnSearch.CustomizableEdges = customizableEdges16;
+            btnSearch.CustomizableEdges = customizableEdges12;
             btnSearch.DisabledState.BorderColor = Color.DarkGray;
             btnSearch.DisabledState.CustomBorderColor = Color.DarkGray;
             btnSearch.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -420,7 +383,7 @@
             btnSearch.Name = "btnSearch";
             btnSearch.ShadowDecoration.BorderRadius = 25;
             btnSearch.ShadowDecoration.Color = Color.FromArgb(255, 112, 28);
-            btnSearch.ShadowDecoration.CustomizableEdges = customizableEdges17;
+            btnSearch.ShadowDecoration.CustomizableEdges = customizableEdges13;
             btnSearch.ShadowDecoration.Depth = 12;
             btnSearch.ShadowDecoration.Enabled = true;
             btnSearch.Size = new Size(53, 47);
@@ -429,13 +392,56 @@
             btnSearch.MouseEnter += BtnSearch_MouseEnter;
             btnSearch.MouseLeave += BtnSearch_MouseLeave;
             // 
+            // btnStartDate
+            // 
+            btnStartDate.BorderRadius = 10;
+            btnStartDate.CustomizableEdges = customizableEdges14;
+            btnStartDate.FillColor = Color.White;
+            btnStartDate.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnStartDate.ForeColor = Color.Black;
+            btnStartDate.Location = new Point(645, 0);
+            btnStartDate.Name = "btnStartDate";
+            btnStartDate.ShadowDecoration.CustomizableEdges = customizableEdges15;
+            btnStartDate.Size = new Size(178, 50);
+            btnStartDate.TabIndex = 7;
+            btnStartDate.Text = "Chọn ngày đi";
+            btnStartDate.Click += BtnStartDate_Click;
+            // 
+            // btnReturnDate
+            // 
+            btnReturnDate.BorderRadius = 10;
+            btnReturnDate.CustomizableEdges = customizableEdges16;
+            btnReturnDate.Enabled = false;
+            btnReturnDate.FillColor = Color.Gainsboro;
+            btnReturnDate.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnReturnDate.ForeColor = Color.Gray;
+            btnReturnDate.Location = new Point(829, 0);
+            btnReturnDate.Name = "btnReturnDate";
+            btnReturnDate.ShadowDecoration.CustomizableEdges = customizableEdges17;
+            btnReturnDate.Size = new Size(178, 50);
+            btnReturnDate.TabIndex = 8;
+            btnReturnDate.Text = "Chọn ngày về";
+            btnReturnDate.Click += BtnReturnDate_Click;
+            // 
+            // panelStartCalendar
+            // 
+            panelStartCalendar.BorderRadius = 12;
+            panelStartCalendar.CustomizableEdges = customizableEdges18;
+            panelStartCalendar.FillColor = Color.White;
+            panelStartCalendar.Location = new Point(687, 77);
+            panelStartCalendar.Name = "panelStartCalendar";
+            panelStartCalendar.ShadowDecoration.CustomizableEdges = customizableEdges19;
+            panelStartCalendar.Size = new Size(350, 280);
+            panelStartCalendar.TabIndex = 9;
+            panelStartCalendar.Visible = false;
+            // 
             // cboSeatClass
             // 
             cboSeatClass.Animated = true;
             cboSeatClass.BackColor = Color.Transparent;
             cboSeatClass.BorderColor = Color.FromArgb(220, 220, 220);
             cboSeatClass.BorderRadius = 10;
-            cboSeatClass.CustomizableEdges = customizableEdges18;
+            cboSeatClass.CustomizableEdges = customizableEdges22;
             cboSeatClass.DrawMode = DrawMode.OwnerDrawFixed;
             cboSeatClass.DropDownStyle = ComboBoxStyle.DropDownList;
             cboSeatClass.FocusedColor = Color.FromArgb(0, 164, 239);
@@ -449,7 +455,7 @@
             cboSeatClass.Name = "cboSeatClass";
             cboSeatClass.ShadowDecoration.BorderRadius = 10;
             cboSeatClass.ShadowDecoration.Color = Color.FromArgb(0, 164, 239);
-            cboSeatClass.ShadowDecoration.CustomizableEdges = customizableEdges19;
+            cboSeatClass.ShadowDecoration.CustomizableEdges = customizableEdges23;
             cboSeatClass.ShadowDecoration.Depth = 8;
             cboSeatClass.Size = new Size(280, 36);
             cboSeatClass.StartIndex = 0;
@@ -464,7 +470,7 @@
             cboPassenger.BackColor = Color.Transparent;
             cboPassenger.BorderColor = Color.FromArgb(220, 220, 220);
             cboPassenger.BorderRadius = 10;
-            cboPassenger.CustomizableEdges = customizableEdges20;
+            cboPassenger.CustomizableEdges = customizableEdges24;
             cboPassenger.DrawMode = DrawMode.OwnerDrawFixed;
             cboPassenger.DropDownStyle = ComboBoxStyle.DropDownList;
             cboPassenger.FocusedColor = Color.FromArgb(0, 164, 239);
@@ -478,7 +484,7 @@
             cboPassenger.Name = "cboPassenger";
             cboPassenger.ShadowDecoration.BorderRadius = 10;
             cboPassenger.ShadowDecoration.Color = Color.FromArgb(0, 164, 239);
-            cboPassenger.ShadowDecoration.CustomizableEdges = customizableEdges21;
+            cboPassenger.ShadowDecoration.CustomizableEdges = customizableEdges25;
             cboPassenger.ShadowDecoration.Depth = 8;
             cboPassenger.Size = new Size(330, 36);
             cboPassenger.StartIndex = 0;
@@ -496,6 +502,20 @@
             flowDeals.Size = new Size(1180, 145);
             flowDeals.TabIndex = 1;
             // 
+            // flowStartDays
+            // 
+            flowStartDays.Location = new Point(0, 0);
+            flowStartDays.Name = "flowStartDays";
+            flowStartDays.Size = new Size(200, 100);
+            flowStartDays.TabIndex = 0;
+            // 
+            // flowReturnDays
+            // 
+            flowReturnDays.Location = new Point(0, 0);
+            flowReturnDays.Name = "flowReturnDays";
+            flowReturnDays.Size = new Size(200, 100);
+            flowReturnDays.TabIndex = 0;
+            // 
             // UC_FlightSearch
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -504,6 +524,7 @@
             Controls.Add(pnlMain);
             Name = "UC_FlightSearch";
             Size = new Size(1440, 840);
+            Load += UC_FlightSearch_Load;
             pnlMain.ResumeLayout(false);
             pnlSearchContainer.ResumeLayout(false);
             pnlTripType.ResumeLayout(false);
@@ -581,14 +602,17 @@
         private Guna.UI2.WinForms.Guna2ComboBox cboFrom;
         private Guna.UI2.WinForms.Guna2CircleButton btnSwap;
         private Guna.UI2.WinForms.Guna2ComboBox cboTo;
-        private Guna.UI2.WinForms.Guna2DateTimePicker dtpStart;
         private Guna.UI2.WinForms.Guna2Button btnSearch;
         private System.Windows.Forms.FlowLayoutPanel flowDeals;
-        private Guna.UI2.WinForms.Guna2DateTimePicker guna2DateTimePicker1;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
         private Guna.UI2.WinForms.Guna2CustomCheckBox guna2CustomCheckBox1;
         private Guna.UI2.WinForms.Guna2Button guna2Button1;
         private Guna.UI2.WinForms.Guna2ComboBox cboPassenger;
         private Guna.UI2.WinForms.Guna2ComboBox cboSeatClass;
+        private Guna2Panel panelReturnCalendar;
+        private Guna2Panel panelStartCalendar;
+        private Guna2Button btnStartDate;
+        private Guna2Button btnReturnDate;
+
     }
 }

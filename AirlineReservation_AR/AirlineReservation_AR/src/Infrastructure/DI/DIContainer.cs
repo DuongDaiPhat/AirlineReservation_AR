@@ -17,9 +17,8 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
     public static class DIContainer
     {
         private static IConfiguration? _config;
-        private static DbContextOptions<AirlineReservationDbContext>? _dbOptions;
+        public static DbContextOptions<AirlineReservationDbContext>? DbOptions { get; private set; }
 
-        private static AirlineReservationDbContext? _db;
         private static PasswordHasher? _hasher;
 
         private static IAuthentication? _authService;
@@ -30,9 +29,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
 
         private static ICityService? _cityService;
         private static CityController? _cityController;
+
         public static void Init()
         {
-            // Load appsettings.json (giống ASP.NET Core)
             _config = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile("appsettings.json", optional: false)
@@ -41,28 +40,33 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             string conn = _config.GetConnectionString("AirlineReservationDatabase")
                            ?? throw new Exception("Missing connection string");
 
-            // Build DbContextOptions
-            _dbOptions = new DbContextOptionsBuilder<AirlineReservationDbContext>()
+            // Build Options (không khởi tạo DbContext tại đây nữa)
+            DbOptions = new DbContextOptionsBuilder<AirlineReservationDbContext>()
                 .UseSqlServer(conn)
                 .Options;
 
-            // Khởi tạo DbContext (inject options)
-            _db = new AirlineReservationDbContext(_dbOptions);
-
-            // Utilities
             _hasher = new PasswordHasher();
 
-            // Service layer
-            _authService = new Authentication(_db, _hasher);
-            _userService = new UserService(_db);
-            _cityService = new CityService(_db);
+            // Service layer — mỗi hàm của service sẽ tự CreateDb()
+            _authService = new Authentication(_hasher);
+            _userService = new UserService();
+            _cityService = new CityService();
 
-            // Controller layer
+            // Controller layer giữ nguyên
             _authController = new AuthenticationController(_authService);
             _userContrller = new UserContrller(_userService);
             _cityController = new CityController(_cityService);
 
         }
+
+        public static AirlineReservationDbContext CreateDb()
+        {
+            if (DbOptions == null)
+                throw new Exception("DI has not been initialized");
+
+            return new AirlineReservationDbContext(DbOptions);
+        }
+
         // expose ra ngoài cho Form gọi
         public static AuthenticationController AuthController =>
             _authController ?? throw new Exception("DI has not been initialized");
