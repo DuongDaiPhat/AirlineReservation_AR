@@ -1,8 +1,8 @@
 namespace AirlineReservation_AR
 {
-    public partial class Form1 : Form
+    public partial class MainTravelokaForm : Form
     {
-        public Form1()
+        public MainTravelokaForm()
         {
             InitializeComponent();
         }

@@ -104,7 +104,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             }
 
             //5.Thành công - chuyển sang Form1
-            Form1 form1 = new Form1();
+            MainTravelokaForm form1 = new MainTravelokaForm();
             var successAnnouncement = new AnnouncementForm();
             successAnnouncement.SetAnnouncement("Success", "Sign In Successful!", true, form1);
             successAnnouncement.ShowDialog();
