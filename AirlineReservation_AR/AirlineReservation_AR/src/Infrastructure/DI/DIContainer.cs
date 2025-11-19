@@ -27,6 +27,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
 
         private static IUserService? _userService;
         private static UserContrller? _userContrller;
+
+        private static ICityService? _cityService;
+        private static CityController? _cityController;
         public static void Init()
         {
             // Load appsettings.json (giống ASP.NET Core)
@@ -52,11 +55,12 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             // Service layer
             _authService = new Authentication(_db, _hasher);
             _userService = new UserService(_db);
+            _cityService = new CityService(_db);
 
             // Controller layer
             _authController = new AuthenticationController(_authService);
             _userContrller = new UserContrller(_userService);
-
+            _cityController = new CityController(_cityService);
 
         }
         // expose ra ngoài cho Form gọi
@@ -65,7 +69,11 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
 
         //user
         public static UserContrller UserContrller =>
-            _userContrller ?? throw new Exception("User controller is started");
+            _userContrller ?? throw new Exception("User controller is not started");
+        
+        //cities
+        public static CityController CityController =>
+            _cityController ?? throw new Exception("City controller not initialized");
 
     }
 }
