@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AirlineReservation_AR.Properties;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Views.Forms.Admin
 {
@@ -137,7 +138,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
                 //}
                 if (button == btnDashboard)
                 {
-                    ShowBigControl("Dashboard Tổng quan", Properties.Resources.booking);
+                    ShowBigControl("Dashboard Tổng quan", Resources.booking);
                     RestoreDefaultDashboard();
                 }
                 else if (button == btnKhachHang)
