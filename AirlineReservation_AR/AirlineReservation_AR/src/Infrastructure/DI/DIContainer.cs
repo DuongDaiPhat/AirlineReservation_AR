@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Application.Services;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Services;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
 using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Application.Services;
@@ -30,6 +32,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static ICityService? _cityService;
         private static CityController? _cityController;
 
+        private static IFlightService? _flightService;
+        private static FlightController? _flightController;
+
         public static void Init()
         {
             _config = new ConfigurationBuilder()
@@ -51,11 +56,13 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _authService = new Authentication(_hasher);
             _userService = new UserService();
             _cityService = new CityService();
+            _flightService = new FlightService();
 
             // Controller layer giữ nguyên
             _authController = new AuthenticationController(_authService);
             _userContrller = new UserContrller(_userService);
             _cityController = new CityController(_cityService);
+            _flightController = new FlightController(_flightService);
 
         }
 
@@ -79,5 +86,8 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         public static CityController CityController =>
             _cityController ?? throw new Exception("City controller not initialized");
 
+        //flights
+        public static FlightController FlightController => 
+            _flightController ?? throw new Exception("Flight controller not initialized");
     }
 }
