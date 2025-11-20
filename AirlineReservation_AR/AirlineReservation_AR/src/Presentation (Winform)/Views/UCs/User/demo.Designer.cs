@@ -34,8 +34,8 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Properties.Resources.team_management;
-            pictureBox1.Location = new Point(171, 123);
+            pictureBox1.Image = Properties.Resources.number_22;
+            pictureBox1.Location = new Point(176, 127);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(100, 50);
             pictureBox1.TabIndex = 0;
