@@ -21,9 +21,9 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
         public UserAccountManagementControl()
         {
             InitializeComponent();
-            InitializeDataGridView();
-            LoadSampleData();
-            LoadUsers();
+            //InitializeDataGridView();
+            //LoadSampleData();
+            //LoadUsers();
             if (this.ParentForm is MenuAdminDashboard main)
             {
                 main.SidebarStateChanged += Main_SidebarStateChanged;
@@ -180,7 +180,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
         {
             if (e.Graphics == null) return;
 
-            string idText = $"#{user.UserId:D3}";
+            string idText = user.UserId.ToString().PadLeft(3, '0');
             using var brush = new SolidBrush(Color.Black);
             using var boldFont = new Font("Segoe UI", 11, FontStyle.Bold);
             e.Graphics.DrawString(idText, boldFont, brush, e.CellBounds, GetCenterFormat());

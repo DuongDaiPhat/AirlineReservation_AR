@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Views.UCs.Admin;
+using AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,14 +15,21 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
     public partial class MenuAdminDashboard : Form
     {
         private List<Control> _defaultPanelMain = new List<Control>();
-        private UserAccountManagementControl _userControlAccount;
+        private readonly UserControl _userControlAccount;
+        private readonly UserControl _pricingPromotionControl;
+        private readonly UserControl _ReportStatisticsControl;
+        private readonly UserControl _FlightManagementControl;
         public event Action<bool> SidebarStateChanged;
 
         public MenuAdminDashboard()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.DoubleBuffered = true;
             _userControlAccount = new UserAccountManagementControl();
+            _pricingPromotionControl = new PricingPromotionControl();
+            _ReportStatisticsControl = new ReportStatisticsControl();
+            _FlightManagementControl = new FlightManagementControl();
             adminDasboardControlUsers.Tag = _userControlAccount;
 
             SetDoubleBuffered(flowLayoutPanelMenu);
@@ -63,7 +71,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
         private void pictureBoxMenu_Click(object sender, EventArgs e)
         {
             MenuTime.Start();
-
         }
 
         private void MenuTime_Tick(object sender, EventArgs e)
@@ -137,13 +144,28 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
                 //}
                 if (button == btnDashboard)
                 {
-                    ShowBigControl("Dashboard Tổng quan", Properties.Resources.booking);
+                    ShowBigControl("Dashboard Tổng quan", Properties.Resources.dashboard);
                     RestoreDefaultDashboard();
                 }
                 else if (button == btnKhachHang)
                 {
                     ShowBigControl(adminDasboardControlUsers.title, adminDasboardControlUsers.dashboardImage);
                     ShowUserControl(_userControlAccount);
+                }
+                else if(button == btnGiaVe_khuyenMai)
+                {
+                    ShowBigControl(adminDasboardControlUsers.title, adminDasboardControlUsers.dashboardImage);
+                    ShowUserControl(_pricingPromotionControl);
+                }
+                else if (button == btnBaoCao_thongKe)
+                {
+                    ShowBigControl(adminDasboardControlBaoCao_ThongKe.title, adminDasboardControlBaoCao_ThongKe.dashboardImage);
+                    ShowUserControl(_ReportStatisticsControl);
+                }
+                else if (button == btnQuanLyChuyenBay)
+                {
+                    ShowBigControl(adminDasboardControlQuanLyChuyenBay.title, adminDasboardControlQuanLyChuyenBay.dashboardImage);
+                    ShowUserControl(_FlightManagementControl);
                 }
                 else if (button.Tag is adminDasboard small)
                 {
@@ -187,6 +209,27 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
                         MenuTime.Start();
                     btnKhachHang.FillColor = Color.FromArgb(0, 102, 203);
                 }
+                else if (small == adminDasboardControlGiaVe_KhuyenMai)
+                {
+                    ShowUserControl(_pricingPromotionControl);
+                    if (flowLayoutPanelMenu.Width > 60)
+                        MenuTime.Start();
+                    btnGiaVe_khuyenMai.FillColor = Color.FromArgb(0, 102, 203);
+                }
+                else if (small == adminDasboardControlBaoCao_ThongKe)
+                {
+                    ShowUserControl(_ReportStatisticsControl);
+                    if (flowLayoutPanelMenu.Width > 60)
+                        MenuTime.Start();
+                    btnBaoCao_thongKe.FillColor = Color.FromArgb(0, 102, 203);
+                }
+                else if (small == adminDasboardControlQuanLyChuyenBay)
+                {
+                    ShowUserControl(_FlightManagementControl);
+                    if (flowLayoutPanelMenu.Width > 60)
+                        MenuTime.Start();
+                    btnQuanLyChuyenBay.FillColor = Color.FromArgb(0, 102, 203);
+                }
             }
         }
 
@@ -205,8 +248,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnKhachHang.Tag = adminDasboardControlUsers;
             btnCaiDat.Tag = adminDasboardControlSetting;
 
-            _userControlAccount = new UserAccountManagementControl();
-            _userControlAccount.Dock = DockStyle.Fill;
         }
         private void ShowUserControl(UserControl ctrl)
         {
