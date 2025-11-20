@@ -3,21 +3,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.Infrastructure.DI;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 {
     public class CityService : ICityService
     {
-        private readonly AirlineReservationDbContext _db;
-
-        public CityService(AirlineReservationDbContext db)
-        {
-            _db = db;
-        }
 
         public async Task<City> CreateAsync(string cityCode, string cityName, string countryCode, bool isActive = true)
         {
+            using var _db = DIContainer.CreateDb();
             var exists = await _db.Cities.AnyAsync(c => c.CityCode == cityCode);
             if (exists) throw new System.Exception("City already exists.");
 
@@ -39,6 +35,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<City?> GetByCodeAsync(string cityCode)
         {
+            using var _db = DIContainer.CreateDb();
             return await _db.Cities
                 .Include(c => c.Country)
                 .Include(c => c.Airports)
@@ -47,6 +44,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<IEnumerable<City>> GetAllAsync(bool includeInactive = false)
         {
+            using var _db = DIContainer.CreateDb();
             var query = _db.Cities.AsQueryable();
 
             if (!includeInactive)
@@ -60,6 +58,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<IEnumerable<City>> GetByCountryAsync(string countryCode, bool onlyActive = true)
         {
+            using var _db = DIContainer.CreateDb();
             var query = _db.Cities.Where(c => c.CountryCode == countryCode);
 
             if (onlyActive)
@@ -77,6 +76,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             string? countryCode = null,
             bool? isActive = null)
         {
+            using var _db = DIContainer.CreateDb();
             var city = await _db.Cities.FindAsync(cityCode);
             if (city == null) return false;
 
@@ -100,6 +100,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<bool> DeleteAsync(string cityCode)
         {
+            using var _db = DIContainer.CreateDb();
             var city = await _db.Cities.FindAsync(cityCode);
             if (city == null) return false;
 

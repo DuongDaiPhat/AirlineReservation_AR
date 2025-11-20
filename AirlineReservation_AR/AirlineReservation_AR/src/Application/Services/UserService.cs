@@ -4,20 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
+using AirlineReservation_AR.src.Infrastructure.DI;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 {
     public class UserService : IUserService
     {
-        private readonly AirlineReservationDbContext _db;
-        public UserService(AirlineReservationDbContext db)
-        {
-            _db = db;
-        }
-
-
         public async Task<User?> GetByIdAsync(Guid userId)
         {
+            using var _db = DIContainer.CreateDb();
             return await _db.Users
                 .Include(u => u.UserRoles)
                 .FirstOrDefaultAsync(u => u.UserId == userId);
@@ -25,11 +20,13 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<User?> GetByEmailAsync(string email)
         {
+            using var _db = DIContainer.CreateDb();
             return await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<bool> ActivateUserAsync(Guid userId)
         {
+            using var _db = DIContainer.CreateDb();
             var user = await _db.Users.FindAsync(userId);
             if (user == null) return false;
 
@@ -42,6 +39,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<bool> DeactivateUserAsync(Guid userId)
         {
+            using var _db = DIContainer.CreateDb();
             var user = await _db.Users.FindAsync(userId);
             if (user == null) return false;
 
@@ -54,6 +52,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<bool> UpdateProfileAsync(Guid userId, string? phone, string? gender, string? address)
         {
+            using var _db = DIContainer.CreateDb();
             var user = await _db.Users.FindAsync(userId);
             if (user == null) return false;
 
@@ -68,6 +67,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<bool> AddUserRoleAsync(string userEmail, int newRoleId)
         {
+            using var _db = DIContainer.CreateDb();
             try
             {
                 var user = await _db.Users

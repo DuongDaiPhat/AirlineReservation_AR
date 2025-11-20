@@ -2,6 +2,7 @@
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 using AirlineReservation_AR.src.Application.Interfaces;
+using AirlineReservation_AR.src.Infrastructure.DI;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,16 +14,16 @@ namespace AirlineReservation_AR.src.Application.Services
 {
     internal class Authentication: IAuthentication
     {
-        private readonly AirlineReservationDbContext _db;
+
         private readonly PasswordHasher _passwordHasher;
 
-        public Authentication(AirlineReservationDbContext db, PasswordHasher passwordHasher)
+        public Authentication(PasswordHasher passwordHasher)
         {
-            _db = db;
             _passwordHasher = passwordHasher;
         }
         public async Task<User> RegisterAsync(string fullName, string email, string password, string? phone = null)
         {
+            using var _db = DIContainer.CreateDb();
             // Check email đã tồn tại chưa
             var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (existingUser != null)
@@ -53,6 +54,7 @@ namespace AirlineReservation_AR.src.Application.Services
 
         public async Task<User?> LoginAsync(string email, string password)
         {
+            using var _db = DIContainer.CreateDb();
             var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             if (user == null) return null;

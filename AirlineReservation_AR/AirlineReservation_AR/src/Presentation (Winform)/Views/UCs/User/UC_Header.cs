@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
+namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
-    public partial class UserDashboardTemplate : Form
+    public partial class UC_Header : UserControl
     {
-        public UserDashboardTemplate()
+        public UC_Header()
         {
             InitializeComponent();
         }

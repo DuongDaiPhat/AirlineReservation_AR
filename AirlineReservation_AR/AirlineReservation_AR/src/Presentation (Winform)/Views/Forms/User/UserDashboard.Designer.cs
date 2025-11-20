@@ -69,7 +69,9 @@
             guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
             Header = new Guna.UI2.WinForms.Guna2Panel();
             pnlContent = new Guna.UI2.WinForms.Guna2Panel();
+            uC_Header1 = new AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User.UC_Header();
             pnlNavigation.SuspendLayout();
+            Header.SuspendLayout();
             SuspendLayout();
             // 
             // pnlNavigation
@@ -341,6 +343,7 @@
             // 
             // Header
             // 
+            Header.Controls.Add(uC_Header1);
             Header.CustomizableEdges = customizableEdges20;
             Header.Dock = DockStyle.Top;
             Header.FillColor = Color.FromArgb(255, 128, 0);
@@ -360,6 +363,14 @@
             pnlContent.Size = new Size(856, 876);
             pnlContent.TabIndex = 5;
             // 
+            // uC_Header1
+            // 
+            uC_Header1.Dock = DockStyle.Top;
+            uC_Header1.Location = new Point(0, 0);
+            uC_Header1.Name = "uC_Header1";
+            uC_Header1.Size = new Size(1422, 138);
+            uC_Header1.TabIndex = 0;
+            // 
             // UserDashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -372,6 +383,7 @@
             Text = "UserDashboard";
             pnlNavigation.ResumeLayout(false);
             pnlNavigation.PerformLayout();
+            Header.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -394,5 +406,6 @@
         private Guna.UI2.WinForms.Guna2HtmlLabel txtName;
         private Guna.UI2.WinForms.Guna2Button btnMyCard;
         private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
+        private UCs.User.UC_Header uC_Header1;
     }
 }
