@@ -24,6 +24,34 @@ namespace AR_Winform.Presentation.Forms
             // Gắn "Others" làm mặc định
             sortCB.Items.Add("Others");
             sortCB.SelectedIndex = 0;
+
+            // Set initial value for label
+            UpdatePriceLabel();
+
+            // Hook up event for trackBarPrice
+            this.trackBarPrice.ValueChanged += new System.EventHandler(this.trackBarPrice_ValueChanged);
+        }
+
+        private void trackBarPrice_ValueChanged(object sender, EventArgs e)
+        {
+            UpdatePriceLabel();
+        }
+
+        private void UpdatePriceLabel()
+        {
+            if (labelPriceValue != null && trackBarPrice != null)
+            {
+                // TrackBar range is 0 to 950
+                // Each step represents 10,000 VND
+                // Min Price = 500,000
+                // Max Price = 500,000 + (950 * 10,000) = 10,000,000
+                
+                double scaledValue = trackBarPrice.Value;
+                double actualPrice = 500000 + (scaledValue * 10000);
+                
+                // Format as currency Vietnamese Dong
+                labelPriceValue.Text = string.Format("{0:N0} VND - {1:N0} VND", 500000, actualPrice);
+            }
         }
 
         // ====== COMBOBOX SORT MỞ DANH SÁCH ======
@@ -35,6 +63,7 @@ namespace AR_Winform.Presentation.Forms
                 sortCB.Items.AddRange(sortOptions);
             }
         }
+
 
     }
 }

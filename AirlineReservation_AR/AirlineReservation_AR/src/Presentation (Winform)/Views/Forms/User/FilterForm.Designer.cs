@@ -1,4 +1,4 @@
-ï»¿using System.Drawing;
+using System.Drawing;
 using AirlineReservation_AR.Properties;
 
 namespace AR_Winform.Presentation.Forms
@@ -50,8 +50,14 @@ namespace AR_Winform.Presentation.Forms
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges47 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges48 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges55 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges56 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges37 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges38 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges39 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges40 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges41 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges42 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -70,16 +76,18 @@ namespace AR_Winform.Presentation.Forms
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges34 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges35 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges36 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges37 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges38 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges39 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges40 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges41 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges42 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges43 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges44 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges45 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges46 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges47 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges48 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges49 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges50 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges51 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges52 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges53 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges54 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges43 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges44 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             card1 = new Guna.UI2.WinForms.Guna2Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -106,6 +114,9 @@ namespace AR_Winform.Presentation.Forms
             guna2PictureBox7 = new Guna.UI2.WinForms.Guna2PictureBox();
             guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
+            businessBtn = new Guna.UI2.WinForms.Guna2Button();
+            firstBtn = new Guna.UI2.WinForms.Guna2Button();
+            economyBtn = new Guna.UI2.WinForms.Guna2Button();
             label2 = new Label();
             deBtn4 = new Guna.UI2.WinForms.Guna2Button();
             deBtn3 = new Guna.UI2.WinForms.Guna2Button();
@@ -118,6 +129,9 @@ namespace AR_Winform.Presentation.Forms
             reBtn4 = new Guna.UI2.WinForms.Guna2Button();
             reBtn1 = new Guna.UI2.WinForms.Guna2Button();
             reBtn2 = new Guna.UI2.WinForms.Guna2Button();
+            labelPriceRange = new Label();
+            trackBarPrice = new Guna.UI2.WinForms.Guna2TrackBar();
+            labelPriceValue = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             reDateLeftLB = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -142,6 +156,7 @@ namespace AR_Winform.Presentation.Forms
             pn2 = new Panel();
             bestFlightPN = new FlowLayoutPanel();
             guna2HtmlLabel12 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            preEconomyBtn = new Guna.UI2.WinForms.Guna2Button();
             guna2Panel1.SuspendLayout();
             card1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -501,12 +516,12 @@ namespace AR_Winform.Presentation.Forms
             // 
             guna2Panel2.Controls.Add(tableLayoutPanel1);
             guna2Panel2.Controls.Add(tableLayoutPanel2);
-            guna2Panel2.CustomizableEdges = customizableEdges47;
+            guna2Panel2.CustomizableEdges = customizableEdges55;
             guna2Panel2.Location = new Point(94, 18);
             guna2Panel2.Margin = new Padding(4);
             guna2Panel2.Name = "guna2Panel2";
-            guna2Panel2.ShadowDecoration.CustomizableEdges = customizableEdges48;
-            guna2Panel2.Size = new Size(423, 680);
+            guna2Panel2.ShadowDecoration.CustomizableEdges = customizableEdges56;
+            guna2Panel2.Size = new Size(423, 912);
             guna2Panel2.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -528,10 +543,17 @@ namespace AR_Winform.Presentation.Forms
             tableLayoutPanel1.Controls.Add(reBtn4, 1, 5);
             tableLayoutPanel1.Controls.Add(reBtn1, 1, 6);
             tableLayoutPanel1.Controls.Add(reBtn2, 0, 6);
-            tableLayoutPanel1.Location = new Point(0, 232);
+            tableLayoutPanel1.Controls.Add(labelPriceRange, 0, 7);
+            tableLayoutPanel1.Controls.Add(trackBarPrice, 0, 8);
+            tableLayoutPanel1.Controls.Add(labelPriceValue, 0, 9);
+            tableLayoutPanel1.Controls.Add(businessBtn, 0, 11);
+            tableLayoutPanel1.Controls.Add(firstBtn, 1, 11);
+            tableLayoutPanel1.Controls.Add(economyBtn, 0, 10);
+            tableLayoutPanel1.Controls.Add(preEconomyBtn, 1, 10);
+            tableLayoutPanel1.Location = new Point(0, 236);
             tableLayoutPanel1.Margin = new Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 9;
+            tableLayoutPanel1.RowCount = 14;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
@@ -539,10 +561,66 @@ namespace AR_Winform.Presentation.Forms
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(423, 303);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 42F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 8F));
+            tableLayoutPanel1.Size = new Size(423, 560);
             tableLayoutPanel1.TabIndex = 6;
+            // 
+            // businessBtn
+            // 
+            businessBtn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            businessBtn.BorderRadius = 10;
+            businessBtn.BorderThickness = 1;
+            businessBtn.CustomizableEdges = customizableEdges37;
+            businessBtn.FillColor = Color.White;
+            businessBtn.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            businessBtn.ForeColor = Color.DodgerBlue;
+            businessBtn.Location = new Point(15, 405);
+            businessBtn.Margin = new Padding(15, 0, 15, 5);
+            businessBtn.Name = "businessBtn";
+            businessBtn.ShadowDecoration.CustomizableEdges = customizableEdges38;
+            businessBtn.Size = new Size(181, 37);
+            businessBtn.TabIndex = 67;
+            businessBtn.Text = "Upper Mid (5M–7M)";
+            // 
+            // firstBtn
+            // 
+            firstBtn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            firstBtn.BorderRadius = 10;
+            firstBtn.BorderThickness = 1;
+            firstBtn.CustomizableEdges = customizableEdges39;
+            firstBtn.FillColor = Color.White;
+            firstBtn.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            firstBtn.ForeColor = Color.DodgerBlue;
+            firstBtn.Location = new Point(226, 405);
+            firstBtn.Margin = new Padding(15, 0, 15, 5);
+            firstBtn.Name = "firstBtn";
+            firstBtn.ShadowDecoration.CustomizableEdges = customizableEdges40;
+            firstBtn.Size = new Size(182, 37);
+            firstBtn.TabIndex = 66;
+            firstBtn.Text = "Premium (7M–10M)";
+            // 
+            // economyBtn
+            // 
+            economyBtn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            economyBtn.BorderRadius = 10;
+            economyBtn.BorderThickness = 1;
+            economyBtn.CustomizableEdges = customizableEdges41;
+            economyBtn.FillColor = Color.White;
+            economyBtn.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            economyBtn.ForeColor = Color.DodgerBlue;
+            economyBtn.Location = new Point(15, 365);
+            economyBtn.Margin = new Padding(15, 0, 15, 5);
+            economyBtn.Name = "economyBtn";
+            economyBtn.ShadowDecoration.CustomizableEdges = customizableEdges42;
+            economyBtn.Size = new Size(181, 35);
+            economyBtn.TabIndex = 65;
+            economyBtn.Text = "Budget (500K–2.5M)";
             // 
             // label2
             // 
@@ -736,6 +814,43 @@ namespace AR_Winform.Presentation.Forms
             reBtn2.TabIndex = 51;
             reBtn2.Text = "12:00 - 18:00";
             // 
+            // labelPriceRange
+            // 
+            labelPriceRange.Anchor = AnchorStyles.Left;
+            labelPriceRange.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(labelPriceRange, 2);
+            labelPriceRange.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelPriceRange.Location = new Point(0, 276);
+            labelPriceRange.Margin = new Padding(0);
+            labelPriceRange.Name = "labelPriceRange";
+            labelPriceRange.Size = new Size(89, 23);
+            labelPriceRange.TabIndex = 53;
+            labelPriceRange.Text = "Price Range";
+            labelPriceRange.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // trackBarPrice
+            // 
+            trackBarPrice.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel1.SetColumnSpan(trackBarPrice, 2);
+            trackBarPrice.Location = new Point(3, 308);
+            trackBarPrice.Name = "trackBarPrice";
+            trackBarPrice.Size = new Size(417, 23);
+            trackBarPrice.TabIndex = 54;
+            trackBarPrice.ThumbColor = Color.DodgerBlue;
+            // 
+            // labelPriceValue
+            // 
+            tableLayoutPanel1.SetColumnSpan(labelPriceValue, 2);
+            labelPriceValue.Font = new Font("Fz Poppins", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelPriceValue.ForeColor = Color.DimGray;
+            labelPriceValue.Location = new Point(0, 335);
+            labelPriceValue.Margin = new Padding(0);
+            labelPriceValue.Name = "labelPriceValue";
+            labelPriceValue.Size = new Size(423, 23);
+            labelPriceValue.TabIndex = 55;
+            labelPriceValue.Text = "500.000 VND - 10.000.000 VND";
+            labelPriceValue.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // tableLayoutPanel2
             // 
             tableLayoutPanel2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
@@ -794,13 +909,13 @@ namespace AR_Winform.Presentation.Forms
             // guna2PictureBox2
             // 
             guna2PictureBox2.Anchor = AnchorStyles.None;
-            guna2PictureBox2.CustomizableEdges = customizableEdges37;
+            guna2PictureBox2.CustomizableEdges = customizableEdges45;
             guna2PictureBox2.Image = Resources.flights;
             guna2PictureBox2.ImageRotate = 0F;
             guna2PictureBox2.Location = new Point(13, 7);
             guna2PictureBox2.Margin = new Padding(4);
             guna2PictureBox2.Name = "guna2PictureBox2";
-            guna2PictureBox2.ShadowDecoration.CustomizableEdges = customizableEdges38;
+            guna2PictureBox2.ShadowDecoration.CustomizableEdges = customizableEdges46;
             guna2PictureBox2.Size = new Size(45, 45);
             guna2PictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox2.TabIndex = 0;
@@ -809,14 +924,14 @@ namespace AR_Winform.Presentation.Forms
             // guna2PictureBox3
             // 
             guna2PictureBox3.Anchor = AnchorStyles.None;
-            guna2PictureBox3.CustomizableEdges = customizableEdges39;
+            guna2PictureBox3.CustomizableEdges = customizableEdges47;
             guna2PictureBox3.Image = Resources.number_11;
             guna2PictureBox3.ImageRotate = 0F;
             guna2PictureBox3.Location = new Point(18, 80);
             guna2PictureBox3.Margin = new Padding(4);
             guna2PictureBox3.Name = "guna2PictureBox3";
             tableLayoutPanel2.SetRowSpan(guna2PictureBox3, 2);
-            guna2PictureBox3.ShadowDecoration.CustomizableEdges = customizableEdges40;
+            guna2PictureBox3.ShadowDecoration.CustomizableEdges = customizableEdges48;
             guna2PictureBox3.Size = new Size(35, 35);
             guna2PictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox3.TabIndex = 1;
@@ -825,14 +940,14 @@ namespace AR_Winform.Presentation.Forms
             // reLeftPicture
             // 
             reLeftPicture.Anchor = AnchorStyles.None;
-            reLeftPicture.CustomizableEdges = customizableEdges41;
+            reLeftPicture.CustomizableEdges = customizableEdges49;
             reLeftPicture.Image = Resources.number_22;
             reLeftPicture.ImageRotate = 0F;
             reLeftPicture.Location = new Point(18, 156);
             reLeftPicture.Margin = new Padding(4);
             reLeftPicture.Name = "reLeftPicture";
             tableLayoutPanel2.SetRowSpan(reLeftPicture, 2);
-            reLeftPicture.ShadowDecoration.CustomizableEdges = customizableEdges42;
+            reLeftPicture.ShadowDecoration.CustomizableEdges = customizableEdges50;
             reLeftPicture.Size = new Size(35, 35);
             reLeftPicture.SizeMode = PictureBoxSizeMode.Zoom;
             reLeftPicture.TabIndex = 2;
@@ -867,13 +982,13 @@ namespace AR_Winform.Presentation.Forms
             // 
             // guna2PictureBox5
             // 
-            guna2PictureBox5.CustomizableEdges = customizableEdges43;
+            guna2PictureBox5.CustomizableEdges = customizableEdges51;
             guna2PictureBox5.Image = Resources.blue_right_arrow;
             guna2PictureBox5.ImageRotate = 0F;
             guna2PictureBox5.Location = new Point(145, 4);
             guna2PictureBox5.Margin = new Padding(4);
             guna2PictureBox5.Name = "guna2PictureBox5";
-            guna2PictureBox5.ShadowDecoration.CustomizableEdges = customizableEdges44;
+            guna2PictureBox5.ShadowDecoration.CustomizableEdges = customizableEdges52;
             guna2PictureBox5.Size = new Size(27, 25);
             guna2PictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             guna2PictureBox5.TabIndex = 2;
@@ -935,13 +1050,13 @@ namespace AR_Winform.Presentation.Forms
             // 
             // leftIcon
             // 
-            leftIcon.CustomizableEdges = customizableEdges45;
+            leftIcon.CustomizableEdges = customizableEdges53;
             leftIcon.Image = Resources.blue_right_arrow;
             leftIcon.ImageRotate = 0F;
             leftIcon.Location = new Point(145, 4);
             leftIcon.Margin = new Padding(4);
             leftIcon.Name = "leftIcon";
-            leftIcon.ShadowDecoration.CustomizableEdges = customizableEdges46;
+            leftIcon.ShadowDecoration.CustomizableEdges = customizableEdges54;
             leftIcon.Size = new Size(27, 25);
             leftIcon.SizeMode = PictureBoxSizeMode.StretchImage;
             leftIcon.TabIndex = 2;
@@ -1040,6 +1155,23 @@ namespace AR_Winform.Presentation.Forms
             guna2HtmlLabel12.Size = new Size(119, 25);
             guna2HtmlLabel12.TabIndex = 5;
             guna2HtmlLabel12.Text = "Best flight for you";
+            // 
+            // preEconomyBtn
+            // 
+            preEconomyBtn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            preEconomyBtn.BorderRadius = 10;
+            preEconomyBtn.BorderThickness = 1;
+            preEconomyBtn.CustomizableEdges = customizableEdges43;
+            preEconomyBtn.FillColor = Color.White;
+            preEconomyBtn.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            preEconomyBtn.ForeColor = Color.DodgerBlue;
+            preEconomyBtn.Location = new Point(226, 365);
+            preEconomyBtn.Margin = new Padding(15, 0, 15, 5);
+            preEconomyBtn.Name = "preEconomyBtn";
+            preEconomyBtn.ShadowDecoration.CustomizableEdges = customizableEdges44;
+            preEconomyBtn.Size = new Size(182, 35);
+            preEconomyBtn.TabIndex = 68;
+            preEconomyBtn.Text = "Lower Mid (2.5M–5M)";
             // 
             // FilterForm
             // 
@@ -1153,5 +1285,12 @@ namespace AR_Winform.Presentation.Forms
         private System.Windows.Forms.Label label4;
         private Guna.UI2.WinForms.Guna2Button resetBtn;
         private Guna.UI2.WinForms.Guna2Button deBtn2;
+        private System.Windows.Forms.Label labelPriceRange;
+        private System.Windows.Forms.Label labelPriceValue;
+        public Guna.UI2.WinForms.Guna2TrackBar trackBarPrice;
+        private Guna.UI2.WinForms.Guna2Button businessBtn;
+        private Guna.UI2.WinForms.Guna2Button firstBtn;
+        private Guna.UI2.WinForms.Guna2Button economyBtn;
+        private Guna.UI2.WinForms.Guna2Button preEconomyBtn;
     }
 }
