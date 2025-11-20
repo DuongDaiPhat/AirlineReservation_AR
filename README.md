@@ -250,7 +250,7 @@ Resources and tools that were helpful during the development of this project:
 [ef-url]: https://learn.microsoft.com/ef/  
 
 [contributors-shield]: https://img.shields.io/github/contributors/DuongDaiPhat/AirlineReservation_AR.svg?style=for-the-badge
-[contributors-url]: https://github.com/DuongDaiPhat/Airline-Reservation-/graphs/contributors
+[contributors-url]: https://github.com/DuongDaiPhat/AirlineReservation_AR/graphs/contributors
 
 [forks-shield]: https://img.shields.io/github/forks/DuongDaiPhat/Airline-Reservation-.svg?style=for-the-badge
 [forks-url]: https://github.com/DuongDaiPhat/AirlineReservation_AR/network/members
