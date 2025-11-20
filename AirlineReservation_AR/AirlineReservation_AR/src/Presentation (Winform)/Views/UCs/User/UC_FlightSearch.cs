@@ -14,6 +14,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
     public partial class UC_FlightSearch : UserControl
     {
+        //chyển hướng
+        public event Action<FlightSearchParams> OnSearchSubmit;
         // Controller + data
         private readonly CityController _cityController;
         private List<CitySelectDTO> _cityItems = new();
@@ -32,11 +34,51 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private List<Guna2Button> startDayButtons = new();
         private List<Guna2Button> returnDayButtons = new();
 
+        private DateTime? selectedStartDate = null;
+        private DateTime? selectedReturnDate = null;
+
+        private Guna2Panel passengerPopup;
+
+        private int adult = 1;
+        private int child = 0;
+        private int infant = 0;
+
         public UC_FlightSearch()
         {
             InitializeComponent();
             _cityController = DIContainer.CityController;
+            InitializeCalendarFlowPanels();
+            CreatePassengerPopup();
             Load += UC_FlightSearch_Load;
+        }
+
+
+       
+
+
+
+        // Khởi tạo FlowLayoutPanel cho lịch
+        private void InitializeCalendarFlowPanels()
+        {
+            flowStartDays = new FlowLayoutPanel
+            {
+                Location = new Point(10, 90),
+                Size = new Size(340, 270),
+                AutoScroll = false,
+                WrapContents = true,
+                Padding = new Padding(0),
+                BackColor = Color.Transparent
+            };
+
+            flowReturnDays = new FlowLayoutPanel
+            {
+                Location = new Point(10, 90),
+                Size = new Size(340, 270),
+                AutoScroll = false,
+                WrapContents = true,
+                Padding = new Padding(0),
+                BackColor = Color.Transparent
+            };
         }
 
         // Load city list
@@ -45,9 +87,205 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             var cities = await _cityController.GetAllCitiesAsync();
             _cityItems = cities.Select(c => new CitySelectDTO(c)).ToList();
             BindComboItems();
+            if (this.ParentForm != null)
+                this.ParentForm.Controls.Add(passengerPopup);
+
+            passengerPopup.BringToFront();
         }
 
-        // Build calendar UI
+        private void CreatePassengerPopup()
+        {
+            passengerPopup = new Guna2Panel
+            {
+                Size = new Size(350, 260),
+                BorderRadius = 12,
+                FillColor = Color.White,
+                Visible = false,
+                ShadowDecoration = { Enabled = true, Depth = 15, Shadow = new Padding(0, 2, 8, 8) },
+            };
+
+      
+
+            // ===== TITLE =====
+            Label lblTitle = new Label
+            {
+                Text = "Số hành khách",
+                Font = new Font("Segoe UI", 13, FontStyle.Bold),
+                Location = new Point(15, 10),
+                AutoSize = true
+            };
+            passengerPopup.Controls.Add(lblTitle);
+
+            // ===== CLOSE =====
+            Guna2Button btnClose = new Guna2Button
+            {
+                Text = "×",
+                FillColor = Color.Transparent,
+                ForeColor = Color.Black,
+                Size = new Size(40, 40),
+                Location = new Point(300, 5),
+                BorderRadius = 8,
+                Cursor = Cursors.Hand
+            };
+            btnClose.Click += (s, e) => passengerPopup.Visible = false;
+            passengerPopup.Controls.Add(btnClose);
+
+            // ===== ROWS =====
+            AddPassengerRow("Người lớn", "Từ 12 tuổi", "adult", 55);
+            AddPassengerRow("Trẻ em", "Từ 2 – 11 tuổi", "child", 120);
+            AddPassengerRow("Em bé", "Dưới 2 tuổi", "infant", 185);
+
+            // ===== BUTTON DONE =====
+            Guna2Button btnDone = new Guna2Button
+            {
+                Text = "Xong",
+                FillColor = Color.FromArgb(0, 147, 255),
+                Size = new Size(300, 42),
+                Location = new Point(25, 215),
+                BorderRadius = 8,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+            };
+            btnDone.Click += BtnDone_Click;
+            passengerPopup.Controls.Add(btnDone);
+        }
+
+        private void UpdatePassengerPopupPosition()
+        {
+            if (this.ParentForm == null) return;
+
+            var btnScreen = btnPassenger.PointToScreen(Point.Empty);
+            var btnInForm = ParentForm.PointToClient(btnScreen);
+
+            passengerPopup.Location = new Point(
+                btnInForm.X,
+                btnInForm.Y + btnPassenger.Height + 6
+            );
+        }
+
+        private void AddPassengerRow(string title, string sub, string type, int y)
+        {
+            Label lbl = new Label
+            {
+                Text = title,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                Location = new Point(15, y),
+                AutoSize = true
+            };
+            passengerPopup.Controls.Add(lbl);
+
+            Label lblSub = new Label
+            {
+                Text = sub,
+                Font = new Font("Segoe UI", 9),
+                ForeColor = Color.Gray,
+                Location = new Point(15, y + 25),
+                AutoSize = true
+            };
+            passengerPopup.Controls.Add(lblSub);
+
+            Guna2Button btnMinus = new Guna2Button
+            {
+                Text = "-",
+                Size = new Size(36, 36),
+                BorderRadius = 10,
+                FillColor = Color.Transparent,
+                BorderThickness = 1,
+                BorderColor = Color.Silver,
+                ForeColor = Color.Black,
+                Location = new Point(200, y),
+                Cursor = Cursors.Hand
+            };
+
+            Label lblNumber = new Label
+            {
+                Text = GetCounter(type).ToString(),
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Size = new Size(45, 36),
+                Location = new Point(240, y + 2)
+            };
+
+            Guna2Button btnPlus = new Guna2Button
+            {
+                Text = "+",
+                Size = new Size(36, 36),
+                BorderRadius = 10,
+                FillColor = Color.Transparent,
+                BorderThickness = 1,
+                BorderColor = Color.Silver,
+                ForeColor = Color.Black,
+                Location = new Point(285, y),
+                Cursor = Cursors.Hand
+            };
+
+            // Minus
+            btnMinus.Click += (s, e) =>
+            {
+                int v = GetCounter(type);
+                if (v > 0) v--;
+                SetCounter(type, v);
+                lblNumber.Text = v.ToString();
+                UpdatePassengerText();
+            };
+
+            // Plus
+            btnPlus.Click += (s, e) =>
+            {
+                int v = GetCounter(type);
+                v++;
+                SetCounter(type, v);
+                lblNumber.Text = v.ToString();
+                UpdatePassengerText();
+            };
+
+            passengerPopup.Controls.Add(btnMinus);
+            passengerPopup.Controls.Add(lblNumber);
+            passengerPopup.Controls.Add(btnPlus);
+        }
+
+
+        private int GetCounter(string type)
+        {
+            return type switch
+            {
+                "adult" => adult,
+                "child" => child,
+                "infant" => infant,
+                _ => 0
+            };
+        }
+
+        private void SetCounter(string type, int value)
+        {
+            switch (type)
+            {
+                case "adult": adult = value; break;
+                case "child": child = value; break;
+                case "infant": infant = value; break;
+            }
+        }
+
+        private void UpdatePassengerText()
+        {
+            btnPassenger.Text = $"{adult} Người lớn, {child} Trẻ em, {infant} Em bé";
+        }
+
+        private void BtnPassenger_Click(object sender, EventArgs e)
+        {
+            UpdatePassengerPopupPosition();
+
+            passengerPopup.Visible = !passengerPopup.Visible;
+            passengerPopup.BringToFront();
+        }
+
+
+
+        private void BtnDone_Click(object sender, EventArgs e)
+        {
+            passengerPopup.Visible = false;
+        }
+
+        // Build calendar UI - Thiết kế mới
         private void BuildCalendar(
             Guna2Panel parent,
             FlowLayoutPanel flow,
@@ -55,114 +293,213 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             Action<DateTime> onSelect)
         {
             parent.Controls.Clear();
+            parent.BorderRadius = 16;
+            parent.ShadowDecoration.Enabled = true;
+            parent.ShadowDecoration.Depth = 15;
+            parent.ShadowDecoration.Shadow = new Padding(0, 2, 6, 6);
+            parent.ShadowDecoration.Color = Color.FromArgb(0, 0, 0, 50);
 
-            // xác định lịch nào
             bool isStart = parent.Tag?.ToString() == "start";
-
             DateTime month = isStart ? startMonth : returnMonth;
 
+            // Header với tháng/năm
             Label lblMonth = new Label()
             {
-                Text = $"Tháng {month:MM, yyyy}",
-                Font = new Font("Segoe UI Semibold", 12),
-                Location = new Point(15, 10),
-                AutoSize = true
+                Text = month.ToString("MMMM yyyy"),
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                Location = new Point(20, 15),
+                Size = new Size(200, 30),
+                ForeColor = Color.FromArgb(30, 30, 30)
             };
             parent.Controls.Add(lblMonth);
 
-            // PREV
+            // Nút Previous
             var btnPrev = new Guna2Button()
             {
-                Text = "<",
-                Width = 30,
-                Height = 30,
-                BorderRadius = 6,
-                FillColor = Color.WhiteSmoke,
-                Location = new Point(245, 5)
+                Text = "◀",
+                Width = 35,
+                Height = 35,
+                BorderRadius = 8,
+                FillColor = Color.FromArgb(240, 240, 240),
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                ForeColor = Color.FromArgb(100, 100, 100),
+                Location = new Point(240, 12),
+                Cursor = Cursors.Hand
             };
-
             btnPrev.Click += (s, e) =>
             {
                 month = month.AddMonths(-1);
-
                 if (isStart) startMonth = month;
                 else returnMonth = month;
-
-                lblMonth.Text = $"Tháng {month:MM, yyyy}";
-                RenderCalendar(month, buttons);
+                lblMonth.Text = month.ToString("MMMM yyyy");
+                RenderCalendar(month, buttons, flow, onSelect, isStart);
             };
             parent.Controls.Add(btnPrev);
 
-            // NEXT
+            // Nút Next
             var btnNext = new Guna2Button()
             {
-                Text = ">",
-                Width = 30,
-                Height = 30,
-                BorderRadius = 6,
-                FillColor = Color.WhiteSmoke,
-                Location = new Point(280, 5)
+                Text = "▶",
+                Width = 35,
+                Height = 35,
+                BorderRadius = 8,
+                FillColor = Color.FromArgb(240, 240, 240),
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                ForeColor = Color.FromArgb(100, 100, 100),
+                Location = new Point(285, 12),
+                Cursor = Cursors.Hand
             };
-
             btnNext.Click += (s, e) =>
             {
                 month = month.AddMonths(1);
-
                 if (isStart) startMonth = month;
                 else returnMonth = month;
-
-                lblMonth.Text = $"Tháng {month:MM, yyyy}";
-                RenderCalendar(month, buttons);
+                lblMonth.Text = month.ToString("MMMM yyyy");
+                RenderCalendar(month, buttons, flow, onSelect, isStart);
             };
             parent.Controls.Add(btnNext);
 
-            // FLOW
+            // Thêm header các ngày trong tuần
+            Panel weekHeader = new Panel
+            {
+                Location = new Point(10, 60),
+                Size = new Size(340, 28),
+                BackColor = Color.Transparent
+            };
+
+            string[] dayNames = { "CN", "T2", "T3", "T4", "T5", "T6", "T7" };
+            for (int i = 0; i < 7; i++)
+            {
+                Label lblDay = new Label
+                {
+                    Text = dayNames[i],
+                    Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(120, 120, 120),
+                    Location = new Point(i * 48 + 1, 0),
+                    Size = new Size(48, 28),
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+                weekHeader.Controls.Add(lblDay);
+            }
+            parent.Controls.Add(weekHeader);
+
+            // Flow panel cho các ngày
             flow.Controls.Clear();
+            flow.Location = new Point(10, 90);
+            flow.Size = new Size(340, 270);
             parent.Controls.Add(flow);
 
             buttons.Clear();
+            RenderCalendar(month, buttons, flow, onSelect, isStart);
+        }
 
-            for (int i = 1; i <= 31; i++)
+        // Render calendar với layout cải tiến
+        private void RenderCalendar(DateTime month, List<Guna2Button> buttons,
+            FlowLayoutPanel flow, Action<DateTime> onSelect, bool isStart)
+        {
+            flow.Controls.Clear();
+            buttons.Clear();
+
+            int daysInMonth = DateTime.DaysInMonth(month.Year, month.Month);
+            DateTime firstDay = new DateTime(month.Year, month.Month, 1);
+            int startDayOfWeek = (int)firstDay.DayOfWeek;
+
+            // Thêm các ô trống cho ngày đầu tháng
+            for (int i = 0; i < startDayOfWeek; i++)
             {
+                Panel emptyCell = new Panel
+                {
+                    Width = 47,
+                    Height = 45,
+                    Margin = new Padding(0)
+                };
+                flow.Controls.Add(emptyCell);
+            }
+
+            DateTime today = DateTime.Now.Date;
+
+            // Tạo button cho mỗi ngày trong tháng
+            for (int day = 1; day <= daysInMonth; day++)
+            {
+                DateTime currentDate = new DateTime(month.Year, month.Month, day);
+                bool isPast = currentDate < today;
+
                 var btnDay = new Guna2Button()
                 {
                     Width = 45,
-                    Height = 45,
-                    BorderRadius = 8,
-                    FillColor = Color.FromArgb(245, 245, 245),
-                    Text = i.ToString()
+                    Height = 43,
+                    Margin = new Padding(1),
+                    BorderRadius = 10,
+                    FillColor = Color.White,
+                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                    ForeColor = isPast ? Color.FromArgb(180, 180, 180) : Color.FromArgb(60, 60, 60),
+                    Text = day.ToString(),
+                    Cursor = isPast ? Cursors.Default : Cursors.Hand,
+                    Enabled = !isPast,
+                    Tag = currentDate
                 };
 
-                btnDay.Click += (s, e) =>
+                // Đánh dấu ngày hôm nay
+                if (currentDate == today)
                 {
-                    foreach (var b in buttons)
-                        b.FillColor = Color.FromArgb(245, 245, 245);
+                    btnDay.BorderColor = Color.FromArgb(0, 164, 239);
+                    btnDay.BorderThickness = 2;
+                }
 
+                // Đánh dấu ngày đã chọn
+                if ((isStart && selectedStartDate == currentDate) ||
+                    (!isStart && selectedReturnDate == currentDate))
+                {
                     btnDay.FillColor = Color.FromArgb(0, 164, 239);
+                    btnDay.ForeColor = Color.White;
+                }
 
-                    DateTime selected = new DateTime(month.Year, month.Month, int.Parse(btnDay.Text));
-                    onSelect(selected);
+                if (!isPast)
+                {
+                    btnDay.HoverState.FillColor = Color.FromArgb(230, 245, 255);
+                    btnDay.HoverState.ForeColor = Color.FromArgb(0, 164, 239);
 
-                    parent.Visible = false;
-                };
+                    btnDay.Click += (s, e) =>
+                    {
+                        // Reset tất cả button
+                        foreach (var b in buttons)
+                        {
+                            b.FillColor = Color.White;
+                            b.ForeColor = Color.FromArgb(60, 60, 60);
+
+                            // Giữ border cho ngày hôm nay
+                            if ((DateTime)b.Tag == today)
+                            {
+                                b.BorderColor = Color.FromArgb(0, 164, 239);
+                                b.BorderThickness = 2;
+                            }
+                            else
+                            {
+                                b.BorderThickness = 0;
+                            }
+                        }
+
+                        // Highlight button được chọn
+                        btnDay.FillColor = Color.FromArgb(0, 164, 239);
+                        btnDay.ForeColor = Color.White;
+                        btnDay.BorderThickness = 0;
+
+                        DateTime selected = (DateTime)btnDay.Tag;
+
+                        if (isStart)
+                            selectedStartDate = selected;
+                        else
+                            selectedReturnDate = selected;
+
+                        onSelect(selected);
+
+                        // Ẩn panel sau khi chọn
+                        ((Guna2Panel)flow.Parent).Visible = false;
+                    };
+                }
 
                 buttons.Add(btnDay);
                 flow.Controls.Add(btnDay);
-            }
-
-            RenderCalendar(month, buttons);
-        }
-
-        // Hide days over max days of month
-        private void RenderCalendar(DateTime month, List<Guna2Button> buttons)
-        {
-            int days = DateTime.DaysInMonth(month.Year, month.Month);
-
-            for (int i = 0; i < buttons.Count; i++)
-            {
-                buttons[i].Visible = (i < days);
-                if (i < days)
-                    buttons[i].Text = (i + 1).ToString();
             }
         }
 
@@ -354,14 +691,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         {
             bool enabled = guna2CustomCheckBox1.Checked;
 
-            panelReturnCalendar.Visible = enabled;
+            btnReturnDate.Enabled = enabled;
+            btnReturnDate.FillColor = enabled ? Color.White : Color.Gainsboro;
+            btnReturnDate.ForeColor = enabled ? Color.Black : Color.Gray;
 
-            foreach (var btn in returnDayButtons)
-                btn.Enabled = enabled;
-
-            panelReturnCalendar.FillColor = enabled
-                ? Color.White
-                : Color.FromArgb(230, 230, 230);
+            if (!enabled)
+            {
+                panelReturnCalendar.Visible = false;
+                selectedReturnDate = null;
+                btnReturnDate.Text = "Chọn ngày về";
+            }
         }
 
         // Click return date button
@@ -371,11 +710,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 return;
 
             panelReturnCalendar.Tag = "return";
-
-            panelReturnCalendar.Location = new Point(
-                btnReturnDate.Left,
-                btnReturnDate.Bottom + 5
-            );
+            panelReturnCalendar.Size = new Size(360, 370);
+            panelReturnCalendar.Location = new Point(754, 56);
+            panelReturnCalendar.BringToFront();
 
             BuildCalendar(
                 panelReturnCalendar,
@@ -392,11 +729,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private void BtnStartDate_Click(object sender, EventArgs e)
         {
             panelStartCalendar.Tag = "start";
-
-            panelStartCalendar.Location = new Point(
-                btnStartDate.Left,
-                btnStartDate.Bottom + 5
-            );
+            panelStartCalendar.Size = new Size(360, 370);
+            panelStartCalendar.Location = new Point(368, 56);
+            panelStartCalendar.BringToFront();
 
             BuildCalendar(
                 panelStartCalendar,
@@ -408,7 +743,21 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 });
 
             panelStartCalendar.Visible = true;
+
         }
 
+        //chuyển hướng
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            var p = new FlightSearchParams
+            {
+                FromCode = (cboFrom.SelectedItem as CitySelectDTO).Code,
+                ToCode = (cboTo.SelectedItem as CitySelectDTO).Code,
+                StartDate = selectedStartDate,
+                SeatClassId = cboSeatClass.SelectedIndex + 1
+            };
+
+            OnSearchSubmit?.Invoke(p);
+        }
     }
 }
