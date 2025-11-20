@@ -10,7 +10,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private System.ComponentModel.IContainer components = null;
         private FlowLayoutPanel flowDayTabs;
         private FlowLayoutPanel flowResults;
-        private FlowLayoutPanel flowFilters;
         private Panel pnlLeftFilters;
 
         /// <summary> 
@@ -34,28 +33,114 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UC_FlightSearchResult));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges41 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges42 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges43 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges44 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges45 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges46 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges47 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges48 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges49 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges50 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges51 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges52 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges53 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges54 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges55 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges56 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges57 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges58 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges59 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges60 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges61 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges62 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges63 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges64 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges65 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges66 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges67 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges68 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges69 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges70 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges71 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges72 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges73 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges74 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges75 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges76 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges77 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges78 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges79 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges80 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             flowDayTabs = new FlowLayoutPanel();
             flowResults = new FlowLayoutPanel();
             pnlFlowResuilt = new Guna.UI2.WinForms.Guna2Panel();
-            this.flowFlightCards = new BetterFlowLayoutPanel();
-            flowFilters = new FlowLayoutPanel();
+            flowFlightCards = new BetterFlowLayoutPanel();
             pnlLeftFilters = new Panel();
-            lblFilter = new Label();
+            panel1 = new Panel();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            reDateLeftLB = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2PictureBox2 = new Guna.UI2.WinForms.Guna2PictureBox();
+            guna2PictureBox3 = new Guna.UI2.WinForms.Guna2PictureBox();
+            reLeftPicture = new Guna.UI2.WinForms.Guna2PictureBox();
+            flowLayoutPanel3 = new FlowLayoutPanel();
+            fromAirportLeftLB = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2PictureBox5 = new Guna.UI2.WinForms.Guna2PictureBox();
+            toAirportLeftLB = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            deDateLeftLB = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            flowLayoutPanel4 = new FlowLayoutPanel();
+            fromAirportReLeftLB = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            leftIcon = new Guna.UI2.WinForms.Guna2PictureBox();
+            toAirportReLeftLB = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            label2 = new Label();
+            deBtn4 = new Guna.UI2.WinForms.Guna2Button();
+            deBtn3 = new Guna.UI2.WinForms.Guna2Button();
+            deBtn1 = new Guna.UI2.WinForms.Guna2Button();
+            label1 = new Label();
+            label4 = new Label();
+            resetBtn = new Guna.UI2.WinForms.Guna2Button();
+            deBtn2 = new Guna.UI2.WinForms.Guna2Button();
+            reBtn3 = new Guna.UI2.WinForms.Guna2Button();
+            reBtn4 = new Guna.UI2.WinForms.Guna2Button();
+            reBtn1 = new Guna.UI2.WinForms.Guna2Button();
+            reBtn2 = new Guna.UI2.WinForms.Guna2Button();
+            labelPriceRange = new Label();
+            trackBarPrice = new Guna.UI2.WinForms.Guna2TrackBar();
+            labelPriceValue = new Label();
+            businessBtn = new Guna.UI2.WinForms.Guna2Button();
+            firstBtn = new Guna.UI2.WinForms.Guna2Button();
+            economyBtn = new Guna.UI2.WinForms.Guna2Button();
+            preEconomyBtn = new Guna.UI2.WinForms.Guna2Button();
+            labelAirline = new Label();
+            airlineCombobox = new Guna.UI2.WinForms.Guna2ComboBox();
+            guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(components);
             flowResults.SuspendLayout();
             pnlFlowResuilt.SuspendLayout();
             pnlLeftFilters.SuspendLayout();
+            panel1.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)reLeftPicture).BeginInit();
+            flowLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox5).BeginInit();
+            flowLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)leftIcon).BeginInit();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // flowDayTabs
             // 
             flowDayTabs.Dock = DockStyle.Top;
-            flowDayTabs.Location = new Point(249, 0);
+            flowDayTabs.Location = new Point(450, 0);
             flowDayTabs.Name = "flowDayTabs";
             flowDayTabs.Padding = new Padding(10);
-            flowDayTabs.Size = new Size(1191, 90);
+            flowDayTabs.Size = new Size(1200, 90);
             flowDayTabs.TabIndex = 2;
             // 
             // flowResults
@@ -64,11 +149,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             flowResults.BackgroundImage = (Image)resources.GetObject("flowResults.BackgroundImage");
             flowResults.BackgroundImageLayout = ImageLayout.Center;
             flowResults.Controls.Add(pnlFlowResuilt);
-            flowResults.Dock = DockStyle.Fill;
-            flowResults.Location = new Point(249, 90);
+            flowResults.Location = new Point(450, 90);
             flowResults.Name = "flowResults";
             flowResults.Padding = new Padding(20, 10, 20, 10);
-            flowResults.Size = new Size(1191, 750);
+            flowResults.Size = new Size(1200, 750);
             flowResults.TabIndex = 0;
             // 
             // pnlFlowResuilt
@@ -76,58 +160,659 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlFlowResuilt.BackColor = Color.Transparent;
             pnlFlowResuilt.BorderRadius = 16;
             pnlFlowResuilt.Controls.Add(flowFlightCards);
-            pnlFlowResuilt.CustomizableEdges = customizableEdges1;
+            pnlFlowResuilt.CustomizableEdges = customizableEdges41;
             pnlFlowResuilt.Location = new Point(23, 13);
             pnlFlowResuilt.Name = "pnlFlowResuilt";
             pnlFlowResuilt.ShadowDecoration.BorderRadius = 16;
             pnlFlowResuilt.ShadowDecoration.Color = Color.FromArgb(0, 0, 0);
-            pnlFlowResuilt.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            pnlFlowResuilt.ShadowDecoration.CustomizableEdges = customizableEdges42;
             pnlFlowResuilt.ShadowDecoration.Depth = 20;
             pnlFlowResuilt.ShadowDecoration.Enabled = true;
             pnlFlowResuilt.ShadowDecoration.Shadow = new Padding(0, 0, 8, 8);
-            pnlFlowResuilt.Size = new Size(1129, 708);
+            pnlFlowResuilt.Size = new Size(1151, 708);
             pnlFlowResuilt.TabIndex = 1;
             // 
             // flowFlightCards
             // 
+            flowFlightCards.AutoScroll = true;
             flowFlightCards.BackColor = Color.Transparent;
-            flowFlightCards.Location = new Point(90, 51);
+            flowFlightCards.Dock = DockStyle.Fill;
+            flowFlightCards.FlowDirection = FlowDirection.TopDown;
+            flowFlightCards.Location = new Point(0, 0);
             flowFlightCards.Name = "flowFlightCards";
             flowFlightCards.Padding = new Padding(20);
-            flowFlightCards.Size = new Size(976, 577);
+            flowFlightCards.Size = new Size(1151, 708);
             flowFlightCards.TabIndex = 0;
             flowFlightCards.WrapContents = false;
-            flowFlightCards.AutoScroll = true;
-            flowFlightCards.FlowDirection = FlowDirection.TopDown;
-            flowFlightCards.Dock = DockStyle.Fill;
-            flowFlightCards.BackColor = Color.Transparent;
-            // 
-            // flowFilters
-            // 
-            flowFilters.AutoScroll = true;
-            flowFilters.Location = new Point(10, 10);
-            flowFilters.Name = "flowFilters";
-            flowFilters.Size = new Size(233, 820);
-            flowFilters.TabIndex = 0;
             // 
             // pnlLeftFilters
             // 
             pnlLeftFilters.BackColor = Color.White;
-            pnlLeftFilters.Controls.Add(flowFilters);
-            pnlLeftFilters.Controls.Add(lblFilter);
+            pnlLeftFilters.Controls.Add(panel1);
             pnlLeftFilters.Dock = DockStyle.Left;
             pnlLeftFilters.Location = new Point(0, 0);
             pnlLeftFilters.Name = "pnlLeftFilters";
             pnlLeftFilters.Padding = new Padding(10);
-            pnlLeftFilters.Size = new Size(249, 840);
+            pnlLeftFilters.Size = new Size(450, 840);
             pnlLeftFilters.TabIndex = 3;
             // 
-            // lblFilter
+            // panel1
             // 
-            lblFilter.Location = new Point(0, 0);
-            lblFilter.Name = "lblFilter";
-            lblFilter.Size = new Size(100, 23);
-            lblFilter.TabIndex = 1;
+            panel1.Controls.Add(tableLayoutPanel1);
+            panel1.Controls.Add(tableLayoutPanel2);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(10, 10);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(430, 820);
+            panel1.TabIndex = 0;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel2.BackColor = Color.White;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 17.13287F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 82.86713F));
+            tableLayoutPanel2.Controls.Add(reDateLeftLB, 1, 3);
+            tableLayoutPanel2.Controls.Add(guna2HtmlLabel1, 1, 0);
+            tableLayoutPanel2.Controls.Add(guna2PictureBox2, 0, 0);
+            tableLayoutPanel2.Controls.Add(guna2PictureBox3, 0, 1);
+            tableLayoutPanel2.Controls.Add(reLeftPicture, 0, 3);
+            tableLayoutPanel2.Controls.Add(flowLayoutPanel3, 1, 2);
+            tableLayoutPanel2.Controls.Add(deDateLeftLB, 1, 1);
+            tableLayoutPanel2.Controls.Add(flowLayoutPanel4, 1, 4);
+            tableLayoutPanel2.Location = new Point(0, 0);
+            tableLayoutPanel2.Margin = new Padding(4);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 5;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.Size = new Size(423, 212);
+            tableLayoutPanel2.TabIndex = 5;
+            // 
+            // reDateLeftLB
+            // 
+            reDateLeftLB.Anchor = AnchorStyles.Left;
+            reDateLeftLB.BackColor = Color.Transparent;
+            reDateLeftLB.Font = new Font("Fz Poppins", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            reDateLeftLB.ForeColor = Color.DimGray;
+            reDateLeftLB.Location = new Point(76, 140);
+            reDateLeftLB.Margin = new Padding(4);
+            reDateLeftLB.Name = "reDateLeftLB";
+            reDateLeftLB.Size = new Size(88, 24);
+            reDateLeftLB.TabIndex = 7;
+            reDateLeftLB.Text = "Fri, 31 Oct 2025";
+            reDateLeftLB.TextAlignment = ContentAlignment.MiddleLeft;
+            // 
+            // guna2HtmlLabel1
+            // 
+            guna2HtmlLabel1.Anchor = AnchorStyles.Left;
+            guna2HtmlLabel1.BackColor = Color.Transparent;
+            guna2HtmlLabel1.Font = new Font("Fz Poppins", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2HtmlLabel1.ForeColor = Color.Black;
+            guna2HtmlLabel1.Location = new Point(76, 10);
+            guna2HtmlLabel1.Margin = new Padding(4);
+            guna2HtmlLabel1.Name = "guna2HtmlLabel1";
+            guna2HtmlLabel1.Size = new Size(129, 39);
+            guna2HtmlLabel1.TabIndex = 3;
+            guna2HtmlLabel1.Text = "Your Flights";
+            guna2HtmlLabel1.TextAlignment = ContentAlignment.MiddleLeft;
+            // 
+            // guna2PictureBox2
+            // 
+            guna2PictureBox2.Anchor = AnchorStyles.None;
+            guna2PictureBox2.CustomizableEdges = customizableEdges43;
+            guna2PictureBox2.Image = Properties.Resources.flights;
+            guna2PictureBox2.ImageRotate = 0F;
+            guna2PictureBox2.Location = new Point(13, 7);
+            guna2PictureBox2.Margin = new Padding(4);
+            guna2PictureBox2.Name = "guna2PictureBox2";
+            guna2PictureBox2.ShadowDecoration.CustomizableEdges = customizableEdges44;
+            guna2PictureBox2.Size = new Size(45, 45);
+            guna2PictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            guna2PictureBox2.TabIndex = 0;
+            guna2PictureBox2.TabStop = false;
+            // 
+            // guna2PictureBox3
+            // 
+            guna2PictureBox3.Anchor = AnchorStyles.None;
+            guna2PictureBox3.CustomizableEdges = customizableEdges45;
+            guna2PictureBox3.Image = Properties.Resources.number_11;
+            guna2PictureBox3.ImageRotate = 0F;
+            guna2PictureBox3.Location = new Point(18, 80);
+            guna2PictureBox3.Margin = new Padding(4);
+            guna2PictureBox3.Name = "guna2PictureBox3";
+            tableLayoutPanel2.SetRowSpan(guna2PictureBox3, 2);
+            guna2PictureBox3.ShadowDecoration.CustomizableEdges = customizableEdges46;
+            guna2PictureBox3.Size = new Size(35, 35);
+            guna2PictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+            guna2PictureBox3.TabIndex = 1;
+            guna2PictureBox3.TabStop = false;
+            // 
+            // reLeftPicture
+            // 
+            reLeftPicture.Anchor = AnchorStyles.None;
+            reLeftPicture.CustomizableEdges = customizableEdges47;
+            reLeftPicture.Image = Properties.Resources.number_22;
+            reLeftPicture.ImageRotate = 0F;
+            reLeftPicture.Location = new Point(18, 156);
+            reLeftPicture.Margin = new Padding(4);
+            reLeftPicture.Name = "reLeftPicture";
+            tableLayoutPanel2.SetRowSpan(reLeftPicture, 2);
+            reLeftPicture.ShadowDecoration.CustomizableEdges = customizableEdges48;
+            reLeftPicture.Size = new Size(35, 35);
+            reLeftPicture.SizeMode = PictureBoxSizeMode.Zoom;
+            reLeftPicture.TabIndex = 2;
+            reLeftPicture.TabStop = false;
+            // 
+            // flowLayoutPanel3
+            // 
+            flowLayoutPanel3.Anchor = AnchorStyles.Left;
+            flowLayoutPanel3.Controls.Add(fromAirportLeftLB);
+            flowLayoutPanel3.Controls.Add(guna2PictureBox5);
+            flowLayoutPanel3.Controls.Add(toAirportLeftLB);
+            flowLayoutPanel3.Location = new Point(76, 97);
+            flowLayoutPanel3.Margin = new Padding(4);
+            flowLayoutPanel3.Name = "flowLayoutPanel3";
+            flowLayoutPanel3.Size = new Size(343, 35);
+            flowLayoutPanel3.TabIndex = 5;
+            flowLayoutPanel3.WrapContents = false;
+            // 
+            // fromAirportLeftLB
+            // 
+            fromAirportLeftLB.Anchor = AnchorStyles.Left;
+            fromAirportLeftLB.BackColor = Color.Transparent;
+            fromAirportLeftLB.Font = new Font("Fz Poppins SemBd", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            fromAirportLeftLB.ForeColor = Color.DodgerBlue;
+            fromAirportLeftLB.Location = new Point(4, 4);
+            fromAirportLeftLB.Margin = new Padding(4);
+            fromAirportLeftLB.Name = "fromAirportLeftLB";
+            fromAirportLeftLB.Size = new Size(133, 28);
+            fromAirportLeftLB.TabIndex = 0;
+            fromAirportLeftLB.Text = "Ho Chi Minh City";
+            fromAirportLeftLB.TextAlignment = ContentAlignment.MiddleLeft;
+            // 
+            // guna2PictureBox5
+            // 
+            guna2PictureBox5.CustomizableEdges = customizableEdges49;
+            guna2PictureBox5.Image = Properties.Resources.blue_right_arrow;
+            guna2PictureBox5.ImageRotate = 0F;
+            guna2PictureBox5.Location = new Point(145, 4);
+            guna2PictureBox5.Margin = new Padding(4);
+            guna2PictureBox5.Name = "guna2PictureBox5";
+            guna2PictureBox5.ShadowDecoration.CustomizableEdges = customizableEdges50;
+            guna2PictureBox5.Size = new Size(27, 25);
+            guna2PictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
+            guna2PictureBox5.TabIndex = 2;
+            guna2PictureBox5.TabStop = false;
+            // 
+            // toAirportLeftLB
+            // 
+            toAirportLeftLB.Anchor = AnchorStyles.Left;
+            toAirportLeftLB.BackColor = Color.Transparent;
+            toAirportLeftLB.Font = new Font("Fz Poppins SemBd", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            toAirportLeftLB.ForeColor = Color.DodgerBlue;
+            toAirportLeftLB.Location = new Point(180, 4);
+            toAirportLeftLB.Margin = new Padding(4);
+            toAirportLeftLB.Name = "toAirportLeftLB";
+            toAirportLeftLB.Size = new Size(133, 28);
+            toAirportLeftLB.TabIndex = 0;
+            toAirportLeftLB.Text = "Ho Chi Minh City";
+            // 
+            // deDateLeftLB
+            // 
+            deDateLeftLB.Anchor = AnchorStyles.Left;
+            deDateLeftLB.BackColor = Color.Transparent;
+            deDateLeftLB.Font = new Font("Fz Poppins", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            deDateLeftLB.ForeColor = Color.DimGray;
+            deDateLeftLB.Location = new Point(76, 64);
+            deDateLeftLB.Margin = new Padding(4);
+            deDateLeftLB.Name = "deDateLeftLB";
+            deDateLeftLB.Size = new Size(97, 25);
+            deDateLeftLB.TabIndex = 4;
+            deDateLeftLB.Text = "Fri, 31 Oct 2025";
+            deDateLeftLB.TextAlignment = ContentAlignment.MiddleLeft;
+            // 
+            // flowLayoutPanel4
+            // 
+            flowLayoutPanel4.Anchor = AnchorStyles.Left;
+            flowLayoutPanel4.Controls.Add(fromAirportReLeftLB);
+            flowLayoutPanel4.Controls.Add(leftIcon);
+            flowLayoutPanel4.Controls.Add(toAirportReLeftLB);
+            flowLayoutPanel4.Location = new Point(76, 172);
+            flowLayoutPanel4.Margin = new Padding(4);
+            flowLayoutPanel4.Name = "flowLayoutPanel4";
+            flowLayoutPanel4.Size = new Size(343, 35);
+            flowLayoutPanel4.TabIndex = 6;
+            flowLayoutPanel4.WrapContents = false;
+            // 
+            // fromAirportReLeftLB
+            // 
+            fromAirportReLeftLB.Anchor = AnchorStyles.Left;
+            fromAirportReLeftLB.BackColor = Color.Transparent;
+            fromAirportReLeftLB.Font = new Font("Fz Poppins SemBd", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            fromAirportReLeftLB.ForeColor = Color.DodgerBlue;
+            fromAirportReLeftLB.Location = new Point(4, 4);
+            fromAirportReLeftLB.Margin = new Padding(4);
+            fromAirportReLeftLB.Name = "fromAirportReLeftLB";
+            fromAirportReLeftLB.Size = new Size(133, 28);
+            fromAirportReLeftLB.TabIndex = 0;
+            fromAirportReLeftLB.Text = "Ho Chi Minh City";
+            fromAirportReLeftLB.TextAlignment = ContentAlignment.MiddleLeft;
+            // 
+            // leftIcon
+            // 
+            leftIcon.CustomizableEdges = customizableEdges51;
+            leftIcon.Image = Properties.Resources.blue_right_arrow;
+            leftIcon.ImageRotate = 0F;
+            leftIcon.Location = new Point(145, 4);
+            leftIcon.Margin = new Padding(4);
+            leftIcon.Name = "leftIcon";
+            leftIcon.ShadowDecoration.CustomizableEdges = customizableEdges52;
+            leftIcon.Size = new Size(27, 25);
+            leftIcon.SizeMode = PictureBoxSizeMode.StretchImage;
+            leftIcon.TabIndex = 2;
+            leftIcon.TabStop = false;
+            // 
+            // toAirportReLeftLB
+            // 
+            toAirportReLeftLB.Anchor = AnchorStyles.Left;
+            toAirportReLeftLB.BackColor = Color.Transparent;
+            toAirportReLeftLB.Font = new Font("Fz Poppins SemBd", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            toAirportReLeftLB.ForeColor = Color.DodgerBlue;
+            toAirportReLeftLB.Location = new Point(180, 4);
+            toAirportReLeftLB.Margin = new Padding(4);
+            toAirportReLeftLB.Name = "toAirportReLeftLB";
+            toAirportReLeftLB.Size = new Size(133, 28);
+            toAirportReLeftLB.TabIndex = 0;
+            toAirportReLeftLB.Text = "Ho Chi Minh City";
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel1.AutoScroll = true;
+            tableLayoutPanel1.BackColor = Color.White;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(labelAirline, 0, 12);
+            tableLayoutPanel1.Controls.Add(label2, 0, 4);
+            tableLayoutPanel1.Controls.Add(deBtn4, 1, 3);
+            tableLayoutPanel1.Controls.Add(deBtn3, 0, 3);
+            tableLayoutPanel1.Controls.Add(deBtn1, 0, 2);
+            tableLayoutPanel1.Controls.Add(label1, 0, 0);
+            tableLayoutPanel1.Controls.Add(label4, 0, 1);
+            tableLayoutPanel1.Controls.Add(resetBtn, 1, 0);
+            tableLayoutPanel1.Controls.Add(deBtn2, 1, 2);
+            tableLayoutPanel1.Controls.Add(reBtn3, 0, 5);
+            tableLayoutPanel1.Controls.Add(reBtn4, 1, 5);
+            tableLayoutPanel1.Controls.Add(reBtn1, 1, 6);
+            tableLayoutPanel1.Controls.Add(reBtn2, 0, 6);
+            tableLayoutPanel1.Controls.Add(labelPriceRange, 0, 7);
+            tableLayoutPanel1.Controls.Add(trackBarPrice, 0, 8);
+            tableLayoutPanel1.Controls.Add(labelPriceValue, 0, 9);
+            tableLayoutPanel1.Controls.Add(businessBtn, 0, 11);
+            tableLayoutPanel1.Controls.Add(firstBtn, 1, 11);
+            tableLayoutPanel1.Controls.Add(economyBtn, 0, 10);
+            tableLayoutPanel1.Controls.Add(preEconomyBtn, 1, 10);
+            tableLayoutPanel1.Controls.Add(airlineCombobox, 0, 13);
+            tableLayoutPanel1.Location = new Point(0, 241);
+            tableLayoutPanel1.Margin = new Padding(4);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 15;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Size = new Size(423, 560);
+            tableLayoutPanel1.TabIndex = 7;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Left;
+            label2.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(label2, 2);
+            label2.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(0, 161);
+            label2.Margin = new Padding(0);
+            label2.Name = "label2";
+            label2.Size = new Size(106, 23);
+            label2.TabIndex = 48;
+            label2.Text = "Depature time";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // deBtn4
+            // 
+            deBtn4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            deBtn4.BorderRadius = 10;
+            deBtn4.BorderThickness = 1;
+            deBtn4.CustomizableEdges = customizableEdges53;
+            deBtn4.FillColor = Color.White;
+            deBtn4.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            deBtn4.ForeColor = Color.DodgerBlue;
+            deBtn4.Location = new Point(226, 115);
+            deBtn4.Margin = new Padding(15, 0, 15, 5);
+            deBtn4.Name = "deBtn4";
+            deBtn4.ShadowDecoration.CustomizableEdges = customizableEdges54;
+            deBtn4.Size = new Size(182, 35);
+            deBtn4.TabIndex = 47;
+            deBtn4.Text = "18:00 - 24:00";
+            // 
+            // deBtn3
+            // 
+            deBtn3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            deBtn3.BorderRadius = 10;
+            deBtn3.BorderThickness = 1;
+            deBtn3.CustomizableEdges = customizableEdges55;
+            deBtn3.FillColor = Color.White;
+            deBtn3.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            deBtn3.ForeColor = Color.DodgerBlue;
+            deBtn3.Location = new Point(15, 115);
+            deBtn3.Margin = new Padding(15, 0, 15, 5);
+            deBtn3.Name = "deBtn3";
+            deBtn3.ShadowDecoration.CustomizableEdges = customizableEdges56;
+            deBtn3.Size = new Size(181, 35);
+            deBtn3.TabIndex = 46;
+            deBtn3.Text = "12:00 - 18:00";
+            // 
+            // deBtn1
+            // 
+            deBtn1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            deBtn1.BorderRadius = 10;
+            deBtn1.BorderThickness = 1;
+            deBtn1.CustomizableEdges = customizableEdges57;
+            deBtn1.FillColor = Color.White;
+            deBtn1.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            deBtn1.ForeColor = Color.DodgerBlue;
+            deBtn1.Location = new Point(15, 75);
+            deBtn1.Margin = new Padding(15, 0, 15, 5);
+            deBtn1.Name = "deBtn1";
+            deBtn1.ShadowDecoration.CustomizableEdges = customizableEdges58;
+            deBtn1.Size = new Size(181, 35);
+            deBtn1.TabIndex = 45;
+            deBtn1.Text = "00:00 - 06:00";
+            // 
+            // label1
+            // 
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            label1.AutoSize = true;
+            label1.Font = new Font("Fz Poppins", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(0, 0);
+            label1.Margin = new Padding(0);
+            label1.Name = "label1";
+            label1.Size = new Size(55, 40);
+            label1.TabIndex = 8;
+            label1.Text = "Filter";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.Left;
+            label4.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(label4, 2);
+            label4.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(0, 46);
+            label4.Margin = new Padding(0);
+            label4.Name = "label4";
+            label4.Size = new Size(106, 23);
+            label4.TabIndex = 25;
+            label4.Text = "Depature time";
+            label4.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // resetBtn
+            // 
+            resetBtn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            resetBtn.CustomizableEdges = customizableEdges59;
+            resetBtn.FillColor = Color.White;
+            resetBtn.Font = new Font("Fz Poppins", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            resetBtn.ForeColor = Color.DodgerBlue;
+            resetBtn.Location = new Point(334, 0);
+            resetBtn.Margin = new Padding(0);
+            resetBtn.Name = "resetBtn";
+            resetBtn.ShadowDecoration.CustomizableEdges = customizableEdges60;
+            resetBtn.Size = new Size(89, 40);
+            resetBtn.TabIndex = 9;
+            resetBtn.Text = "Reset";
+            // 
+            // deBtn2
+            // 
+            deBtn2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            deBtn2.BorderRadius = 10;
+            deBtn2.BorderThickness = 1;
+            deBtn2.CustomizableEdges = customizableEdges61;
+            deBtn2.FillColor = Color.White;
+            deBtn2.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            deBtn2.ForeColor = Color.DodgerBlue;
+            deBtn2.Location = new Point(226, 75);
+            deBtn2.Margin = new Padding(15, 0, 15, 5);
+            deBtn2.Name = "deBtn2";
+            deBtn2.ShadowDecoration.CustomizableEdges = customizableEdges62;
+            deBtn2.Size = new Size(182, 35);
+            deBtn2.TabIndex = 44;
+            deBtn2.Text = "06:00 - 12:00";
+            // 
+            // reBtn3
+            // 
+            reBtn3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            reBtn3.BorderRadius = 10;
+            reBtn3.BorderThickness = 1;
+            reBtn3.CustomizableEdges = customizableEdges63;
+            reBtn3.FillColor = Color.White;
+            reBtn3.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            reBtn3.ForeColor = Color.DodgerBlue;
+            reBtn3.Location = new Point(15, 190);
+            reBtn3.Margin = new Padding(15, 0, 15, 5);
+            reBtn3.Name = "reBtn3";
+            reBtn3.ShadowDecoration.CustomizableEdges = customizableEdges64;
+            reBtn3.Size = new Size(181, 35);
+            reBtn3.TabIndex = 50;
+            reBtn3.Text = "00:00 - 06:00";
+            // 
+            // reBtn4
+            // 
+            reBtn4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            reBtn4.BorderRadius = 10;
+            reBtn4.BorderThickness = 1;
+            reBtn4.CustomizableEdges = customizableEdges65;
+            reBtn4.FillColor = Color.White;
+            reBtn4.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            reBtn4.ForeColor = Color.DodgerBlue;
+            reBtn4.Location = new Point(226, 190);
+            reBtn4.Margin = new Padding(15, 0, 15, 5);
+            reBtn4.Name = "reBtn4";
+            reBtn4.ShadowDecoration.CustomizableEdges = customizableEdges66;
+            reBtn4.Size = new Size(182, 35);
+            reBtn4.TabIndex = 49;
+            reBtn4.Text = "06:00 - 12:00";
+            // 
+            // reBtn1
+            // 
+            reBtn1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            reBtn1.BorderRadius = 10;
+            reBtn1.BorderThickness = 1;
+            reBtn1.CustomizableEdges = customizableEdges67;
+            reBtn1.FillColor = Color.White;
+            reBtn1.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            reBtn1.ForeColor = Color.DodgerBlue;
+            reBtn1.Location = new Point(226, 230);
+            reBtn1.Margin = new Padding(15, 0, 15, 5);
+            reBtn1.Name = "reBtn1";
+            reBtn1.ShadowDecoration.CustomizableEdges = customizableEdges68;
+            reBtn1.Size = new Size(182, 35);
+            reBtn1.TabIndex = 52;
+            reBtn1.Text = "18:00 - 24:00";
+            // 
+            // reBtn2
+            // 
+            reBtn2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            reBtn2.BorderRadius = 10;
+            reBtn2.BorderThickness = 1;
+            reBtn2.CustomizableEdges = customizableEdges69;
+            reBtn2.FillColor = Color.White;
+            reBtn2.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            reBtn2.ForeColor = Color.DodgerBlue;
+            reBtn2.Location = new Point(15, 230);
+            reBtn2.Margin = new Padding(15, 0, 15, 5);
+            reBtn2.Name = "reBtn2";
+            reBtn2.ShadowDecoration.CustomizableEdges = customizableEdges70;
+            reBtn2.Size = new Size(181, 35);
+            reBtn2.TabIndex = 51;
+            reBtn2.Text = "12:00 - 18:00";
+            // 
+            // labelPriceRange
+            // 
+            labelPriceRange.Anchor = AnchorStyles.Left;
+            labelPriceRange.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(labelPriceRange, 2);
+            labelPriceRange.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelPriceRange.Location = new Point(0, 276);
+            labelPriceRange.Margin = new Padding(0);
+            labelPriceRange.Name = "labelPriceRange";
+            labelPriceRange.Size = new Size(89, 23);
+            labelPriceRange.TabIndex = 53;
+            labelPriceRange.Text = "Price Range";
+            labelPriceRange.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // trackBarPrice
+            // 
+            trackBarPrice.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel1.SetColumnSpan(trackBarPrice, 2);
+            trackBarPrice.Location = new Point(3, 308);
+            trackBarPrice.Name = "trackBarPrice";
+            trackBarPrice.Size = new Size(417, 23);
+            trackBarPrice.TabIndex = 54;
+            trackBarPrice.ThumbColor = Color.DodgerBlue;
+            // 
+            // labelPriceValue
+            // 
+            tableLayoutPanel1.SetColumnSpan(labelPriceValue, 2);
+            labelPriceValue.Font = new Font("Fz Poppins", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelPriceValue.ForeColor = Color.DimGray;
+            labelPriceValue.Location = new Point(0, 335);
+            labelPriceValue.Margin = new Padding(0);
+            labelPriceValue.Name = "labelPriceValue";
+            labelPriceValue.Size = new Size(423, 23);
+            labelPriceValue.TabIndex = 55;
+            labelPriceValue.Text = "500.000 VND - 10.000.000 VND";
+            labelPriceValue.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // businessBtn
+            // 
+            businessBtn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            businessBtn.BorderRadius = 10;
+            businessBtn.BorderThickness = 1;
+            businessBtn.CustomizableEdges = customizableEdges71;
+            businessBtn.FillColor = Color.White;
+            businessBtn.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            businessBtn.ForeColor = Color.DodgerBlue;
+            businessBtn.Location = new Point(15, 405);
+            businessBtn.Margin = new Padding(15, 0, 15, 5);
+            businessBtn.Name = "businessBtn";
+            businessBtn.ShadowDecoration.CustomizableEdges = customizableEdges72;
+            businessBtn.Size = new Size(181, 35);
+            businessBtn.TabIndex = 67;
+            businessBtn.Text = "Upper Mid (5M–7M)";
+            // 
+            // firstBtn
+            // 
+            firstBtn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            firstBtn.BorderRadius = 10;
+            firstBtn.BorderThickness = 1;
+            firstBtn.CustomizableEdges = customizableEdges73;
+            firstBtn.FillColor = Color.White;
+            firstBtn.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            firstBtn.ForeColor = Color.DodgerBlue;
+            firstBtn.Location = new Point(226, 405);
+            firstBtn.Margin = new Padding(15, 0, 15, 5);
+            firstBtn.Name = "firstBtn";
+            firstBtn.ShadowDecoration.CustomizableEdges = customizableEdges74;
+            firstBtn.Size = new Size(182, 35);
+            firstBtn.TabIndex = 66;
+            firstBtn.Text = "Premium (7M–10M)";
+            // 
+            // economyBtn
+            // 
+            economyBtn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            economyBtn.BorderRadius = 10;
+            economyBtn.BorderThickness = 1;
+            economyBtn.CustomizableEdges = customizableEdges75;
+            economyBtn.FillColor = Color.White;
+            economyBtn.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            economyBtn.ForeColor = Color.DodgerBlue;
+            economyBtn.Location = new Point(15, 365);
+            economyBtn.Margin = new Padding(15, 0, 15, 5);
+            economyBtn.Name = "economyBtn";
+            economyBtn.ShadowDecoration.CustomizableEdges = customizableEdges76;
+            economyBtn.Size = new Size(181, 35);
+            economyBtn.TabIndex = 65;
+            economyBtn.Text = "Budget (500K–2.5M)";
+            // 
+            // preEconomyBtn
+            // 
+            preEconomyBtn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            preEconomyBtn.BorderRadius = 10;
+            preEconomyBtn.BorderThickness = 1;
+            preEconomyBtn.CustomizableEdges = customizableEdges77;
+            preEconomyBtn.FillColor = Color.White;
+            preEconomyBtn.Font = new Font("Fz Poppins", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            preEconomyBtn.ForeColor = Color.DodgerBlue;
+            preEconomyBtn.Location = new Point(226, 365);
+            preEconomyBtn.Margin = new Padding(15, 0, 15, 5);
+            preEconomyBtn.Name = "preEconomyBtn";
+            preEconomyBtn.ShadowDecoration.CustomizableEdges = customizableEdges78;
+            preEconomyBtn.Size = new Size(182, 35);
+            preEconomyBtn.TabIndex = 68;
+            preEconomyBtn.Text = "Lower Mid (2.5M–5M)";
+            // 
+            // labelAirline
+            // 
+            labelAirline.Anchor = AnchorStyles.Left;
+            labelAirline.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(labelAirline, 2);
+            labelAirline.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelAirline.Location = new Point(0, 451);
+            labelAirline.Margin = new Padding(0);
+            labelAirline.Name = "labelAirline";
+            labelAirline.Size = new Size(53, 23);
+            labelAirline.TabIndex = 69;
+            labelAirline.Text = "Airline";
+            labelAirline.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // airlineCombobox
+            // 
+            airlineCombobox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            airlineCombobox.BackColor = Color.Transparent;
+            airlineCombobox.BorderColor = Color.FromArgb(64, 64, 64);
+            airlineCombobox.BorderRadius = 10;
+            tableLayoutPanel1.SetColumnSpan(airlineCombobox, 2);
+            airlineCombobox.CustomizableEdges = customizableEdges79;
+            airlineCombobox.DrawMode = DrawMode.OwnerDrawFixed;
+            airlineCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
+            airlineCombobox.FocusedColor = Color.FromArgb(94, 148, 255);
+            airlineCombobox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            airlineCombobox.Font = new Font("Segoe UI", 10F);
+            airlineCombobox.ForeColor = Color.FromArgb(68, 88, 112);
+            airlineCombobox.ItemHeight = 35;
+            airlineCombobox.Location = new Point(16, 483);
+            airlineCombobox.Name = "airlineCombobox";
+            airlineCombobox.ShadowDecoration.CustomizableEdges = customizableEdges80;
+            airlineCombobox.Size = new Size(390, 41);
+            airlineCombobox.Sorted = true;
+            airlineCombobox.TabIndex = 70;
             // 
             // UC_FlightSearchResult
             // 
@@ -138,18 +823,69 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             Controls.Add(flowDayTabs);
             Controls.Add(pnlLeftFilters);
             Name = "UC_FlightSearchResult";
-            Size = new Size(1440, 840);
+            Size = new Size(1650, 840);
             Load += UC_FlightSearchResult_Load;
             flowResults.ResumeLayout(false);
             pnlFlowResuilt.ResumeLayout(false);
             pnlLeftFilters.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)reLeftPicture).EndInit();
+            flowLayoutPanel3.ResumeLayout(false);
+            flowLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox5).EndInit();
+            flowLayoutPanel4.ResumeLayout(false);
+            flowLayoutPanel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)leftIcon).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Label lblFilter;
         private Guna.UI2.WinForms.Guna2Panel pnlFlowResuilt;
         private BetterFlowLayoutPanel flowFlightCards;
+        private Panel panel1;
+        private TableLayoutPanel tableLayoutPanel2;
+        public Guna.UI2.WinForms.Guna2HtmlLabel reDateLeftLB;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
+        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox2;
+        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox3;
+        public Guna.UI2.WinForms.Guna2PictureBox reLeftPicture;
+        private FlowLayoutPanel flowLayoutPanel3;
+        public Guna.UI2.WinForms.Guna2HtmlLabel fromAirportLeftLB;
+        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox5;
+        public Guna.UI2.WinForms.Guna2HtmlLabel toAirportLeftLB;
+        public Guna.UI2.WinForms.Guna2HtmlLabel deDateLeftLB;
+        private FlowLayoutPanel flowLayoutPanel4;
+        public Guna.UI2.WinForms.Guna2HtmlLabel fromAirportReLeftLB;
+        public Guna.UI2.WinForms.Guna2PictureBox leftIcon;
+        public Guna.UI2.WinForms.Guna2HtmlLabel toAirportReLeftLB;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Label labelAirline;
+        private Label label2;
+        private Guna.UI2.WinForms.Guna2Button deBtn4;
+        private Guna.UI2.WinForms.Guna2Button deBtn3;
+        private Guna.UI2.WinForms.Guna2Button deBtn1;
+        private Label label1;
+        private Label label4;
+        private Guna.UI2.WinForms.Guna2Button resetBtn;
+        private Guna.UI2.WinForms.Guna2Button deBtn2;
+        private Guna.UI2.WinForms.Guna2Button reBtn3;
+        private Guna.UI2.WinForms.Guna2Button reBtn4;
+        private Guna.UI2.WinForms.Guna2Button reBtn1;
+        private Guna.UI2.WinForms.Guna2Button reBtn2;
+        private Label labelPriceRange;
+        public Guna.UI2.WinForms.Guna2TrackBar trackBarPrice;
+        private Label labelPriceValue;
+        private Guna.UI2.WinForms.Guna2Button businessBtn;
+        private Guna.UI2.WinForms.Guna2Button firstBtn;
+        private Guna.UI2.WinForms.Guna2Button economyBtn;
+        private Guna.UI2.WinForms.Guna2Button preEconomyBtn;
+        private Guna.UI2.WinForms.Guna2ComboBox airlineCombobox;
+        private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
     }
 }
