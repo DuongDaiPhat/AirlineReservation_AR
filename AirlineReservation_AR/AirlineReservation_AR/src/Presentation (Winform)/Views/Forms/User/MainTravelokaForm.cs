@@ -30,6 +30,16 @@ namespace AirlineReservation_AR
         private void MainTravelokaForm_Load(object sender, EventArgs e)
         {
             ucFlightSearch.OnSearchSubmit += LoadResultPage;
+            ucHeader.OnClick += LoadUserDashboard;
+        }
+
+        private void LoadUserDashboard(UserDTO user)
+        {
+            var dashboard = new UserDashboard();
+            dashboard.Dock = DockStyle.Fill;
+
+            bodyPanel.Controls.Clear();
+            bodyPanel.Controls.Add(dashboard);
         }
     }
 }

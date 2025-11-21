@@ -177,6 +177,7 @@
             guna2Button5.Size = new Size(180, 80);
             guna2Button5.TabIndex = 4;
             guna2Button5.Text = "My Tickets";
+            guna2Button5.Click += guna2Button5_Click;
             // 
             // guna2Button6
             // 
