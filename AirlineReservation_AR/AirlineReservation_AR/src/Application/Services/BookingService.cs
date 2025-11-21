@@ -1,88 +1,46 @@
-﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
-using AirlineReservation_AR.src.AirlineReservation.Domain.Services;
-using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.Application.Interfaces;
+using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Infrastructure.DI;
+using Microsoft.EntityFrameworkCore;
 
-namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
+namespace AirlineReservation_AR.src.Application.Services
 {
-    public class BookingServiceService : IBookingServiceService
+    public class BookingService : IBookingService
     {
-        private readonly AirlineReservationDbContext _context;
 
-        public BookingServiceService(AirlineReservationDbContext context)
+        public async Task<Booking> CreateBookingAsync(BookingRequest req)
         {
-            _context = context;
-        }
+            using var _db = DIContainer.CreateDb();
+            var booking = new Booking
+            {
+                UserId = req.UserId,
+                BookingDate = DateTime.Now,
+                BookingReference = Guid.NewGuid().ToString().Substring(0, 6).ToUpper(),
 
-        public async Task<BookingService?> GetByIdAsync(int bookingServiceId)
-        {
-            return await _context.BookingServices
-                .FirstOrDefaultAsync(bs => bs.BookingServiceId == bookingServiceId);
-        }
+                ContactEmail = req.Contact.Email,
+                ContactPhone = req.Contact.Phone
+            };
 
-        public async Task<BookingService?> GetByIdWithDetailsAsync(int bookingServiceId)
-        {
-            return await _context.BookingServices
-                .Include(bs => bs.Booking)
-                .Include(bs => bs.Service)
-                .Include(bs => bs.Passenger)
-                .FirstOrDefaultAsync(bs => bs.BookingServiceId == bookingServiceId);
-        }
+            _db.Bookings.Add(booking);
+            await _db.SaveChangesAsync();
 
-        public async Task<IEnumerable<BookingService>> GetAllAsync()
-        {
-            return await _context.BookingServices
-                .OrderBy(bs => bs.BookingServiceId)
-                .ToListAsync();
-        }
+            var bf = new BookingFlight
+            {
+                BookingId = booking.BookingId,
+                FlightId = req.SelectedFlight.FlightId,
+                TripType = req.TripType
+            };
 
-        public async Task<IEnumerable<BookingService>> GetByBookingIdAsync(int bookingId)
-        {
-            return await _context.BookingServices
-                .Where(bs => bs.BookingId == bookingId)
-                .OrderBy(bs => bs.BookingServiceId)
-                .ToListAsync();
-        }
+            _db.BookingFlights.Add(bf);
+            await _db.SaveChangesAsync();
 
-        public async Task<IEnumerable<BookingService>> GetByPassengerIdAsync(int passengerId)
-        {
-            return await _context.BookingServices
-                .Where(bs => bs.PassengerId == passengerId)
-                .OrderBy(bs => bs.BookingServiceId)
-                .ToListAsync();
-        }
-
-        public async Task<BookingService> CreateAsync(BookingService bookingService)
-        {
-            await _context.BookingServices.AddAsync(bookingService);
-            await _context.SaveChangesAsync();
-            return bookingService;
-        }
-
-        public async Task<bool> UpdateAsync(BookingService bookingService)
-        {
-            _context.BookingServices.Update(bookingService);
-            return await _context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<bool> DeleteAsync(int bookingServiceId)
-        {
-            var bookingService = await _context.BookingServices.FindAsync(bookingServiceId);
-            if (bookingService == null) return false;
-
-            _context.BookingServices.Remove(bookingService);
-            return await _context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<decimal> GetTotalAmountByBookingAsync(int bookingId)
-        {
-            return await _context.BookingServices
-                .Where(bs => bs.BookingId == bookingId)
-                .Select(bs => bs.UnitPrice * bs.Quantity)
-                .SumAsync();
+            return booking;
         }
     }
 }

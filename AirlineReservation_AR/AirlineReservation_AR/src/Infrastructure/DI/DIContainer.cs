@@ -35,6 +35,12 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static IFlightService? _flightService;
         private static FlightController? _flightController;
 
+        private static IBookingService? _bookingService;
+        private static IPassengerService? _passengerService;
+        private static ITicketService? _ticketService;
+        private static IServiceService? _baggageService;
+        private static BookingController? _bookingController;
+
         public static void Init()
         {
             _config = new ConfigurationBuilder()
@@ -57,12 +63,19 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _userService = new UserService();
             _cityService = new CityService();
             _flightService = new FlightService();
+            _bookingService = new BookingService();
+            _passengerService = new PassengerService();
+            _ticketService = new TicketService();
+            _baggageService = new ServiceServices();
+
+
 
             // Controller layer giữ nguyên
             _authController = new AuthenticationController(_authService);
             _userContrller = new UserContrller(_userService);
             _cityController = new CityController(_cityService);
             _flightController = new FlightController(_flightService);
+            _bookingController = new BookingController(_bookingService, _passengerService, _ticketService, _baggageService);
 
         }
 

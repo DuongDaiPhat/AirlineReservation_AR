@@ -124,7 +124,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 10, // top
                 0,
                 10  // bottom
-                );  
+                );
+                card.OnSelected += (selectedFlight) =>
+                {
+                    OpenFilloutInform(selectedFlight);
+                };
+
                 flowFlightCards.Controls.Add(card);
             }
         }
@@ -146,5 +151,18 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 flowFilters.Controls.Add(chk);
             }
         }
+
+        private void OpenFilloutInform(FlightResultDTO flight)
+        {
+            var form = this.FindForm() as MainTravelokaForm;
+            if (form == null) return;
+
+            var screen = new UC_FilloutInform();
+            screen.SetFlightData(flight, _params); // truyền dữ liệu search + flight đã chọn
+
+            form.SwitchScreen(screen);
+        }
+        
+
     }
 }

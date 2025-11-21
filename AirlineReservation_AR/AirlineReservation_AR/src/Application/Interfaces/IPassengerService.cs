@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.Domain.DTOs;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Domain.Services
 {
@@ -16,5 +17,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Services
         Task<Passenger> CreateAsync(Passenger passenger);
         Task<bool> UpdateAsync(Passenger passenger);
         Task<bool> DeleteAsync(int passengerId);
+
+        Task<List<int>> CreatePassengersAsync(int bookingId, List<PassengerDTO> passengers);
     }
 }

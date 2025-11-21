@@ -40,10 +40,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             flowDayTabs = new FlowLayoutPanel();
             flowResults = new FlowLayoutPanel();
             pnlFlowResuilt = new Guna.UI2.WinForms.Guna2Panel();
-            this.flowFlightCards = new BetterFlowLayoutPanel();
+            flowFlightCards = new BetterFlowLayoutPanel();
             flowFilters = new FlowLayoutPanel();
             pnlLeftFilters = new Panel();
             lblFilter = new Label();
+            sqlCommandBuilder1 = new Microsoft.Data.SqlClient.SqlCommandBuilder();
             flowResults.SuspendLayout();
             pnlFlowResuilt.SuspendLayout();
             pnlLeftFilters.SuspendLayout();
@@ -90,17 +91,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             // 
             // flowFlightCards
             // 
+            flowFlightCards.AutoScroll = true;
             flowFlightCards.BackColor = Color.Transparent;
-            flowFlightCards.Location = new Point(90, 51);
+            flowFlightCards.Dock = DockStyle.Fill;
+            flowFlightCards.FlowDirection = FlowDirection.TopDown;
+            flowFlightCards.Location = new Point(0, 0);
             flowFlightCards.Name = "flowFlightCards";
             flowFlightCards.Padding = new Padding(20);
-            flowFlightCards.Size = new Size(976, 577);
+            flowFlightCards.Size = new Size(1129, 708);
             flowFlightCards.TabIndex = 0;
             flowFlightCards.WrapContents = false;
-            flowFlightCards.AutoScroll = true;
-            flowFlightCards.FlowDirection = FlowDirection.TopDown;
-            flowFlightCards.Dock = DockStyle.Fill;
-            flowFlightCards.BackColor = Color.Transparent;
             // 
             // flowFilters
             // 
@@ -151,5 +151,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private Label lblFilter;
         private Guna.UI2.WinForms.Guna2Panel pnlFlowResuilt;
         private BetterFlowLayoutPanel flowFlightCards;
+        private Microsoft.Data.SqlClient.SqlCommandBuilder sqlCommandBuilder1;
     }
 }

@@ -20,6 +20,13 @@ namespace AirlineReservation_AR
             bodyPanel.Controls.Add(resultUC);
         }
 
+        public void SwitchScreen(UserControl next)
+        {
+            bodyPanel.Controls.Clear();
+            next.Dock = DockStyle.Fill;
+            bodyPanel.Controls.Add(next);
+        }
+
         private void MainTravelokaForm_Load(object sender, EventArgs e)
         {
             ucFlightSearch.OnSearchSubmit += LoadResultPage;
