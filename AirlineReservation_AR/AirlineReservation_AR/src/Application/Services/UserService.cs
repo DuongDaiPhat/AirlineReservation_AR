@@ -17,7 +17,15 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
                 .Include(u => u.UserRoles)
                 .FirstOrDefaultAsync(u => u.UserId == userId);
         }
-
+        public async Task<IEnumerable<User>> GetAllAsync()
+        {
+            using var _db = DIContainer.CreateDb();
+            return await _db.Users
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)           // Nếu bạn muốn load luôn tên Role
+                .OrderBy(u => u.FullName)
+                .ToListAsync();
+        }
         public async Task<User?> GetByEmailAsync(string email)
         {
             using var _db = DIContainer.CreateDb();

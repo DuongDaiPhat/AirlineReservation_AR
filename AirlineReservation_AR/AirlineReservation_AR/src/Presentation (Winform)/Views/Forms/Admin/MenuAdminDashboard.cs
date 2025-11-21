@@ -19,6 +19,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
         private readonly UserControl _pricingPromotionControl;
         private readonly UserControl _ReportStatisticsControl;
         private readonly UserControl _FlightManagementControl;
+        private readonly UserControl _BookingAndPaymentControl;
         public event Action<bool> SidebarStateChanged;
 
         public MenuAdminDashboard()
@@ -30,6 +31,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             _pricingPromotionControl = new PricingPromotionControl();
             _ReportStatisticsControl = new ReportStatisticsControl();
             _FlightManagementControl = new FlightManagementControl();
+            _BookingAndPaymentControl = new BookingAndPaymentControl();
             adminDasboardControlUsers.Tag = _userControlAccount;
 
             SetDoubleBuffered(flowLayoutPanelMenu);
@@ -167,6 +169,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
                     ShowBigControl(adminDasboardControlQuanLyChuyenBay.title, adminDasboardControlQuanLyChuyenBay.dashboardImage);
                     ShowUserControl(_FlightManagementControl);
                 }
+                else if (button == btnDatVe_thanhToan)
+                {
+                    ShowBigControl(adminDasboardControlDatVe_ThanhToan.title, adminDasboardControlDatVe_ThanhToan.dashboardImage);
+                    ShowUserControl(_BookingAndPaymentControl);
+                }
                 else if (button.Tag is adminDasboard small)
                 {
                     panelMain.Visible = false;
@@ -229,6 +236,13 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
                     if (flowLayoutPanelMenu.Width > 60)
                         MenuTime.Start();
                     btnQuanLyChuyenBay.FillColor = Color.FromArgb(0, 102, 203);
+                }
+                else if (small == adminDasboardControlDatVe_ThanhToan)
+                {
+                    ShowUserControl(_BookingAndPaymentControl);
+                    if (flowLayoutPanelMenu.Width > 60)
+                        MenuTime.Start();
+                    btnDatVe_thanhToan.FillColor = Color.FromArgb(0, 102, 203);
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -181,7 +182,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 .Take(pageSize)
                 .ToList();
 
-            // Clear and load to DataGridView
+            //// Clear and load to DataGridView
             dgvFlights.Rows.Clear();
 
             foreach (var flight in pagedData)
@@ -611,26 +612,26 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             try
             {
                 // TODO: Tạo và mở form AddEditFlightForm ở chế độ ADD
-                // var addForm = new AddEditFlightForm(FormMode.Add);
-                // if (addForm.ShowDialog() == DialogResult.OK)
-                // {
-                //     RefreshData();
-                // }
+                var addForm = new AddEditFlightForm(FormMode.Add);
+                if (addForm.ShowDialog() == DialogResult.OK)
+                {
+                    RefreshData();
+                }
 
-                MessageBox.Show(
-                    "Form 'Thêm chuyến bay mới' sẽ hiển thị ở đây.\n\n" +
-                    "Tạo form AddEditFlightForm với các fields:\n" +
-                    "- Số hiệu chuyến bay\n" +
-                    "- Hãng hàng không\n" +
-                    "- Sân bay đi/đến\n" +
-                    "- Ngày/Giờ khởi hành\n" +
-                    "- Máy bay\n" +
-                    "- Giá vé\n" +
-                    "- Số ghế",
-                    "Thêm chuyến bay mới",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                //MessageBox.Show(
+                //    "Form 'Thêm chuyến bay mới' sẽ hiển thị ở đây.\n\n" +
+                //    "Tạo form AddEditFlightForm với các fields:\n" +
+                //    "- Số hiệu chuyến bay\n" +
+                //    "- Hãng hàng không\n" +
+                //    "- Sân bay đi/đến\n" +
+                //    "- Ngày/Giờ khởi hành\n" +
+                //    "- Máy bay\n" +
+                //    "- Giá vé\n" +
+                //    "- Số ghế",
+                //    "Thêm chuyến bay mới",
+                //    MessageBoxButtons.OK,
+                //    MessageBoxIcon.Information
+                //);
             }
             catch (Exception ex)
             {

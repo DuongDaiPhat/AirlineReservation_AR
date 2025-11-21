@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Application.Services;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Services;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
@@ -35,6 +36,11 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static IFlightService? _flightService;
         private static FlightController? _flightController;
 
+        //private static IBookingServiceService? _bookingServive;
+        //private static BookingController? _bookingController;
+
+        private static IBookingService? _bookingService;
+        private static BookingController? _bookingController;
         public static void Init()
         {
             _config = new ConfigurationBuilder()
@@ -64,6 +70,8 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _cityController = new CityController(_cityService);
             _flightController = new FlightController(_flightService);
 
+            _bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
+            _bookingController = new BookingController(_bookingService);
         }
 
         public static AirlineReservationDbContext CreateDb()
@@ -89,5 +97,11 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         //flights
         public static FlightController FlightController => 
             _flightController ?? throw new Exception("Flight controller not initialized");
+
+        public static BookingController BookingController =>
+            _bookingController ?? throw new Exception("Booking controller not initialized");
+
+        //public static IBookingService BookingService =>
+        //    _bookingService ?? throw new Exception("BookingService not initialized");
     }
 }

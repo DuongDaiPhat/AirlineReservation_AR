@@ -63,10 +63,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             panelMain = new Panel();
             adminDasboardControlSetting = new adminDasboard();
             adminDasboardControlUsers = new adminDasboard();
-            panel11 = new Panel();
-            panel10 = new Panel();
-            panel9 = new Panel();
-            panel8 = new Panel();
             adminDasboardControlBaoCao_ThongKe = new adminDasboard();
             adminDasboardControlGiaVe_KhuyenMai = new adminDasboard();
             adminDasboardControlDatVe_ThanhToan = new adminDasboard();
@@ -74,6 +70,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             panelTopMain = new Panel();
             adminDashboardControlHight1 = new AdminDashboardControlHight();
             MenuTime = new System.Windows.Forms.Timer(components);
+            label1 = new Label();
             guna2CustomGradientPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxMenu).BeginInit();
             flowLayoutPanelMenu.SuspendLayout();
@@ -90,6 +87,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // guna2CustomGradientPanel1
             // 
+            guna2CustomGradientPanel1.Controls.Add(label1);
             guna2CustomGradientPanel1.Controls.Add(pictureBoxMenu);
             guna2CustomGradientPanel1.CustomizableEdges = customizableEdges1;
             guna2CustomGradientPanel1.Dock = DockStyle.Top;
@@ -358,10 +356,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             panelMain.BackColor = Color.FromArgb(255, 192, 192);
             panelMain.Controls.Add(adminDasboardControlSetting);
             panelMain.Controls.Add(adminDasboardControlUsers);
-            panelMain.Controls.Add(panel11);
-            panelMain.Controls.Add(panel10);
-            panelMain.Controls.Add(panel9);
-            panelMain.Controls.Add(panel8);
             panelMain.Controls.Add(adminDasboardControlBaoCao_ThongKe);
             panelMain.Controls.Add(adminDasboardControlGiaVe_KhuyenMai);
             panelMain.Controls.Add(adminDasboardControlDatVe_ThanhToan);
@@ -396,42 +390,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             adminDasboardControlUsers.TabIndex = 9;
             adminDasboardControlUsers.title = "Khách hàng";
             adminDasboardControlUsers.Click += adminDasboardControlSmall_click;
-            // 
-            // panel11
-            // 
-            panel11.BackColor = Color.FromArgb(255, 255, 192);
-            panel11.Location = new Point(780, 40);
-            panel11.Margin = new Padding(0);
-            panel11.Name = "panel11";
-            panel11.Size = new Size(200, 130);
-            panel11.TabIndex = 8;
-            // 
-            // panel10
-            // 
-            panel10.BackColor = Color.FromArgb(255, 255, 192);
-            panel10.Location = new Point(540, 40);
-            panel10.Margin = new Padding(0);
-            panel10.Name = "panel10";
-            panel10.Size = new Size(200, 130);
-            panel10.TabIndex = 7;
-            // 
-            // panel9
-            // 
-            panel9.BackColor = Color.FromArgb(255, 255, 192);
-            panel9.Location = new Point(300, 40);
-            panel9.Margin = new Padding(0);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(200, 130);
-            panel9.TabIndex = 6;
-            // 
-            // panel8
-            // 
-            panel8.BackColor = Color.FromArgb(255, 255, 192);
-            panel8.Location = new Point(60, 40);
-            panel8.Margin = new Padding(0);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(200, 130);
-            panel8.TabIndex = 5;
             // 
             // adminDasboardControlBaoCao_ThongKe
             // 
@@ -508,6 +466,16 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             MenuTime.Interval = 15;
             MenuTime.Tick += MenuTime_Tick;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(79, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(95, 37);
+            label1.TabIndex = 1;
+            label1.Text = "Admin";
+            // 
             // MenuAdminDashboard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -522,6 +490,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             Text = "MenuAdminDashboard";
             Load += MenuAdminDashboard_Load;
             guna2CustomGradientPanel1.ResumeLayout(false);
+            guna2CustomGradientPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxMenu).EndInit();
             flowLayoutPanelMenu.ResumeLayout(false);
             panel4.ResumeLayout(false);
@@ -559,14 +528,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
         private src.AirlineReservation.Presentation__Winform_.Views.UCs.Admin.adminDasboard adminDasboardControlQuanLyChuyenBay;
         private src.AirlineReservation.Presentation__Winform_.Views.UCs.Admin.adminDasboard adminDasboardControlGiaVe_KhuyenMai;
         private src.AirlineReservation.Presentation__Winform_.Views.UCs.Admin.adminDasboard adminDasboardControlDatVe_ThanhToan;
-        private Panel panel8;
         private src.AirlineReservation.Presentation__Winform_.Views.UCs.Admin.adminDasboard adminDasboardControlBaoCao_ThongKe;
-        private Panel panel11;
-        private Panel panel10;
-        private Panel panel9;
         private src.AirlineReservation.Presentation__Winform_.Views.UCs.Admin.adminDasboard adminDasboardControlSetting;
         private src.AirlineReservation.Presentation__Winform_.Views.UCs.Admin.adminDasboard adminDasboardControlUsers;
         private Panel panelTopMain;
         private AdminDashboardControlHight adminDashboardControlHight1;
+        private Label label1;
     }
 }

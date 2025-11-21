@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges28 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panelFilters = new Panel();
             btnAddFlight = new Guna.UI2.WinForms.Guna2Button();
             cboDestination = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -95,7 +95,7 @@
             // btnAddFlight
             // 
             btnAddFlight.BorderRadius = 8;
-            btnAddFlight.CustomizableEdges = customizableEdges1;
+            btnAddFlight.CustomizableEdges = customizableEdges15;
             btnAddFlight.DisabledState.BorderColor = Color.DarkGray;
             btnAddFlight.DisabledState.CustomBorderColor = Color.DarkGray;
             btnAddFlight.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -105,7 +105,7 @@
             btnAddFlight.Location = new Point(770, 110);
             btnAddFlight.Margin = new Padding(0);
             btnAddFlight.Name = "btnAddFlight";
-            btnAddFlight.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            btnAddFlight.ShadowDecoration.CustomizableEdges = customizableEdges16;
             btnAddFlight.Size = new Size(205, 40);
             btnAddFlight.TabIndex = 11;
             btnAddFlight.Text = "+ Thêm chuyến bay mới";
@@ -115,7 +115,7 @@
             // 
             cboDestination.BackColor = Color.Transparent;
             cboDestination.BorderRadius = 8;
-            cboDestination.CustomizableEdges = customizableEdges3;
+            cboDestination.CustomizableEdges = customizableEdges17;
             cboDestination.DrawMode = DrawMode.OwnerDrawFixed;
             cboDestination.DropDownStyle = ComboBoxStyle.DropDownList;
             cboDestination.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -125,14 +125,14 @@
             cboDestination.ItemHeight = 30;
             cboDestination.Location = new Point(20, 115);
             cboDestination.Name = "cboDestination";
-            cboDestination.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            cboDestination.ShadowDecoration.CustomizableEdges = customizableEdges18;
             cboDestination.Size = new Size(200, 36);
             cboDestination.TabIndex = 10;
             // 
             // btnSearch
             // 
             btnSearch.BorderRadius = 8;
-            btnSearch.CustomizableEdges = customizableEdges5;
+            btnSearch.CustomizableEdges = customizableEdges19;
             btnSearch.DisabledState.BorderColor = Color.DarkGray;
             btnSearch.DisabledState.CustomBorderColor = Color.DarkGray;
             btnSearch.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -143,7 +143,7 @@
             btnSearch.Location = new Point(810, 40);
             btnSearch.Margin = new Padding(0);
             btnSearch.Name = "btnSearch";
-            btnSearch.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            btnSearch.ShadowDecoration.CustomizableEdges = customizableEdges20;
             btnSearch.Size = new Size(120, 35);
             btnSearch.TabIndex = 9;
             btnSearch.Text = "🔍 Tìm kiếm";
@@ -153,7 +153,7 @@
             // 
             cboStatus.BackColor = Color.Transparent;
             cboStatus.BorderRadius = 8;
-            cboStatus.CustomizableEdges = customizableEdges7;
+            cboStatus.CustomizableEdges = customizableEdges21;
             cboStatus.DrawMode = DrawMode.OwnerDrawFixed;
             cboStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cboStatus.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -164,7 +164,7 @@
             cboStatus.Location = new Point(640, 40);
             cboStatus.Margin = new Padding(0);
             cboStatus.Name = "cboStatus";
-            cboStatus.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            cboStatus.ShadowDecoration.CustomizableEdges = customizableEdges22;
             cboStatus.Size = new Size(150, 36);
             cboStatus.TabIndex = 8;
             // 
@@ -172,7 +172,7 @@
             // 
             guna2DateTimePicker1.BorderRadius = 8;
             guna2DateTimePicker1.Checked = true;
-            guna2DateTimePicker1.CustomizableEdges = customizableEdges9;
+            guna2DateTimePicker1.CustomizableEdges = customizableEdges23;
             guna2DateTimePicker1.FillColor = Color.White;
             guna2DateTimePicker1.Font = new Font("Segoe UI", 9F);
             guna2DateTimePicker1.Format = DateTimePickerFormat.Short;
@@ -181,7 +181,7 @@
             guna2DateTimePicker1.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
             guna2DateTimePicker1.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             guna2DateTimePicker1.Name = "guna2DateTimePicker1";
-            guna2DateTimePicker1.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            guna2DateTimePicker1.ShadowDecoration.CustomizableEdges = customizableEdges24;
             guna2DateTimePicker1.Size = new Size(180, 30);
             guna2DateTimePicker1.TabIndex = 7;
             guna2DateTimePicker1.Value = new DateTime(2025, 11, 20, 13, 12, 27, 30);
@@ -190,7 +190,7 @@
             // 
             cboAirline.BackColor = Color.Transparent;
             cboAirline.BorderRadius = 8;
-            cboAirline.CustomizableEdges = customizableEdges11;
+            cboAirline.CustomizableEdges = customizableEdges25;
             cboAirline.DrawMode = DrawMode.OwnerDrawFixed;
             cboAirline.DropDownStyle = ComboBoxStyle.DropDownList;
             cboAirline.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -201,7 +201,7 @@
             cboAirline.Location = new Point(240, 42);
             cboAirline.Margin = new Padding(0);
             cboAirline.Name = "cboAirline";
-            cboAirline.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            cboAirline.ShadowDecoration.CustomizableEdges = customizableEdges26;
             cboAirline.Size = new Size(180, 36);
             cboAirline.TabIndex = 6;
             // 
@@ -250,7 +250,7 @@
             // txtFlightNo
             // 
             txtFlightNo.BorderRadius = 8;
-            txtFlightNo.CustomizableEdges = customizableEdges13;
+            txtFlightNo.CustomizableEdges = customizableEdges27;
             txtFlightNo.DefaultText = "";
             txtFlightNo.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtFlightNo.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -264,7 +264,7 @@
             txtFlightNo.Name = "txtFlightNo";
             txtFlightNo.PlaceholderText = "VD: VN210";
             txtFlightNo.SelectedText = "";
-            txtFlightNo.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            txtFlightNo.ShadowDecoration.CustomizableEdges = customizableEdges28;
             txtFlightNo.Size = new Size(200, 30);
             txtFlightNo.TabIndex = 1;
             txtFlightNo.KeyDown += TxtFlightNo_KeyDown;
@@ -299,6 +299,7 @@
             dgvFlights.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvFlights.Size = new Size(1010, 445);
             dgvFlights.TabIndex = 1;
+            dgvFlights.CellClick += DgvFlights_CellClick;
             // 
             // colFlightCode
             // 

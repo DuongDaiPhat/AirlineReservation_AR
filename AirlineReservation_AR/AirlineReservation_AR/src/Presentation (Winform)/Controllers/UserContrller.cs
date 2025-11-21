@@ -19,7 +19,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
         {
             return await _userService.GetByIdAsync(userId);
         }
-
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            return await _userService.GetAllAsync();
+        }
         public async Task<User?> GetUserByEmailAsync(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
