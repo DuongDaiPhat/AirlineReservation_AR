@@ -8,6 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	<EnableWindowsFormsHighDpiAutoResizing>false</EnableWindowsFormsHighDpiAutoResizing>
 	<ApplicationHighDpiMode>DpiUnaware</ApplicationHighDpiMode>
+	<ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+	<EnableDpiScaling>false</EnableDpiScaling>
   </PropertyGroup>
 
   <ItemGroup>

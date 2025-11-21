@@ -1,6 +1,7 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Services;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.Infrastructure.DI;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                 .Include(bs => bs.Passenger)
                 .FirstOrDefaultAsync(bs => bs.BookingServiceId == bookingServiceId);
         }
+
+        
 
         public async Task<IEnumerable<BookingService>> GetAllAsync()
         {

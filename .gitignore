@@ -103,3 +103,6 @@ Desktop.ini
 
 #migration
 **/Migrations/
+
+#resources
+**/Resources.Designer.cs

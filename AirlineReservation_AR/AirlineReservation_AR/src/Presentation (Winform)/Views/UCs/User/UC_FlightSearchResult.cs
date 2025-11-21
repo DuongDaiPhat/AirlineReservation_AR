@@ -34,7 +34,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             RenderDayTabs(result.DayTabs);
             //RenderBestFlight(result.BestFlight);
             RenderAllFlights(result.AllFlights);
-            RenderAirlineFilters(result.AirlineFilters);
+            //RenderAirlineFilters(result.AirlineFilters);
         }
 
         // ------------------------
@@ -129,22 +129,22 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             }
         }
 
-        private void RenderAirlineFilters(List<AirlineFilterDTO> list)
-        {
-            flowFilters.Controls.Clear();
+        //private void RenderAirlineFilters(List<AirlineFilterDTO> list)
+        //{
+        //    flowFilters.Controls.Clear();
 
-            foreach (var a in list)
-            {
-                var chk = new Guna2CheckBox
-                {
-                    Text = a.AirlineName,
-                    Font = new Font("Segoe UI", 10),
-                    AutoSize = true,
-                    Margin = new Padding(5)
-                };
+        //    foreach (var a in list)
+        //    {
+        //        var chk = new Guna2CheckBox
+        //        {
+        //            Text = a.AirlineName,
+        //            Font = new Font("Segoe UI", 10),
+        //            AutoSize = true,
+        //            Margin = new Padding(5)
+        //        };
 
-                flowFilters.Controls.Add(chk);
-            }
-        }
+        //        flowFilters.Controls.Add(chk);
+        //    }
+        //}
     }
 }

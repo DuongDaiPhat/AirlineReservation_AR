@@ -105,5 +105,27 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
                 return false;
             }
         }
+        public async Task<bool> UpdateAccountAsync(
+            Guid userId,
+            string fullName,
+            string? phone,
+            string? gender,
+            string? cityCode,
+            string? address)
+        {
+            using var _db = DIContainer.CreateDb();
+            var user = await _db.Users.FindAsync(userId);
+            if (user == null) return false;
+
+            user.FullName = fullName;
+            user.Phone = phone;
+            user.Gender = gender;
+            user.CityCode = cityCode;
+            user.Address = address;
+            user.UpdatedAt = DateTime.UtcNow;
+
+            await _db.SaveChangesAsync();
+            return true;
+        }
     }
 }

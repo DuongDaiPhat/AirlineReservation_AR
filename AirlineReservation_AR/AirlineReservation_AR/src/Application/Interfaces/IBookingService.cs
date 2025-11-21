@@ -9,6 +9,7 @@ namespace AirlineReservation_AR.src.Application.Interfaces
 {
     public interface IBookingService
     {
+        Task<List<Booking>> GetBookingsByUserAsync(Guid userId);
         Task<IEnumerable<Booking>> GetAllWithDetailsAsync();
         Task<Booking?> GetByIdAsync(int bookingId);
         Task<Booking?> GetByReferenceAsync(string bookingReference);
