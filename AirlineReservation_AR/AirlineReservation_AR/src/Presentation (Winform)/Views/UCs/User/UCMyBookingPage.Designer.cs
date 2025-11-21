@@ -39,8 +39,8 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panelPendingOrders = new Guna.UI2.WinForms.Guna2Panel();
-            guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             fpnlPendingTicketHolder = new FlowLayoutPanel();
+            guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             panelHistory = new Guna.UI2.WinForms.Guna2Panel();
             pnlPaymentHistoryHolder = new Guna.UI2.WinForms.Guna2Panel();
             guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -64,33 +64,35 @@
             // 
             // panelPendingOrders
             // 
-            panelPendingOrders.Controls.Add(guna2HtmlLabel1);
             panelPendingOrders.Controls.Add(fpnlPendingTicketHolder);
+            panelPendingOrders.Controls.Add(guna2HtmlLabel1);
             panelPendingOrders.CustomizableEdges = customizableEdges1;
             panelPendingOrders.Dock = DockStyle.Top;
             panelPendingOrders.Location = new Point(0, 127);
             panelPendingOrders.Name = "panelPendingOrders";
             panelPendingOrders.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            panelPendingOrders.Size = new Size(856, 391);
+            panelPendingOrders.Size = new Size(856, 355);
             panelPendingOrders.TabIndex = 0;
-            // 
-            // guna2HtmlLabel1
-            // 
-            guna2HtmlLabel1.BackColor = Color.Transparent;
-            guna2HtmlLabel1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            guna2HtmlLabel1.Location = new Point(3, 3);
-            guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            guna2HtmlLabel1.Size = new Size(92, 33);
-            guna2HtmlLabel1.TabIndex = 1;
-            guna2HtmlLabel1.Text = "Pending";
             // 
             // fpnlPendingTicketHolder
             // 
             fpnlPendingTicketHolder.BackColor = SystemColors.Control;
-            fpnlPendingTicketHolder.Location = new Point(3, 54);
+            fpnlPendingTicketHolder.Dock = DockStyle.Top;
+            fpnlPendingTicketHolder.Location = new Point(0, 33);
             fpnlPendingTicketHolder.Name = "fpnlPendingTicketHolder";
-            fpnlPendingTicketHolder.Size = new Size(870, 327);
+            fpnlPendingTicketHolder.Size = new Size(856, 301);
             fpnlPendingTicketHolder.TabIndex = 0;
+            // 
+            // guna2HtmlLabel1
+            // 
+            guna2HtmlLabel1.BackColor = Color.Transparent;
+            guna2HtmlLabel1.Dock = DockStyle.Top;
+            guna2HtmlLabel1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2HtmlLabel1.Location = new Point(0, 0);
+            guna2HtmlLabel1.Name = "guna2HtmlLabel1";
+            guna2HtmlLabel1.Size = new Size(92, 33);
+            guna2HtmlLabel1.TabIndex = 1;
+            guna2HtmlLabel1.Text = "Pending";
             // 
             // panelHistory
             // 
@@ -162,7 +164,7 @@
             panelActiveTicket.Controls.Add(fpnlIssuedTicketHolder);
             panelActiveTicket.Controls.Add(pnlNoIssuedTicket);
             panelActiveTicket.Dock = DockStyle.Top;
-            panelActiveTicket.Location = new Point(0, 518);
+            panelActiveTicket.Location = new Point(0, 482);
             panelActiveTicket.Name = "panelActiveTicket";
             panelActiveTicket.Size = new Size(856, 482);
             panelActiveTicket.TabIndex = 2;

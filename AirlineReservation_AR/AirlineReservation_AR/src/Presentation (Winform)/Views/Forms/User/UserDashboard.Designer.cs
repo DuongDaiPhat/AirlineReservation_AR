@@ -55,7 +55,7 @@
             pnlNavigation = new Guna.UI2.WinForms.Guna2Panel();
             btnMyCard = new Guna.UI2.WinForms.Guna2Button();
             guna2Button7 = new Guna.UI2.WinForms.Guna2Button();
-            guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
+            btnAccount = new Guna.UI2.WinForms.Guna2Button();
             guna2Separator3 = new Guna.UI2.WinForms.Guna2Separator();
             guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
             btnPurchaseList = new Guna.UI2.WinForms.Guna2Button();
@@ -68,17 +68,19 @@
             txtName = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
             Header = new Guna.UI2.WinForms.Guna2Panel();
-            pnlContent = new Guna.UI2.WinForms.Guna2Panel();
             uC_Header1 = new AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User.UC_Header();
+            pnlContent = new Guna.UI2.WinForms.Guna2Panel();
+            guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             pnlNavigation.SuspendLayout();
             Header.SuspendLayout();
+            pnlContent.SuspendLayout();
             SuspendLayout();
             // 
             // pnlNavigation
             // 
             pnlNavigation.Controls.Add(btnMyCard);
             pnlNavigation.Controls.Add(guna2Button7);
-            pnlNavigation.Controls.Add(guna2Button6);
+            pnlNavigation.Controls.Add(btnAccount);
             pnlNavigation.Controls.Add(guna2Separator3);
             pnlNavigation.Controls.Add(guna2Button5);
             pnlNavigation.Controls.Add(btnPurchaseList);
@@ -119,7 +121,7 @@
             btnMyCard.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnMyCard.Size = new Size(393, 53);
             btnMyCard.TabIndex = 27;
-            btnMyCard.Text = "Thẻ của tôi";
+            btnMyCard.Text = "My Card";
             btnMyCard.TextAlign = HorizontalAlignment.Left;
             // 
             // guna2Button7
@@ -142,31 +144,32 @@
             guna2Button7.ShadowDecoration.CustomizableEdges = customizableEdges4;
             guna2Button7.Size = new Size(393, 53);
             guna2Button7.TabIndex = 26;
-            guna2Button7.Text = "Đăng xuất";
+            guna2Button7.Text = "Log out";
             guna2Button7.TextAlign = HorizontalAlignment.Left;
             // 
-            // guna2Button6
+            // btnAccount
             // 
-            guna2Button6.CustomizableEdges = customizableEdges5;
-            guna2Button6.DisabledState.BorderColor = Color.DarkGray;
-            guna2Button6.DisabledState.CustomBorderColor = Color.DarkGray;
-            guna2Button6.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            guna2Button6.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            guna2Button6.FillColor = Color.White;
-            guna2Button6.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold);
-            guna2Button6.ForeColor = Color.Black;
-            guna2Button6.Image = Properties.Resources.download1;
-            guna2Button6.ImageAlign = HorizontalAlignment.Left;
-            guna2Button6.ImageOffset = new Point(10, 0);
-            guna2Button6.ImageSize = new Size(25, 25);
-            guna2Button6.Location = new Point(0, 418);
-            guna2Button6.Name = "guna2Button6";
-            guna2Button6.Padding = new Padding(10, 0, 0, 0);
-            guna2Button6.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            guna2Button6.Size = new Size(393, 53);
-            guna2Button6.TabIndex = 25;
-            guna2Button6.Text = "Tài khoản";
-            guna2Button6.TextAlign = HorizontalAlignment.Left;
+            btnAccount.CustomizableEdges = customizableEdges5;
+            btnAccount.DisabledState.BorderColor = Color.DarkGray;
+            btnAccount.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnAccount.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnAccount.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnAccount.FillColor = Color.White;
+            btnAccount.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold);
+            btnAccount.ForeColor = Color.Black;
+            btnAccount.Image = Properties.Resources.download1;
+            btnAccount.ImageAlign = HorizontalAlignment.Left;
+            btnAccount.ImageOffset = new Point(10, 0);
+            btnAccount.ImageSize = new Size(25, 25);
+            btnAccount.Location = new Point(0, 418);
+            btnAccount.Name = "btnAccount";
+            btnAccount.Padding = new Padding(10, 0, 0, 0);
+            btnAccount.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            btnAccount.Size = new Size(393, 53);
+            btnAccount.TabIndex = 25;
+            btnAccount.Text = "Account";
+            btnAccount.TextAlign = HorizontalAlignment.Left;
+            btnAccount.Click += btnAccount_Click;
             // 
             // guna2Separator3
             // 
@@ -196,7 +199,7 @@
             guna2Button5.ShadowDecoration.CustomizableEdges = customizableEdges8;
             guna2Button5.Size = new Size(393, 53);
             guna2Button5.TabIndex = 22;
-            guna2Button5.Text = "Thông tin hành khách đã lưu";
+            guna2Button5.Text = "Saved Passengers";
             guna2Button5.TextAlign = HorizontalAlignment.Left;
             // 
             // btnPurchaseList
@@ -219,8 +222,9 @@
             btnPurchaseList.ShadowDecoration.CustomizableEdges = customizableEdges10;
             btnPurchaseList.Size = new Size(393, 53);
             btnPurchaseList.TabIndex = 20;
-            btnPurchaseList.Text = "Danh sách giao dịch";
+            btnPurchaseList.Text = "Transactions";
             btnPurchaseList.TextAlign = HorizontalAlignment.Left;
+            btnPurchaseList.Click += btnPurchaseList_Click;
             // 
             // btnMyBooking
             // 
@@ -242,7 +246,7 @@
             btnMyBooking.ShadowDecoration.CustomizableEdges = customizableEdges12;
             btnMyBooking.Size = new Size(393, 53);
             btnMyBooking.TabIndex = 18;
-            btnMyBooking.Text = "Đặt chỗ của tôi";
+            btnMyBooking.Text = "My Bookings";
             btnMyBooking.TextAlign = HorizontalAlignment.Left;
             btnMyBooking.Click += btnMyBooking_Click;
             // 
@@ -319,9 +323,9 @@
             txtName.Font = new Font("Segoe UI", 13F);
             txtName.Location = new Point(131, 23);
             txtName.Name = "txtName";
-            txtName.Size = new Size(39, 32);
+            txtName.Size = new Size(61, 32);
             txtName.TabIndex = 15;
-            txtName.Text = "Tên";
+            txtName.Text = "Name";
             // 
             // guna2CircleButton1
             // 
@@ -353,16 +357,6 @@
             Header.Size = new Size(1422, 100);
             Header.TabIndex = 3;
             // 
-            // pnlContent
-            // 
-            pnlContent.CustomizableEdges = customizableEdges22;
-            pnlContent.FillColor = Color.FromArgb(255, 255, 128);
-            pnlContent.Location = new Point(502, 129);
-            pnlContent.Name = "pnlContent";
-            pnlContent.ShadowDecoration.CustomizableEdges = customizableEdges23;
-            pnlContent.Size = new Size(856, 876);
-            pnlContent.TabIndex = 5;
-            // 
             // uC_Header1
             // 
             uC_Header1.Dock = DockStyle.Top;
@@ -370,6 +364,28 @@
             uC_Header1.Name = "uC_Header1";
             uC_Header1.Size = new Size(1422, 138);
             uC_Header1.TabIndex = 0;
+            // 
+            // pnlContent
+            // 
+            pnlContent.Controls.Add(guna2HtmlLabel1);
+            pnlContent.CustomizableEdges = customizableEdges22;
+            pnlContent.FillColor = Color.WhiteSmoke;
+            pnlContent.Location = new Point(502, 129);
+            pnlContent.Name = "pnlContent";
+            pnlContent.ShadowDecoration.CustomizableEdges = customizableEdges23;
+            pnlContent.Size = new Size(856, 876);
+            pnlContent.TabIndex = 5;
+            // 
+            // guna2HtmlLabel1
+            // 
+            guna2HtmlLabel1.BackColor = Color.Transparent;
+            guna2HtmlLabel1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2HtmlLabel1.ForeColor = SystemColors.ControlDarkDark;
+            guna2HtmlLabel1.Location = new Point(33, 22);
+            guna2HtmlLabel1.Name = "guna2HtmlLabel1";
+            guna2HtmlLabel1.Size = new Size(590, 33);
+            guna2HtmlLabel1.TabIndex = 0;
+            guna2HtmlLabel1.Text = "Hãy chọn các nút bên trái để quản lý tài khoản của bạn";
             // 
             // UserDashboard
             // 
@@ -384,6 +400,8 @@
             pnlNavigation.ResumeLayout(false);
             pnlNavigation.PerformLayout();
             Header.ResumeLayout(false);
+            pnlContent.ResumeLayout(false);
+            pnlContent.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -393,7 +411,7 @@
         private Guna.UI2.WinForms.Guna2Panel Header;
         private Guna.UI2.WinForms.Guna2Panel pnlContent;
         private Guna.UI2.WinForms.Guna2Button guna2Button7;
-        private Guna.UI2.WinForms.Guna2Button guna2Button6;
+        private Guna.UI2.WinForms.Guna2Button btnAccount;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator3;
         private Guna.UI2.WinForms.Guna2Button guna2Button5;
         private Guna.UI2.WinForms.Guna2Button btnPurchaseList;
@@ -407,5 +425,6 @@
         private Guna.UI2.WinForms.Guna2Button btnMyCard;
         private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
         private UCs.User.UC_Header uC_Header1;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
     }
 }

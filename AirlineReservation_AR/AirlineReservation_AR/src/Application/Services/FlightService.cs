@@ -27,8 +27,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
             return await _context.Flights
                 .Include(f => f.Airline)
                 .Include(f => f.Aircraft)
-                .Include(f => f.DepartureAirport)
-                .Include(f => f.ArrivalAirport)
+                .Include(f => f.DepartureAirport).ThenInclude(a => a.City)
+                .Include(f => f.ArrivalAirport).ThenInclude(a => a.City)
                 .Include(f => f.FlightPricings)
                 .FirstOrDefaultAsync(f => f.FlightId == flightId);
         }

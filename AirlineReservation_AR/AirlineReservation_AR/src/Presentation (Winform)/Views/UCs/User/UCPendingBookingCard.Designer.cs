@@ -28,57 +28,60 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            txtFromCtyToCty = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            txtBookingReference = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            btnPaymentStatus = new Guna.UI2.WinForms.Guna2Button();
             bntDetail = new Guna.UI2.WinForms.Guna2Button();
+            btnCancel = new Guna.UI2.WinForms.Guna2Button();
             SuspendLayout();
             // 
-            // guna2HtmlLabel1
+            // txtFromCtyToCty
             // 
-            guna2HtmlLabel1.BackColor = Color.Transparent;
-            guna2HtmlLabel1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            guna2HtmlLabel1.Location = new Point(19, 8);
-            guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            guna2HtmlLabel1.Size = new Size(358, 33);
-            guna2HtmlLabel1.TabIndex = 0;
-            guna2HtmlLabel1.Text = "TP HCM (SGN) -> Bangkok (BKK)";
+            txtFromCtyToCty.BackColor = Color.Transparent;
+            txtFromCtyToCty.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtFromCtyToCty.Location = new Point(19, 8);
+            txtFromCtyToCty.Name = "txtFromCtyToCty";
+            txtFromCtyToCty.Size = new Size(358, 33);
+            txtFromCtyToCty.TabIndex = 0;
+            txtFromCtyToCty.Text = "TP HCM (SGN) -> Bangkok (BKK)";
             // 
-            // guna2HtmlLabel3
+            // txtBookingReference
             // 
-            guna2HtmlLabel3.BackColor = Color.Transparent;
-            guna2HtmlLabel3.Location = new Point(19, 47);
-            guna2HtmlLabel3.Name = "guna2HtmlLabel3";
-            guna2HtmlLabel3.Size = new Size(227, 22);
-            guna2HtmlLabel3.TabIndex = 2;
-            guna2HtmlLabel3.Text = "Mã đặt chỗ tên công ty: 29112005";
+            txtBookingReference.BackColor = Color.Transparent;
+            txtBookingReference.Location = new Point(19, 47);
+            txtBookingReference.Name = "txtBookingReference";
+            txtBookingReference.Size = new Size(144, 22);
+            txtBookingReference.TabIndex = 2;
+            txtBookingReference.Text = "BookingID: 29112005";
             // 
-            // guna2Button1
+            // btnPaymentStatus
             // 
-            guna2Button1.BorderRadius = 10;
-            guna2Button1.CustomizableEdges = customizableEdges5;
-            guna2Button1.DisabledState.BorderColor = Color.DarkGray;
-            guna2Button1.DisabledState.CustomBorderColor = Color.DarkGray;
-            guna2Button1.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            guna2Button1.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            guna2Button1.FillColor = Color.DeepSkyBlue;
-            guna2Button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            guna2Button1.ForeColor = Color.White;
-            guna2Button1.Location = new Point(19, 86);
-            guna2Button1.Name = "guna2Button1";
-            guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            guna2Button1.Size = new Size(320, 32);
-            guna2Button1.TabIndex = 3;
-            guna2Button1.Text = "Đang đợi phương thức thanh toán";
+            btnPaymentStatus.BorderRadius = 10;
+            btnPaymentStatus.CustomizableEdges = customizableEdges7;
+            btnPaymentStatus.DisabledState.BorderColor = Color.DarkGray;
+            btnPaymentStatus.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnPaymentStatus.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnPaymentStatus.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnPaymentStatus.FillColor = Color.DeepSkyBlue;
+            btnPaymentStatus.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPaymentStatus.ForeColor = Color.White;
+            btnPaymentStatus.Location = new Point(19, 86);
+            btnPaymentStatus.Name = "btnPaymentStatus";
+            btnPaymentStatus.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnPaymentStatus.Size = new Size(320, 32);
+            btnPaymentStatus.TabIndex = 3;
+            btnPaymentStatus.Text = "Waiting for payment method";
             // 
             // bntDetail
             // 
             bntDetail.BorderRadius = 10;
-            bntDetail.CustomizableEdges = customizableEdges7;
+            bntDetail.CustomizableEdges = customizableEdges9;
             bntDetail.DisabledState.BorderColor = Color.DarkGray;
             bntDetail.DisabledState.CustomBorderColor = Color.DarkGray;
             bntDetail.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -86,22 +89,41 @@
             bntDetail.FillColor = Color.Transparent;
             bntDetail.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             bntDetail.ForeColor = Color.DeepSkyBlue;
-            bntDetail.Location = new Point(706, 86);
+            bntDetail.Location = new Point(761, 86);
             bntDetail.Name = "bntDetail";
-            bntDetail.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            bntDetail.Size = new Size(144, 32);
+            bntDetail.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            bntDetail.Size = new Size(79, 32);
             bntDetail.TabIndex = 4;
-            bntDetail.Text = "Xem chi tiết";
+            bntDetail.Text = "Detail";
+            // 
+            // btnCancel
+            // 
+            btnCancel.BorderRadius = 10;
+            btnCancel.CustomizableEdges = customizableEdges11;
+            btnCancel.DisabledState.BorderColor = Color.DarkGray;
+            btnCancel.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnCancel.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnCancel.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnCancel.FillColor = Color.Transparent;
+            btnCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCancel.ForeColor = Color.Crimson;
+            btnCancel.Location = new Point(676, 86);
+            btnCancel.Name = "btnCancel";
+            btnCancel.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            btnCancel.Size = new Size(79, 32);
+            btnCancel.TabIndex = 5;
+            btnCancel.Text = "Cancel";
             // 
             // UCPendingBookingCard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
+            Controls.Add(btnCancel);
             Controls.Add(bntDetail);
-            Controls.Add(guna2Button1);
-            Controls.Add(guna2HtmlLabel3);
-            Controls.Add(guna2HtmlLabel1);
+            Controls.Add(btnPaymentStatus);
+            Controls.Add(txtBookingReference);
+            Controls.Add(txtFromCtyToCty);
             Name = "UCPendingBookingCard";
             Size = new Size(853, 130);
             Load += UCPendingBookingCard_Load;
@@ -111,9 +133,10 @@
 
         #endregion
 
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel3;
-        private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2HtmlLabel txtFromCtyToCty;
+        private Guna.UI2.WinForms.Guna2HtmlLabel txtBookingReference;
+        private Guna.UI2.WinForms.Guna2Button btnPaymentStatus;
         private Guna.UI2.WinForms.Guna2Button bntDetail;
+        private Guna.UI2.WinForms.Guna2Button btnCancel;
     }
 }
