@@ -7,6 +7,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 {
     public interface IUserService
     {
+        Task<IEnumerable<User>> GetAllAsync();
         Task<User?> GetByIdAsync(Guid userId);
         Task<User?> GetByEmailAsync(string email);
 
