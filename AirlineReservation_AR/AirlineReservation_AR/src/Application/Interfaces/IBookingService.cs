@@ -10,6 +10,6 @@ namespace AirlineReservation_AR.src.Application.Interfaces
 {
     public interface IBookingService
     {
-        Task<Booking> CreateBookingAsync(BookingRequest req);
+        int CreateBooking(BookingCreateDTO dto);
     }
 }

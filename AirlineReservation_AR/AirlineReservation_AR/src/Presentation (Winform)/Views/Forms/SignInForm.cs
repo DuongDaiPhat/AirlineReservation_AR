@@ -80,6 +80,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
 
             // 2. Truy vấn DB trong Task tránh UI bị đơ
             var user = await _controller.LoginAsync(emailTB.Text, passwordTB.Text);
+            DIContainer.SetCurrentUser(user);
 
             // 3. Đóng loading NGAY SAU KHI truy vấn xong
             loading.Close();

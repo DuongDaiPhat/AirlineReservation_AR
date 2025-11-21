@@ -12,38 +12,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
 {
     public class BookingController
     {
-        private readonly IBookingService _bookingService;
-        private readonly IPassengerService _passengerService;
-        private readonly ITicketService _ticketService;
-        private readonly IServiceService _baggageService; //bagageservice
+        private readonly IBookingService _service;
 
-        public BookingController(
-        IBookingService bookingService,
-        IPassengerService passengerService,
-        ITicketService ticketService,
-        IServiceService baggageService)
+        public BookingController(IBookingService service)
         {
-            _bookingService = bookingService;
-            _passengerService = passengerService;
-            _ticketService = ticketService;
-            _baggageService = baggageService;
+            _service = service;
         }
 
-        public async Task<int> CreateFullBookingAsync(BookingRequest req)
-        {
-            var booking = await _bookingService.CreateBookingAsync(req);
-
-            await _passengerService.CreatePassengersAsync(booking.BookingId, req.Passengers);
-
-            await _ticketService.CreateTicketsAsync(
-                booking.BookingId,
-                req.SelectedFlight.FlightId,
-                req.SelectedFlight.SeatClassId
-            );
-
-            await _baggageService.AddBaggageAsync(booking.BookingId, req.Baggage);
-
-            return booking.BookingId;
-        }
+        public int CreateBooking(BookingCreateDTO dto)
+            => _service.CreateBooking(dto);
     }
 }

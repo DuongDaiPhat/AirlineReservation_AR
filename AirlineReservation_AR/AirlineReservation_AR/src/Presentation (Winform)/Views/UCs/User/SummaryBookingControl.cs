@@ -118,5 +118,22 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pricingVAT.Text = $"{total:N0} VND";
             lblTotalPrice.Text = $"{totalVAT:N0} VND";
         }
+
+        public decimal TotalPrice
+        {
+            get
+            {
+                var text = lblTotalPrice.Text
+                    .Replace("VND", "")
+                    .Replace(",", "")
+                    .Trim();
+
+                if (decimal.TryParse(text, out var value))
+                    return value;
+
+                return 0;
+            }
+        }
+
     }
 }

@@ -110,7 +110,7 @@
             // txtFirstName
             // 
             txtFirstName.Font = new Font("Segoe UI", 10F);
-            txtFirstName.Location = new Point(15, 85);
+            txtFirstName.Location = new Point(18, 85);
             txtFirstName.Name = "txtFirstName";
             txtFirstName.Size = new Size(270, 25);
             txtFirstName.TabIndex = 2;

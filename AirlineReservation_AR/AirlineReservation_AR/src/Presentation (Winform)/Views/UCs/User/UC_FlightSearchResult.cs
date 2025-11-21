@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
@@ -136,21 +137,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
         private void RenderAirlineFilters(List<AirlineFilterDTO> list)
         {
-            flowFilters.Controls.Clear();
+            airlineCombobox.Items.Clear();
 
             foreach (var a in list)
             {
-                var chk = new Guna2CheckBox
-                {
-                    Text = a.AirlineName,
-                    Font = new Font("Segoe UI", 10),
-                    AutoSize = true,
-                    Margin = new Padding(5)
-                };
-
-                flowFilters.Controls.Add(chk);
+                airlineCombobox.Items.Add(a.AirlineName);
             }
+
+
         }
+        
 
         private void OpenFilloutInform(FlightResultDTO flight)
         {

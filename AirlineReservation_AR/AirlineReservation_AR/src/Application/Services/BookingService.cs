@@ -14,33 +14,40 @@ namespace AirlineReservation_AR.src.Application.Services
     public class BookingService : IBookingService
     {
 
-        public async Task<Booking> CreateBookingAsync(BookingRequest req)
+        public int CreateBooking(BookingCreateDTO dto)
         {
-            using var _db = DIContainer.CreateDb();
+            using var db = DIContainer.CreateDb();
+
             var booking = new Booking
             {
-                UserId = req.UserId,
+                UserId = dto.UserId,
+                BookingReference = "BK-" + DateTime.Now.Ticks,
                 BookingDate = DateTime.Now,
-                BookingReference = Guid.NewGuid().ToString().Substring(0, 6).ToUpper(),
-
-                ContactEmail = req.Contact.Email,
-                ContactPhone = req.Contact.Phone
+                Status = "Pending",
+                Currency = "VND",
+                ContactEmail = dto.ContactEmail,
+                ContactPhone = dto.ContactPhone,
+                SpecialRequests = dto.SpecialRequest
             };
 
-            _db.Bookings.Add(booking);
-            await _db.SaveChangesAsync();
+            db.Bookings.Add(booking);
+            db.SaveChanges();
 
-            var bf = new BookingFlight
+            db.BookingFlights.Add(new BookingFlight
             {
                 BookingId = booking.BookingId,
-                FlightId = req.SelectedFlight.FlightId,
-                TripType = req.TripType
-            };
+                FlightId = dto.FlightId,
+                TripType = dto.TripType
+            });
 
-            _db.BookingFlights.Add(bf);
-            await _db.SaveChangesAsync();
+            foreach (var p in dto.Passengers)
+            {
+                p.BookingId = booking.BookingId;
+                db.Passengers.Add(p);
+            }
 
-            return booking;
+            db.SaveChanges();
+            return booking.BookingId;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
 
             builder.Property(b => b.BookingReference)
                 .IsRequired()
-                .HasMaxLength(10);
+                .HasMaxLength(500);
 
             builder.Property(b => b.UserId)
                 .HasColumnName("UserID");

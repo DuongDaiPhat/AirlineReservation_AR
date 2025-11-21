@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Application.Services;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Services;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
@@ -19,6 +20,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
     public static class DIContainer
     {
         private static IConfiguration? _config;
+        public static User CurrentUser { get; private set; }
         public static DbContextOptions<AirlineReservationDbContext>? DbOptions { get; private set; }
 
         private static PasswordHasher? _hasher;
@@ -36,10 +38,10 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static FlightController? _flightController;
 
         private static IBookingService? _bookingService;
-        private static IPassengerService? _passengerService;
-        private static ITicketService? _ticketService;
-        private static IServiceService? _baggageService;
         private static BookingController? _bookingController;
+
+        private static IPaymentService? _paymentService;
+        private static PaymentController? _paymentController;
 
         public static void Init()
         {
@@ -63,10 +65,8 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _userService = new UserService();
             _cityService = new CityService();
             _flightService = new FlightService();
-            _bookingService = new BookingService();
-            _passengerService = new PassengerService();
-            _ticketService = new TicketService();
-            _baggageService = new ServiceServices();
+            _bookingService = new Application.Services.BookingService();
+            _paymentService = new PaymentService();
 
 
 
@@ -75,10 +75,16 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _userContrller = new UserContrller(_userService);
             _cityController = new CityController(_cityService);
             _flightController = new FlightController(_flightService);
-            _bookingController = new BookingController(_bookingService, _passengerService, _ticketService, _baggageService);
+            _bookingController = new BookingController(_bookingService);
+            _paymentController = new PaymentController(_paymentService);
+
 
         }
 
+        public static void SetCurrentUser(User user)
+        {
+            CurrentUser = user;
+        }
         public static AirlineReservationDbContext CreateDb()
         {
             if (DbOptions == null)
@@ -102,5 +108,12 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         //flights
         public static FlightController FlightController => 
             _flightController ?? throw new Exception("Flight controller not initialized");
+        //booking
+        public static BookingController BookingController =>
+            _bookingController ?? throw new Exception("Booking controller not initialized");
+
+        //payment
+        public static PaymentController paymentController =>
+            _paymentController ?? throw new Exception("Payment controller not initialized");
     }
 }

@@ -14,7 +14,7 @@ namespace AirlineReservation_AR.src.Domain.DTOs
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
-
+        public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
 
         // Passport / CCCD
