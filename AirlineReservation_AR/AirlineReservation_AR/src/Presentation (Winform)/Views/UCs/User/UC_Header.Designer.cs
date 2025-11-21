@@ -61,7 +61,7 @@
             flowLayoutPanel1.Controls.Add(guna2Button3);
             flowLayoutPanel1.Controls.Add(guna2Button5);
             flowLayoutPanel1.Controls.Add(guna2Button6);
-            flowLayoutPanel1.Location = new Point(552, 38);
+            flowLayoutPanel1.Location = new Point(552, 6);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(1075, 94);
             flowLayoutPanel1.TabIndex = 2;
@@ -177,6 +177,7 @@
             guna2Button5.Size = new Size(180, 80);
             guna2Button5.TabIndex = 4;
             guna2Button5.Text = "My Tickets";
+            guna2Button5.Click += guna2Button5_Click;
             // 
             // guna2Button6
             // 
@@ -207,7 +208,7 @@
             picLogo.FillColor = Color.Transparent;
             picLogo.Image = Properties.Resources.logo_blacktext;
             picLogo.ImageRotate = 0F;
-            picLogo.Location = new Point(25, 38);
+            picLogo.Location = new Point(30, 14);
             picLogo.Margin = new Padding(0);
             picLogo.Name = "picLogo";
             picLogo.ShadowDecoration.CustomizableEdges = customizableEdges14;
@@ -220,7 +221,7 @@
             // 
             Controls.Add(pnlMain);
             Name = "UC_Header";
-            Size = new Size(1650, 240);
+            Size = new Size(1650, 100);
             pnlMain.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();

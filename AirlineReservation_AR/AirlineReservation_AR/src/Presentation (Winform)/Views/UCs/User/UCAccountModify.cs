@@ -198,7 +198,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             var gender = cboGender.SelectedValue.ToString();
             var address = txtAddress.Text.Trim();
             var cityCode = cboCity.SelectedValue?.ToString();
-
+            var user = DIContainer.CurrentUser;
             var ok = await _userService.UpdateAccountAsync(
                 UserSession.UserId,
                 fullName,
@@ -219,8 +219,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             UserSession.FullName = fullName;
             UserSession.Phone = phone;
 
-            var parentForm = this.FindForm() as UserDashboard;
-            parentForm?.RefreshUserInfoOnNav();
+            //var parentForm = this.FindForm() as UserDashboard;
+            //parentForm?.RefreshUserInfoOnNav();
 
             MessageBox.Show("Account updated.",
                 "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

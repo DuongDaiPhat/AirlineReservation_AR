@@ -22,5 +22,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
         Task<bool> CheckInAsync(Guid ticketId, string seatNumber);
         Task<bool> UpdateStatusAsync(Guid ticketId, string status);
         Task<bool> UpdateSeatAsync(Guid ticketId, string newSeatNumber);
+
+        Task CreateTicketsAsync(int bookingId, int flightId, int seatClassId);
     }
 }

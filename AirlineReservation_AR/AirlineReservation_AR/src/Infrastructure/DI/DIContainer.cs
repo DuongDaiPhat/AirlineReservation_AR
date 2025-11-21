@@ -20,6 +20,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
     public static class DIContainer
     {
         private static IConfiguration? _config;
+        public static User CurrentUser { get; private set; }
         public static DbContextOptions<AirlineReservationDbContext>? DbOptions { get; private set; }
 
         private static PasswordHasher? _hasher;
@@ -36,11 +37,12 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static IFlightService? _flightService;
         private static FlightController? _flightController;
 
-        //private static IBookingServiceService? _bookingServive;
-        //private static BookingController? _bookingController;
-
         private static IBookingService? _bookingService;
         private static BookingController? _bookingController;
+
+        private static IPaymentService? _paymentService;
+        private static PaymentController? _paymentController;
+
         public static void Init()
         {
             _config = new ConfigurationBuilder()
@@ -63,17 +65,28 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _userService = new UserService();
             _cityService = new CityService();
             _flightService = new FlightService();
+            _bookingService = new Application.Services.BookingService();
+            _paymentService = new PaymentService();
+
+
 
             // Controller layer giữ nguyên
             _authController = new AuthenticationController(_authService);
             _userContrller = new UserContrller(_userService);
             _cityController = new CityController(_cityService);
             _flightController = new FlightController(_flightService);
+            _bookingController = new BookingController(_bookingService);
+            _paymentController = new PaymentController(_paymentService);
+
 
             _bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
             _bookingController = new BookingController(_bookingService);
         }
 
+        public static void SetCurrentUser(User user)
+        {
+            CurrentUser = user;
+        }
         public static AirlineReservationDbContext CreateDb()
         {
             if (DbOptions == null)
@@ -97,11 +110,12 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         //flights
         public static FlightController FlightController => 
             _flightController ?? throw new Exception("Flight controller not initialized");
-
+        //booking
         public static BookingController BookingController =>
             _bookingController ?? throw new Exception("Booking controller not initialized");
 
-        //public static IBookingService BookingService =>
-        //    _bookingService ?? throw new Exception("BookingService not initialized");
+        //payment
+        public static PaymentController paymentController =>
+            _paymentController ?? throw new Exception("Payment controller not initialized");
     }
 }

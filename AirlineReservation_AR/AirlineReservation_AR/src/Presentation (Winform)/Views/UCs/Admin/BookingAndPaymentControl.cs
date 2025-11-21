@@ -89,7 +89,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             cboStatusBooking.SelectedIndexChanged += (s, e) => ApplyFilters();
             cboStatusPayment.SelectedIndexChanged += (s, e) => ApplyFilters();
 
-            dgvBooking.CellContentClick += DgvBooking_CellContentClick;
+            //dgvBooking.CellContentClick += DgvBooking_CellContentClick;
         }
 
         private void PopulateComboBoxes()
@@ -163,22 +163,22 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
         }
 
-        private async void DgvBooking_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.ColumnIndex != colThaoTac.Index) return;
+        //private async void DgvBooking_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.RowIndex < 0 || e.ColumnIndex != colThaoTac.Index) return;
 
-            var refCode = dgvBooking.Rows[e.RowIndex].Cells[colBookingID.Index].Value?.ToString();
-            if (string.IsNullOrEmpty(refCode)) return;
+        //    var refCode = dgvBooking.Rows[e.RowIndex].Cells[colBookingID.Index].Value?.ToString();
+        //    if (string.IsNullOrEmpty(refCode)) return;
 
-            var menu = new ContextMenuStrip();
-            menu.Font = new Font("Segoe UI", 9.5F);
+        //    var menu = new ContextMenuStrip();
+        //    menu.Font = new Font("Segoe UI", 9.5F);
 
-            menu.Items.Add("Xem chi tiết vé", Properties.Resources.booking ?? null, async (s, ev) => await ViewBookingDetailAsync(refCode));
-            menu.Items.Add("Xác nhận thanh toán", Properties.Resources.booking ?? null, async (s, ev) => await ConfirmBookingAsync(refCode));
-            menu.Items.Add("Hủy đặt chỗ", Properties.Resources.booking ?? null, async (s, ev) => await CancelBookingAsync(refCode));
+        //    menu.Items.Add("Xem chi tiết vé", Properties.Resources.booking ?? null, async (s, ev) => await ViewBookingDetailAsync(refCode));
+        //    menu.Items.Add("Xác nhận thanh toán", Properties.Resources.booking ?? null, async (s, ev) => await ConfirmBookingAsync(refCode));
+        //    menu.Items.Add("Hủy đặt chỗ", Properties.Resources.booking ?? null, async (s, ev) => await CancelBookingAsync(refCode));
 
-            menu.Show(dgvBooking, dgvBooking.PointToClient(Cursor.Position));
-        }
+        //    menu.Show(dgvBooking, dgvBooking.PointToClient(Cursor.Position));
+        //}
 
         private async Task ViewBookingDetailAsync(string bookingRef)
         {
@@ -201,46 +201,46 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private async Task ConfirmBookingAsync(string bookingRef)
-        {
-            var confirm = MessageBox.Show(
-                $"Xác nhận thanh toán và kích hoạt vé cho mã đặt chỗ:\n{bookingRef}\n\nBạn có chắc chắn?",
-                "Xác nhận thanh toán", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        //private async Task ConfirmBookingAsync(string bookingRef)
+        //{
+        //    var confirm = MessageBox.Show(
+        //        $"Xác nhận thanh toán và kích hoạt vé cho mã đặt chỗ:\n{bookingRef}\n\nBạn có chắc chắn?",
+        //        "Xác nhận thanh toán", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            if (confirm == DialogResult.Yes)
-            {
-                var success = await _bookingController.ConfirmBookingAsync(bookingRef);
-                if (success)
-                {
-                    MessageBox.Show("Đã xác nhận thanh toán thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    await LoadBookingsAsync(); // Refresh lại danh sách
-                }
-                else
-                {
-                    MessageBox.Show("Xác nhận thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
+        //    if (confirm == DialogResult.Yes)
+        //    {
+        //        var success = await _bookingController.ConfirmBookingAsync(bookingRef);
+        //        if (success)
+        //        {
+        //            MessageBox.Show("Đã xác nhận thanh toán thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //            await LoadBookingsAsync(); // Refresh lại danh sách
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Xác nhận thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //    }
+        //}
 
-        private async Task CancelBookingAsync(string bookingRef)
-        {
-            var confirm = MessageBox.Show(
-                $"Bạn có chắc muốn HỦY đặt chỗ:\n{bookingRef}\n\nHành khách sẽ được hoàn tiền (nếu có).",
-                "Xác nhận hủy", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        //private async Task CancelBookingAsync(string bookingRef)
+        //{
+        //    var confirm = MessageBox.Show(
+        //        $"Bạn có chắc muốn HỦY đặt chỗ:\n{bookingRef}\n\nHành khách sẽ được hoàn tiền (nếu có).",
+        //        "Xác nhận hủy", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-            if (confirm == DialogResult.Yes)
-            {
-                var success = await _bookingController.CancelBookingAsync(bookingRef);
-                if (success)
-                {
-                    MessageBox.Show("Đã hủy đặt chỗ thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    await LoadBookingsAsync();
-                }
-                else
-                {
-                    MessageBox.Show("Hủy thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
+        //    if (confirm == DialogResult.Yes)
+        //    {
+        //        var success = await _bookingController.CancelBookingAsync(bookingRef);
+        //        if (success)
+        //        {
+        //            MessageBox.Show("Đã hủy đặt chỗ thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //            await LoadBookingsAsync();
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Hủy thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //    }
+        //}
     }
 }

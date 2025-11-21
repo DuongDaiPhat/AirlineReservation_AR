@@ -15,7 +15,9 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
         public DateTime? DateOfBirth { get; set; }
         public string? Gender { get; set; }
         public string? IdNumber { get; set; }
-
+        public string? Nationality {get; set; }
+        public string? CountryIssue { get; set; }
+        public DateTime? ExpireDatePassport { get; set; }
         public Booking Booking { get; set; } = null!;
         public ICollection<BookingService> BookingServices { get; set; } = new HashSet<BookingService>();
         public ICollection<Ticket> Tickets { get; set; } = new HashSet<Ticket>();

@@ -13,9 +13,17 @@ namespace MomoQR
 {
     public partial class MomoQR : Form
     {
+        private int _bookingId;
+        private decimal _amount;
         public MomoQR()
         {
             InitializeComponent();
+        }
+        public void SetPayment(int bookingId, decimal amount)
+        {
+            _bookingId = bookingId;
+            _amount = amount;
+            txtAmount.Text = amount.ToString("N0");
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -33,25 +41,11 @@ namespace MomoQR
 
         private async void payButton_Click(object sender, EventArgs e)
         {
-            string amount = txtAmount.Text.Trim();
-            if (string.IsNullOrEmpty(amount))
-            {
-                MessageBox.Show("Please enter an amount!", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else if (long.TryParse(amount, out long amountValue) && amountValue > 0)
-            {
-                MessageBox.Show($"Processing payment of {amountValue:N0} VND...\n\nRedirecting to Momo...",
-                    "Payment Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var momo = new MomoService();
+            await momo.CreatePaymentAsync(_bookingId, (long)_amount);
 
-                var momo = new MomoService();
-                await momo.CreatePaymentAsync(amountValue);
-            }
-            else
-            {
-                MessageBox.Show("Please enter a valid amount!", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            MessageBox.Show("Redirecting to MoMo…");
+            this.Close();
         }
 
         private void payButton_MouseEnter(object sender, EventArgs e)
@@ -63,5 +57,8 @@ namespace MomoQR
         {
             payButton.BackColor = Color.FromArgb(220, 53, 69);
         }
+
     }
 }
+
+

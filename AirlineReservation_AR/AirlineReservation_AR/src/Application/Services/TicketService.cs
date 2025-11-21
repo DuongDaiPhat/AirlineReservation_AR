@@ -4,18 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.Infrastructure.DI;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 {
     public class TicketService : ITicketService
     {
-        private readonly AirlineReservationDbContext _db;
-
-        public TicketService(AirlineReservationDbContext db)
-        {
-            _db = db;
-        }
 
         public async Task<Ticket> CreateTicketAsync(
             int bookingFlightId,
@@ -25,6 +20,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             decimal? taxes,
             decimal? fees)
         {
+            using var _db = DIContainer.CreateDb();
             var bookingFlight = await _db.BookingFlights
                 .FirstOrDefaultAsync(x => x.BookingFlightId == bookingFlightId);
 
@@ -67,6 +63,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<Ticket?> GetTicketByIdAsync(Guid ticketId)
         {
+            using var _db = DIContainer.CreateDb();
             return await _db.Tickets
                 .Include(t => t.BookingFlight)
                 .Include(t => t.Passenger)
@@ -76,6 +73,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<IEnumerable<Ticket>> GetTicketsByPassengerAsync(int passengerId)
         {
+            using var _db = DIContainer.CreateDb();
             return await _db.Tickets
                 .Where(t => t.PassengerId == passengerId)
                 .Include(t => t.BookingFlight)
@@ -84,6 +82,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<IEnumerable<Ticket>> GetTicketsByBookingFlightAsync(int bookingFlightId)
         {
+            using var _db = DIContainer.CreateDb();
             return await _db.Tickets
                 .Where(t => t.BookingFlightId == bookingFlightId)
                 .Include(t => t.Passenger)
@@ -92,6 +91,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<bool> CheckInAsync(Guid ticketId, string seatNumber)
         {
+            using var _db = DIContainer.CreateDb();
             var ticket = await _db.Tickets.FindAsync(ticketId);
             if (ticket == null) return false;
 
@@ -105,6 +105,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<bool> UpdateStatusAsync(Guid ticketId, string status)
         {
+            using var _db = DIContainer.CreateDb();
             var ticket = await _db.Tickets.FindAsync(ticketId);
             if (ticket == null) return false;
 
@@ -116,6 +117,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
         public async Task<bool> UpdateSeatAsync(Guid ticketId, string newSeatNumber)
         {
+            using var _db = DIContainer.CreateDb();
             var ticket = await _db.Tickets.FindAsync(ticketId);
             if (ticket == null) return false;
 
@@ -123,6 +125,26 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
             await _db.SaveChangesAsync();
             return true;
+        }
+
+        public async Task CreateTicketsAsync(int bookingId, int flightId, int seatClassId)
+        {
+            using var _db = DIContainer.CreateDb();
+            var passengers = _db.Passengers.Where(p => p.BookingId == bookingId).ToList();
+            var bf = _db.BookingFlights.First(b => b.BookingId == bookingId && b.FlightId == flightId);
+
+            foreach (var p in passengers)
+            {
+                _db.Tickets.Add(new Ticket
+                {
+                    TicketId = Guid.NewGuid(),
+                    BookingFlightId = bf.BookingFlightId,
+                    PassengerId = p.PassengerId,
+                    SeatClassId = seatClassId
+                });
+            }
+
+            await _db.SaveChangesAsync();
         }
     }
 }

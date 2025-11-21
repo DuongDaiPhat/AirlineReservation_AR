@@ -46,6 +46,14 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
 
             builder.Property(p => p.IdNumber)
                 .HasMaxLength(20);
+            builder.Property(p => p.Nationality)
+                .HasMaxLength(100)
+                .IsRequired(false);
+            builder.Property(p => p.ExpireDatePassport)
+                .HasColumnType("date");
+            builder.Property(p => p.CountryIssue)
+                .HasMaxLength(100)
+                .IsRequired(false);
 
             builder.HasCheckConstraint("CK_Passenger_Type", "[PassengerType] IN ('Adult','Child','Infant')");
             builder.HasCheckConstraint("CK_Passenger_Gender", "[Gender] IS NULL OR [Gender] IN ('M','F','O')");

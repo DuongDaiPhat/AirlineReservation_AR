@@ -96,6 +96,7 @@
             this.btnSelect.Size = new System.Drawing.Size(80, 36);
             this.btnSelect.BackColor = System.Drawing.Color.Transparent;
             this.btnSelect.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSelect.Click += btnSelect_Click;
 
             // Add Controls
             this.Controls.Add(this.picLogo);

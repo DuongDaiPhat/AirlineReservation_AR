@@ -111,6 +111,7 @@ namespace MomoQR
             txtAmount.ForeColor = Color.FromArgb(165, 0, 100);
             txtAmount.Location = new Point(20, 40);
             txtAmount.Name = "txtAmount";
+            txtAmount.ReadOnly = true;
             txtAmount.Size = new Size(360, 43);
             txtAmount.TabIndex = 9;
             txtAmount.Text = "5000";
@@ -262,7 +263,6 @@ namespace MomoQR
             ((System.ComponentModel.ISupportInitialize)picWallet).EndInit();
             panelFooter.ResumeLayout(false);
             ResumeLayout(false);
-
         }
 
         #endregion
