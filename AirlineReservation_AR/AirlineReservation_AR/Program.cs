@@ -21,8 +21,7 @@ namespace AirlineReservation_AR
             AppSettingsLoader.Load();
             ApplicationConfiguration.Initialize();
             DIContainer.Init();
-            UserSession.Initialize(new Guid("D859D1B7-5B11-4F70-A069-75D818117DA8"), "iFat", "duongphat521@gmail.com", "0899492608");
-            Application.Run(new UserDashboard());
+            Application.Run(new SignInForm());
         }
     }
 }
