@@ -214,6 +214,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             _user.UserName = fullName;
             _user.Phone = phone;
 
+            DIContainer.CurrentUser.FullName = fullName;
+            DIContainer.CurrentUser.Phone = phone;
+            DIContainer.CurrentUser.Address = address;
+            DIContainer.CurrentUser.CityCode = cityCode;
+
             AccountUpdated?.Invoke(this, EventArgs.Empty);
             MessageBox.Show("Account updated.",
                 "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

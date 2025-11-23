@@ -17,6 +17,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
     public partial class UserDashboard : UserControl
     {
+        public event Action UpdatedUIRequest;
+        public event Action LogoutRequest;
         private UserDTO _user;
         private UserService _userService;
         public UserDashboard(UserDTO user)
@@ -41,30 +43,20 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         }
         private void btnPurchaseList_Click(object sender, EventArgs e)
         {
-            pnlContent.Controls.Clear();
-
-            var uc = new UCUserTransaction(_user);
-            uc.Dock = DockStyle.Fill;
-
-            pnlContent.Controls.Add(uc);
+            LoadMyPurchaseList();
         }
 
         private void btnAccount_Click(object sender, EventArgs e)
         {
-            pnlContent.Controls.Clear();
-
-            var uc = new UCAccountModify(_user);
-            uc.Dock = DockStyle.Fill;
-            uc.AccountUpdated += UcAccountModify_AccountUpdated;
-
-            pnlContent.Controls.Add(uc);
+            LoadMyAccountModify();
         }
-        private async void  UcAccountModify_AccountUpdated(object? sender, EventArgs e)
+        private async void UcAccountModify_AccountUpdated(object? sender, EventArgs e)
         {
             await LoadUserInfoAsync();
+            UpdatedUIRequest?.Invoke();
         }
 
-        private void LoadMyBookingPage()
+        public void LoadMyBookingPage()
         {
             pnlContent.Controls.Clear();
 
@@ -77,6 +69,32 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlContent.Controls.Add(page);
 
             //page.ShowEmptyState();
+        }
+        public void LoadMyPurchaseList()
+        {
+            pnlContent.Controls.Clear();
+
+            var uc = new UCUserTransaction(_user);
+            uc.Dock = DockStyle.Fill;
+
+            pnlContent.Controls.Add(uc);
+        }
+
+        public void LoadMyAccountModify()
+        {
+            pnlContent.Controls.Clear();
+
+            var uc = new UCAccountModify(_user);
+            uc.Dock = DockStyle.Fill;
+            uc.AccountUpdated += UcAccountModify_AccountUpdated;
+
+            pnlContent.Controls.Add(uc);
+
+        }
+
+        public void Logout()
+        {
+
         }
 
         private async Task LoadUserInfoAsync()
@@ -100,7 +118,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             if (string.IsNullOrWhiteSpace(fullName))
                 return "?";
 
-            // Lọc chỉ giữ lại chữ cái
             var letters = new string(fullName
                 .Where(char.IsLetter)
                 .ToArray());
@@ -116,14 +133,13 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             return letters.Substring(0, 2);
         }
 
-       
+
 
         public void RefreshUserInfoOnNav()
         {
             txtName.Text = _user.UserName ?? "";
             txtEmail.Text = _user.Email ?? "";
 
-            // Nếu em có circle button hiển thị 2 chữ cái tên:
             string initials = "";
             if (!string.IsNullOrWhiteSpace(_user.UserName))
             {
@@ -134,10 +150,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                     initials = char.ToUpper(parts[0][0]).ToString();
             }
 
-            cbtnUserAcronym.Text = initials; // hoặc cbtnUserAcronym nếu em đổi tên
+            cbtnUserAcronym.Text = initials;
         }
 
-        
-
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            LogoutRequest?.Invoke();
+        }
     }
 }
