@@ -1,9 +1,10 @@
-using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 using AirlineReservation_AR.src.Infrastructure.DI;
-using AR_Winform.Presentation.Forms;
+using AirlineReservation_AR.src.Presentation__Winform_.Helpers;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User;
+using AR_Winform.Presentation.Forms;
 namespace AirlineReservation_AR
 {
     internal static class Program
@@ -18,7 +19,8 @@ namespace AirlineReservation_AR
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             DIContainer.Init();
-            Application.Run(new SignInForm());
+            UserSession.Initialize(new Guid("D859D1B7-5B11-4F70-A069-75D818117DA8"), "iFat", "duongphat521@gmail.com", "0899492608");
+            Application.Run(new UserDashboard());
         }
     }
 }

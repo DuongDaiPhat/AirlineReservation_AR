@@ -72,7 +72,7 @@
             guna2HtmlLabel1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             guna2HtmlLabel1.Location = new Point(0, 0);
             guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            guna2HtmlLabel1.Size = new Size(241, 33);
+            guna2HtmlLabel1.Size = new Size(840, 33);
             guna2HtmlLabel1.TabIndex = 0;
             guna2HtmlLabel1.Text = "Modify Your Account!";
             // 
