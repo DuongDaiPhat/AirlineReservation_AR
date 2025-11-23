@@ -1,6 +1,6 @@
 ﻿namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
-    partial class UserDashboard
+    partial class UCUserProfile
     {
         /// <summary> 
         /// Required designer variable.
@@ -20,10 +20,10 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -47,11 +47,9 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             pnlNavigation = new Guna.UI2.WinForms.Guna2Panel();
             btnMyCard = new Guna.UI2.WinForms.Guna2Button();
-            btnLogout = new Guna.UI2.WinForms.Guna2Button();
+            btnLogOut = new Guna.UI2.WinForms.Guna2Button();
             btnAccount = new Guna.UI2.WinForms.Guna2Button();
             guna2Separator3 = new Guna.UI2.WinForms.Guna2Separator();
             guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
@@ -64,16 +62,13 @@
             txtEmail = new Guna.UI2.WinForms.Guna2HtmlLabel();
             txtName = new Guna.UI2.WinForms.Guna2HtmlLabel();
             cbtnUserAcronym = new Guna.UI2.WinForms.Guna2CircleButton();
-            pnlContent = new Guna.UI2.WinForms.Guna2Panel();
-            guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             pnlNavigation.SuspendLayout();
-            pnlContent.SuspendLayout();
             SuspendLayout();
             // 
             // pnlNavigation
             // 
             pnlNavigation.Controls.Add(btnMyCard);
-            pnlNavigation.Controls.Add(btnLogout);
+            pnlNavigation.Controls.Add(btnLogOut);
             pnlNavigation.Controls.Add(btnAccount);
             pnlNavigation.Controls.Add(guna2Separator3);
             pnlNavigation.Controls.Add(guna2Button5);
@@ -87,12 +82,13 @@
             pnlNavigation.Controls.Add(txtName);
             pnlNavigation.Controls.Add(cbtnUserAcronym);
             pnlNavigation.CustomizableEdges = customizableEdges18;
+            pnlNavigation.Dock = DockStyle.Fill;
             pnlNavigation.FillColor = Color.White;
-            pnlNavigation.Location = new Point(73, 33);
+            pnlNavigation.Location = new Point(0, 0);
             pnlNavigation.Name = "pnlNavigation";
             pnlNavigation.ShadowDecoration.CustomizableEdges = customizableEdges19;
             pnlNavigation.Size = new Size(393, 523);
-            pnlNavigation.TabIndex = 4;
+            pnlNavigation.TabIndex = 5;
             // 
             // btnMyCard
             // 
@@ -118,29 +114,29 @@
             btnMyCard.Text = "My Card";
             btnMyCard.TextAlign = HorizontalAlignment.Left;
             // 
-            // btnLogout
+            // btnLogOut
             // 
-            btnLogout.CustomizableEdges = customizableEdges3;
-            btnLogout.DisabledState.BorderColor = Color.DarkGray;
-            btnLogout.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnLogout.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnLogout.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnLogout.FillColor = Color.White;
-            btnLogout.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold);
-            btnLogout.ForeColor = Color.IndianRed;
-            btnLogout.Image = Properties.Resources.logout;
-            btnLogout.ImageAlign = HorizontalAlignment.Left;
-            btnLogout.ImageOffset = new Point(10, 0);
-            btnLogout.ImageSize = new Size(25, 25);
-            btnLogout.Location = new Point(0, 469);
-            btnLogout.Name = "btnLogout";
-            btnLogout.Padding = new Padding(10, 0, 0, 0);
-            btnLogout.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            btnLogout.Size = new Size(393, 53);
-            btnLogout.TabIndex = 26;
-            btnLogout.Text = "Log out";
-            btnLogout.TextAlign = HorizontalAlignment.Left;
-            btnLogout.Click += btnLogout_Click;
+            btnLogOut.CustomizableEdges = customizableEdges3;
+            btnLogOut.DisabledState.BorderColor = Color.DarkGray;
+            btnLogOut.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnLogOut.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnLogOut.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnLogOut.FillColor = Color.White;
+            btnLogOut.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold);
+            btnLogOut.ForeColor = Color.IndianRed;
+            btnLogOut.Image = Properties.Resources.logout;
+            btnLogOut.ImageAlign = HorizontalAlignment.Left;
+            btnLogOut.ImageOffset = new Point(10, 0);
+            btnLogOut.ImageSize = new Size(25, 25);
+            btnLogOut.Location = new Point(0, 469);
+            btnLogOut.Name = "btnLogOut";
+            btnLogOut.Padding = new Padding(10, 0, 0, 0);
+            btnLogOut.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btnLogOut.Size = new Size(393, 53);
+            btnLogOut.TabIndex = 26;
+            btnLogOut.Text = "Log out";
+            btnLogOut.TextAlign = HorizontalAlignment.Left;
+            btnLogOut.Click += btnLogOut_Click;
             // 
             // btnAccount
             // 
@@ -164,6 +160,7 @@
             btnAccount.TabIndex = 25;
             btnAccount.Text = "Account";
             btnAccount.TextAlign = HorizontalAlignment.Left;
+            btnAccount.Click += btnAccount_Click;
             // 
             // guna2Separator3
             // 
@@ -218,6 +215,7 @@
             btnPurchaseList.TabIndex = 20;
             btnPurchaseList.Text = "Transactions";
             btnPurchaseList.TextAlign = HorizontalAlignment.Left;
+            btnPurchaseList.Click += btnPurchaseList_Click;
             // 
             // btnMyBooking
             // 
@@ -241,6 +239,7 @@
             btnMyBooking.TabIndex = 18;
             btnMyBooking.Text = "My Bookings";
             btnMyBooking.TextAlign = HorizontalAlignment.Left;
+            btnMyBooking.Click += btnMyBooking_Click;
             // 
             // guna2Separator2
             // 
@@ -337,48 +336,23 @@
             cbtnUserAcronym.TabIndex = 28;
             cbtnUserAcronym.Text = "T";
             // 
-            // pnlContent
-            // 
-            pnlContent.Controls.Add(guna2HtmlLabel1);
-            pnlContent.CustomizableEdges = customizableEdges20;
-            pnlContent.FillColor = Color.WhiteSmoke;
-            pnlContent.Location = new Point(489, 33);
-            pnlContent.Name = "pnlContent";
-            pnlContent.ShadowDecoration.CustomizableEdges = customizableEdges21;
-            pnlContent.Size = new Size(856, 876);
-            pnlContent.TabIndex = 5;
-            // 
-            // guna2HtmlLabel1
-            // 
-            guna2HtmlLabel1.BackColor = Color.Transparent;
-            guna2HtmlLabel1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            guna2HtmlLabel1.ForeColor = SystemColors.ControlDarkDark;
-            guna2HtmlLabel1.Location = new Point(33, 21);
-            guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            guna2HtmlLabel1.Size = new Size(559, 33);
-            guna2HtmlLabel1.TabIndex = 0;
-            guna2HtmlLabel1.Text = "Select the left-side buttons to manage your account";
-            // 
-            // UserDashboard
+            // UCUserProfile
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(pnlContent);
             Controls.Add(pnlNavigation);
-            Name = "UserDashboard";
-            Size = new Size(1422, 1033);
+            Name = "UCUserProfile";
+            Size = new Size(393, 523);
             pnlNavigation.ResumeLayout(false);
             pnlNavigation.PerformLayout();
-            pnlContent.ResumeLayout(false);
-            pnlContent.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
         private Guna.UI2.WinForms.Guna2Panel pnlNavigation;
-        private Guna.UI2.WinForms.Guna2Panel pnlContent;
-        private Guna.UI2.WinForms.Guna2Button btnLogout;
+        private Guna.UI2.WinForms.Guna2Button btnMyCard;
+        private Guna.UI2.WinForms.Guna2Button btnLogOut;
         private Guna.UI2.WinForms.Guna2Button btnAccount;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator3;
         private Guna.UI2.WinForms.Guna2Button guna2Button5;
@@ -390,9 +364,6 @@
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private Guna.UI2.WinForms.Guna2HtmlLabel txtEmail;
         private Guna.UI2.WinForms.Guna2HtmlLabel txtName;
-        private Guna.UI2.WinForms.Guna2Button btnMyCard;
         private Guna.UI2.WinForms.Guna2CircleButton cbtnUserAcronym;
-        private UCs.User.UC_Header uC_Header1;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
     }
 }
