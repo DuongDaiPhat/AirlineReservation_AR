@@ -12,5 +12,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
 
         public Flight Flight { get; set; } = null!;
         public SeatClass SeatClass { get; set; } = null!;
+
+
     }
 }

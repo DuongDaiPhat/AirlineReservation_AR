@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
@@ -124,27 +125,40 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 10, // top
                 0,
                 10  // bottom
-                );  
+                );
+                card.OnSelected += (selectedFlight) =>
+                {
+                    OpenFilloutInform(selectedFlight);
+                };
+
                 flowFlightCards.Controls.Add(card);
             }
         }
 
-        //private void RenderAirlineFilters(List<AirlineFilterDTO> list)
-        //{
-        //    flowFilters.Controls.Clear();
+        private void RenderAirlineFilters(List<AirlineFilterDTO> list)
+        {
+            airlineCombobox.Items.Clear();
 
-        //    foreach (var a in list)
-        //    {
-        //        var chk = new Guna2CheckBox
-        //        {
-        //            Text = a.AirlineName,
-        //            Font = new Font("Segoe UI", 10),
-        //            AutoSize = true,
-        //            Margin = new Padding(5)
-        //        };
+            foreach (var a in list)
+            {
+                airlineCombobox.Items.Add(a.AirlineName);
+            }
 
-        //        flowFilters.Controls.Add(chk);
-        //    }
-        //}
+
+        }
+        
+
+        private void OpenFilloutInform(FlightResultDTO flight)
+        {
+            var form = this.FindForm() as MainTravelokaForm;
+            if (form == null) return;
+
+            var screen = new UC_FilloutInform();
+            screen.SetFlightData(flight, _params); // truyền dữ liệu search + flight đã chọn
+
+            form.SwitchScreen(screen);
+        }
+        
+
     }
 }

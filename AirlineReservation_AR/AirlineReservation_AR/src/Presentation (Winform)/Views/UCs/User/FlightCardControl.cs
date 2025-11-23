@@ -8,6 +8,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
     public partial class FlightCardControl : Guna2Panel
     {
+        public event Action<FlightResultDTO> OnSelected;
+        private FlightResultDTO _dto;
         public FlightCardControl()
         {
             InitializeComponent();
@@ -36,7 +38,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         // Constructor runtime để truyền DTO
         public FlightCardControl(FlightResultDTO dto, bool highlight = false) : this()
         {
+            _dto = dto;
             BindData(dto, highlight);
+
         }
 
         // === Bind dữ liệu vào UI ===
@@ -86,6 +90,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 this.ShadowDecoration.Depth = 8;
                 this.BorderColor = Color.FromArgb(230, 230, 230);
             }
+        }
+
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
+            OnSelected?.Invoke(_dto);
         }
     }
 }

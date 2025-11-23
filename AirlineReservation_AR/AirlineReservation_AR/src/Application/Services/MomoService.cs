@@ -8,15 +8,26 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AirlineReservation_AR.src.Infrastructure.DI;
 
 namespace MomoQR
 {
     public class MomoService
     {
-        public async Task CreatePaymentAsync(long amount)
+        public async Task CreatePaymentAsync(int bookingId, long amount)
         {
             string orderId = Guid.NewGuid().ToString();
             string requestId = Guid.NewGuid().ToString();
+
+            using (var db = DIContainer.CreateDb())
+            {
+                var bk = db.Bookings.FirstOrDefault(b => b.BookingId == bookingId);
+                if (bk != null)
+                {
+                    bk.Status = "Pending";
+                    db.SaveChanges();
+                }
+            }
 
             // Quan trọng: KHÔNG DẤU hoặc ENCODE
             string orderInfo = "WinForms thanh toan";
