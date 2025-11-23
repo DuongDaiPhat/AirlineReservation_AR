@@ -79,7 +79,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _paymentController = new PaymentController(_paymentService);
 
 
-            _bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
+            //_bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
             _bookingController = new BookingController(_bookingService);
         }
 

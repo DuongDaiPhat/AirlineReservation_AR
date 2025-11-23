@@ -43,7 +43,7 @@
             guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             panelHistory = new Guna.UI2.WinForms.Guna2Panel();
             pnlPaymentHistoryHolder = new Guna.UI2.WinForms.Guna2Panel();
-            guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            txtCheckMyTransaction = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel5 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel6 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -110,7 +110,7 @@
             // 
             pnlPaymentHistoryHolder.BackColor = Color.White;
             pnlPaymentHistoryHolder.BorderRadius = 50;
-            pnlPaymentHistoryHolder.Controls.Add(guna2HtmlLabel4);
+            pnlPaymentHistoryHolder.Controls.Add(txtCheckMyTransaction);
             pnlPaymentHistoryHolder.CustomizableEdges = customizableEdges3;
             pnlPaymentHistoryHolder.Location = new Point(0, 45);
             pnlPaymentHistoryHolder.Name = "pnlPaymentHistoryHolder";
@@ -118,15 +118,17 @@
             pnlPaymentHistoryHolder.Size = new Size(856, 65);
             pnlPaymentHistoryHolder.TabIndex = 4;
             // 
-            // guna2HtmlLabel4
+            // txtCheckMyTransaction
             // 
-            guna2HtmlLabel4.BackColor = Color.Transparent;
-            guna2HtmlLabel4.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            guna2HtmlLabel4.Location = new Point(25, 19);
-            guna2HtmlLabel4.Name = "guna2HtmlLabel4";
-            guna2HtmlLabel4.Size = new Size(254, 27);
-            guna2HtmlLabel4.TabIndex = 0;
-            guna2HtmlLabel4.Text = "Check your transaction history";
+            txtCheckMyTransaction.BackColor = Color.Transparent;
+            txtCheckMyTransaction.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtCheckMyTransaction.ForeColor = Color.Black;
+            txtCheckMyTransaction.Location = new Point(25, 19);
+            txtCheckMyTransaction.Name = "txtCheckMyTransaction";
+            txtCheckMyTransaction.Size = new Size(254, 27);
+            txtCheckMyTransaction.TabIndex = 0;
+            txtCheckMyTransaction.Text = "Check your transaction history";
+            txtCheckMyTransaction.Click += txtCheckMyTransaction_Click;
             // 
             // guna2HtmlLabel3
             // 
@@ -268,7 +270,7 @@
         private FlowLayoutPanel fpnlPendingTicketHolder;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel3;
         private Guna.UI2.WinForms.Guna2Panel pnlPaymentHistoryHolder;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel4;
+        private Guna.UI2.WinForms.Guna2HtmlLabel txtCheckMyTransaction;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel5;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel6;
         private FlowLayoutPanel panelActiveTicket;

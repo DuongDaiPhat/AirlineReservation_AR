@@ -34,8 +34,8 @@
             guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
-            guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
-            guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
+            btnBookings = new Guna.UI2.WinForms.Guna2Button();
+            btnMyTickets = new Guna.UI2.WinForms.Guna2Button();
             guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
             picLogo = new Guna.UI2.WinForms.Guna2PictureBox();
             pnlMain.SuspendLayout();
@@ -58,8 +58,8 @@
             flowLayoutPanel1.Controls.Add(guna2Button1);
             flowLayoutPanel1.Controls.Add(guna2Button2);
             flowLayoutPanel1.Controls.Add(guna2Button4);
-            flowLayoutPanel1.Controls.Add(guna2Button3);
-            flowLayoutPanel1.Controls.Add(guna2Button5);
+            flowLayoutPanel1.Controls.Add(btnBookings);
+            flowLayoutPanel1.Controls.Add(btnMyTickets);
             flowLayoutPanel1.Controls.Add(guna2Button6);
             flowLayoutPanel1.Location = new Point(552, 6);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -134,50 +134,51 @@
             guna2Button4.TabIndex = 3;
             guna2Button4.Text = "Support";
             // 
-            // guna2Button3
+            // btnBookings
             // 
-            guna2Button3.BorderColor = Color.Transparent;
-            guna2Button3.BorderRadius = 10;
-            guna2Button3.BorderThickness = 1;
-            guna2Button3.CustomizableEdges = customizableEdges7;
-            guna2Button3.DisabledState.BorderColor = Color.DarkGray;
-            guna2Button3.DisabledState.CustomBorderColor = Color.DarkGray;
-            guna2Button3.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            guna2Button3.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            guna2Button3.FillColor = Color.White;
-            guna2Button3.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            guna2Button3.ForeColor = Color.Black;
-            guna2Button3.Image = Properties.Resources.order;
-            guna2Button3.ImageSize = new Size(35, 35);
-            guna2Button3.Location = new Point(521, 3);
-            guna2Button3.Name = "guna2Button3";
-            guna2Button3.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            guna2Button3.Size = new Size(160, 80);
-            guna2Button3.TabIndex = 2;
-            guna2Button3.Text = "Bookings";
+            btnBookings.BorderColor = Color.Transparent;
+            btnBookings.BorderRadius = 10;
+            btnBookings.BorderThickness = 1;
+            btnBookings.CustomizableEdges = customizableEdges7;
+            btnBookings.DisabledState.BorderColor = Color.DarkGray;
+            btnBookings.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnBookings.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnBookings.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnBookings.FillColor = Color.White;
+            btnBookings.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnBookings.ForeColor = Color.Black;
+            btnBookings.Image = Properties.Resources.order;
+            btnBookings.ImageSize = new Size(35, 35);
+            btnBookings.Location = new Point(521, 3);
+            btnBookings.Name = "btnBookings";
+            btnBookings.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnBookings.Size = new Size(160, 80);
+            btnBookings.TabIndex = 2;
+            btnBookings.Text = "Bookings";
+            btnBookings.Click += btnBookings_Click;
             // 
-            // guna2Button5
+            // btnMyTickets
             // 
-            guna2Button5.BorderColor = Color.Transparent;
-            guna2Button5.BorderRadius = 10;
-            guna2Button5.BorderThickness = 1;
-            guna2Button5.CustomizableEdges = customizableEdges9;
-            guna2Button5.DisabledState.BorderColor = Color.DarkGray;
-            guna2Button5.DisabledState.CustomBorderColor = Color.DarkGray;
-            guna2Button5.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            guna2Button5.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            guna2Button5.FillColor = Color.White;
-            guna2Button5.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            guna2Button5.ForeColor = Color.Black;
-            guna2Button5.Image = Properties.Resources.airline_ticket;
-            guna2Button5.ImageSize = new Size(35, 35);
-            guna2Button5.Location = new Point(687, 3);
-            guna2Button5.Name = "guna2Button5";
-            guna2Button5.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            guna2Button5.Size = new Size(180, 80);
-            guna2Button5.TabIndex = 4;
-            guna2Button5.Text = "My Tickets";
-            guna2Button5.Click += guna2Button5_Click;
+            btnMyTickets.BorderColor = Color.Transparent;
+            btnMyTickets.BorderRadius = 10;
+            btnMyTickets.BorderThickness = 1;
+            btnMyTickets.CustomizableEdges = customizableEdges9;
+            btnMyTickets.DisabledState.BorderColor = Color.DarkGray;
+            btnMyTickets.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnMyTickets.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnMyTickets.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnMyTickets.FillColor = Color.White;
+            btnMyTickets.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnMyTickets.ForeColor = Color.Black;
+            btnMyTickets.Image = Properties.Resources.airline_ticket;
+            btnMyTickets.ImageSize = new Size(35, 35);
+            btnMyTickets.Location = new Point(687, 3);
+            btnMyTickets.Name = "btnMyTickets";
+            btnMyTickets.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            btnMyTickets.Size = new Size(180, 80);
+            btnMyTickets.TabIndex = 4;
+            btnMyTickets.Text = "My Tickets";
+            btnMyTickets.Click += btnMyTickets_Click;
             // 
             // guna2Button6
             // 
@@ -235,9 +236,9 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Guna.UI2.WinForms.Guna2Button guna2Button1;
         private Guna.UI2.WinForms.Guna2Button guna2Button2;
-        private Guna.UI2.WinForms.Guna2Button guna2Button3;
+        private Guna.UI2.WinForms.Guna2Button btnBookings;
         private Guna.UI2.WinForms.Guna2Button guna2Button4;
-        private Guna.UI2.WinForms.Guna2Button guna2Button5;
+        private Guna.UI2.WinForms.Guna2Button btnMyTickets;
         private Guna.UI2.WinForms.Guna2Button guna2Button6;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Application.Services;
+using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Helpers;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User;
@@ -18,13 +19,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
     public partial class UCAccountModify : UserControl
     {
         private readonly UserService _userService = new UserService();
+        private UserDTO _user;
+        public event EventHandler AccountUpdated;
 
         private bool _isLoading = false;
-        public UCAccountModify()
+        public UCAccountModify(UserDTO user)
         {
             InitializeComponent();
 
             this.Load += UCAccountModify_Load;
+            _user = user;
 
             // Gender combo basic
             cboGender.DisplayMember = "Text";
@@ -46,7 +50,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
         private async void UCAccountModify_Load(object sender, EventArgs e)
         {
-            if (UserSession.UserId == Guid.Empty)
+            if (_user.UserId == Guid.Empty)
             {
                 MessageBox.Show("User session is empty.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -71,19 +75,15 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
         private void TxtPhone_KeyPress(object? sender, KeyPressEventArgs e)
         {
-            // Cho phép phím control (Backspace, Delete, mũi tên...)
             if (char.IsControl(e.KeyChar))
                 return;
 
-            // Cho phép số
             if (char.IsDigit(e.KeyChar))
                 return;
 
-            // Nếu muốn cho phép dấu + ở đầu:
             if (e.KeyChar == '+' && txtPhone.SelectionStart == 0 && !txtPhone.Text.Contains("+"))
                 return;
 
-            // Còn lại: chặn
             e.Handled = true;
         }
         private void txtPhone_TextChanged(object sender, EventArgs e)
@@ -125,7 +125,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
         private async Task LoadUserProfileAsync()
         {
-            var user = await _userService.GetByIdAsync(UserSession.UserId);
+            var user = await _userService.GetByIdAsync(_user.UserId);
             if (user == null)
             {
                 MessageBox.Show("No user found.",
@@ -154,17 +154,13 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
                 if (city != null)
                 {
-                    // set country
                     cboCountry.SelectedValue = city.CountryCode;
-                    // load city theo country
                     await LoadCitiesByCountryAsync(city.CountryCode);
-                    // set city
                     cboCity.SelectedValue = user.CityCode;
                 }
             }
             else
             {
-                // Nếu user chưa có city, default country = VN
                 var vn = await db.Countries
                     .FirstOrDefaultAsync(c => c.CountryCode == "VNM");
                 if (vn != null)
@@ -195,12 +191,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             var fullName = txtFullName.Text.Trim();
             var phone = txtPhone.Text.Trim();
-            var gender = cboGender.SelectedValue.ToString();
+            var gender = cboGender.SelectedValue?.ToString();
             var address = txtAddress.Text.Trim();
             var cityCode = cboCity.SelectedValue?.ToString();
             var user = DIContainer.CurrentUser;
             var ok = await _userService.UpdateAccountAsync(
-                UserSession.UserId,
+                _user.UserId,
                 fullName,
                 phone,
                 gender,
@@ -215,13 +211,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 return;
             }
 
-            // Update UserSession
-            UserSession.FullName = fullName;
-            UserSession.Phone = phone;
+            _user.UserName = fullName;
+            _user.Phone = phone;
 
-            //var parentForm = this.FindForm() as UserDashboard;
-            //parentForm?.RefreshUserInfoOnNav();
-
+            AccountUpdated?.Invoke(this, EventArgs.Empty);
             MessageBox.Show("Account updated.",
                 "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -272,6 +265,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             }
 
             return isValid;
+        }
+
+        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

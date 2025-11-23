@@ -16,14 +16,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
     public partial class UC_Header : UserControl
     {
-        public event Action<UserDTO> OnClick;
-        
+        public event Action<UserDTO> MyTicketClick;
+        public event Action BookingClick;
+
+
         public UC_Header()
         {
             InitializeComponent();
         }
 
-        private void guna2Button5_Click(object sender, EventArgs e)
+
+        private void btnMyTickets_Click(object sender, EventArgs e)
         {
             var user = DIContainer.CurrentUser;
             var p = new UserDTO
@@ -37,11 +40,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 Phone = user.Phone
 
             };
-            OnClick.Invoke(p);
-            
+            MyTicketClick.Invoke(p);
         }
-        
 
-
+        private void btnBookings_Click(object sender, EventArgs e)
+        {
+            BookingClick.Invoke();
+        }
     }
 }
