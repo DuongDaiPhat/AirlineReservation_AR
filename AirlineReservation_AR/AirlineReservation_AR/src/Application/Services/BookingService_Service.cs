@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
 {
-    public class BookingServiceService : IBookingServiceService
+    public class BookingService_Service : IBookingServiceService
     {
         private readonly AirlineReservationDbContext _context;
 
-        public BookingServiceService(AirlineReservationDbContext context)
+        public BookingService_Service(AirlineReservationDbContext context)
         {
             _context = context;
         }

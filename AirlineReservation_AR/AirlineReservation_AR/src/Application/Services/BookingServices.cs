@@ -1,0 +1,185 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.Application.Interfaces;
+using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Infrastructure.DI;
+using Microsoft.EntityFrameworkCore;
+
+namespace AirlineReservation_AR.src.Application.Services
+{
+    public class BookingServices : IBookingService
+    {
+
+        public int CreateBooking(BookingCreateDTO dto)
+        {
+            using var db = DIContainer.CreateDb();
+
+            var booking = new Booking
+            {
+                UserId = dto.UserId,
+                BookingReference = "BK-" + DateTime.Now.Ticks,
+                BookingDate = DateTime.Now,
+                Status = "Pending",
+                Currency = "VND",
+                ContactEmail = dto.ContactEmail,
+                ContactPhone = dto.ContactPhone,
+                SpecialRequests = dto.SpecialRequest,
+                Price = dto.TotalAmount,
+                Taxes = dto.TaxAmount,
+                Fees = dto.TotalFee
+            };
+
+            db.Bookings.Add(booking);
+            db.SaveChanges();
+
+            db.BookingFlights.Add(new BookingFlight
+            {
+                BookingId = booking.BookingId,
+                FlightId = dto.FlightId,
+                TripType = dto.TripType
+            });
+            db.SaveChanges();
+
+
+
+            foreach (var p in dto.Passengers)
+            {
+                p.BookingId = booking.BookingId;
+                db.Passengers.Add(p);
+            }
+            db.SaveChanges();
+
+            foreach (var bg in dto.Baggages)
+            {
+                // tìm đúng passenger theo PassengerIndex
+                var passenger = db.Passengers
+                    .Where(p => p.BookingId == booking.BookingId)
+                    .OrderBy(p => p.PassengerId)
+                    .Skip(bg.PassengerIndex - 1)
+                    .FirstOrDefault();
+
+                db.BookingServices.Add(new BookingService
+                {
+                    BookingId = booking.BookingId,
+                    PassengerId = passenger.PassengerId,
+                    ServiceId = bg.ServiceType,   // serviceType = baggage type
+                    Quantity = 1,
+                    UnitPrice = bg.Price
+                });
+            }
+            db.SaveChanges();
+            return booking.BookingId;
+        }
+
+        public async Task<IEnumerable<Booking>> GetAllWithDetailsAsync()
+        {
+            using var _context = DIContainer.CreateDb();
+            return await _context.Bookings
+                .Include(b => b.User)
+                .Include(b => b.Passengers)
+                .Include(b => b.BookingFlights)
+                    .ThenInclude(bf => bf.Flight)
+                        .ThenInclude(f => f.DepartureAirport)
+                .Include(b => b.BookingFlights)
+                    .ThenInclude(bf => bf.Flight)
+                        .ThenInclude(f => f.ArrivalAirport)
+                .Include(b => b.BookingFlights)
+                    .ThenInclude(bf => bf.Flight)
+                        .ThenInclude(f => f.Airline)
+                .Include(b => b.Payments)
+                .Include(b => b.BookingServices)
+                    .ThenInclude(bs => bs.Service)
+                .OrderByDescending(b => b.BookingDate)
+                .ToListAsync();
+        }
+
+        public async Task<Booking?> GetByIdAsync(int bookingId)
+        {
+            using var _context = DIContainer.CreateDb();
+            return await _context.Bookings
+                .Include(b => b.User)
+                .Include(b => b.Passengers)
+                .Include(b => b.BookingFlights).ThenInclude(bf => bf.Flight)
+                .Include(b => b.Payments)
+                .Include(b => b.BookingServices)
+                .FirstOrDefaultAsync(b => b.BookingId == bookingId);
+        }
+
+        public async Task<Booking?> GetByReferenceAsync(string bookingReference)
+        {
+            using var _context = DIContainer.CreateDb();
+            return await _context.Bookings
+                .Include(b => b.User)
+                .Include(b => b.Passengers)
+                .Include(b => b.BookingFlights)
+                    .ThenInclude(bf => bf.Flight)
+                        .ThenInclude(f => f.DepartureAirport)
+                .Include(b => b.BookingFlights)
+                    .ThenInclude(bf => bf.Flight)
+                        .ThenInclude(f => f.ArrivalAirport)
+                .Include(b => b.Payments)
+                .Include(b => b.BookingServices)
+                .FirstOrDefaultAsync(b => b.BookingReference == bookingReference);
+        }
+
+        public async Task<bool> UpdateAsync(Booking booking)
+        {
+            using var _context = DIContainer.CreateDb();
+            try
+            {
+                _context.Bookings.Update(booking);
+
+                if (booking.Payments != null)
+                    foreach (var p in booking.Payments)
+                        _context.Payments.Update(p);
+
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
+
+        public async Task<IEnumerable<Booking>> GetByDateRangeAsync(DateTime from, DateTime to)
+        {
+            using var _context = DIContainer.CreateDb();
+            return await _context.Bookings
+                .Where(b => b.BookingDate >= from && b.BookingDate <= to)
+                .Include(b => b.User)
+                .Include(b => b.Passengers)
+                .Include(b => b.BookingFlights).ThenInclude(bf => bf.Flight)
+                .Include(b => b.Payments)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Booking>> SearchAsync(string keyword)
+        {
+            using var _context = DIContainer.CreateDb();
+            if (string.IsNullOrWhiteSpace(keyword)) return await GetAllWithDetailsAsync();
+
+            keyword = keyword.ToLower();
+            return await _context.Bookings
+                .Where(b =>
+                    b.BookingReference.ToLower().Contains(keyword) ||
+                    b.ContactEmail.ToLower().Contains(keyword) ||
+                    b.ContactPhone.Contains(keyword))
+                .Include(b => b.User)
+                .Include(b => b.Passengers)
+                .Include(b => b.BookingFlights).ThenInclude(bf => bf.Flight)
+                .Include(b => b.Payments)
+                .ToListAsync();
+        }
+
+        public Task<List<Booking>> GetBookingsByUserAsync(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

@@ -20,6 +20,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
     public static class DIContainer
     {
         private static IConfiguration? _config;
+        public static User? CurrentUser { get; private set; }
         public static DbContextOptions<AirlineReservationDbContext>? DbOptions { get; private set; }
 
         private static PasswordHasher? _hasher;
@@ -36,13 +37,8 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static IFlightService? _flightService;
         private static FlightController? _flightController;
 
-        //private static IBookingServiceService? _bookingServive;
-        //private static BookingController? _bookingController;
-
         private static IBookingService? _bookingService;
         private static BookingController? _bookingController;
-<<<<<<< Updated upstream
-=======
 
         private static IPaymentService? _paymentService;
         private static PaymentController? _paymentController;
@@ -62,8 +58,8 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static PromotionControllerAdmin? _promotionControllerAdmin;
         private static ReportControllerAdmin? _reportController;
 
-
->>>>>>> Stashed changes
+        private static IPromotionService? _promotionService;
+        private static PromotionController? _promotionController;
         public static void Init()
         {
             _config = new ConfigurationBuilder()
@@ -95,8 +91,6 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _userService = new UserService();
             _cityService = new CityService();
             _flightService = new FlightService();
-<<<<<<< Updated upstream
-=======
             _bookingService = new Application.Services.BookingService();
             _paymentService = new PaymentService();
             _bookingServiceAdmin = new BookingServiceAdmin();
@@ -104,17 +98,18 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _flightPricingServiceAdmin = new FlightPricingServiceAdmin(_unitOfWorkAdmin);
             _promotionServiceAdmin = new PromotionServiceAdmin(_unitOfWorkAdmin);
             _reportServiceAdmin = new ReportServiceAdmin(new AirlineReservationDbContext(DbOptions));
->>>>>>> Stashed changes
+            _bookingService = new Application.Services.BookingServices();
+            _paymentService = new PaymentService();
+
+            _promotionService = new PromotionService();
 
             // Controller layer giữ nguyên
             _authController = new AuthenticationController(_authService);
             _userContrller = new UserContrller(_userService);
             _cityController = new CityController(_cityService);
             _flightController = new FlightController(_flightService);
-<<<<<<< Updated upstream
 
             _bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
-=======
             _bookingController = new BookingController(_bookingService);
             _paymentController = new PaymentController(_paymentService);
             _bookingControllerAdmin = new BookingControllerAdmin(_bookingServiceAdmin);
@@ -124,10 +119,19 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _reportController = new ReportControllerAdmin(_reportServiceAdmin);
 
             //_bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
->>>>>>> Stashed changes
             _bookingController = new BookingController(_bookingService);
+            _paymentController = new PaymentController(_paymentService);
+
+
+            //_bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
+            _bookingController = new BookingController(_bookingService);
+            _promotionController = new PromotionController(_promotionService);
         }
 
+        public static void SetCurrentUser(User user)
+        {
+            CurrentUser = user;
+        }
         public static AirlineReservationDbContext CreateDb()
         {
             if (DbOptions == null)
@@ -151,14 +155,12 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         //flights
         public static FlightController FlightController => 
             _flightController ?? throw new Exception("Flight controller not initialized");
-
+        //booking
         public static BookingController BookingController =>
             _bookingController ?? throw new Exception("Booking controller not initialized");
-<<<<<<< Updated upstream
 
         //public static IBookingService BookingService =>
         //    _bookingService ?? throw new Exception("BookingService not initialized");
-=======
         //payment
         public static PaymentController paymentController =>
             _paymentController ?? throw new Exception("Payment controller not initialized");
@@ -177,6 +179,14 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         //report admin
         public static ReportControllerAdmin ReportControllerAdmin =>
             _reportController ?? throw new Exception("Report Admin controller not initialized");
->>>>>>> Stashed changes
+        //payment
+        public static PaymentController paymentController =>
+            _paymentController ?? throw new Exception("Payment controller not initialized");
+
+
+        //promotion
+        public static PromotionController PromotionController =>
+        _promotionController ?? throw new Exception("Promotion controller not initialized");
+
     }
 }

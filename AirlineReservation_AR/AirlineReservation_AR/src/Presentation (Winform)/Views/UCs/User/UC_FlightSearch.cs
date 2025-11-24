@@ -754,7 +754,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 FromCode = (cboFrom.SelectedItem as CitySelectDTO).Code,
                 ToCode = (cboTo.SelectedItem as CitySelectDTO).Code,
                 StartDate = selectedStartDate,
-                SeatClassId = cboSeatClass.SelectedIndex + 1
+                SeatClassId = cboSeatClass.SelectedIndex + 1,
+
+                Adult = adult,
+                Child = child,
+                Infant = infant
             };
 
             OnSearchSubmit?.Invoke(p);

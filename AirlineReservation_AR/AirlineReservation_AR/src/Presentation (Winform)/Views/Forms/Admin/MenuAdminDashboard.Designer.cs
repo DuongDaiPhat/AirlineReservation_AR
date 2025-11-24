@@ -338,7 +338,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnCaiDat.FillColor = Color.Black;
             btnCaiDat.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCaiDat.ForeColor = Color.White;
-            btnCaiDat.Image = Properties.Resources.tải_xuống;
+            btnCaiDat.Image = global::AirlineReservation_AR.Properties.Resources.download;
             btnCaiDat.ImageAlign = HorizontalAlignment.Left;
             btnCaiDat.ImageSize = new Size(30, 30);
             btnCaiDat.Location = new Point(0, 0);
@@ -369,7 +369,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // adminDasboardControlSetting
             // 
-            adminDasboardControlSetting.dashboardImage = Properties.Resources.tải_xuống;
+            adminDasboardControlSetting.dashboardImage = global::AirlineReservation_AR.Properties.Resources.download;
             adminDasboardControlSetting.description = "Cấu hình, thanh toán, email/SMS, database, bảo mật";
             adminDasboardControlSetting.Location = new Point(750, 420);
             adminDasboardControlSetting.Margin = new Padding(0);

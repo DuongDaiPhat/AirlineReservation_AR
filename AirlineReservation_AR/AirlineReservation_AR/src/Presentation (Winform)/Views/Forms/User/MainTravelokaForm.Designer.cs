@@ -35,7 +35,7 @@ namespace AirlineReservation_AR
             headerPanel.Dock = DockStyle.Top;
             headerPanel.Location = new Point(0, 0);
             headerPanel.Name = "headerPanel";
-            headerPanel.Size = new Size(1440, 100);
+            headerPanel.Size = new Size(1634, 100);
             headerPanel.TabIndex = 1;
             // 
             // ucHeader
@@ -43,7 +43,7 @@ namespace AirlineReservation_AR
             ucHeader.Dock = DockStyle.Fill;
             ucHeader.Location = new Point(0, 0);
             ucHeader.Name = "ucHeader";
-            ucHeader.Size = new Size(1440, 100);
+            ucHeader.Size = new Size(1634, 100);
             ucHeader.TabIndex = 0;
             // 
             // bodyPanel
@@ -51,14 +51,13 @@ namespace AirlineReservation_AR
             bodyPanel.Dock = DockStyle.Fill;
             bodyPanel.Location = new Point(0, 100);
             bodyPanel.Name = "bodyPanel";
-            bodyPanel.Size = new Size(1440, 941);
+            bodyPanel.Size = new Size(1634, 941);
             bodyPanel.TabIndex = 0;
-
             // 
             // MainTravelokaForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(1440, 1041);
+            ClientSize = new Size(1634, 1041);
             Controls.Add(bodyPanel);
             Controls.Add(headerPanel);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -67,12 +66,6 @@ namespace AirlineReservation_AR
             Text = "Traveloka - Flight Booking UI";
             Load += MainTravelokaForm_Load;
             headerPanel.ResumeLayout(false);
-            // ucFlightSearch
-            ucFlightSearch = new UC_FlightSearch();
-            ucFlightSearch.Dock = DockStyle.Fill;
-
-            // Add UC vào bodyPanel
-            bodyPanel.Controls.Add(ucFlightSearch);
             ResumeLayout(false);
         }
 

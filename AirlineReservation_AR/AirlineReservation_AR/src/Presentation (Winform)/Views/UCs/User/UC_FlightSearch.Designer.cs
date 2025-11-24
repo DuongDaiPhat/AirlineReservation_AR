@@ -84,10 +84,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlMain.BackgroundImage = (Image)resources.GetObject("pnlMain.BackgroundImage");
             pnlMain.Controls.Add(pnlSearchContainer);
             pnlMain.Controls.Add(flowDeals);
+            pnlMain.Dock = DockStyle.Fill;
             pnlMain.Location = new Point(0, 0);
             pnlMain.Name = "pnlMain";
             pnlMain.Padding = new Padding(40, 20, 40, 20);
-            pnlMain.Size = new Size(1440, 840);
+            pnlMain.Size = new Size(1650, 840);
             pnlMain.TabIndex = 0;
             // 
             // pnlSearchContainer
@@ -101,7 +102,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlSearchContainer.Controls.Add(cboSeatClass);
             pnlSearchContainer.Controls.Add(btnPassenger);
             pnlSearchContainer.CustomizableEdges = customizableEdges26;
-            pnlSearchContainer.Location = new Point(130, 23);
+            pnlSearchContainer.Location = new Point(118, 23);
             pnlSearchContainer.Name = "pnlSearchContainer";
             pnlSearchContainer.ShadowDecoration.BorderRadius = 16;
             pnlSearchContainer.ShadowDecoration.Color = Color.FromArgb(0, 0, 0);
@@ -109,14 +110,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlSearchContainer.ShadowDecoration.Depth = 20;
             pnlSearchContainer.ShadowDecoration.Enabled = true;
             pnlSearchContainer.ShadowDecoration.Shadow = new Padding(0, 0, 8, 8);
-            pnlSearchContainer.Size = new Size(1178, 618);
+            pnlSearchContainer.Size = new Size(1409, 634);
             pnlSearchContainer.TabIndex = 0;
             // 
             // lblTitle
             // 
             lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(349, 15);
+            lblTitle.Location = new Point(463, 17);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(567, 51);
             lblTitle.TabIndex = 0;
@@ -128,7 +129,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlTripType.BackColor = Color.Transparent;
             pnlTripType.Controls.Add(guna2Button1);
             pnlTripType.Controls.Add(btnRoundTrip);
-            pnlTripType.Location = new Point(30, 69);
+            pnlTripType.Location = new Point(144, 71);
             pnlTripType.Name = "pnlTripType";
             pnlTripType.Size = new Size(371, 42);
             pnlTripType.TabIndex = 1;
@@ -191,7 +192,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlLabels.Controls.Add(lblFrom);
             pnlLabels.Controls.Add(lblTo);
             pnlLabels.Controls.Add(lblDate);
-            pnlLabels.Location = new Point(19, 148);
+            pnlLabels.Location = new Point(133, 150);
             pnlLabels.Name = "pnlLabels";
             pnlLabels.Size = new Size(1120, 35);
             pnlLabels.TabIndex = 2;
@@ -270,7 +271,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlInputs.Controls.Add(btnStartDate);
             pnlInputs.Controls.Add(btnReturnDate);
             pnlInputs.Controls.Add(panelStartCalendar);
-            pnlInputs.Location = new Point(19, 186);
+            pnlInputs.Location = new Point(133, 188);
             pnlInputs.Name = "pnlInputs";
             pnlInputs.Size = new Size(1120, 432);
             pnlInputs.TabIndex = 3;
@@ -452,7 +453,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             cboSeatClass.HoverState.BorderColor = Color.FromArgb(0, 164, 239);
             cboSeatClass.ItemHeight = 30;
             cboSeatClass.Items.AddRange(new object[] { "Phổ thông", "Phổ thông đặc biệt", "Thương gia", "Hạng nhất" });
-            cboSeatClass.Location = new Point(533, 75);
+            cboSeatClass.Location = new Point(647, 77);
             cboSeatClass.Name = "cboSeatClass";
             cboSeatClass.ShadowDecoration.BorderRadius = 10;
             cboSeatClass.ShadowDecoration.Color = Color.FromArgb(0, 164, 239);
@@ -474,7 +475,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             btnPassenger.FillColor = Color.Transparent;
             btnPassenger.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnPassenger.ForeColor = Color.White;
-            btnPassenger.Location = new Point(848, 75);
+            btnPassenger.Location = new Point(962, 77);
             btnPassenger.Name = "btnPassenger";
             btnPassenger.ShadowDecoration.CustomizableEdges = customizableEdges25;
             btnPassenger.Size = new Size(259, 36);
@@ -486,9 +487,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             // 
             flowDeals.AutoScroll = true;
             flowDeals.BackColor = Color.Transparent;
-            flowDeals.Location = new Point(130, 663);
+            flowDeals.Location = new Point(118, 672);
             flowDeals.Name = "flowDeals";
-            flowDeals.Size = new Size(1180, 145);
+            flowDeals.Size = new Size(1409, 145);
             flowDeals.TabIndex = 1;
             // 
             // flowStartDays
@@ -512,7 +513,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             BackColor = Color.White;
             Controls.Add(pnlMain);
             Name = "UC_FlightSearch";
-            Size = new Size(1440, 840);
+            Size = new Size(1650, 840);
             Load += UC_FlightSearch_Load;
             pnlMain.ResumeLayout(false);
             pnlSearchContainer.ResumeLayout(false);
