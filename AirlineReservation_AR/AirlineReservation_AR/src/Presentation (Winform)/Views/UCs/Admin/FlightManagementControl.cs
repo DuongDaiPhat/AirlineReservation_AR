@@ -1,4 +1,7 @@
-﻿using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin;
+﻿using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Infrastructure.DI;
+using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
+using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,15 +20,18 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         private int pageSize = 20;
         private int totalRecords = 0;
         private int totalPages = 0;
-        private List<FlightData> allFlights = new List<FlightData>();
-        private List<FlightData> filteredFlights = new List<FlightData>();
+        private List<FlightListDtoAdmin> allFlights = new List<FlightListDtoAdmin>();
+        private List<FlightListDtoAdmin> filteredFlights = new List<FlightListDtoAdmin>();
+
+        private readonly FlightControllerAdmin _flightController = DIContainer.FlightControllerAdmin;
         public FlightManagementControl()
         {
             InitializeComponent();
             InitializeStyles();
             InitializeData();
             InitializeEvents();
-            LoadFlightData();
+
+            LoadFlightDataAsync();
         }
         private void InitializeStyles()
         {
@@ -69,7 +75,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             cboAirline.Items.Clear();
             cboAirline.Items.AddRange(new object[]
             {
-                "Tất cả",
+                "All",
                 "Vietnam Airlines",
                 "VietJet Air",
                 "Bamboo Airways",
@@ -82,10 +88,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             cboStatus.Items.Clear();
             cboStatus.Items.AddRange(new object[]
             {
-                "Tất cả",
-                "Còn chỗ",
-                "Đã đầy",
-                "Đã hủy"
+                "All",
+                "Available",
+                "Full",
+                "Cancelled"
             });
             cboStatus.SelectedIndex = 0;
 
@@ -93,22 +99,19 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             cboDestination.Items.Clear();
             cboDestination.Items.AddRange(new object[]
             {
-                "Tất cả",
-                "Hà Nội (HAN)",
-                "Đà Nẵng (DAD)",
-                "Phú Quốc (PQC)",
+                "All",
+                "Hanoi (HAN)",
+                "Da Nang (DAD)",
+                "Phu Quoc (PQC)",
                 "Nha Trang (CXR)",
-                "Cần Thơ (VCA)",
-                "Huế (HUI)",
+                "Can Tho (VCA)",
+                "Hue (HUI)",
                 "Vinh (VII)"
             });
             cboDestination.SelectedIndex = 0;
 
             // DateTimePicker
             guna2DateTimePicker1.Value = DateTime.Now;
-
-            // Load sample data
-            LoadSampleData();
         }
 
         private void InitializeEvents()
@@ -126,49 +129,44 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             txtFlightNo.KeyDown += TxtFlightNo_KeyDown;
         }
 
-        private void LoadSampleData()
-        {
-            // Sample data - thay thế bằng data từ database
-            allFlights = new List<FlightData>
-            {
-                new FlightData { FlightCode = "VN210", Airline = "Vietnam Airlines", Route = "SGN → HAN",
-                    Date = "15/12/2024", Departure = "06:00", Duration = "2h 15m",
-                    Aircraft = "Boeing 787", Price = "1.500.000 ₫", Seats = "45/180", Status = "Còn chỗ" },
-
-                new FlightData { FlightCode = "VJ123", Airline = "VietJet Air", Route = "HAN → DAD",
-                    Date = "15/12/2024", Departure = "08:30", Duration = "1h 30m",
-                    Aircraft = "Airbus A321", Price = "890.000 ₫", Seats = "0/180", Status = "Đã đầy" },
-
-                new FlightData { FlightCode = "QH206", Airline = "Bamboo Airways", Route = "SGN → PQC",
-                    Date = "16/12/2024", Departure = "14:45", Duration = "1h 00m",
-                    Aircraft = "Airbus A320", Price = "1.200.000 ₫", Seats = "78/160", Status = "Còn chỗ" },
-
-                new FlightData { FlightCode = "VN315", Airline = "Vietnam Airlines", Route = "HAN → SGN",
-                    Date = "16/12/2024", Departure = "16:20", Duration = "2h 10m",
-                    Aircraft = "Boeing 787", Price = "1.450.000 ₫", Seats = "23/180", Status = "Còn chỗ" },
-
-                new FlightData { FlightCode = "VJ456", Airline = "VietJet Air", Route = "DAD → SGN",
-                    Date = "17/12/2024", Departure = "10:15", Duration = "1h 20m",
-                    Aircraft = "Airbus A321", Price = "750.000 ₫", Seats = "0/180", Status = "Đã hủy" },
-                
-                // Thêm nhiều data hơn để test pagination
-                new FlightData { FlightCode = "VN100", Airline = "Vietnam Airlines", Route = "SGN → HAN",
-                    Date = "17/12/2024", Departure = "07:00", Duration = "2h 15m",
-                    Aircraft = "Boeing 787", Price = "1.500.000 ₫", Seats = "120/180", Status = "Còn chỗ" },
-
-                new FlightData { FlightCode = "QH300", Airline = "Bamboo Airways", Route = "HAN → PQC",
-                    Date = "18/12/2024", Departure = "09:30", Duration = "2h 30m",
-                    Aircraft = "Airbus A320", Price = "1.800.000 ₫", Seats = "45/160", Status = "Còn chỗ" },
-            };
-
-            filteredFlights = new List<FlightData>(allFlights);
-            totalRecords = filteredFlights.Count;
-        }
-
         // ============================================
         // LOAD & DISPLAY DATA
         // ============================================
 
+        private async Task LoadFlightDataAsync()
+        {
+            try
+            {
+                // Hiển thị loading (optional)
+                dgvFlights.Enabled = false;
+                Cursor = Cursors.WaitCursor;
+
+                // GỌI API LẤY DỮ LIỆU
+                var flights = await _flightController.GetAllFlightsAsync();
+
+                // Gán vào list
+                allFlights = flights.ToList();
+                filteredFlights = new List<FlightListDtoAdmin>(allFlights);
+                totalRecords = filteredFlights.Count;
+
+                // Hiển thị lên DataGridView
+                LoadFlightData();
+
+                // Tắt loading
+                dgvFlights.Enabled = true;
+                Cursor = Cursors.Default;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                dgvFlights.Enabled = true;
+                Cursor = Cursors.Default;
+            }
+        }
+
+        // GIỮ NGUYÊN method này (chỉ hiển thị, không load từ DB)
         private void LoadFlightData()
         {
             // Calculate pagination
@@ -182,7 +180,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 .Take(pageSize)
                 .ToList();
 
-            //// Clear and load to DataGridView
+            // Clear and load to DataGridView
             dgvFlights.Rows.Clear();
 
             foreach (var flight in pagedData)
@@ -191,27 +189,19 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                     flight.FlightCode,
                     flight.Airline,
                     flight.Route,
-                    flight.Date,
-                    flight.Duration,
-                    flight.Departure,
+                    flight.FlightDate.ToString("yyyy-MM-dd"),
+                    flight.DepartureTime.ToString(@"hh\:mm"),
+                    flight.ArrivalTime.ToString(@"hh\:mm"),
                     flight.Aircraft,
-                    flight.Price,
-                    flight.Seats,
+                    flight.BasePrice,
+                    flight.AvailableSeats,
                     flight.Status,
-                    "•••" // Actions column placeholder
+                    "•••"
                 );
 
-                // Store full data object in Tag
                 dgvFlights.Rows[rowIndex].Tag = flight;
             }
-
-            // Update pagination info (nếu có pagination panel)
-            // UpdatePaginationInfo();
         }
-
-        // ============================================
-        // SEARCH & FILTER
-        // ============================================
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
@@ -426,7 +416,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 var localX = clickPoint.X - startX;
 
                 // Get flight data
-                var flight = dgvFlights.Rows[e.RowIndex].Tag as FlightData;
+                var flight = dgvFlights.Rows[e.RowIndex].Tag as FlightListDtoAdmin;
                 if (flight == null) return;
 
                 // Determine which button was clicked
@@ -452,7 +442,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         // ACTION HANDLERS
         // ============================================
 
-        private void HandleViewFlight(FlightData flight)
+        private void HandleViewFlight(FlightListDtoAdmin flight)
         {
             try
             {
@@ -462,10 +452,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                     $"Mã: {flight.FlightCode}\n" +
                     $"Hãng: {flight.Airline}\n" +
                     $"Tuyến: {flight.Route}\n" +
-                    $"Ngày: {flight.Date} {flight.Departure}\n" +
+                    $"Ngày: {flight.FlightDate} {flight.DepartureTime}\n" +
                     $"Máy bay: {flight.Aircraft}\n" +
-                    $"Giá: {flight.Price}\n" +
-                    $"Ghế: {flight.Seats}\n" +
+                    $"Giá: {flight.BasePrice}\n" +
+                    $"Ghế: {flight.AvailableSeats}\n" +
                     $"Trạng thái: {flight.Status}",
                     "Chi tiết chuyến bay",
                     MessageBoxButtons.OK,
@@ -482,7 +472,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
         }
 
-        private void HandleDisableFlight(FlightData flight)
+        private void HandleDisableFlight(FlightListDtoAdmin flight)
         {
             try
             {
@@ -515,7 +505,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void HandleEditFlight(FlightData flight)
+        private void HandleEditFlight(FlightListDtoAdmin flight)
         {
             try
             {
@@ -551,7 +541,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
         }
 
-        private void HandleDeleteFlight(FlightData flight)
+        private void HandleDeleteFlight(FlightListDtoAdmin flight)
         {
             try
             {
@@ -587,10 +577,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
         }
 
-        public void RefreshData()
+        public async void RefreshData()
         {
-            LoadSampleData();
-            LoadFlightData();
+            await LoadFlightDataAsync();
         }
 
         public void ClearFilters()
@@ -601,7 +590,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             cboDestination.SelectedIndex = 0;
             guna2DateTimePicker1.Value = DateTime.Now;
 
-            filteredFlights = new List<FlightData>(allFlights);
+            filteredFlights = new List<FlightListDtoAdmin>(allFlights);
             currentPage = 1;
             totalRecords = filteredFlights.Count;
             LoadFlightData();
@@ -638,18 +627,5 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-    }
-    public class FlightData
-    {
-        public string FlightCode { get; set; }
-        public string Airline { get; set; }
-        public string Route { get; set; }
-        public string Date { get; set; }
-        public string Departure { get; set; }
-        public string Duration { get; set; }
-        public string Aircraft { get; set; }
-        public string Price { get; set; }
-        public string Seats { get; set; }
-        public string Status { get; set; }
     }
 }

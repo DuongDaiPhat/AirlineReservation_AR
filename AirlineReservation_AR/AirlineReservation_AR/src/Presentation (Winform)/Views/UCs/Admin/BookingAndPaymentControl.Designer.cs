@@ -388,6 +388,7 @@
             dgvBooking.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBooking.Size = new Size(1010, 420);
             dgvBooking.TabIndex = 1;
+            dgvBooking.CellContentClick += DgvBooking_CellContentClick;
             // 
             // colBookingID
             // 
@@ -459,6 +460,7 @@
             Name = "BookingAndPaymentControl";
             Padding = new Padding(15);
             Size = new Size(1040, 650);
+            Load += BookingAndPaymentControl_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvBooking).EndInit();
