@@ -32,7 +32,7 @@
             pnlMain = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
-            guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
+            btnPromotion = new Guna.UI2.WinForms.Guna2Button();
             guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             btnBookings = new Guna.UI2.WinForms.Guna2Button();
             btnMyTickets = new Guna.UI2.WinForms.Guna2Button();
@@ -56,7 +56,7 @@
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Controls.Add(guna2Button1);
-            flowLayoutPanel1.Controls.Add(guna2Button2);
+            flowLayoutPanel1.Controls.Add(btnPromotion);
             flowLayoutPanel1.Controls.Add(guna2Button4);
             flowLayoutPanel1.Controls.Add(btnBookings);
             flowLayoutPanel1.Controls.Add(btnMyTickets);
@@ -88,27 +88,28 @@
             guna2Button1.TabIndex = 0;
             guna2Button1.Text = "VND | VN";
             // 
-            // guna2Button2
+            // btnPromotion
             // 
-            guna2Button2.BorderColor = Color.Transparent;
-            guna2Button2.BorderRadius = 10;
-            guna2Button2.BorderThickness = 1;
-            guna2Button2.CustomizableEdges = customizableEdges3;
-            guna2Button2.DisabledState.BorderColor = Color.DarkGray;
-            guna2Button2.DisabledState.CustomBorderColor = Color.DarkGray;
-            guna2Button2.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            guna2Button2.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            guna2Button2.FillColor = Color.White;
-            guna2Button2.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            guna2Button2.ForeColor = Color.Black;
-            guna2Button2.Image = Properties.Resources.gift_voucher;
-            guna2Button2.ImageSize = new Size(35, 35);
-            guna2Button2.Location = new Point(159, 3);
-            guna2Button2.Name = "guna2Button2";
-            guna2Button2.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            guna2Button2.Size = new Size(180, 80);
-            guna2Button2.TabIndex = 1;
-            guna2Button2.Text = "Promotions";
+            btnPromotion.BorderColor = Color.Transparent;
+            btnPromotion.BorderRadius = 10;
+            btnPromotion.BorderThickness = 1;
+            btnPromotion.CustomizableEdges = customizableEdges3;
+            btnPromotion.DisabledState.BorderColor = Color.DarkGray;
+            btnPromotion.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnPromotion.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnPromotion.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnPromotion.FillColor = Color.White;
+            btnPromotion.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPromotion.ForeColor = Color.Black;
+            btnPromotion.Image = Properties.Resources.gift_voucher;
+            btnPromotion.ImageSize = new Size(35, 35);
+            btnPromotion.Location = new Point(159, 3);
+            btnPromotion.Name = "btnPromotion";
+            btnPromotion.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btnPromotion.Size = new Size(180, 80);
+            btnPromotion.TabIndex = 1;
+            btnPromotion.Text = "Promotions";
+            btnPromotion.Click += btnPromotion_Click;
             // 
             // guna2Button4
             // 
@@ -205,6 +206,7 @@
             // picLogo
             // 
             picLogo.BackColor = Color.Transparent;
+            picLogo.Cursor = Cursors.Hand;
             picLogo.CustomizableEdges = customizableEdges13;
             picLogo.FillColor = Color.Transparent;
             picLogo.Image = Properties.Resources.logo_blacktext;
@@ -217,6 +219,7 @@
             picLogo.SizeMode = PictureBoxSizeMode.Zoom;
             picLogo.TabIndex = 1;
             picLogo.TabStop = false;
+            picLogo.Click += picLogo_Click;
             // 
             // UC_Header
             // 
@@ -235,7 +238,7 @@
         private Guna.UI2.WinForms.Guna2PictureBox picLogo;
         private FlowLayoutPanel flowLayoutPanel1;
         private Guna.UI2.WinForms.Guna2Button guna2Button1;
-        private Guna.UI2.WinForms.Guna2Button guna2Button2;
+        private Guna.UI2.WinForms.Guna2Button btnPromotion;
         private Guna.UI2.WinForms.Guna2Button btnBookings;
         private Guna.UI2.WinForms.Guna2Button guna2Button4;
         private Guna.UI2.WinForms.Guna2Button btnMyTickets;

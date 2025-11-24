@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.Application.Interfaces;
+using AirlineReservation_AR.src.Domain.DTOs;
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
 {
@@ -15,7 +16,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
         {
             _authentication = authentication;
         }
-        public async Task<User?> LoginAsync(string email, string password)
+        public async Task<LoginResultDTO?> LoginAsync(string email, string password)
         {
             return await _authentication.LoginAsync(email, password);
         }

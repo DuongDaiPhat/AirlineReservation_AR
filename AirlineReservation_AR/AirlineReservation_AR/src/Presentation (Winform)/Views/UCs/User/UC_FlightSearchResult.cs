@@ -115,7 +115,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
         private void RenderAllFlights(List<FlightResultDTO> list)
         {
-            flowFlightCards.Controls.Clear();
+            //flowFlightCards.Controls.Clear();
 
             foreach (var f in list)
             {

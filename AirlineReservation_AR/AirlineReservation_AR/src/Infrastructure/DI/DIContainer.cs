@@ -43,6 +43,8 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static IPaymentService? _paymentService;
         private static PaymentController? _paymentController;
 
+        private static IPromotionService? _promotionService;
+        private static PromotionController? _promotionController;
         public static void Init()
         {
             _config = new ConfigurationBuilder()
@@ -67,7 +69,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _flightService = new FlightService();
             _bookingService = new Application.Services.BookingService();
             _paymentService = new PaymentService();
-
+            _promotionService = new PromotionService();
 
 
             // Controller layer giữ nguyên
@@ -81,6 +83,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
 
             //_bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
             _bookingController = new BookingController(_bookingService);
+            _promotionController = new PromotionController(_promotionService);
         }
 
         public static void SetCurrentUser(User user)
@@ -117,5 +120,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         //payment
         public static PaymentController paymentController =>
             _paymentController ?? throw new Exception("Payment controller not initialized");
+
+        //promotion
+        public static PromotionController PromotionController =>
+        _promotionController ?? throw new Exception("Promotion controller not initialized");
     }
 }
