@@ -1,3 +1,4 @@
+
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User;
@@ -10,12 +11,18 @@ namespace AirlineReservation_AR
         {
             InitializeComponent();
 
-            
+
         }
         private void MainTravelokaForm_Load(object sender, EventArgs e)
         {
             //ucFlightSearch.OnSearchSubmit += LoadResultPage;
             ucHeader.MyTicketClick += LoadUserDashboard;
+            ucHeader.MyTicketClick += LoadUserDashboardWithMyBookings;
+            ucHeader.BookingClick += LoadSearchPage;
+            ucHeader.OpenMyBookingRequest += LoadUserDashboardWithMyBookings;
+            ucHeader.OpenAccountModifyRequest += LoadUserDashboardWithAccountModified;
+            ucHeader.OpenMyTransactionRequest += LoadUserDashboardWithMyPurchaseList;
+            ucHeader.LogoutRequest += HandleLogout;
             ucHeader.BookingClick += LoadSearchPage;
             ucHeader.HomeClick += LoadHomePage;
             ucHeader.PromotionClick += LoadPromotionPage;
@@ -37,7 +44,7 @@ namespace AirlineReservation_AR
         {
             var homeForm = new MainTravelokaForm();
             homeForm.Show();
-            this.Close(); 
+            this.Close();
         }
 
         private void LoadUserDashboard(UserDTO user)
@@ -50,14 +57,14 @@ namespace AirlineReservation_AR
         private void LoadSearchPage()
         {
             var search = new UC_FlightSearch();
-            search.OnSearchSubmit += LoadResultPage; 
+            search.OnSearchSubmit += LoadResultPage;
             SwitchScreen(search);
         }
 
         private void LoadPromotionPage()
         {
             var promoUC = new UC_Promotion();
-            SwitchScreen(promoUC);   
+            SwitchScreen(promoUC);
         }
 
 
@@ -91,7 +98,7 @@ namespace AirlineReservation_AR
         }
         private void UpdatedUI()
         {
-            //ucHeader.LoadUI();
+            ucHeader.LoadUI();
         }
         private void HandleLogout()
         {

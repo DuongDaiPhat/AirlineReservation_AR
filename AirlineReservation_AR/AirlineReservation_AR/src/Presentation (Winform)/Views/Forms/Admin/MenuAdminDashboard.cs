@@ -1,5 +1,8 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Views.UCs.Admin;
+using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin;
+using AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User.UC_Header;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Views.Forms.Admin
 {
@@ -21,6 +25,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
         private UserControl _FlightManagementControl;
         private UserControl _BookingAndPaymentControl;
         public event Action<bool> SidebarStateChanged;
+        public event Action LogoutRequest;
 
         public MenuAdminDashboard()
         {
@@ -149,7 +154,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
                     ShowBigControl(adminDasboardControlUsers.title, adminDasboardControlUsers.dashboardImage);
                     ShowUserControl(ref _userControlAccount, () => new UserAccountManagementControl());
                 }
-                else if(button == btnGiaVe_khuyenMai)
+                else if (button == btnGiaVe_khuyenMai)
                 {
                     ShowBigControl(adminDasboardControlUsers.title, adminDasboardControlUsers.dashboardImage);
                     ShowUserControl(ref _pricingPromotionControl, () => new PricingPromotionControl());
@@ -282,6 +287,32 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
 
             panelMain.Visible = true;
             panelMain.BringToFront();
+        }
+
+        private void btnUserProfile_Click(object sender, EventArgs e)
+        {
+            HandleLogout();
+        }
+
+        private void HandleLogout()
+        {
+            var result = MessageBox.Show(
+                "Are your sure want to log out?",
+                "Confirm Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.No) return;
+
+            DIContainer.SetCurrentUser(null);
+
+            PerformLogout();
+        }
+        private void PerformLogout()
+        {
+            System.Windows.Forms.Application.Restart();
+
+            Environment.Exit(0);
         }
     }
 }
