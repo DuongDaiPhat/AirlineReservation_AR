@@ -34,7 +34,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Properties.Resources.download1;
+            pictureBox1.Image = Properties.Resources.download;
             pictureBox1.Location = new Point(288, 161);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(125, 62);

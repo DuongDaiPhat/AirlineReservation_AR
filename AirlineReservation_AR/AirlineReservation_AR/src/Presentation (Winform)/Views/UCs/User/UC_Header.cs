@@ -18,7 +18,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
     {
         public event Action<UserDTO> MyTicketClick;
         public event Action BookingClick;
-        public event Action<UserDTO> OpenMyBookingRequest;
+        public event Action HomeClick;
+        public event Action PromotionClick;        public event Action<UserDTO> OpenMyBookingRequest;
         public event Action<UserDTO> OpenMyTransactionRequest;
         public event Action<UserDTO> OpenAccountModifyRequest;
         public event Action LogoutRequest;
@@ -183,6 +184,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private void btnBookings_Click(object sender, EventArgs e)
         {
             BookingClick.Invoke();
+        }
+
+        private void picLogo_Click(object sender, EventArgs e)
+        {
+            HomeClick.Invoke();
+        }
+
+        private void btnPromotion_Click(object sender, EventArgs e)
+        {
+            PromotionClick?.Invoke();
         }
 
         public class NoBorderRenderer : ToolStripProfessionalRenderer
