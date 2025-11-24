@@ -137,7 +137,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             };
 
 
-            ucProfile.Size = new Size(393, 523);
+            ucProfile.Size = new Size(344, 392); 
 
             ToolStripControlHost host = new ToolStripControlHost(ucProfile);
 

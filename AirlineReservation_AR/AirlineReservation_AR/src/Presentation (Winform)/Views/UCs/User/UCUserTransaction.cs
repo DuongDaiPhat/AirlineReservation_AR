@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
 
@@ -90,7 +91,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                         var card = new UCPaidTicket();
 
                         // full chiều ngang flowpanel + padding dưới cho có khoảng cách
-                        card.Margin = new Padding(0, 0, 0, 12);
                         card.Width = fpnlTransactionHolder.ClientSize.Width - card.Margin.Horizontal;
 
                         // Dùng lại UI & logic từ UCPaidTicket

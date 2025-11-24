@@ -157,5 +157,15 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         {
             LogoutRequest?.Invoke();
         }
+
+        private void pnlNavigation_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void UserDashboard_Load_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
