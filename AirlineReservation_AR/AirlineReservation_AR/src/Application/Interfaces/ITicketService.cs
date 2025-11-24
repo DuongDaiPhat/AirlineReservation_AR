@@ -10,10 +10,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
         Task<Ticket> CreateTicketAsync(
             int bookingFlightId,
             int passengerId,
-            int seatClassId,
-            decimal price,
-            decimal? taxes,
-            decimal? fees);
+            int seatClassId);
 
         Task<Ticket?> GetTicketByIdAsync(Guid ticketId);
         Task<IEnumerable<Ticket>> GetTicketsByPassengerAsync(int passengerId);

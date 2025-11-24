@@ -14,29 +14,35 @@ namespace MomoQR
 {
     public class MomoService
     {
-        public async Task CreatePaymentAsync(int bookingId, long amount)
+
+
+        public async Task<string?> CreatePaymentAsync(int bookingId, long amount)
         {
+            // ⭐ FIXED: Đổi từ Task → Task<string?> để trả về payUrl
             string orderId = Guid.NewGuid().ToString();
             string requestId = Guid.NewGuid().ToString();
 
             using (var db = DIContainer.CreateDb())
             {
-                var bk = db.Bookings.FirstOrDefault(b => b.BookingId == bookingId);
-                if (bk != null)
+                var booking = db.Bookings.First(b => b.BookingId == bookingId);
+                booking.Status = "Pending";
+                db.SaveChanges();
+
+                var payment = db.Payments.FirstOrDefault(p => p.BookingId == bookingId);
+                if (payment != null)
                 {
-                    bk.Status = "Pending";
+                    payment.TransactionId = orderId;   // ⭐ FIXED: cần transactionId để IPN đối chiếu
+                    payment.Status = "Processing";
                     db.SaveChanges();
                 }
             }
 
-            // Quan trọng: KHÔNG DẤU hoặc ENCODE
-            string orderInfo = "WinForms thanh toan";
-            // hoặc: string orderInfo = Uri.EscapeDataString("WinForms thanh toán");
+            // KHÔNG DẤU
+            string orderInfo = "WinForms thanh toan booking " + bookingId;
 
             string redirectUrl = MomoConfiguration.ReturnUrl;
             string ipnUrl = MomoConfiguration.IpnUrl;
 
-            // CHUỖI RAWHASH PHẢI EXACT THỨ TỰ MO MO API V2
             string rawHash =
                 $"accessKey={MomoConfiguration.AccessKey}" +
                 $"&amount={amount}" +
@@ -49,7 +55,6 @@ namespace MomoQR
                 $"&requestId={requestId}" +
                 $"&requestType=captureWallet";
 
-
             string signature = SignSHA256(rawHash, MomoConfiguration.SecretKey);
 
             var request = new MomoPaymentConfiguration
@@ -60,7 +65,7 @@ namespace MomoQR
                 requestId = requestId,
                 amount = amount,
                 orderId = orderId,
-                orderInfo = orderInfo,   // phải giống 100% rawHash
+                orderInfo = orderInfo,
                 redirectUrl = MomoConfiguration.ReturnUrl,
                 ipnUrl = MomoConfiguration.IpnUrl,
                 extraData = "",
@@ -68,7 +73,8 @@ namespace MomoQR
                 lang = "vi",
                 signature = signature
             };
-            // LOG: Raw hash string for signature
+
+            // Logging
             Console.WriteLine("=== MOMO DEBUG INFO ===");
             Console.WriteLine($"RawHash: {rawHash}");
             Console.WriteLine($"Signature: {signature}");
@@ -79,51 +85,49 @@ namespace MomoQR
 
             var client = new HttpClient();
             var requestJson = JsonSerializer.Serialize(request);
-            
-            // LOG: Request payload
             Console.WriteLine($"Request JSON: {requestJson}");
-            
-            var content = new StringContent(requestJson, Encoding.UTF8, "application/json");
 
+            var content = new StringContent(requestJson, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(MomoConfiguration.PaymentUrl, content);
             string result = await response.Content.ReadAsStringAsync();
 
-            // LOG: Response from MoMo
             Console.WriteLine($"Response: {result}");
             Console.WriteLine("======================");
 
             var json = JsonSerializer.Deserialize<JsonElement>(result);
 
-            // Check for error codes
+            // Check error
             if (json.TryGetProperty("resultCode", out var resultCode))
             {
                 int code = resultCode.GetInt32();
-                Console.WriteLine($"Result Code: {code}");
-                
+
                 if (code != 0)
                 {
-                    string message = json.TryGetProperty("message", out var msg) ? msg.GetString() : "Unknown error";
-                    MessageBox.Show($"MoMo Error Code: {code}\nMessage: {message}\n\nCheck Console for details", "MoMo Error");
-                    return;
+                    string message = json.TryGetProperty("message", out var msg)
+                                    ? msg.GetString() : "Unknown error";
+
+                    MessageBox.Show($"MoMo Error Code: {code}\nMessage: {message}", "MoMo Error");
+                    return null;  // ⭐ FIXED: phải trả về null khi lỗi
                 }
             }
 
-            // Lấy payUrl an toàn
+            // ⭐ FIXED: TRẢ PAYURL RA CHO FORM
             if (json.TryGetProperty("payUrl", out var payUrl))
             {
-                Console.WriteLine($"Opening PayUrl: {payUrl.GetString()}");
-                Process.Start(new ProcessStartInfo(payUrl.GetString()) { UseShellExecute = true });
+                string url = payUrl.GetString();
+                Console.WriteLine($"Opening PayUrl: {url}");
+
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+
+                return url;   // ⭐ FIXED: TRẢ PAYURL VỀ
             }
             else
             {
                 MessageBox.Show(result, "MoMo Error - No PayUrl");
+                return null;  // ⭐ FIXED
             }
-
-            Console.WriteLine($"PARTNER={MomoConfiguration.PartnerCode}\n" +
-    $"ACCESS={MomoConfiguration.AccessKey}\n" +
-    $"SECRET={MomoConfiguration.SecretKey}\n" +
-    $"PAYMENT_URL={MomoConfiguration.PaymentUrl}\n");
         }
+
 
 
         private string SignSHA256(string data, string key)

@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
+using AirlineReservation_AR.src.Presentation__Winform_.Views.popup;
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
@@ -12,8 +13,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
     {
         private FlightResultDTO _selectedFlight;
         private FlightSearchParams _searchParams;
-        private List<BaggageDTO> _selectedBaggage = new List<BaggageDTO>();
-        private List<Passenger> _passengerList;
+        private List<PassengerBaggageDTO> _savedBaggage = new();
 
         public UC_FilloutInform()
         {
@@ -26,6 +26,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             _searchParams = p;
             RenderContactForm();
             RenderPassengers();
+            RenderDefaultSummary();
         }
 
         private void RenderContactForm()
@@ -91,21 +92,72 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             }
             return list;
         }
-
         private void btnAddBaggage_Click(object sender, EventArgs e)
         {
-            var list = BuildPassengerList();
-            if (list != null) RenderSummary(list);
+            var types = new List<string>();
+
+            // Lấy đúng loại từ PassengerFormFill
+            foreach (var pf in GetPassengerForms())
+                types.Add(pf.PassengerType);
+
+            var popup = new PopupAddBaggage(_selectedFlight, types, _savedBaggage);
+
+            if (popup.ShowDialog() == DialogResult.OK)
+            {
+                var list = BuildPassengerList();
+                if (list != null) RenderSummary(list);
+
+                var baggageList = popup.SelectedBaggage;
+                UpdateSummaryWithBaggage(baggageList);
+
+                MessageBox.Show("Đã chọn hành lý!",
+                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _savedBaggage = popup.SelectedBaggage;
+            }
+
         }
+
+        private void UpdateSummaryWithBaggage(List<PassengerBaggageDTO> bag)
+        {
+            var summary = GetSummaryControl();
+            if (summary == null) return;
+
+            decimal baggageTotal = bag.Sum(x => x.Price);
+            summary.ClearExtraCosts();
+            summary.AddExtraCost("Hành lý", baggageTotal);
+        }
+
+
+
 
         private void guna2Button2_Click(object sender, EventArgs e)
         {
+            // 1. Validate contact info
+            var contact = GetContactForm();
+            if (contact == null || !contact.ValidateContact())
+            {
+                MessageBox.Show("Vui lòng kiểm tra lại thông tin liên hệ.",
+                    "Thông tin chưa hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Validate all passenger forms
+            var passengers = BuildPassengerList();
+            if (passengers == null)
+                return;
+
+            // 3. Build DTO
             var dto = BuildBookingDTO();
+
+            // 4. Save to DB
             int bookingId = DIContainer.BookingController.CreateBooking(dto);
+
+            // 5. Payment
             var form = new MomoQR.MomoQR();
             form.SetPayment(bookingId, dto.TotalAmount);
             form.ShowDialog();
         }
+
 
         private SummaryBookingControl GetSummaryControl()
         {
@@ -187,8 +239,39 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 FlightId = _selectedFlight.FlightId,
                 TripType = _searchParams.ReturnDate == null ? "OneWay" : "RoundTrip",
                 TotalAmount = summary != null ? summary.TotalPrice : 0,
-                Passengers = BuildPassengerEntityList()
+                TaxAmount = summary!= null ? summary.TotalPrice*0.1M : 0,
+                TotalFee = 0,
+                Passengers = BuildPassengerEntityList(),
+                Baggages = _savedBaggage
+
             };
         }
+
+        private void RenderDefaultSummary()
+        {
+            pnlSummary.Controls.Clear();
+
+            var defaultPassengers = new List<PassengerDTO>();
+            int adults = _searchParams.Adult;
+            int childs = _searchParams.Child;
+            int infants = _searchParams.Infant;
+
+            // Tạo DTO tạm mà không cần validate
+            for (int i = 0; i < adults; i++)
+                defaultPassengers.Add(new PassengerDTO { PassengerType = "Adult" });
+
+            for (int i = 0; i < childs; i++)
+                defaultPassengers.Add(new PassengerDTO { PassengerType = "Child" });
+
+            for (int i = 0; i < infants; i++)
+                defaultPassengers.Add(new PassengerDTO { PassengerType = "Infant" });
+
+            var summary = new SummaryBookingControl();
+            summary.Dock = DockStyle.Fill;
+            summary.SetData(_selectedFlight, _searchParams, defaultPassengers);
+
+            pnlSummary.Controls.Add(summary);
+        }
+
     }
 }

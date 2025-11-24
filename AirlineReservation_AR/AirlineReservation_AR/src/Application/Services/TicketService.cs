@@ -15,10 +15,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
         public async Task<Ticket> CreateTicketAsync(
             int bookingFlightId,
             int passengerId,
-            int seatClassId,
-            decimal price,
-            decimal? taxes,
-            decimal? fees)
+            int seatClassId)
         {
             using var _db = DIContainer.CreateDb();
             var bookingFlight = await _db.BookingFlights
@@ -48,9 +45,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
                 PassengerId = passengerId,
                 SeatClassId = seatClassId,
                 TicketNumber = ticketNumber,
-                Price = price,
-                Taxes = taxes,
-                Fees = fees,
                 Status = "Pending",
                 CheckedInAt = null
             };

@@ -50,7 +50,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
 
             var status = ticket.Status ?? "";
 
-            decimal? total = ticket?.Price + ticket?.Taxes + ticket?.Fees;
+            decimal? total = booking?.Price + booking?.Taxes + booking?.Fees;
             txtTotal.Text = "$" + total?.ToString("#,##0.00", CultureInfo.InvariantCulture);
 
 

@@ -67,9 +67,11 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _userService = new UserService();
             _cityService = new CityService();
             _flightService = new FlightService();
-            _bookingService = new Application.Services.BookingService();
+            _bookingService = new Application.Services.BookingServices();
             _paymentService = new PaymentService();
+
             _promotionService = new PromotionService();
+
 
 
             // Controller layer giữ nguyên
@@ -121,8 +123,10 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         public static PaymentController paymentController =>
             _paymentController ?? throw new Exception("Payment controller not initialized");
 
+
         //promotion
         public static PromotionController PromotionController =>
         _promotionController ?? throw new Exception("Promotion controller not initialized");
+
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservation_AR.src.Application.Services
 {
-    public class BookingService : IBookingService
+    public class BookingServices : IBookingService
     {
 
         public int CreateBooking(BookingCreateDTO dto)
@@ -27,7 +27,10 @@ namespace AirlineReservation_AR.src.Application.Services
                 Currency = "VND",
                 ContactEmail = dto.ContactEmail,
                 ContactPhone = dto.ContactPhone,
-                SpecialRequests = dto.SpecialRequest
+                SpecialRequests = dto.SpecialRequest,
+                Price = dto.TotalAmount,
+                Taxes = dto.TaxAmount,
+                Fees = dto.TotalFee
             };
 
             db.Bookings.Add(booking);
@@ -39,13 +42,35 @@ namespace AirlineReservation_AR.src.Application.Services
                 FlightId = dto.FlightId,
                 TripType = dto.TripType
             });
+            db.SaveChanges();
+
+
 
             foreach (var p in dto.Passengers)
             {
                 p.BookingId = booking.BookingId;
                 db.Passengers.Add(p);
             }
+            db.SaveChanges();
 
+            foreach (var bg in dto.Baggages)
+            {
+                // tìm đúng passenger theo PassengerIndex
+                var passenger = db.Passengers
+                    .Where(p => p.BookingId == booking.BookingId)
+                    .OrderBy(p => p.PassengerId)
+                    .Skip(bg.PassengerIndex - 1)
+                    .FirstOrDefault();
+
+                db.BookingServices.Add(new BookingService
+                {
+                    BookingId = booking.BookingId,
+                    PassengerId = passenger.PassengerId,
+                    ServiceId = bg.ServiceType,   // serviceType = baggage type
+                    Quantity = 1,
+                    UnitPrice = bg.Price
+                });
+            }
             db.SaveChanges();
             return booking.BookingId;
         }

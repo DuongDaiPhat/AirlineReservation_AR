@@ -18,9 +18,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
     public partial class UCUserTransaction : UserControl
     {
-        private readonly BookingsService _bookingService = new BookingsService();
+
+        private readonly BookingsService_Profile _bookingService = new BookingsService_Profile();
         private UserDTO _user;
         public UCUserTransaction(UserDTO user)
+
         {
             InitializeComponent();
             _user = user;

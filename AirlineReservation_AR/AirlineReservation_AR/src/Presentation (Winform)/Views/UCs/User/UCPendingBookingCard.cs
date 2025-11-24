@@ -76,7 +76,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
 
             try
             {
-                var service = new BookingsService();
+
+                var service = new BookingsService_Profile();
                 var ok = await service.CancelBookingAsync(_booking.BookingId, _user.UserId);
 
                 if (!ok)

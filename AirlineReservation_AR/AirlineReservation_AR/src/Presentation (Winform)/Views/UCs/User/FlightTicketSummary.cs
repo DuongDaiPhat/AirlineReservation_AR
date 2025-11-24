@@ -68,11 +68,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
             txtFromAirport.Text = flight.DepartureAirport?.AirportName.ToString();
             txtToAirport.Text = flight.ArrivalAirport?.AirportName.ToString();
 
-            txtFlightPrice.Text = ticket.Price.ToString("#,##0.00", CultureInfo.InvariantCulture);
-            txtTax.Text = ticket.Taxes?.ToString("#,##0.00", CultureInfo.InvariantCulture);
-            txtFee.Text = ticket.Fees?.ToString("#,##0.00", CultureInfo.InvariantCulture);
+            txtFlightPrice.Text = booking.Price.ToString("#,##0.00", CultureInfo.InvariantCulture);
+            txtTax.Text = booking.Taxes?.ToString("#,##0.00", CultureInfo.InvariantCulture);
+            txtFee.Text = booking.Fees?.ToString("#,##0.00", CultureInfo.InvariantCulture);
 
-            decimal? total = ticket?.Price + ticket?.Taxes + ticket?.Fees;
+            decimal? total = booking?.Price + booking?.Taxes + booking?.Fees;
             txtTotal.Text = "$" + total?.ToString("#,##0.00", CultureInfo.InvariantCulture);
 
 

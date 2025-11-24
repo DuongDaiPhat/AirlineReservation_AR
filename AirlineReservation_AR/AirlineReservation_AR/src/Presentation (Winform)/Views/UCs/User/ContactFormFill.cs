@@ -9,16 +9,23 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AirlineReservation_AR.src.Domain.DTOs;
+using System.Text.RegularExpressions;
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
     public partial class ContactFormFill : UserControl
     {
+
         public ContactFormFill()
         {
             InitializeComponent();
             LoadPhoneCodes();
             HookResetEvents();
+            txtPhoneNumber.KeyPress += (s, e) =>
+            {
+                if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+                    e.Handled = true;
+            };
         }
         private void LoadPhoneCodes()
         {
@@ -53,25 +60,43 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             ResetError(txtFirstName, txtLastName, txtPhoneNumber, txtEmail);
 
-            if (string.IsNullOrWhiteSpace(txtFirstName.Text))
+            // 1. First name – không để trống và không chứa số
+            if (string.IsNullOrWhiteSpace(txtFirstName.Text) ||
+                !Regex.IsMatch(txtFirstName.Text.Trim(), @"^[A-Za-zÀ-ỹ\s]+$"))
             {
                 MarkError(txtFirstName, errorFirstName);
                 ok = false;
             }
 
-            if (string.IsNullOrWhiteSpace(txtLastName.Text))
+            // 2. Last name – không để trống và không chứa số
+            if (string.IsNullOrWhiteSpace(txtLastName.Text) ||
+                !Regex.IsMatch(txtLastName.Text.Trim(), @"^[A-Za-zÀ-ỹ\s]+$"))
             {
                 MarkError(txtLastName, errorLastName);
                 ok = false;
             }
 
-            if (string.IsNullOrWhiteSpace(txtPhoneNumber.Text))
+            // 3. Phone number
+            string phone = txtPhoneNumber.Text.Trim();
+            if (!Regex.IsMatch(phone, @"^[0-9]{9,15}$"))
             {
+                errorPhone.Text = "Số điện thoại chỉ được chứa số (9–15 ký tự)";
                 MarkError(txtPhoneNumber, errorPhone);
                 ok = false;
             }
 
-            if (!IsValidEmail(txtEmail.Text))
+            // 4. Phone number – validate chuẩn Việt Nam
+            if (cboPhoneCode.Text == "+84" &&
+                !Regex.IsMatch(phone, @"^(03|05|07|08|09)[0-9]{8}$"))
+            {
+                errorPhone.Text = "Số điện thoại Việt Nam không hợp lệ";
+                MarkError(txtPhoneNumber, errorPhone);
+                ok = false;
+            }
+
+            // 5. Email
+            if (!Regex.IsMatch(txtEmail.Text.Trim(),
+                 @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
                 MarkError(txtEmail, errorEmail);
                 ok = false;

@@ -254,6 +254,7 @@ namespace MomoQR
             Name = "MomoQR";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MoMo Payment";
+            Load += MomoQR_Load;
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             panelMain.ResumeLayout(false);

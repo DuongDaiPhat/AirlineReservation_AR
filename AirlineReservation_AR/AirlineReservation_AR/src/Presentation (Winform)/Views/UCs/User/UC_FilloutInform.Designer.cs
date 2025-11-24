@@ -74,7 +74,7 @@
             guna2Button2.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             guna2Button2.Font = new Font("Segoe UI", 9F);
             guna2Button2.ForeColor = Color.White;
-            guna2Button2.Location = new Point(332, 538);
+            guna2Button2.Location = new Point(320, 654);
             guna2Button2.Name = "guna2Button2";
             guna2Button2.ShadowDecoration.CustomizableEdges = customizableEdges4;
             guna2Button2.Size = new Size(180, 45);
@@ -91,7 +91,7 @@
             guna2Button1.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             guna2Button1.Font = new Font("Segoe UI", 9F);
             guna2Button1.ForeColor = Color.White;
-            guna2Button1.Location = new Point(28, 538);
+            guna2Button1.Location = new Point(29, 654);
             guna2Button1.Name = "guna2Button1";
             guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges6;
             guna2Button1.Size = new Size(180, 45);
@@ -101,9 +101,9 @@
             // 
             // pnlSummary
             // 
-            pnlSummary.Location = new Point(28, 19);
+            pnlSummary.Location = new Point(79, 6);
             pnlSummary.Name = "pnlSummary";
-            pnlSummary.Size = new Size(472, 488);
+            pnlSummary.Size = new Size(365, 612);
             pnlSummary.TabIndex = 0;
             // 
             // formPnl

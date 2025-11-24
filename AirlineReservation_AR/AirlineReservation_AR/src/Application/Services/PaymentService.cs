@@ -161,5 +161,48 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             return payment.PaymentId;
         }
 
+        //public void HandlePaymentStatus(int bookingId)
+        //{
+        //    using var db = DIContainer.CreateDb();
+
+        //    var payment = db.Payments
+        //        .Where(p => p.BookingId == bookingId)
+        //        .OrderByDescending(p => p.PaymentId)
+        //        .FirstOrDefault();
+
+        //    if (payment == null) return;
+
+        //    if (payment.Status == "Success")
+        //    {
+        //        // --- UPDATE BOOKING ---
+        //        var booking = db.Bookings.First(b => b.BookingId == bookingId);
+        //        booking.Status = "Paid";
+
+        //        // --- CREATE TICKET ---
+        //        var ticket = new Ticket
+        //        {
+        //            BookingFlightId = bookingId,
+        //            TicketCode = "TCK-" + DateTime.Now.Ticks,
+        //            IssuedAt = DateTime.Now,
+        //            Status = "Active"
+        //        };
+        //        db.Tickets.Add(ticket);
+
+        //        // --- UPDATE PAYMENT ---
+        //        payment.Status = "Success";
+        //        payment.UpdatedAt = DateTime.Now;
+
+        //        db.SaveChanges();
+        //    }
+        //    else if (payment.Status == "Failed" || payment.Status == "Canceled")
+        //    {
+        //        var booking = db.Bookings.First(b => b.BookingId == bookingId);
+        //        booking.Status = "Canceled";
+
+        //        payment.UpdatedAt = DateTime.Now;
+
+        //        db.SaveChanges();
+        //    }
+        //}
     }
 }
