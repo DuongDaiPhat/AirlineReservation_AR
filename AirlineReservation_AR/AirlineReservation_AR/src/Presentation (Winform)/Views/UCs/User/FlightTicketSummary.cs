@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                 $"{fromCity} ({flight.DepartureAirport?.IataCode}) -> {toCity} ({flight.ArrivalAirport?.IataCode})";
 
             // Hãng + hạng ghế
-            txtAirline.Text = flight.Airline?.AirlineName ?? "Unknown airline"; 
+            txtAirline.Text = flight.Airline?.AirlineName ?? "Unknown airline";
             txtSeatClass.Text = _ticket.SeatClass?.ClassName ?? "Economy";
 
             // Thời gian cất cánh / hạ cánh
@@ -62,6 +63,18 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
             txtArrTime.Text = arrive.ToString("HH:mm");
             txtArrDay.Text = arrive.ToString("ddd, dd MMM");
             txtArrYear.Text = arrive.ToString("yyyy");
+
+            //Hãng hàng không
+            txtFromAirport.Text = flight.DepartureAirport?.AirportName.ToString();
+            txtToAirport.Text = flight.ArrivalAirport?.AirportName.ToString();
+
+            txtFlightPrice.Text = ticket.Price.ToString("#,##0.00", CultureInfo.InvariantCulture);
+            txtTax.Text = ticket.Taxes?.ToString("#,##0.00", CultureInfo.InvariantCulture);
+            txtFee.Text = ticket.Fees?.ToString("#,##0.00", CultureInfo.InvariantCulture);
+
+            decimal? total = ticket?.Price + ticket?.Taxes + ticket?.Fees;
+            txtTotal.Text = "$" + total?.ToString("#,##0.00", CultureInfo.InvariantCulture);
+
 
             // Thời lượng bay
             var minutes = flight.DurationMinutes ?? (int)(arrive - depart).TotalMinutes;
@@ -88,6 +101,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                 txtPassengerInfo.Text = "Passenger details not available";
                 txtPassport.Text = string.Empty;
             }
+        }
+
+        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

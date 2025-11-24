@@ -90,7 +90,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                     var card = new UCPendingBookingCard(_user)
                     {
                         Width = fpnlPendingTicketHolder.ClientSize.Width,
-                        Margin = new Padding(0, 0, 0, 10)
                     };
 
                     card.SetData(b, flight);
@@ -106,10 +105,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                     fpnlPendingTicketHolder.Height = card.Height;
                     fpnlPendingTicketHolder.MinimumSize = new Size(card.Width, card.Height + 10);
 
-                    // ---- Resize luôn panelPendingOrders ----
-                    int paddingBottom = 20; // tuỳ em
                     panelPendingOrders.Height =
-                        fpnlPendingTicketHolder.Top + card.Height + paddingBottom;
+                        fpnlPendingTicketHolder.Top + card.Height;
                 }
                 else
                 {
@@ -156,7 +153,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                         var ticketCard = new UCPaidTicket
                         {
                             Width = fpnlIssuedTicketHolder.ClientSize.Width,
-                            Margin = new Padding(0, 0, 0, 10)
                         };
 
                         ticketCard.SetData(booking, flight, ticket);
@@ -184,7 +180,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
             {
                 var card = new UCPendingBookingCard(_user);
 
-                card.Margin = new Padding(0, 0, 0, 10);
 
                 fpnlPendingTicketHolder.Controls.Add(card);
             }
@@ -202,7 +197,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
             {
                 var card = new UCPaidTicket();
 
-                card.Margin = new Padding(0, 0, 0, 10);
 
                 fpnlIssuedTicketHolder.Controls.Add(card);
             }

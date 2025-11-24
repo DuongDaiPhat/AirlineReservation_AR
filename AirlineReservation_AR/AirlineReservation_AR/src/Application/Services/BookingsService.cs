@@ -19,8 +19,9 @@ namespace AirlineReservation_AR.src.Application.Services
             .Where(b => b.UserId == userId)
             .Include(b => b.BookingFlights)
                 .ThenInclude(bf => bf.Flight)
-                    .ThenInclude(f => f.DepartureAirport)
+                    .ThenInclude(da => da.DepartureAirport)
                         .ThenInclude(a => a.City)
+
             .Include(b => b.BookingFlights)
                 .ThenInclude(bf => bf.Flight)
                     .ThenInclude(f => f.ArrivalAirport)
@@ -28,6 +29,9 @@ namespace AirlineReservation_AR.src.Application.Services
             .Include(b => b.BookingFlights)
                 .ThenInclude(bf => bf.Tickets)
                     .ThenInclude(t => t.Passenger)
+            .Include(b => b.BookingFlights)
+                .ThenInclude(bf => bf.Flight)
+                    .ThenInclude(f => f.Airline)
             .ToListAsync();
         }
 
