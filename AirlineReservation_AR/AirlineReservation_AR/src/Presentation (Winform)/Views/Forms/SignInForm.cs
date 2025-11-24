@@ -1,5 +1,10 @@
 ﻿//using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.Properties;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Views.Forms.Admin;
 using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
+using AirlineReservation_AR.src.Infrastructure.DI;
+using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
+using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Staff;
 using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
@@ -12,9 +17,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
-using AirlineReservation_AR.Properties;
-using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
-using AirlineReservation_AR.src.Infrastructure.DI;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common
 {
@@ -78,36 +80,57 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             loading.Show();
             loading.Refresh();
 
+
+
+
             // 2. Truy vấn DB trong Task tránh UI bị đơ
-            var user = await _controller.LoginAsync(emailTB.Text, passwordTB.Text);
-            DIContainer.SetCurrentUser(user);
+            var result = await _controller.LoginAsync(emailTB.Text, passwordTB.Text);
+
 
             // 3. Đóng loading NGAY SAU KHI truy vấn xong
             loading.Close();
             loading.Dispose();
             loading = null;
 
-            // 4. Xử lý kết quả
-            if (user == null)
+            // 3.Xử lý kết quả
+            if (result == null)
             {
                 var errorAnnouncement = new AnnouncementForm();
-                errorAnnouncement.SetAnnouncement("Error", "Email không tồn tại trong hệ thống.", false, null);
+                errorAnnouncement.SetAnnouncement(
+                    "Error",
+                    "Email hoặc mật khẩu không đúng.",
+                    false,
+                    null);
                 errorAnnouncement.ShowDialog();
                 return;
             }
 
-            if (!hasher.VerifyPassword(passwordTB.Text, user.PasswordHash))
+            var user = result.User;
+            var roleId = result.RoleId;
+
+            // 4. Lưu thông tin user hiện tại vào DIContainer
+            DIContainer.SetCurrentUser(user);
+
+            // 5. Chuyển đến form tương ứng theo role
+            Form nextForm;
+
+            switch (roleId)
             {
-                var errorAnnouncement = new AnnouncementForm();
-                errorAnnouncement.SetAnnouncement("Error", "Sai mật khẩu.", false, null);
-                errorAnnouncement.ShowDialog();
-                return;
+                case 1:
+                    nextForm = new MenuAdminDashboard();   // Admin
+                    break;
+                case 2:
+                    nextForm = new StaffDashboard();       // Staff
+                    break;
+                case 3:
+                default:
+                    nextForm = new MainTravelokaForm();    // User
+                    break;
             }
 
-            //5.Thành công - chuyển sang Form1
-            MainTravelokaForm form1 = new MainTravelokaForm();
+            // 6. Thông báo success + mở form tương ứng
             var successAnnouncement = new AnnouncementForm();
-            successAnnouncement.SetAnnouncement("Success", "Sign In Successful!", true, form1);
+            successAnnouncement.SetAnnouncement("Success", "Sign In Successful!", true, nextForm);
             successAnnouncement.ShowDialog();
 
             this.Hide();

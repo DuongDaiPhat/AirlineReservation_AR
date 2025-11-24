@@ -51,17 +51,13 @@ namespace AirlineReservation_AR
             bodyPanel.Dock = DockStyle.Fill;
             bodyPanel.Location = new Point(0, 100);
             bodyPanel.Name = "bodyPanel";
-            bodyPanel.Size = new Size(1634, 841);
+            bodyPanel.Size = new Size(1634, 941);
             bodyPanel.TabIndex = 0;
-
-            ucFlightSearch = new UC_FlightSearch();
-            ucFlightSearch.Dock = DockStyle.Fill;
-            bodyPanel.Controls.Add(ucFlightSearch);
             // 
             // MainTravelokaForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(1634, 941);
+            ClientSize = new Size(1634, 1041);
             Controls.Add(bodyPanel);
             Controls.Add(headerPanel);
             FormBorderStyle = FormBorderStyle.FixedSingle;

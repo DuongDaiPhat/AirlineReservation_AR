@@ -148,7 +148,7 @@
             btnAccount.FillColor = Color.White;
             btnAccount.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold);
             btnAccount.ForeColor = Color.Black;
-            btnAccount.Image = Properties.Resources.download1;
+            btnAccount.Image = Properties.Resources.download;
             btnAccount.ImageAlign = HorizontalAlignment.Left;
             btnAccount.ImageOffset = new Point(10, 0);
             btnAccount.ImageSize = new Size(25, 25);
@@ -203,7 +203,7 @@
             btnPurchaseList.FillColor = Color.White;
             btnPurchaseList.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold);
             btnPurchaseList.ForeColor = Color.Black;
-            btnPurchaseList.Image = Properties.Resources.booking_list1;
+            btnPurchaseList.Image = Properties.Resources.booking_list;
             btnPurchaseList.ImageAlign = HorizontalAlignment.Left;
             btnPurchaseList.ImageOffset = new Point(10, 0);
             btnPurchaseList.ImageSize = new Size(25, 25);
