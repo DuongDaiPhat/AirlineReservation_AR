@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
     public partial class AddEditFlightForm : Form
     {
         private readonly FormMode _mode;
-        private readonly FlightData _flight;
-        public AddEditFlightForm(FormMode mode, FlightData flight = null)
+        private readonly FlightListDtoAdmin _flight;
+        public AddEditFlightForm(FormMode mode, FlightListDtoAdmin flight = null)
         {
             InitializeComponent();
             _mode = mode;

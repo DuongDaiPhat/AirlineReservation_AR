@@ -1,22 +1,35 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AirlineReservation_AR.src.Application.Interfaces;
+using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Infrastructure.DI;
 using Guna.UI2.WinForms;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 {
     public partial class ReportStatisticsControl : UserControl
     {
+        private Panel _loadingPanel;
         public ReportStatisticsControl()
         {
             InitializeComponent();
             InitializeCustomStyles();
             InitializeFilters();
-            LoadStatCards();
-            LoadChartData();
+            InitializeLoadingPanel();
         }
+        protected override async void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            if (!DesignMode)
+            {
+                await LoadInitialDataAsync();
+            }
+        }
+
         private void InitializeCustomStyles()
         {
             pnlFilters.BackColor = Color.White;
@@ -41,46 +54,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             btnFilter.Click += BtnFilter_Click;
             btnExport.Click += BtnExport_Click;
             cboReportType.SelectedIndexChanged += CboReportType_SelectedIndexChanged;
-        }
-
-        private void StyleGunaButton(Guna2Button btn, Color color)
-        {
-            btn.FillColor = color;
-            btn.ForeColor = Color.White;
-            btn.BorderRadius = 8;
-            btn.Cursor = Cursors.Hand;
-            btn.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-
-            // Hover effect
-            Color hoverColor = ControlPaint.Dark(color, 0.1f);
-            btn.HoverState.FillColor = hoverColor;
-        }
-
-        private void StyleChartPanel(Panel panel)
-        {
-            panel.BackColor = Color.White;
-            panel.BorderStyle = BorderStyle.None;
-
-            // Rounded corners effect
-            panel.Paint += (s, e) =>
-            {
-                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                using (var pen = new Pen(Color.FromArgb(233, 236, 239), 2))
-                {
-                    var rect = new Rectangle(1, 1, panel.Width - 2, panel.Height - 2);
-                    e.Graphics.DrawRectangle(pen, rect);
-                }
-            };
-        }
-
-        private void StyleListView(ListView lv)
-        {
-            lv.View = View.Details;
-            lv.FullRowSelect = true;
-            lv.GridLines = true;
-            lv.Font = new Font("Segoe UI", 9);
-            lv.BackColor = Color.White;
-            lv.BorderStyle = BorderStyle.None;
         }
 
         private void InitializeFilters()
@@ -122,27 +95,482 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             listView1.Columns.Add("Tổng chi", 100);
         }
 
-        // ============================================
-        // TẠO STAT CARDS
-        // ============================================
-        private void LoadStatCards()
+        private void InitializeLoadingPanel()
         {
-            flpStats.Controls.Clear();
-
-            var stats = new[]
+            _loadingPanel = new Panel
             {
-                new { Icon = "💰", Title = "Tổng doanh thu", Value = "₫8.5 tỷ", Change = "+12.5%", Color = Color.FromArgb(52, 152, 219) },
-                new { Icon = "🎫", Title = "Tổng booking", Value = "1,245", Change = "+8.3%", Color = Color.FromArgb(240, 147, 251) },
-                new { Icon = "✈️", Title = "Chuyến bay", Value = "248", Change = "+15", Color = Color.FromArgb(79, 172, 254) },
-                new { Icon = "👥", Title = "Khách hàng", Value = "1,856", Change = "+18.7%", Color = Color.FromArgb(67, 233, 123) },
-                new { Icon = "📈", Title = "Giá vé TB", Value = "₫6.8M", Change = "-3.2%", Color = Color.FromArgb(250, 112, 154) }
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(200, 255, 255, 255),
+                Visible = false
             };
 
-            foreach (var stat in stats)
+            var lblLoading = new Label
             {
-                var card = CreateStatCard(stat.Icon, stat.Title, stat.Value, stat.Change, stat.Color);
+                Text = "Đang tải dữ liệu...",
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                ForeColor = Color.FromArgb(52, 152, 219),
+                AutoSize = false,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Fill
+            };
+
+            _loadingPanel.Controls.Add(lblLoading);
+            this.Controls.Add(_loadingPanel);
+            _loadingPanel.BringToFront();
+        }
+
+        private async System.Threading.Tasks.Task LoadInitialDataAsync()
+        {
+            try
+            {
+                ShowLoading(true);
+
+                var fromDate = DateTime.Now.AddMonths(-1);
+                var toDate = DateTime.Now;
+
+                await LoadAllReportDataAsync(fromDate, toDate);
+
+                ShowLoading(false);
+            }
+            catch (Exception ex)
+            {
+                ShowLoading(false);
+                ShowError($"Lỗi khi tải dữ liệu: {ex.Message}");
+            }
+        }
+
+        private async System.Threading.Tasks.Task LoadAllReportDataAsync(DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                // Lấy controller từ DIContainer
+                var reportController = DIContainer.ReportControllerAdmin;
+
+                // Load stat cards
+                var statCards = await reportController.GetStatCardsAsync(fromDate, toDate);
+                DisplayStatCards(statCards);
+
+                // Load monthly revenue
+                var monthlyRevenue = await reportController.GetMonthlyRevenueAsync(fromDate, toDate);
+                DisplayRevenueChart(monthlyRevenue);
+
+                // Load top routes
+                var topRoutes = await reportController.GetTopRoutesAsync(fromDate, toDate);
+                DisplayTopRoutes(topRoutes);
+
+                // Load top customers
+                var topCustomers = await reportController.GetTopCustomersAsync(fromDate, toDate);
+                DisplayTopCustomers(topCustomers);
+
+                // Load summary
+                var summary = await reportController.GetReportSummaryAsync(fromDate, toDate);
+                DisplaySummary(summary);
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Lỗi khi tải báo cáo: {ex.Message}");
+            }
+        }
+
+        // ============================================
+        // LOAD SPECIFIC REPORTS
+        // ============================================
+
+        private async System.Threading.Tasks.Task LoadRevenueReportAsync(DateTime fromDate, DateTime toDate)
+        {
+            var reportController = DIContainer.ReportControllerAdmin;
+
+            var statCards = await reportController.GetStatCardsAsync(fromDate, toDate);
+            DisplayStatCards(statCards);
+
+            var revenueByRoute = await reportController.GetRevenueByRouteAsync(fromDate, toDate);
+            DisplayRevenueByRoute(revenueByRoute);
+
+            var monthlyRevenue = await reportController.GetMonthlyRevenueAsync(fromDate, toDate);
+            DisplayRevenueChart(monthlyRevenue);
+        }
+
+        private async System.Threading.Tasks.Task LoadBookingReportAsync(DateTime fromDate, DateTime toDate)
+        {
+            var reportController = DIContainer.ReportControllerAdmin;
+
+            var bookingStatuses = await reportController.GetBookingStatusAnalysisAsync(fromDate, toDate);
+            // TODO: Display booking statuses chart (implement later)
+
+            var bookingTrends = await reportController.GetBookingTrendsAsync(fromDate, toDate);
+            // TODO: Display booking trends chart (implement later)
+
+            // Tạm thời hiển thị thông báo
+            ShowSuccess("Báo cáo Booking đang được phát triển");
+        }
+
+        private async System.Threading.Tasks.Task LoadCustomerReportAsync(DateTime fromDate, DateTime toDate)
+        {
+            var reportController = DIContainer.ReportControllerAdmin;
+
+            var topCustomers = await reportController.GetTopCustomersAsync(fromDate, toDate);
+            DisplayTopCustomers(topCustomers);
+        }
+
+        private async System.Threading.Tasks.Task LoadFlightReportAsync(DateTime fromDate, DateTime toDate)
+        {
+            var reportController = DIContainer.ReportControllerAdmin;
+
+            var flightPerformance = await reportController.GetFlightPerformanceAsync(fromDate, toDate);
+            // TODO: Display flight performance (implement later)
+
+            // Tạm thời hiển thị thông báo
+            ShowSuccess("Báo cáo Chuyến bay đang được phát triển");
+        }
+
+        // ============================================
+        // EVENTS
+        // ============================================
+        private async void BtnFilter_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string reportType = cboReportType.SelectedItem?.ToString() ?? "Tổng quan";
+                DateTime fromDate = dtpFromDate.Value;
+                DateTime toDate = guna2DateTimePicker1.Value;
+
+                var reportController = DIContainer.ReportControllerAdmin;
+
+                // Validate date range
+                if (!reportController.ValidateDateRange(fromDate, toDate, out string errorMessage))
+                {
+                    ShowWarning(errorMessage);
+                    return;
+                }
+
+                ShowLoading(true);
+
+                switch (reportType)
+                {
+                    case "Doanh thu":
+                        await LoadRevenueReportAsync(fromDate, toDate);
+                        break;
+                    case "Booking":
+                        await LoadBookingReportAsync(fromDate, toDate);
+                        break;
+                    case "Khách hàng":
+                        await LoadCustomerReportAsync(fromDate, toDate);
+                        break;
+                    case "Chuyến bay":
+                        await LoadFlightReportAsync(fromDate, toDate);
+                        break;
+                    default:
+                        await LoadAllReportDataAsync(fromDate, toDate);
+                        break;
+                }
+
+                ShowLoading(false);
+                ShowSuccess($"Đã tải báo cáo {reportType} từ {fromDate:dd/MM/yyyy} đến {toDate:dd/MM/yyyy}");
+            }
+            catch (Exception ex)
+            {
+                ShowLoading(false);
+                ShowError($"Lỗi khi lọc dữ liệu: {ex.Message}");
+            }
+        }
+
+        private async void BtnExport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var saveDialog = new SaveFileDialog
+                {
+                    Filter = "Excel Files|*.xlsx",
+                    Title = "Lưu báo cáo",
+                    FileName = $"BaoCao_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx"
+                };
+
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ShowLoading(true);
+
+                    string reportType = cboReportType.SelectedItem?.ToString() ?? "Tổng quan";
+                    DateTime fromDate = dtpFromDate.Value;
+                    DateTime toDate = guna2DateTimePicker1.Value;
+
+                    var request = new ReportRequestDtoAdmin
+                    {
+                        ReportType = reportType,
+                        FromDate = fromDate,
+                        ToDate = toDate
+                    };
+
+                    var reportController = DIContainer.ReportControllerAdmin;
+                    var excelData = await reportController.ExportReportToExcelAsync(request);
+
+                    if (excelData != null && excelData.Length > 0)
+                    {
+                        await System.IO.File.WriteAllBytesAsync(saveDialog.FileName, excelData);
+                        ShowSuccess($"Đã xuất báo cáo thành công!\n{saveDialog.FileName}");
+                    }
+                    else
+                    {
+                        ShowWarning("Chức năng xuất Excel đang được phát triển.");
+                    }
+
+                    ShowLoading(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowLoading(false);
+                ShowError($"Lỗi khi xuất file: {ex.Message}");
+            }
+        }
+
+        private void CboReportType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string reportType = cboReportType.SelectedItem?.ToString() ?? "";
+
+            switch (reportType)
+            {
+                case "Doanh thu":
+                    label4.Text = "📊 Doanh thu theo tháng";
+                    label5.Text = "💰 Doanh thu theo tuyến";
+                    break;
+                case "Booking":
+                    label4.Text = "📈 Số lượng booking";
+                    label5.Text = "🎫 Booking theo hãng";
+                    break;
+                case "Khách hàng":
+                    label4.Text = "👥 Khách hàng mới";
+                    label5.Text = "⭐ Top khách hàng";
+                    break;
+                default:
+                    label4.Text = "📊 Biểu đồ doanh thu";
+                    label5.Text = "📈 Top tuyến bay";
+                    break;
+            }
+        }
+
+        private void DisplayStatCards(List<StatCardDtoAdmin> statCards)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => DisplayStatCards(statCards)));
+                return;
+            }
+
+            flpStats.Controls.Clear();
+
+            foreach (var stat in statCards)
+            {
+                var color = GetColorForCard(stat.Icon);
+                var card = CreateStatCard(stat.Icon, stat.Title, stat.Value, stat.Change, color);
                 flpStats.Controls.Add(card);
             }
+        }
+
+        private void DisplayRevenueChart(List<MonthlyRevenueDtoAdmin> monthlyRevenue)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => DisplayRevenueChart(monthlyRevenue)));
+                return;
+            }
+
+            var chartPanel = pnlChart1Content;
+            if (chartPanel != null)
+            {
+                chartPanel.Invalidate();
+                chartPanel.Paint -= ChartPanel_Paint;
+                chartPanel.Paint += (s, e) => DrawRevenueChart(e.Graphics, monthlyRevenue, chartPanel);
+            }
+        }
+
+        private void DisplayTopRoutes(List<TopRouteDtoAdmin> topRoutes)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => DisplayTopRoutes(topRoutes)));
+                return;
+            }
+
+            lvTopRoutes.Items.Clear();
+
+            foreach (var route in topRoutes)
+            {
+                var rankIcon = GetRankIcon(route.Rank);
+                var item = new ListViewItem(rankIcon);
+                item.SubItems.Add(route.Route);
+                item.SubItems.Add(route.BookingCount.ToString());
+                item.SubItems.Add(FormatCurrency(route.TotalRevenue));
+                lvTopRoutes.Items.Add(item);
+            }
+        }
+
+        private void DisplayTopCustomers(List<TopCustomerDtoAdmin> topCustomers)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => DisplayTopCustomers(topCustomers)));
+                return;
+            }
+
+            listView1.Items.Clear();
+
+            foreach (var customer in topCustomers)
+            {
+                var rankIcon = GetRankIcon(customer.Rank);
+                var item = new ListViewItem(rankIcon);
+                item.SubItems.Add(customer.CustomerName);
+                item.SubItems.Add(customer.Email);
+                item.SubItems.Add(FormatCurrency(customer.TotalSpent));
+                listView1.Items.Add(item);
+            }
+        }
+
+        private void DisplaySummary(ReportSummaryDtoAdmin summary)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => DisplaySummary(summary)));
+                return;
+            }
+
+            var summaryPanel = pnlSummary;
+            if (summaryPanel != null)
+            {
+                summaryPanel.Controls.Clear();
+
+                var summaryData = new[]
+                {
+                    new { Label = "Tổng chuyến bay:", Value = summary.TotalFlights.ToString() },
+                    new { Label = "Tổng hành khách:", Value = summary.TotalPassengers.ToString("N0") },
+                    new { Label = "Doanh thu:", Value = FormatCurrency(summary.TotalRevenue) },
+                    new { Label = "Lợi nhuận:", Value = FormatCurrency(summary.TotalProfit) },
+                    new { Label = "Tỷ lệ hủy:", Value = $"{summary.CancellationRate:N1}%" },
+                    new { Label = "Độ hài lòng:", Value = $"{summary.AverageSatisfactionScore:N1}/5" }
+                };
+
+                int yPos = 10;
+                foreach (var item in summaryData)
+                {
+                    var lblLabel = new Label
+                    {
+                        Text = item.Label,
+                        Location = new Point(20, yPos),
+                        AutoSize = true,
+                        Font = new Font("Segoe UI", 9),
+                        ForeColor = Color.Gray
+                    };
+
+                    var lblValue = new Label
+                    {
+                        Text = item.Value,
+                        Location = new Point(250, yPos),
+                        AutoSize = true,
+                        Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                        ForeColor = Color.Black
+                    };
+
+                    summaryPanel.Controls.AddRange(new Control[] { lblLabel, lblValue });
+                    yPos += 22;
+                }
+            }
+        }
+        private void DisplayRevenueByRoute(List<RevenueByRouteDtoAdmin> revenueByRoute)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => DisplayRevenueByRoute(revenueByRoute)));
+                return;
+            }
+
+            lvTopRoutes.Items.Clear();
+
+            int rank = 1;
+            foreach (var route in revenueByRoute.Take(10))
+            {
+                var item = new ListViewItem(rank.ToString());
+                item.SubItems.Add(route.Route);
+                item.SubItems.Add(route.BookingCount.ToString());
+                item.SubItems.Add(FormatCurrency(route.TotalRevenue));
+                lvTopRoutes.Items.Add(item);
+                rank++;
+            }
+        }
+
+        public void ClearData()
+        {
+            flpStats.Controls.Clear();
+            lvTopRoutes.Items.Clear();
+            listView1.Items.Clear();
+            pnlSummary?.Controls.Clear();
+        }
+
+        private void ShowLoading(bool isLoading)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => ShowLoading(isLoading)));
+                return;
+            }
+
+            _loadingPanel.Visible = isLoading;
+            if (isLoading)
+                _loadingPanel.BringToFront();
+        }
+
+        private void ShowError(string message)
+        {
+            MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void ShowWarning(string message)
+        {
+            MessageBox.Show(message, "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void ShowSuccess(string message)
+        {
+            MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        // ============================================
+        // HELPER METHODS
+        // ============================================
+        private void StyleGunaButton(Guna2Button btn, Color color)
+        {
+            btn.FillColor = color;
+            btn.ForeColor = Color.White;
+            btn.BorderRadius = 8;
+            btn.Cursor = Cursors.Hand;
+            btn.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+
+            Color hoverColor = ControlPaint.Dark(color, 0.1f);
+            btn.HoverState.FillColor = hoverColor;
+        }
+
+        private void StyleChartPanel(Panel panel)
+        {
+            panel.BackColor = Color.White;
+            panel.BorderStyle = BorderStyle.None;
+
+            panel.Paint += (s, e) =>
+            {
+                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                using (var pen = new Pen(Color.FromArgb(233, 236, 239), 2))
+                {
+                    var rect = new Rectangle(1, 1, panel.Width - 2, panel.Height - 2);
+                    e.Graphics.DrawRectangle(pen, rect);
+                }
+            };
+        }
+
+        private void StyleListView(ListView lv)
+        {
+            lv.View = View.Details;
+            lv.FullRowSelect = true;
+            lv.GridLines = true;
+            lv.Font = new Font("Segoe UI", 9);
+            lv.BackColor = Color.White;
+            lv.BorderStyle = BorderStyle.None;
         }
 
         private Panel CreateStatCard(string icon, string title, string value, string change, Color color)
@@ -154,7 +582,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 Margin = new Padding(5)
             };
 
-            // Rounded corners
             card.Paint += (s, e) =>
             {
                 e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -213,254 +640,77 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             return card;
         }
 
-        // ============================================
-        // LOAD CHART DATA
-        // ============================================
-        private void LoadChartData()
+        private void DrawRevenueChart(Graphics g, List<MonthlyRevenueDtoAdmin> data, Panel chartPanel)
         {
-            DrawRevenueChart();
-            LoadTopRoutes();
-            LoadTopCustomers();
-            LoadSummary();
-        }
+            if (data == null || !data.Any()) return;
 
-        private void DrawRevenueChart()
-        {
-            var chartPanel = pnlChart1Content;
-            if (chartPanel != null)
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            int barWidth = 50;
+            int spacing = 10;
+            int maxHeight = 100;
+            decimal maxRevenue = data.Max(d => d.Revenue);
+
+            for (int i = 0; i < data.Count; i++)
             {
-                chartPanel.Paint += (s, e) =>
+                int barHeight = maxRevenue > 0
+                    ? (int)((data[i].Revenue / maxRevenue) * maxHeight)
+                    : 0;
+
+                int x = 20 + i * (barWidth + spacing);
+                int y = chartPanel.Height - barHeight - 30;
+
+                using (var brush = new SolidBrush(Color.FromArgb(52, 152, 219)))
                 {
-                    var g = e.Graphics;
-                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                    g.FillRectangle(brush, x, y, barWidth, barHeight);
+                }
 
-                    var data = new[] { 85, 120, 95, 140, 110, 160, 130 };
-                    var labels = new[] { "T1", "T2", "T3", "T4", "T5", "T6", "T7" };
-
-                    int barWidth = 50;
-                    int spacing = 10;
-                    int maxHeight = 100;
-
-                    for (int i = 0; i < data.Length; i++)
-                    {
-                        int barHeight = (int)(data[i] * maxHeight / 160f);
-                        int x = 20 + i * (barWidth + spacing);
-                        int y = chartPanel.Height - barHeight - 30;
-
-                        using (var brush = new SolidBrush(Color.FromArgb(52, 152, 219)))
-                        {
-                            g.FillRectangle(brush, x, y, barWidth, barHeight);
-                        }
-
-                        using (var font = new Font("Segoe UI", 8))
-                        using (var textBrush = new SolidBrush(Color.Gray))
-                        {
-                            var sf = new StringFormat { Alignment = StringAlignment.Center };
-                            g.DrawString(labels[i], font, textBrush, x + barWidth / 2, chartPanel.Height - 20, sf);
-                        }
-                    }
-                };
+                using (var font = new Font("Segoe UI", 8))
+                using (var textBrush = new SolidBrush(Color.Gray))
+                {
+                    var sf = new StringFormat { Alignment = StringAlignment.Center };
+                    g.DrawString(data[i].MonthLabel, font, textBrush, x + barWidth / 2, chartPanel.Height - 20, sf);
+                }
             }
         }
 
-        private void LoadTopRoutes()
+        private void ChartPanel_Paint(object sender, PaintEventArgs e)
         {
-            lvTopRoutes.Items.Clear();
-
-            var routes = new[]
+            // Placeholder
+        }
+        private Color GetColorForCard(string icon)
+        {
+            return icon switch
             {
-                new { Rank = "🥇", Route = "SGN → HAN", Bookings = "456", Revenue = "₫2.8 tỷ" },
-                new { Rank = "🥈", Route = "HAN → DAD", Bookings = "389", Revenue = "₫1.9 tỷ" },
-                new { Rank = "🥉", Route = "SGN → PQC", Bookings = "312", Revenue = "₫1.5 tỷ" },
-                new { Rank = "4", Route = "HAN → SGN", Bookings = "287", Revenue = "₫1.2 tỷ" },
-                new { Rank = "5", Route = "DAD → SGN", Bookings = "198", Revenue = "₫890M" }
+                "💰" => Color.FromArgb(52, 152, 219),
+                "🎫" => Color.FromArgb(240, 147, 251),
+                "✈️" => Color.FromArgb(79, 172, 254),
+                "👥" => Color.FromArgb(67, 233, 123),
+                "📈" => Color.FromArgb(250, 112, 154),
+                _ => Color.FromArgb(52, 152, 219)
             };
-
-            foreach (var route in routes)
-            {
-                var item = new ListViewItem(route.Rank);
-                item.SubItems.Add(route.Route);
-                item.SubItems.Add(route.Bookings);
-                item.SubItems.Add(route.Revenue);
-                lvTopRoutes.Items.Add(item);
-            }
         }
 
-        private void LoadTopCustomers()
+        private string GetRankIcon(int rank)
         {
-            listView1.Items.Clear();
-
-            var customers = new[]
+            return rank switch
             {
-                new { Rank = "🥇", Name = "Nguyễn Văn An", Email = "an@email.com", Total = "₫45M" },
-                new { Rank = "🥈", Name = "Trần Thị Bình", Email = "binh@email.com", Total = "₫38M" },
-                new { Rank = "🥉", Name = "Lê Minh Công", Email = "cong@email.com", Total = "₫32M" },
-                new { Rank = "4", Name = "Phạm Thu Dung", Email = "dung@email.com", Total = "₫28M" },
-                new { Rank = "5", Name = "Hoàng Văn Em", Email = "em@email.com", Total = "₫22M" }
+                1 => "🥇",
+                2 => "🥈",
+                3 => "🥉",
+                _ => rank.ToString()
             };
-
-            foreach (var customer in customers)
-            {
-                var item = new ListViewItem(customer.Rank);
-                item.SubItems.Add(customer.Name);
-                item.SubItems.Add(customer.Email);
-                item.SubItems.Add(customer.Total);
-                listView1.Items.Add(item);
-            }
         }
 
-        private void LoadSummary()
+        private string FormatCurrency(decimal amount)
         {
-            var summaryPanel = pnlSummary;
-            if (summaryPanel != null)
-            {
-                summaryPanel.Controls.Clear();
-
-                var summaryData = new[]
-                {
-                    new { Label = "Tổng chuyến bay:", Value = "248" },
-                    new { Label = "Tổng hành khách:", Value = "3,856" },
-                    new { Label = "Doanh thu:", Value = "₫8.5B" },
-                    new { Label = "Lợi nhuận:", Value = "₫2.1B" },
-                    new { Label = "Tỷ lệ hủy:", Value = "3.2%" },
-                    new { Label = "Độ hài lòng:", Value = "4.7/5" }
-                };
-
-                int yPos = 10;
-                foreach (var item in summaryData)
-                {
-                    var lblLabel = new Label
-                    {
-                        Text = item.Label,
-                        Location = new Point(20, yPos),
-                        AutoSize = true,
-                        Font = new Font("Segoe UI", 9),
-                        ForeColor = Color.Gray
-                    };
-
-                    var lblValue = new Label
-                    {
-                        Text = item.Value,
-                        Location = new Point(250, yPos),
-                        AutoSize = true,
-                        Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                        ForeColor = Color.Black
-                    };
-
-                    summaryPanel.Controls.AddRange(new Control[] { lblLabel, lblValue });
-                    yPos += 22;
-                }
-            }
+            if (amount >= 1_000_000_000)
+                return $"₫{amount / 1_000_000_000:N1} tỷ";
+            if (amount >= 1_000_000)
+                return $"₫{amount / 1_000_000:N1}M";
+            return $"₫{amount:N0}";
         }
 
-        // ============================================
-        // EVENTS
-        // ============================================
-        private void BtnFilter_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string reportType = cboReportType.SelectedItem?.ToString() ?? "Tổng quan";
-                DateTime fromDate = dtpFromDate.Value;
-                DateTime toDate = guna2DateTimePicker1.Value; // dtpToDate
-
-                if (fromDate > toDate)
-                {
-                    MessageBox.Show("Ngày bắt đầu phải nhỏ hơn ngày kết thúc!", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                LoadChartData();
-
-                MessageBox.Show($"Đang tải báo cáo {reportType}\nTừ {fromDate:dd/MM/yyyy} đến {toDate:dd/MM/yyyy}",
-                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void BtnExport_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var saveDialog = new SaveFileDialog
-                {
-                    Filter = "Excel Files|*.xlsx",
-                    Title = "Lưu báo cáo",
-                    FileName = $"BaoCao_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx"
-                };
-
-                if (saveDialog.ShowDialog() == DialogResult.OK)
-                {
-                    MessageBox.Show($"Đã xuất báo cáo ra file:\n{saveDialog.FileName}",
-                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi xuất file: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void CboReportType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string reportType = cboReportType.SelectedItem?.ToString() ?? "";
-
-            switch (reportType)
-            {
-                case "Doanh thu":
-                    label4.Text = "📊 Doanh thu theo tháng"; // lblChart1Title
-                    label5.Text = "💰 Doanh thu theo tuyến"; // lblChart2Title
-                    break;
-                case "Booking":
-                    label4.Text = "📈 Số lượng booking";
-                    label5.Text = "🎫 Booking theo hãng";
-                    break;
-                case "Khách hàng":
-                    label4.Text = "👥 Khách hàng mới";
-                    label5.Text = "⭐ Top khách hàng";
-                    break;
-                default:
-                    label4.Text = "📊 Biểu đồ doanh thu";
-                    label5.Text = "📈 Top tuyến bay";
-                    break;
-            }
-        }
-
-        // ============================================
-        // PUBLIC METHODS
-        // ============================================
-
-        public void LoadReportData(string reportType, DateTime fromDate, DateTime toDate)
-        {
-            cboReportType.SelectedItem = reportType;
-            dtpFromDate.Value = fromDate;
-            guna2DateTimePicker1.Value = toDate;
-            LoadChartData();
-        }
-
-        public void RefreshData()
-        {
-            LoadStatCards();
-            LoadChartData();
-        }
-
-        public void ClearData()
-        {
-            flpStats.Controls.Clear();
-            lvTopRoutes.Items.Clear();
-            listView1.Items.Clear();
-            pnlSummary?.Controls.Clear();
-        }
-
-        // ============================================
-        // HELPER METHODS
-        // ============================================
         private System.Drawing.Drawing2D.GraphicsPath GetRoundedRectPath(Rectangle rect, int radius)
         {
             var path = new System.Drawing.Drawing2D.GraphicsPath();

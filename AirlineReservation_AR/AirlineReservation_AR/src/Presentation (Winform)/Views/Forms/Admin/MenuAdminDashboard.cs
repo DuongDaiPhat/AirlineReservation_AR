@@ -15,11 +15,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
     public partial class MenuAdminDashboard : Form
     {
         private List<Control> _defaultPanelMain = new List<Control>();
-        private readonly UserControl _userControlAccount;
-        private readonly UserControl _pricingPromotionControl;
-        private readonly UserControl _ReportStatisticsControl;
-        private readonly UserControl _FlightManagementControl;
-        private readonly UserControl _BookingAndPaymentControl;
+        private UserControl _userControlAccount;
+        private UserControl _pricingPromotionControl;
+        private UserControl _ReportStatisticsControl;
+        private UserControl _FlightManagementControl;
+        private UserControl _BookingAndPaymentControl;
         public event Action<bool> SidebarStateChanged;
 
         public MenuAdminDashboard()
@@ -27,11 +27,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             this.DoubleBuffered = true;
-            _userControlAccount = new UserAccountManagementControl();
-            _pricingPromotionControl = new PricingPromotionControl();
-            _ReportStatisticsControl = new ReportStatisticsControl();
-            _FlightManagementControl = new FlightManagementControl();
-            _BookingAndPaymentControl = new BookingAndPaymentControl();
             adminDasboardControlUsers.Tag = _userControlAccount;
 
             SetDoubleBuffered(flowLayoutPanelMenu);
@@ -152,27 +147,27 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
                 else if (button == btnKhachHang)
                 {
                     ShowBigControl(adminDasboardControlUsers.title, adminDasboardControlUsers.dashboardImage);
-                    ShowUserControl(_userControlAccount);
+                    ShowUserControl(ref _userControlAccount, () => new UserAccountManagementControl());
                 }
                 else if(button == btnGiaVe_khuyenMai)
                 {
                     ShowBigControl(adminDasboardControlUsers.title, adminDasboardControlUsers.dashboardImage);
-                    ShowUserControl(_pricingPromotionControl);
+                    ShowUserControl(ref _pricingPromotionControl, () => new PricingPromotionControl());
                 }
                 else if (button == btnBaoCao_thongKe)
                 {
                     ShowBigControl(adminDasboardControlBaoCao_ThongKe.title, adminDasboardControlBaoCao_ThongKe.dashboardImage);
-                    ShowUserControl(_ReportStatisticsControl);
+                    ShowUserControl(ref _ReportStatisticsControl, () => new ReportStatisticsControl());
                 }
                 else if (button == btnQuanLyChuyenBay)
                 {
                     ShowBigControl(adminDasboardControlQuanLyChuyenBay.title, adminDasboardControlQuanLyChuyenBay.dashboardImage);
-                    ShowUserControl(_FlightManagementControl);
+                    ShowUserControl(ref _FlightManagementControl, () => new FlightManagementControl());
                 }
                 else if (button == btnDatVe_thanhToan)
                 {
                     ShowBigControl(adminDasboardControlDatVe_ThanhToan.title, adminDasboardControlDatVe_ThanhToan.dashboardImage);
-                    ShowUserControl(_BookingAndPaymentControl);
+                    ShowUserControl(ref _BookingAndPaymentControl, () => new BookingAndPaymentControl());
                 }
                 else if (button.Tag is adminDasboard small)
                 {
@@ -211,35 +206,35 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
 
                 if (small == adminDasboardControlUsers)
                 {
-                    ShowUserControl(_userControlAccount);
+                    ShowUserControl(ref _userControlAccount, () => new UserAccountManagementControl());
                     if (flowLayoutPanelMenu.Width > 60)
                         MenuTime.Start();
                     btnKhachHang.FillColor = Color.FromArgb(0, 102, 203);
                 }
                 else if (small == adminDasboardControlGiaVe_KhuyenMai)
                 {
-                    ShowUserControl(_pricingPromotionControl);
+                    ShowUserControl(ref _pricingPromotionControl, () => new PricingPromotionControl());
                     if (flowLayoutPanelMenu.Width > 60)
                         MenuTime.Start();
                     btnGiaVe_khuyenMai.FillColor = Color.FromArgb(0, 102, 203);
                 }
                 else if (small == adminDasboardControlBaoCao_ThongKe)
                 {
-                    ShowUserControl(_ReportStatisticsControl);
+                    ShowUserControl(ref _ReportStatisticsControl, () => new ReportStatisticsControl());
                     if (flowLayoutPanelMenu.Width > 60)
                         MenuTime.Start();
                     btnBaoCao_thongKe.FillColor = Color.FromArgb(0, 102, 203);
                 }
                 else if (small == adminDasboardControlQuanLyChuyenBay)
                 {
-                    ShowUserControl(_FlightManagementControl);
+                    ShowUserControl(ref _FlightManagementControl, () => new FlightManagementControl());
                     if (flowLayoutPanelMenu.Width > 60)
                         MenuTime.Start();
                     btnQuanLyChuyenBay.FillColor = Color.FromArgb(0, 102, 203);
                 }
                 else if (small == adminDasboardControlDatVe_ThanhToan)
                 {
-                    ShowUserControl(_BookingAndPaymentControl);
+                    ShowUserControl(ref _BookingAndPaymentControl, () => new BookingAndPaymentControl());
                     if (flowLayoutPanelMenu.Width > 60)
                         MenuTime.Start();
                     btnDatVe_thanhToan.FillColor = Color.FromArgb(0, 102, 203);
@@ -263,8 +258,13 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnCaiDat.Tag = adminDasboardControlSetting;
 
         }
-        private void ShowUserControl(UserControl ctrl)
+        private void ShowUserControl(ref UserControl ctrl, Func<UserControl> creator)
         {
+            if (ctrl == null || ctrl.IsDisposed)
+            {
+                ctrl = creator();
+            }
+
             panelMain.Controls.Clear();
             ctrl.Dock = DockStyle.Fill;
             panelMain.Controls.Add(ctrl);

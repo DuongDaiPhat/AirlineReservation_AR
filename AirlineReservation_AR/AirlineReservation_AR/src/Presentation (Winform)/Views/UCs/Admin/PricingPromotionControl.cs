@@ -1,5 +1,10 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.Application.Interfaces;
+using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Infrastructure.DI;
+using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin;
 using System;
+using System.Collections.Generic;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,25 +12,107 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 {
     public partial class PricingPromotionControl : UserControl
     {
-        private List<FlightPricing> flightPricings = new List<FlightPricing>();
-        private List<Promotion> promotions = new List<Promotion>();
+        private List<FlightPricingDtoAdmin> _flightPricings = new List<FlightPricingDtoAdmin>();
+        private List<PromotionDtoAdmin> _promotions = new List<PromotionDtoAdmin>();
         public PricingPromotionControl()
         {
             InitializeComponent();
             InitializeCustomStyles();
-            LoadSampleData();
+            //LoadSampleData();
             InitializeFilters();
-            LoadPricingCards();
-            LoadPromoCards();
+            RegisterEventHandlers();
+            //LoadPricingCards();
+            //LoadPromoCards();
             //LoadStatCards();
+            LoadDataAsync();
         }
+
+        private void RegisterEventHandlers()
+        {
+            // Hủy đăng ký cũ (phòng trường hợp được gọi nhiều lần)
+            btnSearchFlights.Click -= BtnSearchFlights_Click;
+            txtPromoSearch.TextChanged -= TxtPromoSearch_TextChanged;
+            cboPromoStatus.SelectedIndexChanged -= CboPromoStatus_SelectedIndexChanged;
+
+            // Đăng ký mới
+            btnSearchFlights.Click += BtnSearchFlights_Click;
+            txtPromoSearch.TextChanged += TxtPromoSearch_TextChanged;
+            cboPromoStatus.SelectedIndexChanged += CboPromoStatus_SelectedIndexChanged;
+        }
+
+        // Event handlers riêng biệt
+        private void BtnSearchFlights_Click(object sender, EventArgs e)
+        {
+            ApplyFlightFilters();
+        }
+
+        private void TxtPromoSearch_TextChanged(object sender, EventArgs e)
+        {
+            ApplyPromoFilters();
+        }
+
+        private void CboPromoStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ApplyPromoFilters();
+        }
+        private async void LoadDataAsync()
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                // Load data using Static DI Container
+                await LoadPricingDataAsync();
+                await LoadPromotionDataAsync();
+
+                // Update UI
+                LoadPricingCards();
+                LoadPromoCards();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+        }
+        private async Task LoadPricingDataAsync()
+        {
+            var response = await DIContainer.PricingControllerAdmin.GetAllPricings();
+            if (response.Success && response.Data != null)
+            {
+                _flightPricings = response.Data.ToList();
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private async Task LoadPromotionDataAsync()
+        {
+            var response = await DIContainer.PromotionControllerAdmin.GetAllPromotions();
+            if (response.Success && response.Data != null)
+            {
+                _promotions = response.Data.ToList();
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         private void InitializeCustomStyles()
         {
             // Style cho TabControl
@@ -140,10 +227,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             });
             cboPromoSort.SelectedIndex = 0;
 
-            // Events
-            btnSearchFlights.Click += (s, e) => ApplyFlightFilters();
-            txtPromoSearch.TextChanged += (s, e) => ApplyPromoFilters();
-            cboPromoStatus.SelectedIndexChanged += (s, e) => ApplyPromoFilters();
+            //// Events
+            //btnSearchFlights.Click += (s, e) => ApplyFlightFilters();
+            //txtPromoSearch.TextChanged += (s, e) => ApplyPromoFilters();
+            //cboPromoStatus.SelectedIndexChanged += (s, e) => ApplyPromoFilters();
         }
         //private void LoadStatCards()
         //{
@@ -211,26 +298,229 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
         //    return card;
         //}
-        private void LoadPricingCards()
+        private void LoadSampleData()
         {
-            flpPricingCards.Controls.Clear();
-
-            foreach (var pricing in flightPricings)
+            _flightPricings = new List<FlightPricingDtoAdmin>
             {
-                var card = CreatePricingCard(pricing);
-                flpPricingCards.Controls.Add(card);
+                //new FlightPricingDtoAdmin
+                //{
+                //    FlightNumber = "VN210",
+                //    AirlineName = "Vietnam Airlines",
+                //    Route = "SGN → HAN",
+                //    SeatClass = "Economy",
+                //    OriginalPrice = 2000000,
+                //    DiscountPercent = 25,
+                //    DiscountedPrice = 1500000,
+                //    BookedSeats = 45,
+                //    AvailableSeats = 135
+                //},
+                //new FlightPricingDtoAdmin
+                //{
+                //    FlightNumber = "VJ123",
+                //    AirlineName = "VietJet Air",
+                //    Route = "HAN → DAD",
+                //    SeatClass = "Economy",
+                //    OriginalPrice = 1200000,
+                //    DiscountPercent = 30,
+                //    DiscountedPrice = 840000,
+                //    BookedSeats = 120,
+                //    AvailableSeats = 60
+                //}
+            };
+
+            _promotions = new List<PromotionDtoAdmin>
+            {
+                new PromotionDtoAdmin
+                {
+                    PromoCode = "SUMMER2024",
+                    PromoName = "Ưu đãi mùa hè 2024",
+                    DiscountType = "Percent",
+                    DiscountValue = 15,
+                    MinimumAmount = 1000000,
+                    MaximumDiscount = 500000,
+                    UsageCount = 245,
+                    UsageLimit = 1000,
+                    ValidFrom = DateTime.Now.AddDays(-30),
+                    ValidTo = DateTime.Now.AddDays(30),
+                    IsActive = true
+                },
+                new PromotionDtoAdmin
+                {
+                    PromoCode = "WELCOME50",
+                    PromoName = "Khách hàng mới",
+                    DiscountType = "Fixed",
+                    DiscountValue = 50000,
+                    MinimumAmount = 500000,
+                    MaximumDiscount = 50000,
+                    UsageCount = 89,
+                    UsageLimit = 500,
+                    ValidFrom = DateTime.Now.AddDays(-60),
+                    ValidTo = DateTime.Now.AddDays(60),
+                    IsActive = true
+                }
+            };
+        }
+        private async void ApplyFlightFilters()
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                var filter = new FlightPricingFilterDtoAdmin
+                {
+                    Route = cboRoute.SelectedItem?.ToString(),
+                    SeatClass = cboSeatClass.SelectedItem?.ToString(),
+                    MinDiscountPercent = GetMinDiscountPercent()
+                };
+
+                var response = await DIContainer.PricingControllerAdmin.SearchPricings(filter);
+                if (response.Success && response.Data != null)
+                {
+                    _flightPricings = response.Data.ToList();
+                    LoadPricingCards();
+                }
+                else
+                {
+                    MessageBox.Show(response.Message, "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
             }
         }
-        private Panel CreatePricingCard(FlightPricing pricing)
+        private async void ApplyPromoFilters()
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                var filter = new PromotionFilterDtoAdmin
+                {
+                    SearchTerm = txtPromoSearch.Text,
+                    IsActive = GetPromoActiveStatus(),
+                    DiscountType = cboPromoType.SelectedItem?.ToString(),
+                    SortBy = GetPromoSortBy()
+                };
+
+                var response = await DIContainer.PromotionControllerAdmin.SearchPromotions(filter);
+                if (response.Success && response.Data != null)
+                {
+                    _promotions = response.Data.ToList();
+                    LoadPromoCards();
+                }
+                else
+                {
+                    MessageBox.Show(response.Message, "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+        }
+        private int? GetMinDiscountPercent()
+        {
+            var selected = cboDiscount.SelectedItem?.ToString();
+            return selected switch
+            {
+                "Trên 10%" => 10,
+                "Trên 20%" => 20,
+                "Trên 30%" => 30,
+                _ => null
+            };
+        }
+        private bool? GetPromoActiveStatus()
+        {
+            var selected = cboPromoStatus.SelectedItem?.ToString();
+            return selected switch
+            {
+                "Đang hoạt động" => true,
+                "Tạm dừng" => false,
+                _ => null
+            };
+        }
+        private string GetPromoSortBy()
+        {
+            var selected = cboPromoSort.SelectedItem?.ToString();
+            return selected switch
+            {
+                "Nhiều lượt dùng" => "most_used",
+                "Giá trị cao nhất" => "highest_value",
+                _ => "newest"
+            };
+        }
+
+        private bool _isLoadingPricing = false;
+        private void LoadPricingCards()
+        {
+            if (_isLoadingPricing)
+            {
+                System.Diagnostics.Debug.WriteLine("⚠️ LoadPricingCards đang chạy, bỏ qua lần gọi này");
+                return;
+            }
+
+            _isLoadingPricing = true;
+            flpPricingCards.Controls.Clear();
+            try
+            {
+                flpPricingCards.SuspendLayout();
+                flpPricingCards.Controls.Clear();
+
+                System.Diagnostics.Debug.WriteLine($"📊 Loading {_flightPricings.Count} pricing cards");
+
+                foreach (var pricing in _flightPricings)
+                {
+                    var card = CreatePricingCard(pricing);
+                    flpPricingCards.Controls.Add(card);
+                }
+
+                if (_flightPricings.Count == 0)
+                {
+                    var lblEmpty = new Label
+                    {
+                        Text = "Không có dữ liệu giá vé",
+                        Font = new Font("Segoe UI", 12, FontStyle.Italic),
+                        ForeColor = Color.Gray,
+                        AutoSize = true,
+                        Margin = new Padding(20)
+                    };
+                    flpPricingCards.Controls.Add(lblEmpty);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"❌ Lỗi LoadPricingCards: {ex.Message}");
+                MessageBox.Show($"Lỗi hiển thị giá vé: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                flpPricingCards.ResumeLayout();
+                _isLoadingPricing = false;
+            }
+        }
+        private Panel CreatePricingCard(FlightPricingDtoAdmin pricing)
         {
             var card = new Panel
             {
                 Size = new Size(350, 280),
-                //BackColor = GetGradientColor(pricing.DiscountPercent),
+                BackColor = GetGradientColor(pricing.DiscountPercent),
                 Margin = new Padding(10)
             };
 
-            // Rounded corners
             card.Paint += (s, e) =>
             {
                 e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -240,10 +530,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 }
             };
 
-            // Flight Number
             var lblFlight = new Label
             {
-                //Text = $"{pricing.FlightNumber} - {pricing.AirlineName}",
+                Text = $"{pricing.FlightNumber} - {pricing.AirlineName}",
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 12, FontStyle.Bold),
                 Location = new Point(20, 20),
@@ -251,10 +540,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 BackColor = Color.Transparent
             };
 
-            // Route
             var lblRoute = new Label
             {
-                //Text = pricing.Route,
+                Text = pricing.Route,
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 10),
                 Location = new Point(20, 50),
@@ -262,10 +550,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 BackColor = Color.Transparent
             };
 
-            // Discount Badge
             var lblDiscount = new Label
             {
-                //Text = $"🔥 Giảm {pricing.DiscountPercent}%",
+                Text = $"🔥 Giảm {pricing.DiscountPercent}%",
                 BackColor = Color.FromArgb(100, 255, 255, 255),
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
@@ -274,10 +561,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 Padding = new Padding(10, 5, 10, 5)
             };
 
-            // Prices
             var lblOldPrice = new Label
             {
-                //Text = $"{pricing.OriginalPrice:N0} ₫",
+                Text = $"{pricing.OriginalPrice:N0} ₫",
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 11, FontStyle.Strikeout),
                 Location = new Point(20, 130),
@@ -287,7 +573,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             var lblNewPrice = new Label
             {
-                //Text = $"{pricing.DiscountedPrice:N0} ₫",
+                Text = $"{pricing.DiscountedPrice:N0} ₫",
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 20, FontStyle.Bold),
                 Location = new Point(20, 155),
@@ -295,7 +581,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 BackColor = Color.Transparent
             };
 
-            // Info Box
             var pnlInfo = new Panel
             {
                 Location = new Point(20, 205),
@@ -315,7 +600,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             var lblSeats = new Label
             {
-                //Text = $"Đã bán: {pricing.BookedSeats} | Còn: {pricing.AvailableSeats}",
+                Text = $"Đã bán: {pricing.BookedSeats} | Còn: {pricing.AvailableSeats}",
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 9),
                 Location = new Point(10, 35),
@@ -330,7 +615,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 lblFlight, lblRoute, lblDiscount, lblOldPrice, lblNewPrice, pnlInfo
             });
 
-            // Click to edit
             card.Cursor = Cursors.Hand;
             card.Click += (s, e) => EditPricing(pricing);
 
@@ -339,14 +623,26 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         private void LoadPromoCards()
         {
             flpPromoCards.Controls.Clear();
-
-            foreach (var promo in promotions)
+            foreach (var promo in _promotions)
             {
                 var card = CreatePromoCard(promo);
                 flpPromoCards.Controls.Add(card);
             }
+
+            if (_promotions.Count == 0)
+            {
+                var lblEmpty = new Label
+                {
+                    Text = "Không có dữ liệu khuyến mãi",
+                    Font = new Font("Segoe UI", 12, FontStyle.Italic),
+                    ForeColor = Color.Gray,
+                    AutoSize = true,
+                    Margin = new Padding(20)
+                };
+                flpPromoCards.Controls.Add(lblEmpty);
+            }
         }
-        private Panel CreatePromoCard(Promotion promo)
+        private Panel CreatePromoCard(PromotionDtoAdmin promo)
         {
             var card = new Panel
             {
@@ -356,7 +652,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 BorderStyle = BorderStyle.FixedSingle
             };
 
-            // Rounded corners
             card.Paint += (s, e) =>
             {
                 e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -416,17 +711,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 BackColor = Color.Transparent
             };
 
-            var lblDiscountType = new Label
-            {
-                Text = promo.DiscountType == "Percent" ? "Giảm phần trăm" : "Giảm cố định",
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 9),
-                Location = new Point(lblDiscountValue.Right + 15, 28),
-                AutoSize = true,
-                BackColor = Color.Transparent
-            };
-
-            pnlDiscount.Controls.AddRange(new Control[] { lblDiscountValue, lblDiscountType });
+            pnlDiscount.Controls.Add(lblDiscountValue);
 
             // Info rows
             int yPos = 200;
@@ -445,7 +730,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 BackColor = Color.FromArgb(233, 236, 239)
             };
 
-            int progressWidth = (int)(260 * ((double)promo.UsageCount / promo.UsageLimit));
+            int progressWidth = (int)(260 * promo.UsagePercentage / 100);
             var pnlProgressFill = new Panel
             {
                 Location = new Point(0, 0),
@@ -490,7 +775,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 Font = new Font("Segoe UI", 9, FontStyle.Bold)
             };
             btnToggle.FlatAppearance.BorderSize = 0;
-            btnToggle.Click += (s, e) => TogglePromo(promo);
+            btnToggle.Click += async (s, e) => await TogglePromoAsync(promo);
 
             var btnDelete = new Button
             {
@@ -503,7 +788,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 Font = new Font("Segoe UI", 12, FontStyle.Bold)
             };
             btnDelete.FlatAppearance.BorderSize = 0;
-            btnDelete.Click += (s, e) => DeletePromo(promo);
+            btnDelete.Click += async (s, e) => await DeletePromoAsync(promo);
 
             pnlActions.Controls.AddRange(new Control[] { btnEdit, btnToggle, btnDelete });
 
@@ -533,6 +818,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             card.Controls.AddRange(new Control[] { lblLabel, lblValue });
         }
+
         private Color GetGradientColor(int discountPercent)
         {
             if (discountPercent >= 30) return Color.FromArgb(240, 147, 251);
@@ -554,98 +840,44 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             return path;
         }
-        private void LoadSampleData()
+        private void EditPricing(FlightPricingDtoAdmin pricing)
         {
-            flightPricings = new List<FlightPricing>
-            {
-                //new FlightPricing
-                //{
-                //    FlightNumber = "VN210",
-                //    AirlineName = "Vietnam Airlines",
-                //    Route = "SGN → HAN",
-                //    SeatClass = "Economy",
-                //    OriginalPrice = 2000000,
-                //    DiscountPercent = 25,
-                //    DiscountedPrice = 1500000,
-                //    BookedSeats = 45,
-                //    AvailableSeats = 135
-                //},
-                //new FlightPricing
-                //{
-                //    FlightNumber = "VJ123",
-                //    AirlineName = "VietJet Air",
-                //    Route = "HAN → DAD",
-                //    SeatClass = "Economy",
-                //    OriginalPrice = 1200000,
-                //    DiscountPercent = 30,
-                //    DiscountedPrice = 840000,
-                //    BookedSeats = 120,
-                //    AvailableSeats = 60
-                //}
-            };
-
-            promotions = new List<Promotion>
-            {
-                new Promotion
-                {
-                    PromoCode = "SUMMER2024",
-                    PromoName = "Ưu đãi mùa hè 2024",
-                    DiscountType = "Percent",
-                    DiscountValue = 15,
-                    MinimumAmount = 1000000,
-                    MaximumDiscount = 500000,
-                    UsageCount = 245,
-                    UsageLimit = 1000,
-                    ValidFrom = DateTime.Now.AddDays(-30),
-                    ValidTo = DateTime.Now.AddDays(30),
-                    IsActive = true
-                },
-                new Promotion
-                {
-                    PromoCode = "WELCOME50",
-                    PromoName = "Khách hàng mới",
-                    DiscountType = "Fixed",
-                    DiscountValue = 50000,
-                    MinimumAmount = 500000,
-                    MaximumDiscount = 50000,
-                    UsageCount = 89,
-                    UsageLimit = 500,
-                    ValidFrom = DateTime.Now.AddDays(-60),
-                    ValidTo = DateTime.Now.AddDays(60),
-                    IsActive = true
-                }
-            };
-        }
-        private void ApplyFlightFilters()
-        {
-            // Implement filtering logic
-            LoadPricingCards();
-        }
-        private void ApplyPromoFilters()
-        {
-            // Implement filtering logic
-            LoadPromoCards();
-        }
-        private void EditPricing(FlightPricing pricing)
-        {
-            //MessageBox.Show($"Chỉnh sửa giá vé: {pricing.FlightNumber}", "Edit",
-                //MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Chỉnh sửa giá vé: {pricing.PricingId}", "Edit",
+                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void EditPromo(Promotion promo)
+        private void EditPromo(PromotionDtoAdmin promo)
         {
             MessageBox.Show($"Chỉnh sửa khuyến mãi: {promo.PromoCode}", "Edit",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void TogglePromo(Promotion promo)
+        private async Task TogglePromoAsync(PromotionDtoAdmin promo)
         {
-            promo.IsActive = !promo.IsActive;
-            LoadPromoCards();
-            MessageBox.Show($"Đã {(promo.IsActive ? "kích hoạt" : "tạm dừng")} mã {promo.PromoCode}",
-                "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                var response = await DIContainer.PromotionControllerAdmin.TogglePromotion(promo.PromotionId);
+                if (response.Success)
+                {
+                    MessageBox.Show(response.Message, "Thành công",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    await LoadPromotionDataAsync();
+                    LoadPromoCards();
+                }
+                else
+                {
+                    MessageBox.Show(response.Message, "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-        private void DeletePromo(Promotion promo)
+
+        private async Task DeletePromoAsync(PromotionDtoAdmin promo)
         {
             var result = MessageBox.Show(
                 $"Bạn có chắc chắn muốn xóa mã khuyến mãi '{promo.PromoCode}'?",
@@ -655,10 +887,44 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             if (result == DialogResult.Yes)
             {
-                promotions.Remove(promo);
-                LoadPromoCards();
-                MessageBox.Show("Đã xóa mã khuyến mãi!", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    var response = await DIContainer.PromotionControllerAdmin.DeletePromotion(promo.PromotionId);
+                    if (response.Success)
+                    {
+                        MessageBox.Show("Đã xóa mã khuyến mãi!", "Thành công",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        await LoadPromotionDataAsync();
+                        LoadPromoCards();
+                    }
+                    else
+                    {
+                        MessageBox.Show(response.Message, "Lỗi",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        private void ShowAddPromoDialog()
+        {
+            // TODO: Implement Add Promotion Dialog
+            MessageBox.Show("Form thêm khuyến mãi sẽ được triển khai", "Thông báo",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnAddPromo_Click(object sender, EventArgs e)
+        {
+            using (var addForm = new AddPromotionForm())
+            {
+                if (addForm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadDataAsync();
+                }
             }
         }
     }

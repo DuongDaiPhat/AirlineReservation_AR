@@ -43,6 +43,21 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static IPaymentService? _paymentService;
         private static PaymentController? _paymentController;
 
+        private static IBookingServiceAdmin? _bookingServiceAdmin;
+        private static BookingControllerAdmin? _bookingControllerAdmin;
+
+        private static IFlightServiceAdmin? _flightServiceAdmin;
+        private static FlightControllerAdmin? _flightControllerAdmin;
+
+        private static IFlightPricingServiceAdmin? _flightPricingServiceAdmin;
+        private static IPromotionServiceAdmin? _promotionServiceAdmin;
+        private static IUnitOfWorkAdmin? _unitOfWorkAdmin;
+        private static IReportServiceAdmin? _reportServiceAdmin;
+
+        private static PricingControllerAdmin? _pricingControllerAdmin;
+        private static PromotionControllerAdmin? _promotionControllerAdmin;
+        private static ReportControllerAdmin? _reportController;
+
         private static IPromotionService? _promotionService;
         private static PromotionController? _promotionController;
         public static void Init()
@@ -53,7 +68,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
                 .Build();
 
             string conn = _config.GetConnectionString("AirlineReservationDatabase")
-                           ?? throw new Exception("Missing connection string");
+               ?? throw new Exception("Missing connection string");
 
             // Build Options (không khởi tạo DbContext tại đây nữa)
             DbOptions = new DbContextOptionsBuilder<AirlineReservationDbContext>()
@@ -62,23 +77,48 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
 
             _hasher = new PasswordHasher();
 
+            var pricingRepo = new FlightPricingRepositoryAdmin(new AirlineReservationDbContext(DbOptions));
+            var promotionRepo = new PromotionRepositoryAdmin(new AirlineReservationDbContext(DbOptions));
+
+            _unitOfWorkAdmin = new UnitOfWorkAdmin(
+                new AirlineReservationDbContext(DbOptions),
+                pricingRepo,
+                promotionRepo
+            );
+
             // Service layer — mỗi hàm của service sẽ tự CreateDb()
             _authService = new Authentication(_hasher);
             _userService = new UserService();
             _cityService = new CityService();
             _flightService = new FlightService();
+            _bookingService = new Application.Services.BookingService();
+            _paymentService = new PaymentService();
+            _bookingServiceAdmin = new BookingServiceAdmin();
+            _flightServiceAdmin = new FlightServiceAdmin();
+            _flightPricingServiceAdmin = new FlightPricingServiceAdmin(_unitOfWorkAdmin);
+            _promotionServiceAdmin = new PromotionServiceAdmin(_unitOfWorkAdmin);
+            _reportServiceAdmin = new ReportServiceAdmin(new AirlineReservationDbContext(DbOptions));
             _bookingService = new Application.Services.BookingServices();
             _paymentService = new PaymentService();
 
             _promotionService = new PromotionService();
-
-
 
             // Controller layer giữ nguyên
             _authController = new AuthenticationController(_authService);
             _userContrller = new UserContrller(_userService);
             _cityController = new CityController(_cityService);
             _flightController = new FlightController(_flightService);
+
+            _bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
+            _bookingController = new BookingController(_bookingService);
+            _paymentController = new PaymentController(_paymentService);
+            _bookingControllerAdmin = new BookingControllerAdmin(_bookingServiceAdmin);
+            _flightControllerAdmin = new FlightControllerAdmin(_flightServiceAdmin);
+            _pricingControllerAdmin = new PricingControllerAdmin(_flightPricingServiceAdmin);
+            _promotionControllerAdmin = new PromotionControllerAdmin(_promotionServiceAdmin);
+            _reportController = new ReportControllerAdmin(_reportServiceAdmin);
+
+            //_bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
             _bookingController = new BookingController(_bookingService);
             _paymentController = new PaymentController(_paymentService);
 
@@ -119,6 +159,26 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         public static BookingController BookingController =>
             _bookingController ?? throw new Exception("Booking controller not initialized");
 
+        //public static IBookingService BookingService =>
+        //    _bookingService ?? throw new Exception("BookingService not initialized");
+        //payment
+        public static PaymentController paymentController =>
+            _paymentController ?? throw new Exception("Payment controller not initialized");
+        //booking admin
+        public static BookingControllerAdmin BookingControllerAdmin =>
+            _bookingControllerAdmin ?? throw new Exception("Booking Admin controller not initialized");
+        //flight admin
+        public static FlightControllerAdmin FlightControllerAdmin =>
+            _flightControllerAdmin ?? throw new Exception("Flight Admin controller not initialized");
+        //pricing admin
+        public static PricingControllerAdmin PricingControllerAdmin =>
+            _pricingControllerAdmin ?? throw new Exception("Pricing Admin controller not initialized");
+        //promotion admin
+        public static PromotionControllerAdmin PromotionControllerAdmin =>
+            _promotionControllerAdmin ?? throw new Exception("Promotion Admin controller not initialized");
+        //report admin
+        public static ReportControllerAdmin ReportControllerAdmin =>
+            _reportController ?? throw new Exception("Report Admin controller not initialized");
         //payment
         public static PaymentController paymentController =>
             _paymentController ?? throw new Exception("Payment controller not initialized");
