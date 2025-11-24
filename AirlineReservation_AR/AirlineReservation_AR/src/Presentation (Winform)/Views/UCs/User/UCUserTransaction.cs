@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.Application.Services;
+using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Presentation__Winform_.Helpers;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User;
 using System;
@@ -11,15 +12,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
 
     public partial class UCUserTransaction : UserControl
     {
-        private readonly BookingServices _bookingService = new BookingServices();
-        public UCUserTransaction()
+
+        private readonly BookingsService_Profile _bookingService = new BookingsService_Profile();
+        private UserDTO _user;
+        public UCUserTransaction(UserDTO user)
+
         {
             InitializeComponent();
+            _user = user;
 
             this.DoubleBuffered = true;
             this.Load += UCUserTransaction_Load;
@@ -46,7 +52,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             fpnlTransactionHolder.Controls.Clear();
 
             // Nếu chưa có user (trường hợp test UI)
-            if (UserSession.UserId == Guid.Empty)
+            if (_user.UserId == Guid.Empty)
             {
                 fpnlTransactionHolder.Visible = false;
                 pnlNoTransaction.Visible = true;
@@ -54,7 +60,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             }
 
             // Lấy toàn bộ booking của user từ DB
-            var bookings = await _bookingService.GetBookingsByUserAsync(UserSession.UserId);
+            var bookings = await _bookingService.GetBookingsByUserAsync(_user.UserId);
 
             // Lọc tất cả booking KHÔNG phải Pending
             var txBookings = bookings
@@ -87,7 +93,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                         var card = new UCPaidTicket();
 
                         // full chiều ngang flowpanel + padding dưới cho có khoảng cách
-                        card.Margin = new Padding(0, 0, 0, 12);
                         card.Width = fpnlTransactionHolder.ClientSize.Width - card.Margin.Horizontal;
 
                         // Dùng lại UI & logic từ UCPaidTicket

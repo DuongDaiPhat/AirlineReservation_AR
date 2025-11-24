@@ -194,7 +194,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             confirmPasswordTB.SelectedText = "";
             confirmPasswordTB.ShadowDecoration.CustomizableEdges = customizableEdges2;
             confirmPasswordTB.Size = new Size(345, 45);
-            confirmPasswordTB.TabIndex = 29;
+            confirmPasswordTB.TabIndex = 20;
             // 
             // label15
             // 
@@ -228,7 +228,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             numberTB.SelectedText = "";
             numberTB.ShadowDecoration.CustomizableEdges = customizableEdges4;
             numberTB.Size = new Size(170, 45);
-            numberTB.TabIndex = 25;
+            numberTB.TabIndex = 18;
             // 
             // label14
             // 
@@ -262,7 +262,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             userNameTB.SelectedText = "";
             userNameTB.ShadowDecoration.CustomizableEdges = customizableEdges6;
             userNameTB.Size = new Size(150, 45);
-            userNameTB.TabIndex = 23;
+            userNameTB.TabIndex = 17;
             // 
             // label11
             // 
@@ -315,7 +315,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             passwordTB.SelectedText = "";
             passwordTB.ShadowDecoration.CustomizableEdges = customizableEdges10;
             passwordTB.Size = new Size(345, 45);
-            passwordTB.TabIndex = 18;
+            passwordTB.TabIndex = 19;
             // 
             // label13
             // 

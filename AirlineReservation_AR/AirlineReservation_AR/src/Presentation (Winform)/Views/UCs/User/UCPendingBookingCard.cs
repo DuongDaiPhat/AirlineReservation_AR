@@ -1,5 +1,6 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.Application.Services;
+using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Presentation__Winform_.Helpers;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
     {
         private Booking _booking;
         private Flight _flight;
+        private UserDTO _user;
 
         public event EventHandler? BookingCancelled;
-        public UCPendingBookingCard()
+        public UCPendingBookingCard(UserDTO user)
         {
             InitializeComponent();
             btnCancel.Click += BtnCancel_Click;
+            _user = user;
         }
 
         private void UCPendingBookingCard_Load(object sender, EventArgs e)
@@ -73,8 +76,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
 
             try
             {
+
                 var service = new BookingsService_Profile();
-                var ok = await service.CancelBookingAsync(_booking.BookingId, UserSession.UserId);
+                var ok = await service.CancelBookingAsync(_booking.BookingId, _user.UserId);
 
                 if (!ok)
                 {

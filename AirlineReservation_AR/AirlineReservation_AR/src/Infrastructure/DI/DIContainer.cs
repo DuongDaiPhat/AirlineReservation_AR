@@ -20,7 +20,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
     public static class DIContainer
     {
         private static IConfiguration? _config;
-        public static User CurrentUser { get; private set; }
+        public static User? CurrentUser { get; private set; }
         public static DbContextOptions<AirlineReservationDbContext>? DbOptions { get; private set; }
 
         private static PasswordHasher? _hasher;
@@ -43,6 +43,8 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static IPaymentService? _paymentService;
         private static PaymentController? _paymentController;
 
+        private static IPromotionService? _promotionService;
+        private static PromotionController? _promotionController;
         public static void Init()
         {
             _config = new ConfigurationBuilder()
@@ -68,6 +70,10 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _bookingService = new Application.Services.BookingServices();
             _paymentService = new PaymentService();
 
+            _promotionService = new PromotionService();
+
+
+
             // Controller layer giữ nguyên
             _authController = new AuthenticationController(_authService);
             _userContrller = new UserContrller(_userService);
@@ -77,6 +83,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _paymentController = new PaymentController(_paymentService);
 
 
+            //_bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
+            _bookingController = new BookingController(_bookingService);
+            _promotionController = new PromotionController(_promotionService);
         }
 
         public static void SetCurrentUser(User user)
@@ -114,6 +123,10 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         public static PaymentController paymentController =>
             _paymentController ?? throw new Exception("Payment controller not initialized");
 
+
+        //promotion
+        public static PromotionController PromotionController =>
+        _promotionController ?? throw new Exception("Promotion controller not initialized");
 
     }
 }

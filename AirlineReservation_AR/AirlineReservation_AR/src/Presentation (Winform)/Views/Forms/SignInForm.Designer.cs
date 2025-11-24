@@ -43,6 +43,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             theme = new Guna.UI2.WinForms.Guna2PictureBox();
             guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(components);
             form = new Guna.UI2.WinForms.Guna2Panel();
+            showPassword = new PictureBox();
             guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             linkLabel1 = new LinkLabel();
             passwordTB = new Guna.UI2.WinForms.Guna2TextBox();
@@ -71,9 +72,9 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             guna2Elipse2 = new Guna.UI2.WinForms.Guna2Elipse(components);
             guna2Elipse3 = new Guna.UI2.WinForms.Guna2Elipse(components);
             guna2Elipse4 = new Guna.UI2.WinForms.Guna2Elipse(components);
-            showPassword = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)theme).BeginInit();
             form.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)showPassword).BeginInit();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             panel2.SuspendLayout();
@@ -82,7 +83,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)logo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)vector).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)showPassword).BeginInit();
             SuspendLayout();
             // 
             // theme
@@ -133,6 +133,17 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             form.ShadowDecoration.Shadow = new Padding(0, 0, 20, 15);
             form.Size = new Size(420, 600);
             form.TabIndex = 12;
+            // 
+            // showPassword
+            // 
+            showPassword.Image = Resources.view;
+            showPassword.Location = new Point(327, 424);
+            showPassword.Name = "showPassword";
+            showPassword.Size = new Size(35, 35);
+            showPassword.SizeMode = PictureBoxSizeMode.Zoom;
+            showPassword.TabIndex = 34;
+            showPassword.TabStop = false;
+            showPassword.Click += showPassword_Click;
             // 
             // guna2Button1
             // 
@@ -187,7 +198,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             passwordTB.SelectedText = "";
             passwordTB.ShadowDecoration.CustomizableEdges = customizableEdges6;
             passwordTB.Size = new Size(345, 45);
-            passwordTB.TabIndex = 18;
+            passwordTB.TabIndex = 17;
             // 
             // label13
             // 
@@ -452,17 +463,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             guna2Elipse4.BorderRadius = 18;
             guna2Elipse4.TargetControl = panel3;
             // 
-            // showPassword
-            // 
-            showPassword.Image = Resources.view;
-            showPassword.Location = new Point(327, 424);
-            showPassword.Name = "showPassword";
-            showPassword.Size = new Size(35, 35);
-            showPassword.SizeMode = PictureBoxSizeMode.Zoom;
-            showPassword.TabIndex = 34;
-            showPassword.TabStop = false;
-            showPassword.Click += showPassword_Click;
-            // 
             // SignInForm
             // 
             AccessibleRole = AccessibleRole.None;
@@ -484,6 +484,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             ((System.ComponentModel.ISupportInitialize)theme).EndInit();
             form.ResumeLayout(false);
             form.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)showPassword).EndInit();
             panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             panel2.ResumeLayout(false);
@@ -493,7 +494,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)logo).EndInit();
             ((System.ComponentModel.ISupportInitialize)vector).EndInit();
-            ((System.ComponentModel.ISupportInitialize)showPassword).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

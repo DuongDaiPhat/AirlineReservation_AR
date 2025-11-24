@@ -69,20 +69,24 @@
             // 
             guna2HtmlLabel1.BackColor = Color.Transparent;
             guna2HtmlLabel1.Dock = DockStyle.Top;
-            guna2HtmlLabel1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2HtmlLabel1.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             guna2HtmlLabel1.Location = new Point(0, 0);
+            guna2HtmlLabel1.Margin = new Padding(4, 3, 4, 3);
             guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            guna2HtmlLabel1.Size = new Size(241, 33);
+            guna2HtmlLabel1.Size = new Size(284, 39);
             guna2HtmlLabel1.TabIndex = 0;
             guna2HtmlLabel1.Text = "Modify Your Account!";
+            guna2HtmlLabel1.TextAlignment = ContentAlignment.MiddleCenter;
+            guna2HtmlLabel1.Click += guna2HtmlLabel1_Click;
             // 
             // guna2HtmlLabel2
             // 
             guna2HtmlLabel2.BackColor = Color.Transparent;
-            guna2HtmlLabel2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            guna2HtmlLabel2.Location = new Point(3, 49);
+            guna2HtmlLabel2.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold);
+            guna2HtmlLabel2.Location = new Point(0, 80);
+            guna2HtmlLabel2.Margin = new Padding(4, 3, 4, 3);
             guna2HtmlLabel2.Name = "guna2HtmlLabel2";
-            guna2HtmlLabel2.Size = new Size(74, 22);
+            guna2HtmlLabel2.Size = new Size(82, 25);
             guna2HtmlLabel2.TabIndex = 1;
             guna2HtmlLabel2.Text = "Username";
             // 
@@ -95,15 +99,15 @@
             txtFullName.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             txtFullName.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             txtFullName.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtFullName.Font = new Font("Segoe UI", 9F);
+            txtFullName.Font = new Font("Microsoft Sans Serif", 12.75F);
             txtFullName.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtFullName.Location = new Point(3, 78);
-            txtFullName.Margin = new Padding(3, 4, 3, 4);
+            txtFullName.Location = new Point(0, 109);
+            txtFullName.Margin = new Padding(4, 4, 4, 4);
             txtFullName.Name = "txtFullName";
             txtFullName.PlaceholderText = "";
             txtFullName.SelectedText = "";
             txtFullName.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            txtFullName.Size = new Size(286, 29);
+            txtFullName.Size = new Size(357, 37);
             txtFullName.TabIndex = 2;
             // 
             // txtEmail
@@ -115,24 +119,25 @@
             txtEmail.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             txtEmail.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             txtEmail.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtEmail.Font = new Font("Segoe UI", 9F);
+            txtEmail.Font = new Font("Microsoft Sans Serif", 12.75F);
             txtEmail.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtEmail.Location = new Point(483, 78);
-            txtEmail.Margin = new Padding(3, 4, 3, 4);
+            txtEmail.Location = new Point(541, 109);
+            txtEmail.Margin = new Padding(4, 4, 4, 4);
             txtEmail.Name = "txtEmail";
             txtEmail.PlaceholderText = "";
             txtEmail.SelectedText = "";
             txtEmail.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            txtEmail.Size = new Size(286, 29);
+            txtEmail.Size = new Size(357, 37);
             txtEmail.TabIndex = 4;
             // 
             // Email
             // 
             Email.BackColor = Color.Transparent;
-            Email.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            Email.Location = new Point(483, 49);
+            Email.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold);
+            Email.Location = new Point(541, 80);
+            Email.Margin = new Padding(4, 3, 4, 3);
             Email.Name = "Email";
-            Email.Size = new Size(125, 22);
+            Email.Size = new Size(142, 25);
             Email.TabIndex = 3;
             Email.Text = "Email (View only)";
             // 
@@ -145,24 +150,25 @@
             txtPhone.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             txtPhone.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             txtPhone.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtPhone.Font = new Font("Segoe UI", 9F);
+            txtPhone.Font = new Font("Microsoft Sans Serif", 12.75F);
             txtPhone.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtPhone.Location = new Point(3, 151);
-            txtPhone.Margin = new Padding(3, 4, 3, 4);
+            txtPhone.Location = new Point(0, 220);
+            txtPhone.Margin = new Padding(4, 4, 4, 4);
             txtPhone.Name = "txtPhone";
             txtPhone.PlaceholderText = "";
             txtPhone.SelectedText = "";
             txtPhone.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            txtPhone.Size = new Size(286, 29);
+            txtPhone.Size = new Size(357, 36);
             txtPhone.TabIndex = 6;
             // 
             // guna2HtmlLabel4
             // 
             guna2HtmlLabel4.BackColor = Color.Transparent;
-            guna2HtmlLabel4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            guna2HtmlLabel4.Location = new Point(3, 122);
+            guna2HtmlLabel4.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold);
+            guna2HtmlLabel4.Location = new Point(0, 191);
+            guna2HtmlLabel4.Margin = new Padding(4, 3, 4, 3);
             guna2HtmlLabel4.Name = "guna2HtmlLabel4";
-            guna2HtmlLabel4.Size = new Size(106, 22);
+            guna2HtmlLabel4.Size = new Size(120, 25);
             guna2HtmlLabel4.TabIndex = 5;
             guna2HtmlLabel4.Text = "Phone number";
             // 
@@ -175,24 +181,25 @@
             txtAddress.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             txtAddress.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             txtAddress.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtAddress.Font = new Font("Segoe UI", 9F);
+            txtAddress.Font = new Font("Microsoft Sans Serif", 12.75F);
             txtAddress.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtAddress.Location = new Point(3, 318);
-            txtAddress.Margin = new Padding(3, 4, 3, 4);
+            txtAddress.Location = new Point(0, 441);
+            txtAddress.Margin = new Padding(4, 4, 4, 4);
             txtAddress.Name = "txtAddress";
             txtAddress.PlaceholderText = "";
             txtAddress.SelectedText = "";
             txtAddress.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            txtAddress.Size = new Size(598, 29);
+            txtAddress.Size = new Size(898, 36);
             txtAddress.TabIndex = 8;
             // 
             // gunaLabel
             // 
             gunaLabel.BackColor = Color.Transparent;
-            gunaLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            gunaLabel.Location = new Point(3, 289);
+            gunaLabel.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold);
+            gunaLabel.Location = new Point(0, 402);
+            gunaLabel.Margin = new Padding(4, 3, 4, 3);
             gunaLabel.Name = "gunaLabel";
-            gunaLabel.Size = new Size(60, 22);
+            gunaLabel.Size = new Size(67, 25);
             gunaLabel.TabIndex = 7;
             gunaLabel.Text = "Address";
             // 
@@ -204,22 +211,24 @@
             cboGender.DropDownStyle = ComboBoxStyle.DropDownList;
             cboGender.FocusedColor = Color.FromArgb(94, 148, 255);
             cboGender.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            cboGender.Font = new Font("Segoe UI", 10F);
+            cboGender.Font = new Font("Microsoft Sans Serif", 12.75F);
             cboGender.ForeColor = Color.FromArgb(68, 88, 112);
             cboGender.ItemHeight = 30;
-            cboGender.Location = new Point(3, 232);
+            cboGender.Location = new Point(680, 324);
+            cboGender.Margin = new Padding(4, 3, 4, 3);
             cboGender.Name = "cboGender";
             cboGender.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            cboGender.Size = new Size(175, 36);
+            cboGender.Size = new Size(218, 36);
             cboGender.TabIndex = 11;
             // 
             // guna2HtmlLabel7
             // 
             guna2HtmlLabel7.BackColor = Color.Transparent;
-            guna2HtmlLabel7.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            guna2HtmlLabel7.Location = new Point(3, 204);
+            guna2HtmlLabel7.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold);
+            guna2HtmlLabel7.Location = new Point(681, 296);
+            guna2HtmlLabel7.Margin = new Padding(4, 3, 4, 3);
             guna2HtmlLabel7.Name = "guna2HtmlLabel7";
-            guna2HtmlLabel7.Size = new Size(54, 22);
+            guna2HtmlLabel7.Size = new Size(61, 25);
             guna2HtmlLabel7.TabIndex = 12;
             guna2HtmlLabel7.Text = "Gender";
             // 
@@ -230,22 +239,24 @@
             btnSaveChanges.DisabledState.CustomBorderColor = Color.DarkGray;
             btnSaveChanges.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnSaveChanges.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnSaveChanges.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSaveChanges.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSaveChanges.ForeColor = Color.White;
-            btnSaveChanges.Location = new Point(563, 419);
+            btnSaveChanges.Location = new Point(641, 550);
+            btnSaveChanges.Margin = new Padding(4, 3, 4, 3);
             btnSaveChanges.Name = "btnSaveChanges";
             btnSaveChanges.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            btnSaveChanges.Size = new Size(206, 36);
+            btnSaveChanges.Size = new Size(257, 45);
             btnSaveChanges.TabIndex = 13;
             btnSaveChanges.Text = "Save Changes";
             // 
             // guna2HtmlLabel3
             // 
             guna2HtmlLabel3.BackColor = Color.Transparent;
-            guna2HtmlLabel3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            guna2HtmlLabel3.Location = new Point(214, 204);
+            guna2HtmlLabel3.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold);
+            guna2HtmlLabel3.Location = new Point(0, 296);
+            guna2HtmlLabel3.Margin = new Padding(4, 3, 4, 3);
             guna2HtmlLabel3.Name = "guna2HtmlLabel3";
-            guna2HtmlLabel3.Size = new Size(59, 22);
+            guna2HtmlLabel3.Size = new Size(67, 25);
             guna2HtmlLabel3.TabIndex = 15;
             guna2HtmlLabel3.Text = "Country";
             // 
@@ -257,22 +268,24 @@
             cboCountry.DropDownStyle = ComboBoxStyle.DropDownList;
             cboCountry.FocusedColor = Color.FromArgb(94, 148, 255);
             cboCountry.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            cboCountry.Font = new Font("Segoe UI", 10F);
+            cboCountry.Font = new Font("Microsoft Sans Serif", 12.75F);
             cboCountry.ForeColor = Color.FromArgb(68, 88, 112);
             cboCountry.ItemHeight = 30;
-            cboCountry.Location = new Point(214, 232);
+            cboCountry.Location = new Point(0, 324);
+            cboCountry.Margin = new Padding(4, 3, 4, 3);
             cboCountry.Name = "cboCountry";
             cboCountry.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            cboCountry.Size = new Size(175, 36);
+            cboCountry.Size = new Size(280, 36);
             cboCountry.TabIndex = 14;
             // 
             // guna2HtmlLabel5
             // 
             guna2HtmlLabel5.BackColor = Color.Transparent;
-            guna2HtmlLabel5.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            guna2HtmlLabel5.Location = new Point(426, 204);
+            guna2HtmlLabel5.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold);
+            guna2HtmlLabel5.Location = new Point(339, 296);
+            guna2HtmlLabel5.Margin = new Padding(4, 3, 4, 3);
             guna2HtmlLabel5.Name = "guna2HtmlLabel5";
-            guna2HtmlLabel5.Size = new Size(30, 22);
+            guna2HtmlLabel5.Size = new Size(35, 25);
             guna2HtmlLabel5.TabIndex = 17;
             guna2HtmlLabel5.Text = "City";
             // 
@@ -284,13 +297,14 @@
             cboCity.DropDownStyle = ComboBoxStyle.DropDownList;
             cboCity.FocusedColor = Color.FromArgb(94, 148, 255);
             cboCity.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            cboCity.Font = new Font("Segoe UI", 10F);
+            cboCity.Font = new Font("Microsoft Sans Serif", 12.75F);
             cboCity.ForeColor = Color.FromArgb(68, 88, 112);
             cboCity.ItemHeight = 30;
-            cboCity.Location = new Point(426, 232);
+            cboCity.Location = new Point(339, 324);
+            cboCity.Margin = new Padding(4, 3, 4, 3);
             cboCity.Name = "cboCity";
             cboCity.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            cboCity.Size = new Size(175, 36);
+            cboCity.Size = new Size(281, 36);
             cboCity.TabIndex = 16;
             // 
             // errorProvider1
@@ -299,7 +313,7 @@
             // 
             // UCAccountModify
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(guna2HtmlLabel5);
             Controls.Add(cboCity);
@@ -317,8 +331,10 @@
             Controls.Add(txtFullName);
             Controls.Add(guna2HtmlLabel2);
             Controls.Add(guna2HtmlLabel1);
+            Font = new Font("Microsoft Sans Serif", 12.75F);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "UCAccountModify";
-            Size = new Size(840, 500);
+            Size = new Size(947, 757);
             Load += UCAccountModify_Load;
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);

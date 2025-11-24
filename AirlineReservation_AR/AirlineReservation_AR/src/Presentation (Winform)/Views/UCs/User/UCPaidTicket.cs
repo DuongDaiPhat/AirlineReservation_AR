@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
+
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
 {
@@ -47,6 +49,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
             txtAirline_Airport_Terminal.Text = flight.Airline?.AirlineName ?? "Airline";
 
             var status = ticket.Status ?? "";
+
+            decimal? total = booking?.Price + booking?.Taxes + booking?.Fees;
+            txtTotal.Text = "$" + total?.ToString("#,##0.00", CultureInfo.InvariantCulture);
+
 
             btnTicketStatus.Text = status;
 

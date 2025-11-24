@@ -1,6 +1,7 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
 using AirlineReservation_AR.src.Application.Services;
+using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Presentation__Winform_.Helpers;
 using Guna.UI2.WinForms;
 using System;
@@ -19,10 +20,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
     {
         private readonly BookingsService_Profile _bookingService = new BookingsService_Profile();
         private readonly FlightService _flightService = new FlightService();
+        private UserDTO _user;
         private int _pendingPanelDefaultHeight;
-        public UCMyBookingPage()
+        public event EventHandler CheckTransactionClick;
+        public UCMyBookingPage(UserDTO user)
         {
             InitializeComponent();
+
+            _user = user;
 
             this.DoubleBuffered = true;
 
@@ -51,15 +56,15 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
             fpnlPendingTicketHolder.Controls.Clear();
 
             // nếu chưa có user (phòng trường hợp test UI)
-            if (UserSession.UserId == Guid.Empty)
+            if (_user.UserId == Guid.Empty)
             {
                 panelPendingOrders.Visible = false;
                 fpnlIssuedTicketHolder.Visible = false;
-                pnlNoIssuedTicket.Visible = true; 
+                pnlNoIssuedTicket.Visible = true;
                 return;
             }
 
-            var bookings = await _bookingService.GetBookingsByUserAsync(UserSession.UserId);
+            var bookings = await _bookingService.GetBookingsByUserAsync(_user.UserId);
 
             var pendingBookings = bookings
                 .Where(b => string.Equals(b.Status, "Pending", StringComparison.OrdinalIgnoreCase))
@@ -82,10 +87,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                         flight = await _flightService.GetByIdWithDetailsAsync(bf.FlightId);
                     }
 
-                    var card = new UCPendingBookingCard
+                    var card = new UCPendingBookingCard(_user)
                     {
                         Width = fpnlPendingTicketHolder.ClientSize.Width,
-                        Margin = new Padding(0, 0, 0, 10)
                     };
 
                     card.SetData(b, flight);
@@ -101,10 +105,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                     fpnlPendingTicketHolder.Height = card.Height;
                     fpnlPendingTicketHolder.MinimumSize = new Size(card.Width, card.Height + 10);
 
-                    // ---- Resize luôn panelPendingOrders ----
-                    int paddingBottom = 20; // tuỳ em
                     panelPendingOrders.Height =
-                        fpnlPendingTicketHolder.Top + card.Height + paddingBottom;
+                        fpnlPendingTicketHolder.Top + card.Height;
                 }
                 else
                 {
@@ -151,7 +153,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                         var ticketCard = new UCPaidTicket
                         {
                             Width = fpnlIssuedTicketHolder.ClientSize.Width,
-                            Margin = new Padding(0, 0, 0, 10)
                         };
 
                         ticketCard.SetData(booking, flight, ticket);
@@ -177,9 +178,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
 
             for (int i = 0; i < 3; i++)
             {
-                var card = new UCPendingBookingCard();
+                var card = new UCPendingBookingCard(_user);
 
-                card.Margin = new Padding(0, 0, 0, 10);
 
                 fpnlPendingTicketHolder.Controls.Add(card);
             }
@@ -197,7 +197,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
             {
                 var card = new UCPaidTicket();
 
-                card.Margin = new Padding(0, 0, 0, 10);
 
                 fpnlIssuedTicketHolder.Controls.Add(card);
             }
@@ -215,6 +214,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
         private void fpnlIssuedTicketHolder_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void txtCheckMyTransaction_Click(object sender, EventArgs e)
+        {
+            CheckTransactionClick.Invoke(this, EventArgs.Empty);
         }
     }
 

@@ -35,7 +35,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             RenderDayTabs(result.DayTabs);
             //RenderBestFlight(result.BestFlight);
             RenderAllFlights(result.AllFlights);
-            RenderAirlineFilters(result.AirlineFilters);
+            //RenderAirlineFilters(result.AirlineFilters);
         }
 
         // ------------------------
