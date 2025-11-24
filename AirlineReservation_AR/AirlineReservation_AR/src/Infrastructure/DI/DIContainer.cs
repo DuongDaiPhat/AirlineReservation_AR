@@ -91,7 +91,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _userService = new UserService();
             _cityService = new CityService();
             _flightService = new FlightService();
-            _bookingService = new Application.Services.BookingService();
+            _bookingService = new Application.Services.BookingServices();
             _paymentService = new PaymentService();
             _bookingServiceAdmin = new BookingServiceAdmin();
             _flightServiceAdmin = new FlightServiceAdmin();
@@ -109,7 +109,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _cityController = new CityController(_cityService);
             _flightController = new FlightController(_flightService);
 
-            _bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
+        
             _bookingController = new BookingController(_bookingService);
             _paymentController = new PaymentController(_paymentService);
             _bookingControllerAdmin = new BookingControllerAdmin(_bookingServiceAdmin);
@@ -180,7 +180,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         public static ReportControllerAdmin ReportControllerAdmin =>
             _reportController ?? throw new Exception("Report Admin controller not initialized");
         //payment
-        public static PaymentController paymentController =>
+        public static PaymentController PaymentController =>
             _paymentController ?? throw new Exception("Payment controller not initialized");
 
 

@@ -140,5 +140,23 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             txtEmail.TextChanged += (s, e) => txtEmail.BackColor = Color.White;
             txtPhoneNumber.TextChanged += (s, e) => txtPhoneNumber.BackColor = Color.White;
         }
+
+        private void picUserIcon_Paint(object sender, PaintEventArgs e)
+        {
+            picUserIcon.Paint += (s, e) =>
+            {
+                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                using (var brush = new SolidBrush(Color.FromArgb(0, 149, 238)))
+                {
+                    e.Graphics.FillEllipse(brush, 0, 0, 50, 50);
+                }
+                using (var pen = new Pen(Color.White, 3))
+                {
+                    // Draw user icon
+                    e.Graphics.DrawEllipse(pen, 15, 10, 20, 20);
+                    e.Graphics.DrawArc(pen, 8, 25, 34, 30, 200, 140);
+                }
+            };
+        }
     }
 }

@@ -106,10 +106,9 @@
             mainPanel.Controls.Add(lblTitle);
             mainPanel.Controls.Add(warningPanel);
             mainPanel.Controls.Add(lblAdult1);
-            mainPanel.Dock = DockStyle.Fill;
             mainPanel.Location = new Point(0, 0);
             mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(980, 760);
+            mainPanel.Size = new Size(1020, 760);
             mainPanel.TabIndex = 0;
             // 
             // cboCountryOfIssue
@@ -170,9 +169,9 @@
             txtExpiryYear.Location = new Point(516, 705);
             txtExpiryYear.Multiline = true;
             txtExpiryYear.Name = "txtExpiryYear";
+            txtExpiryYear.PlaceholderText = "YYYY";
             txtExpiryYear.Size = new Size(90, 30);
             txtExpiryYear.TabIndex = 27;
-            txtExpiryYear.Text = "YYYY";
             // 
             // txtExpiryMonth
             // 
@@ -181,9 +180,9 @@
             txtExpiryMonth.Location = new Point(421, 705);
             txtExpiryMonth.Multiline = true;
             txtExpiryMonth.Name = "txtExpiryMonth";
+            txtExpiryMonth.PlaceholderText = "MM";
             txtExpiryMonth.Size = new Size(90, 30);
             txtExpiryMonth.TabIndex = 26;
-            txtExpiryMonth.Text = "MMMM";
             // 
             // txtExpiryDay
             // 
@@ -192,9 +191,9 @@
             txtExpiryDay.Location = new Point(326, 705);
             txtExpiryDay.Multiline = true;
             txtExpiryDay.Name = "txtExpiryDay";
+            txtExpiryDay.PlaceholderText = "DD";
             txtExpiryDay.Size = new Size(90, 30);
             txtExpiryDay.TabIndex = 25;
-            txtExpiryDay.Text = "DD";
             // 
             // lblExpiryDate
             // 
@@ -250,7 +249,7 @@
             infoPanel.Controls.Add(lblPassportInfo);
             infoPanel.Location = new Point(16, 475);
             infoPanel.Name = "infoPanel";
-            infoPanel.Size = new Size(940, 60);
+            infoPanel.Size = new Size(989, 60);
             infoPanel.TabIndex = 18;
             // 
             // lnkLearnMore
@@ -307,9 +306,9 @@
             txtDobYear.Location = new Point(206, 356);
             txtDobYear.Multiline = true;
             txtDobYear.Name = "txtDobYear";
+            txtDobYear.PlaceholderText = "YYYY";
             txtDobYear.Size = new Size(90, 30);
             txtDobYear.TabIndex = 13;
-            txtDobYear.Text = "YYYY";
             // 
             // txtDobMonth
             // 
@@ -318,9 +317,9 @@
             txtDobMonth.Location = new Point(111, 356);
             txtDobMonth.Multiline = true;
             txtDobMonth.Name = "txtDobMonth";
+            txtDobMonth.PlaceholderText = "MM";
             txtDobMonth.Size = new Size(90, 30);
             txtDobMonth.TabIndex = 12;
-            txtDobMonth.Text = "MMMM";
             // 
             // txtDobDay
             // 
@@ -329,9 +328,9 @@
             txtDobDay.Location = new Point(16, 356);
             txtDobDay.Multiline = true;
             txtDobDay.Name = "txtDobDay";
+            txtDobDay.PlaceholderText = "DD";
             txtDobDay.Size = new Size(90, 30);
             txtDobDay.TabIndex = 11;
-            txtDobDay.Text = "DD";
             // 
             // lblDob
             // 
@@ -417,7 +416,7 @@
             warningPanel.Controls.Add(lblWarningIcon);
             warningPanel.Location = new Point(16, 45);
             warningPanel.Name = "warningPanel";
-            warningPanel.Size = new Size(940, 100);
+            warningPanel.Size = new Size(989, 100);
             warningPanel.TabIndex = 1;
             // 
             // lnkNameGuideline
@@ -471,7 +470,7 @@
             AutoScaleMode = AutoScaleMode.None;
             Controls.Add(mainPanel);
             Name = "PassengerFormFill";
-            Size = new Size(980, 760);
+            Size = new Size(1020, 760);
             mainPanel.ResumeLayout(false);
             mainPanel.PerformLayout();
             infoPanel.ResumeLayout(false);

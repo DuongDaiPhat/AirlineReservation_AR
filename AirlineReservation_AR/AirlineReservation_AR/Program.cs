@@ -21,6 +21,7 @@ namespace AirlineReservation_AR
             AppSettingsLoader.Load();
             ApplicationConfiguration.Initialize();
             DIContainer.Init();
+            
             Application.Run(new SignInForm());
         }
     }

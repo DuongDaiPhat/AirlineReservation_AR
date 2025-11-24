@@ -88,6 +88,7 @@ namespace MomoQR
             btnClose.TabIndex = 1;
             btnClose.Text = "✕";
             btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
             // 
             // panelMain
             // 
