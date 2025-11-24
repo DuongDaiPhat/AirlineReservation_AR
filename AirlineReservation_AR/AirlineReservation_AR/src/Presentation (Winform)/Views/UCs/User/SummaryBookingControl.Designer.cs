@@ -65,22 +65,20 @@
             pnlRoot.Controls.Add(label1);
             pnlRoot.Controls.Add(pricingVAT);
             pnlRoot.Controls.Add(pnlFlightBox);
-            pnlRoot.Controls.Add(lblSummaryHeader);
             pnlRoot.Controls.Add(pnlSummaryBox);
             pnlRoot.Controls.Add(lblTotalTitle);
             pnlRoot.Controls.Add(lblTotalPrice);
-            pnlRoot.Dock = DockStyle.Fill;
-            pnlRoot.Location = new Point(0, 0);
+            pnlRoot.Location = new Point(3, 3);
             pnlRoot.Name = "pnlRoot";
             pnlRoot.Padding = new Padding(10);
-            pnlRoot.Size = new Size(380, 540);
+            pnlRoot.Size = new Size(375, 605);
             pnlRoot.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label1.Location = new Point(13, 362);
+            label1.Location = new Point(14, 507);
             label1.Name = "label1";
             label1.Size = new Size(119, 21);
             label1.TabIndex = 6;
@@ -91,7 +89,7 @@
             pricingVAT.AutoSize = true;
             pricingVAT.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold | FontStyle.Strikeout, GraphicsUnit.Point, 0);
             pricingVAT.ForeColor = SystemColors.ButtonShadow;
-            pricingVAT.Location = new Point(138, 359);
+            pricingVAT.Location = new Point(139, 504);
             pricingVAT.Name = "pricingVAT";
             pricingVAT.Size = new Size(78, 25);
             pricingVAT.TabIndex = 7;
@@ -106,7 +104,7 @@
             pnlFlightBox.Controls.Add(lblTime);
             pnlFlightBox.Controls.Add(lblAirline);
             pnlFlightBox.Controls.Add(lblDates);
-            pnlFlightBox.Location = new Point(0, 0);
+            pnlFlightBox.Location = new Point(11, 13);
             pnlFlightBox.Name = "pnlFlightBox";
             pnlFlightBox.Padding = new Padding(10);
             pnlFlightBox.Size = new Size(350, 160);
@@ -163,7 +161,7 @@
             // 
             lblSummaryHeader.AutoSize = true;
             lblSummaryHeader.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblSummaryHeader.Location = new Point(10, 180);
+            lblSummaryHeader.Location = new Point(2, 10);
             lblSummaryHeader.Name = "lblSummaryHeader";
             lblSummaryHeader.Size = new Size(79, 25);
             lblSummaryHeader.TabIndex = 2;
@@ -174,7 +172,8 @@
             pnlSummaryBox.BackColor = Color.WhiteSmoke;
             pnlSummaryBox.BorderStyle = BorderStyle.FixedSingle;
             pnlSummaryBox.Controls.Add(flowPriceList);
-            pnlSummaryBox.Location = new Point(0, 0);
+            pnlSummaryBox.Controls.Add(lblSummaryHeader);
+            pnlSummaryBox.Location = new Point(11, 203);
             pnlSummaryBox.Name = "pnlSummaryBox";
             pnlSummaryBox.Padding = new Padding(10);
             pnlSummaryBox.Size = new Size(350, 220);
@@ -195,7 +194,7 @@
             // 
             lblTotalTitle.AutoSize = true;
             lblTotalTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblTotalTitle.Location = new Point(10, 410);
+            lblTotalTitle.Location = new Point(11, 555);
             lblTotalTitle.Name = "lblTotalTitle";
             lblTotalTitle.Size = new Size(93, 21);
             lblTotalTitle.TabIndex = 4;
@@ -206,7 +205,7 @@
             lblTotalPrice.AutoSize = true;
             lblTotalPrice.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblTotalPrice.ForeColor = Color.OrangeRed;
-            lblTotalPrice.Location = new Point(120, 408);
+            lblTotalPrice.Location = new Point(121, 553);
             lblTotalPrice.Name = "lblTotalPrice";
             lblTotalPrice.Size = new Size(78, 25);
             lblTotalPrice.TabIndex = 5;
@@ -218,7 +217,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlRoot);
             Name = "SummaryBookingControl";
-            Size = new Size(380, 540);
+            Size = new Size(385, 612);
             pnlRoot.ResumeLayout(false);
             pnlRoot.PerformLayout();
             pnlFlightBox.ResumeLayout(false);

@@ -10,5 +10,6 @@ namespace AirlineReservation_AR.src.Domain.DTOs
     {
         public string Weight { get; set; }
         public decimal Price { get; set; }
+        public int ServiceType { get; set; }
     }
 }

@@ -15,22 +15,24 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
     {
         private FlightResultDTO _flight;
         private int _passengerCount;
+        private List<string> _passengerTypes;
 
         public List<PassengerBaggageDTO> SelectedBaggage { get; private set; }
-            = new List<PassengerBaggageDTO>();
 
         private List<BaggageDTO> _baggageOptions = new List<BaggageDTO>()
         {
-            new BaggageDTO { Weight="0kg",  Price=0 },
-            new BaggageDTO { Weight="20kg", Price=845000 },
-            new BaggageDTO { Weight="30kg", Price=1124000 },
-            new BaggageDTO { Weight="40kg", Price=1399000 }
+            new BaggageDTO { ServiceType = 4 ,Weight="0kg",  Price=0 },
+            new BaggageDTO { ServiceType = 3 ,Weight="20kg", Price=845000 },
+            new BaggageDTO { ServiceType = 2 ,Weight="30kg", Price=1124000 },
+            new BaggageDTO {ServiceType = 1 ,Weight="40kg", Price=1399000 }
         };
 
-        public PopupAddBaggage(FlightResultDTO flight, int passengerCount)
+        public PopupAddBaggage(FlightResultDTO flight, List<string> types, List<PassengerBaggageDTO> pre)
         {
             _flight = flight;
-            _passengerCount = passengerCount;
+            _passengerTypes = types;
+            _passengerCount = types.Count;
+            SelectedBaggage = pre ?? new List<PassengerBaggageDTO>();
 
             InitializeComponent();
             InitUI();
@@ -86,6 +88,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
 
         private Panel CreatePassengerBaggagePanel(int index)
         {
+            var existing = SelectedBaggage.FirstOrDefault(x => x.PassengerIndex == index);
             var panel = new Panel()
             {
                 Width = 520,
@@ -96,33 +99,36 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
                 Margin = new Padding(0, 0, 0, 20)
             };
 
+            string type = _passengerTypes[index - 1];
+
             var lblTitle = new Label()
             {
-                Text = $"Hành khách {index}",
+                Text = $"{type} {index}",
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
                 AutoSize = true
             };
             panel.Controls.Add(lblTitle);
 
             int y = 50;
-            int optionIndex = 0;
 
             foreach (var opt in _baggageOptions)
             {
-                var radio = new RadioButton()
+                var radio = new RadioButton
                 {
                     Text = $"{opt.Weight} – {opt.Price:N0} VND",
-                    Tag = new { PassengerIndex = index, Baggage = opt },
+                    Tag = new { PassengerIndex = index, ServiceType = opt.ServiceType, Baggage = opt },
                     AutoSize = true,
                     Font = new Font("Segoe UI", 10),
                     Location = new Point(10, y)
                 };
+
+                if (existing != null && existing.Weight == opt.Weight)
+                    radio.Checked = true;
+
                 radio.CheckedChanged += radio_CheckedChanged;
 
                 panel.Controls.Add(radio);
-
                 y += 35;
-                optionIndex++;
             }
 
             return panel;
@@ -151,6 +157,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
 
                         SelectedBaggage.Add(new PassengerBaggageDTO
                         {
+                            ServiceType = data.ServiceType,
                             PassengerIndex = data.PassengerIndex,
                             Weight = bg.Weight,
                             Price = bg.Price
@@ -170,5 +177,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
+
     }
+
+
 }

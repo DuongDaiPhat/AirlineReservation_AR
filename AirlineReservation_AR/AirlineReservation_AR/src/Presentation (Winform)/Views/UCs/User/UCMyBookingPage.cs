@@ -17,7 +17,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
 {
     public partial class UCMyBookingPage : UserControl
     {
-        private readonly BookingsService _bookingService = new BookingsService();
+        private readonly BookingsService_Profile _bookingService = new BookingsService_Profile();
         private readonly FlightService _flightService = new FlightService();
         private int _pendingPanelDefaultHeight;
         public UCMyBookingPage()

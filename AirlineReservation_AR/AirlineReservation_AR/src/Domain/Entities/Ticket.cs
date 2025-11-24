@@ -9,9 +9,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
         public int PassengerId { get; set; }
         public int SeatClassId { get; set; }
         public string TicketNumber { get; set; } = null!;
-        public decimal Price { get; set; }
-        public decimal? Taxes { get; set; }
-        public decimal? Fees { get; set; }
         public string? Status { get; set; }
         public DateTime? CheckedInAt { get; set; }
         public string? SeatNumber { get; set; }
@@ -21,3 +18,4 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
         public SeatClass SeatClass { get; set; } = null!;
     }
 }
+   

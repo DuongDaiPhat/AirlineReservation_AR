@@ -1,15 +1,15 @@
-﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
-using AirlineReservation_AR.src.Infrastructure.DI;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.Infrastructure.DI;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservation_AR.src.Application.Services
 {
-    public class BookingsService
+    public class BookingsService_Profile
     {
         public async Task<List<Booking>> GetBookingsByUserAsync(Guid userId)
         {

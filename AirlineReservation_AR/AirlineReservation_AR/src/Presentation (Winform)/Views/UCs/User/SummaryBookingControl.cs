@@ -64,11 +64,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             if (children > 0)
                 AddItem($"Trẻ em x{children}",
-                    children * (_flight.Price * 0.67M)); // ví dụ Traveloka
+                    children * (_flight.Price * 0.9M)); // ví dụ Traveloka
 
             if (infants > 0)
                 AddItem($"Em bé x{infants}",
-                    infants * (_flight.Price * 0.1M));
+                    infants * (_flight.Price * 0.7M));
         }
 
         private void AddItem(string name, decimal price)
@@ -114,8 +114,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             total += (_params.Adult * _flight.Price);
             total += (_params.Child * (_flight.Price * 0.9M));
             total += (_params.Infant * (_flight.Price * 0.7M));
-            totalVAT += total * 1.1M;
             pricingVAT.Text = $"{total:N0} VND";
+            totalVAT += total * 1.1M;
             lblTotalPrice.Text = $"{totalVAT:N0} VND";
         }
 
@@ -133,6 +133,42 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
                 return 0;
             }
+        }
+
+        public void AddExtraCost(string name, decimal amount)
+        {
+            // Thêm dòng phụ phí
+            var item = new Label
+            {
+                Text = $"{name}: {amount:N0} VND",
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                AutoSize = true,
+                ForeColor = Color.DarkRed
+            };
+            flowPriceList.Controls.Add(item);
+
+            // Lấy lại đúng total gốc từ pricingVAT
+            decimal baseTotal = decimal.Parse(
+                pricingVAT.Text.Replace("VND", "").Replace(",", "")
+            );
+
+            decimal newTotal = baseTotal + amount;
+
+            lblTotalPrice.Text = $"{newTotal:N0} VND";
+        }
+
+        public void ClearExtraCosts()
+        {
+            var toRemove = new List<Control>();
+            foreach (Control c in flowPriceList.Controls)
+            {
+                if (c.ForeColor == Color.DarkRed)
+                    toRemove.Add(c);
+            }
+            foreach (var item in toRemove)
+                flowPriceList.Controls.Remove(item);
+
+            RenderTotal();
         }
 
     }

@@ -29,17 +29,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
                 .IsRequired()
                 .HasMaxLength(15);
 
-            builder.Property(t => t.Price)
-                .HasColumnType("decimal(12,2)");
-
-            builder.Property(t => t.Taxes)
-                .HasColumnType("decimal(10,2)")
-                .HasDefaultValue(0m);
-
-            builder.Property(t => t.Fees)
-                .HasColumnType("decimal(10,2)")
-                .HasDefaultValue(0m);
-
             builder.Property(t => t.Status)
                 .HasMaxLength(20)
                 .HasDefaultValue("Issued");
@@ -58,7 +47,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
                 .HasDatabaseName("IX_Tickets_BookingFlight");
 
             builder.HasCheckConstraint("CK_Ticket_Status", "[Status] IN ('Issued','CheckedIn','Boarded','Cancelled','Refunded')");
-            builder.HasCheckConstraint("CK_Ticket_Price_Positive", "[Price] > 0");
+            
 
             builder.HasOne(t => t.BookingFlight)
                 .WithMany(bf => bf.Tickets)

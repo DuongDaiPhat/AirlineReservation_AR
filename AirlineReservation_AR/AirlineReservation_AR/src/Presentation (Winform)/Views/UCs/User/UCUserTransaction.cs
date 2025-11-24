@@ -16,7 +16,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
     public partial class UCUserTransaction : UserControl
     {
-        private readonly BookingsService _bookingService = new BookingsService();
+        private readonly BookingServices _bookingService = new BookingServices();
         public UCUserTransaction()
         {
             InitializeComponent();

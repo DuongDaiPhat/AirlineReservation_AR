@@ -14,7 +14,9 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
         public string? ContactEmail { get; set; }
         public string? ContactPhone { get; set; }
         public string? SpecialRequests { get; set; }
-
+        public decimal Price { get; set; }
+        public decimal? Taxes { get; set; }
+        public decimal? Fees { get; set; }
         public User User { get; set; } = null!;
         public ICollection<Passenger> Passengers { get; set; } = new HashSet<Passenger>();
         public ICollection<BookingFlight> BookingFlights { get; set; } = new HashSet<BookingFlight>();
