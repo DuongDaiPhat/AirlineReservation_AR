@@ -20,7 +20,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
     public static class DIContainer
     {
         private static IConfiguration? _config;
-        public static User CurrentUser { get; private set; }
+        public static User? CurrentUser { get; private set; }
         public static DbContextOptions<AirlineReservationDbContext>? DbOptions { get; private set; }
 
         private static PasswordHasher? _hasher;
