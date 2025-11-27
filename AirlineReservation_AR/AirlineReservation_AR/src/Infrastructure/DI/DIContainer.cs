@@ -100,7 +100,6 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _reportServiceAdmin = new ReportServiceAdmin(new AirlineReservationDbContext(DbOptions));
             _bookingService = new Application.Services.BookingServices();
             _paymentService = new PaymentService();
-
             _promotionService = new PromotionService();
 
             // Controller layer giữ nguyên

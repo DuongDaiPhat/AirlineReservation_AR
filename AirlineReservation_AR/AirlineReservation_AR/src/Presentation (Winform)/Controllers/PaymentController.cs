@@ -20,5 +20,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
         public int CreatePayment(PaymentCreateDTO dto)
             => _service.CreatePayment(dto);
 
+
+        public void MarkSuccess(int bookingId, string momoTransId)
+            => _service.MarkPaymentSuccess(bookingId, momoTransId);
+
+        public void MarkFailed(int bookingId, string reason)
+            => _service.MarkPaymentFailed(bookingId, reason);
     }
 }

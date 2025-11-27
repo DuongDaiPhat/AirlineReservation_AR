@@ -13,7 +13,12 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 {
     public class PaymentService : IPaymentService
     {
-
+        private readonly AirlineReservationDbContext _airlineReservationDbContext;
+        public PaymentService(AirlineReservationDbContext airlineReservationDbContext)
+        {
+            _airlineReservationDbContext = airlineReservationDbContext;
+        }
+        public PaymentService() { }
         public async Task<Payment> CreateAsync(
             int bookingId,
             decimal amount,
@@ -161,48 +166,119 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             return payment.PaymentId;
         }
 
-        //public void HandlePaymentStatus(int bookingId)
-        //{
-        //    using var db = DIContainer.CreateDb();
+        public void HandlePaymentStatus(int bookingId)
+        {
+            using var db = DIContainer.CreateDb();
 
-        //    var payment = db.Payments
-        //        .Where(p => p.BookingId == bookingId)
-        //        .OrderByDescending(p => p.PaymentId)
-        //        .FirstOrDefault();
+            var payment = db.Payments
+                .Where(p => p.BookingId == bookingId)
+                .OrderByDescending(p => p.PaymentId)
+                .FirstOrDefault();
 
-        //    if (payment == null) return;
+            if (payment == null) return;
 
-        //    if (payment.Status == "Success")
-        //    {
-        //        // --- UPDATE BOOKING ---
-        //        var booking = db.Bookings.First(b => b.BookingId == bookingId);
-        //        booking.Status = "Paid";
+            if (payment.Status == "Success")
+            {
+                // --- UPDATE BOOKING ---
+                var booking = db.Bookings.First(b => b.BookingId == bookingId);
+                booking.Status = "Paid";
 
-        //        // --- CREATE TICKET ---
-        //        var ticket = new Ticket
-        //        {
-        //            BookingFlightId = bookingId,
-        //            TicketCode = "TCK-" + DateTime.Now.Ticks,
-        //            IssuedAt = DateTime.Now,
-        //            Status = "Active"
-        //        };
-        //        db.Tickets.Add(ticket);
+                // --- CREATE TICKET ---
+                var ticket = new Ticket
+                {
+                    BookingFlightId = bookingId,
+                    TicketId = Guid.NewGuid(),
+                    CheckedInAt = DateTime.Now,
+                    Status = "Active"
+                };
+                db.Tickets.Add(ticket);
 
-        //        // --- UPDATE PAYMENT ---
-        //        payment.Status = "Success";
-        //        payment.UpdatedAt = DateTime.Now;
+                // --- UPDATE PAYMENT ---
+                payment.Status = "Success";
+                payment.CompletedAt = DateTime.Now;
 
-        //        db.SaveChanges();
-        //    }
-        //    else if (payment.Status == "Failed" || payment.Status == "Canceled")
-        //    {
-        //        var booking = db.Bookings.First(b => b.BookingId == bookingId);
-        //        booking.Status = "Canceled";
+                db.SaveChanges();
+            }
+            else if (payment.Status == "Failed" || payment.Status == "Canceled")
+            {
+                var booking = db.Bookings.First(b => b.BookingId == bookingId);
+                booking.Status = "Canceled";
 
-        //        payment.UpdatedAt = DateTime.Now;
+                payment.CompletedAt = DateTime.Now;
 
-        //        db.SaveChanges();
-        //    }
-        //}
+                db.SaveChanges();
+            }
+        }
+        public void MarkPaymentSuccess(int bookingId, string momoTransId)
+        {
+            using var db = DIContainer.CreateDb();
+
+            var payment = db.Payments.First(p => p.BookingId == bookingId);
+            var booking = db.Bookings.First(b => b.BookingId == bookingId);
+
+            // 1. Update Payment
+            payment.Status = "Success";
+            payment.TransactionId = momoTransId;
+            payment.ProcessedAt = DateTime.Now;
+            payment.CompletedAt = DateTime.Now;
+
+            // 2. Log history
+            db.PaymentHistories.Add(new PaymentHistory
+            {
+                PaymentId = payment.PaymentId,
+                Status = "Success",
+                TransactionTime = DateTime.Now,
+                Note = "Thanh toán thành công MoMo"
+            });
+
+            // 3. Update Booking
+            booking.Status = "Paid";
+
+            // 4. Add tickets
+            var bookingFlightId = db.BookingFlights
+                .Where(x => x.BookingId == bookingId)
+                .Select(x => x.BookingFlightId)
+                .First();
+
+            var passengers = db.Passengers.Where(p => p.BookingId == bookingId).ToList();
+
+            foreach (var ps in passengers)
+            {
+                db.Tickets.Add(new Ticket
+                {
+                    TicketId = Guid.NewGuid(),
+                    BookingFlightId = bookingFlightId,
+                    PassengerId = ps.PassengerId,
+                    SeatClassId = 1,
+                    TicketNumber = "TKT-" + Guid.NewGuid().ToString("N")[..10],
+                    Status = "Active"
+                });
+            }
+
+            db.SaveChanges();
+        }
+
+        public void MarkPaymentFailed(int bookingId, string? reason = null)
+        {
+            using var db = DIContainer.CreateDb();
+
+            var payment = db.Payments.First(p => p.BookingId == bookingId);
+            var booking = db.Bookings.First(b => b.BookingId == bookingId);
+
+            payment.Status = "Failed";
+            payment.ProcessedAt = DateTime.Now;
+
+            db.PaymentHistories.Add(new PaymentHistory
+            {
+                PaymentId = payment.PaymentId,
+                Status = "Failed",
+                TransactionTime = DateTime.Now,
+                Note = reason ?? "Thanh toán thất bại"
+            });
+
+            booking.Status = "Canceled";
+
+            db.SaveChanges();
+        }
     }
 }

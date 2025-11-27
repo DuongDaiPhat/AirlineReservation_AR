@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MomoQR
+﻿namespace AirlineReservation_AR.API.Services.Momo.Configurations
 {
     public class MomoConfiguration
     {
@@ -15,5 +9,4 @@ namespace MomoQR
         public string AccessKey { get; set; }
         public string SecretKey { get; set; }
     }
-
 }
