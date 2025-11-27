@@ -10,6 +10,9 @@ namespace AirlineReservation_AR.src.Application.Interfaces
     public interface IPaymentService
     {
         int CreatePayment(PaymentCreateDTO dto);
-        //void HandlePaymentStatus(int bookingId);
+        void HandlePaymentStatus(int bookingId);
+        void MarkPaymentSuccess(int bookingId, string momoTransId);
+        void MarkPaymentFailed(int bookingId, string? reason = null);
+
     }
 }
