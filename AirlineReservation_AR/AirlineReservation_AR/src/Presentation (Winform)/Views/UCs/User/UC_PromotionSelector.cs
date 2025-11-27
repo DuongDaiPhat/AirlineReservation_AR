@@ -20,6 +20,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         public UC_PromotionSelector()
         {
             InitializeComponent();
+
         }
 
         // Set dữ liệu cho selector
@@ -46,8 +47,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             {
                 var item = new UC_PromotionItem();
                 item.Margin = new Padding(10, 50, 10, 10);
-                item.Width = 350;         // chỉnh cho vừa 3 card/1 hàng
-                item.Height = 240;
+                //item.Width = 320;         // chỉnh cho vừa 3 card/1 hàng
+                //item.Height = 240;
                 item.Bind(promo);
 
                 promoItemsFlowPnl.Controls.Add(item);
@@ -65,8 +66,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             {
                 var item = new UC_PromotionItem();
                 item.Margin = new Padding(10, 50, 10, 10);
-                item.Width = 350;         // chỉnh cho vừa 3 card/1 hàng
-                item.Height = 240;
+                //item.Width = 350;         // chỉnh cho vừa 3 card/1 hàng
+                //item.Height = 240;
                 item.Bind(promo);
 
                 promoItemsFlowPnl.Controls.Add(item);

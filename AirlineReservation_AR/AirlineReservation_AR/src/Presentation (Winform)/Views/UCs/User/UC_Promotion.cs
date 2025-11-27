@@ -18,8 +18,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
     public partial class UC_Promotion : UserControl
     {
         private readonly PromotionController _promotionController;
+
         // cache theo loại để dùng cho filter
         private Dictionary<string, List<PromotionDTO>> _groupedPromos = new Dictionary<string, List<PromotionDTO>>();
+
+        // cache toàn bộ promo để search
+        private List<PromotionDTO> _allPromosCache = new List<PromotionDTO>();
 
         public UC_Promotion()
         {
@@ -44,6 +48,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 promotionContentPnl.Controls.Clear();
                 return;
             }
+
+            // lưu cache cho search
+            _allPromosCache = allPromos;
 
             _groupedPromos = allPromos
                 .GroupBy(p => p.PromotionType) // Special Campaigns, Flights, Others
@@ -136,6 +143,53 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private void btnFlights_Click(object sender, EventArgs e)
         {
             ShowSingleType("Flights");
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            ApplySearch(txtSearchPromo.Text);
+        }
+
+        // Tìm theo PromoName (proNameLbl), không gọi DB lại
+        private void ApplySearch(string keyword)
+        {
+            keyword = (keyword ?? string.Empty).Trim();
+
+            // Nếu rỗng -> quay lại chế độ All mặc định
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                ShowAllPreview();
+                return;
+            }
+
+            // Lọc trên cache, so khớp không phân biệt hoa/thường
+            var filtered = _allPromosCache
+                .Where(p => p.PromoName != null &&
+                            p.PromoName.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
+                .ToList();
+
+            promotionContentPnl.SuspendLayout();
+            promotionContentPnl.Controls.Clear();
+
+            if (filtered.Count > 0)
+            {
+                // Dùng lại UC_PromotionSelector để hiển thị kết quả tìm kiếm
+                var selector = new UC_PromotionSelector
+                {
+                    Dock = DockStyle.Fill
+                };
+
+                selector.Bind(
+                    "Search results",   // tiêu đề
+                    filtered,           // full kết quả
+                    showFilter: false,  // kết quả search không cần filter/see more
+                    showSeeMore: false
+                );
+
+                promotionContentPnl.Controls.Add(selector);
+            }
+
+            promotionContentPnl.ResumeLayout();
         }
     }
 }

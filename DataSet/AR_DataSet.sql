@@ -1,7 +1,7 @@
 ﻿-- =============================================
--- AIRLINE RESERVATION SYSTEM - FINAL DATA (ENHANCED)
--- All 26 Tables with Realistic Data
--- Date Range: 20/11/2024 - 20/12/2024
+-- AIRLINE RESERVATION SYSTEM - FINAL DATA (UPDATED SCHEMA)
+-- Date Range: 20/11/2025 - 20/12/2025
+-- Note: Price, Taxes, Fees moved from Tickets to Bookings
 -- =============================================
 
 USE AirlineReservationSystem;
@@ -9,7 +9,7 @@ GO
 
 PRINT '';
 PRINT '=============================================';
-PRINT '   STARTING DATA IMPORT - ALL 26 TABLES';
+PRINT '   STARTING DATA IMPORT - UPDATED SCHEMA';
 PRINT '=============================================';
 PRINT '';
 
@@ -97,10 +97,6 @@ DECLARE @PermissionCount INT;
 SELECT @PermissionCount = COUNT(*) FROM Permissions;
 PRINT '  ✓ Permissions: ' + CAST(@PermissionCount AS NVARCHAR(10));
 
-DECLARE @RolePermCount INT;
-SELECT @RolePermCount = COUNT(*) FROM RolePermissions;
-PRINT '  ✓ RolePermissions: ' + CAST(@RolePermCount AS NVARCHAR(10));
-
 -- =============================================
 -- STEP 3: INSERT COUNTRIES & CITIES
 -- =============================================
@@ -128,14 +124,6 @@ INSERT INTO Cities (CityCode, CityName, CountryCode, IsActive) VALUES
 ('NRT', 'Tokyo', 'JPN', 1), ('PNH', 'Phnom Penh', 'KHM', 1), ('VTE', 'Vientiane', 'LAO', 1),
 ('RGN', 'Yangon', 'MMR', 1), ('LAX', 'Los Angeles', 'USA', 1), ('JFK', 'New York', 'USA', 1),
 ('LHR', 'London', 'GBR', 1), ('CDG', 'Paris', 'FRA', 1), ('SYD', 'Sydney', 'AUS', 1), ('PEK', 'Beijing', 'CHN', 1);
-
-DECLARE @CountryCountFinal INT;
-SELECT @CountryCountFinal = COUNT(*) FROM Countries;
-PRINT '  ✓ Countries: ' + CAST(@CountryCountFinal AS NVARCHAR(10));
-
-DECLARE @CityCountFinal INT;
-SELECT @CityCountFinal = COUNT(*) FROM Cities;
-PRINT '  ✓ Cities: ' + CAST(@CityCountFinal AS NVARCHAR(10));
 
 -- =============================================
 -- STEP 4: INSERT AIRLINES & AIRPORTS
@@ -175,14 +163,6 @@ INSERT INTO Airlines (AirlineName, IATACode, CountryCode, ContactEmail, ContactP
 ('British Airways', 'BA', 'GBR', 'contact@britishairways.com', '+44-344-222-1111', 'britishairways.com', 1),
 ('Air France', 'AF', 'FRA', 'info@airfrance.com', '+33-1-4262-2222', 'airfrance.com', 1);
 
-DECLARE @AirportCountFinal INT;
-SELECT @AirportCountFinal = COUNT(*) FROM Airports;
-PRINT '  ✓ Airports: ' + CAST(@AirportCountFinal AS NVARCHAR(10));
-
-DECLARE @AirlineCountFinal INT;
-SELECT @AirlineCountFinal = COUNT(*) FROM Airlines;
-PRINT '  ✓ Airlines: ' + CAST(@AirlineCountFinal AS NVARCHAR(10));
-
 -- =============================================
 -- STEP 5: INSERT AIRCRAFT TYPES & AIRCRAFT
 -- =============================================
@@ -219,10 +199,6 @@ BEGIN
     END;
     SET @AirlineLoop = @AirlineLoop + 1;
 END;
-
-DECLARE @AircraftCountFinal INT;
-SELECT @AircraftCountFinal = COUNT(*) FROM Aircraft;
-PRINT '  ✓ Aircraft: ' + CAST(@AircraftCountFinal AS NVARCHAR(10));
 
 -- =============================================
 -- STEP 6: INSERT AIRCRAFT SEAT CONFIG & SEATS
@@ -274,10 +250,6 @@ END;
 CLOSE aircraft_cursor;
 DEALLOCATE aircraft_cursor;
 
-DECLARE @SeatCountFinal INT;
-SELECT @SeatCountFinal = COUNT(*) FROM Seats;
-PRINT '  ✓ Seats: ' + CAST(@SeatCountFinal AS NVARCHAR(10));
-
 -- =============================================
 -- STEP 7: INSERT FLIGHTS & FLIGHT PRICING
 -- =============================================
@@ -301,7 +273,7 @@ INSERT INTO @InternationalAirports VALUES (1), (11), (12), (13), (14), (15), (16
 
 WHILE @DomesticCount < @DomesticTarget
 BEGIN
-    DECLARE @FlightDate DATE = CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 31, '2024-11-20') AS DATE);
+    DECLARE @FlightDate DATE = CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 31, '2025-11-20') AS DATE);
     DECLARE @Departure INT = (SELECT TOP 1 AirportID FROM @DomesticAirports ORDER BY NEWID());
     DECLARE @Arrival INT = (SELECT TOP 1 AirportID FROM @DomesticAirports WHERE AirportID != @Departure ORDER BY NEWID());
     DECLARE @AirlineID INT = (SELECT TOP 1 AirlineID FROM Airlines WHERE IATACode IN ('VN', 'VJ', 'QH') ORDER BY NEWID());
@@ -335,7 +307,7 @@ END;
 
 WHILE @InternationalCount < @InternationalTarget
 BEGIN
-    SET @FlightDate = CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 31, '2024-11-20') AS DATE);
+    SET @FlightDate = CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 31, '2025-11-20') AS DATE);
     SET @Departure = (SELECT TOP 1 AirportID FROM @InternationalAirports ORDER BY NEWID());
     SET @Arrival = (SELECT TOP 1 AirportID FROM @InternationalAirports WHERE AirportID != @Departure ORDER BY NEWID());
     SET @AirlineID = (SELECT TOP 1 AirlineID FROM Airlines ORDER BY NEWID());
@@ -354,7 +326,7 @@ BEGIN
     
     SET @NewFlightID = SCOPE_IDENTITY();
     
-    -- Insert FlightPricing cho các seat classes
+    -- Insert FlightPricing
     INSERT INTO FlightPricing (FlightID, SeatClassID, Price, BookedSeats)
     SELECT 
         @NewFlightID,
@@ -366,14 +338,6 @@ BEGIN
     SET @InternationalCount = @InternationalCount + 1;
     IF @InternationalCount % 500 = 0 PRINT '    International: ' + CAST(@InternationalCount AS NVARCHAR(10));
 END;
-
-DECLARE @FlightCountFinal INT;
-SELECT @FlightCountFinal = COUNT(*) FROM Flights;
-PRINT '  ✓ Flights: ' + CAST(@FlightCountFinal AS NVARCHAR(10));
-
-DECLARE @FlightPricingCountFinal INT;
-SELECT @FlightPricingCountFinal = COUNT(*) FROM FlightPricing;
-PRINT '  ✓ FlightPricing: ' + CAST(@FlightPricingCountFinal AS NVARCHAR(10));
 
 -- =============================================
 -- STEP 8: INSERT SERVICES
@@ -397,10 +361,6 @@ INSERT INTO Services (ServiceName, Category, Description, BasePrice, Unit, IsAct
 ('WiFi Pass', 'Priority', 'In-flight WiFi pass', 80000, 'person', 1),
 ('Pet Booking', 'Other', 'Transport pet on board', 500000, 'pet', 1);
 
-DECLARE @ServiceCountFinal INT;
-SELECT @ServiceCountFinal = COUNT(*) FROM Services;
-PRINT '  ✓ Services: ' + CAST(@ServiceCountFinal AS NVARCHAR(10));
-
 -- =============================================
 -- STEP 9: INSERT USERS & USER ROLES
 -- =============================================
@@ -411,20 +371,16 @@ PRINT 'STEP 9: Inserting Users & UserRoles...';
 DELETE FROM UserRoles;
 DELETE FROM Users;
 
--- Admin account đã được khởi tạo trong DbContext
+-- Admin account
 DECLARE @AdminUserID UNIQUEIDENTIFIER = 'd3f9a7c2-8b1e-4f3a-9c2a-7e4f9a1b2c3d';
 DECLARE @AdminEmail NVARCHAR(100) = 'adminsystem@gmail.com';
 
--- Insert Admin User
 INSERT INTO Users (UserID, FullName, Email, Phone, PasswordHash, DateOfBirth, Gender, CityCode, Address, IsVerified, IsActive, CreatedAt)
 VALUES (@AdminUserID, 'Admin System', @AdminEmail, '+84901234567', 
         '$2y$10$zyStMeYVzLEfJgJvTEGH9uqZDuqCmFKprzN2rVkDqqjfPPYhvWqZe', '1980-01-01', 'O', 'SGN', '123 Admin St', 1, 1, '2025-10-20');
 
--- Assign Admin role
 DECLARE @AdminRoleID INT = (SELECT RoleID FROM Roles WHERE RoleName = 'Admin');
 INSERT INTO UserRoles (UserID, RoleID, AssignedAt) VALUES (@AdminUserID, @AdminRoleID, GETDATE());
-
-PRINT '  ✓ Admin Account Assigned: ' + @AdminEmail;
 
 CREATE TABLE #UserAccounts (
     Email NVARCHAR(100),
@@ -506,10 +462,6 @@ DECLARE @CustomerRoleID INT = (SELECT RoleID FROM Roles WHERE RoleName = 'Custom
 INSERT INTO UserRoles (UserID, RoleID, AssignedAt)
 SELECT UserID, @CustomerRoleID, GETDATE() FROM #UserAccounts WHERE UserType = 'User';
 
-DECLARE @UserCountFinal INT;
-SELECT @UserCountFinal = COUNT(*) FROM Users;
-PRINT N'  ✓ Users: ' + CAST(@UserCountFinal AS NVARCHAR(10));
-
 -- =============================================
 -- STEP 10: INSERT BOOKINGS, PASSENGERS, BOOKING FLIGHTS
 -- =============================================
@@ -533,6 +485,8 @@ DECLARE @SeatClassID_f INT;
 DECLARE @TicketStatus NVARCHAR(20);
 DECLARE @TicketNumber NVARCHAR(15);
 DECLARE @TicketPrice DECIMAL(12,2);
+DECLARE @TaxAmt DECIMAL(12,2);
+DECLARE @FeeAmt DECIMAL(12,2);
 DECLARE @SeatClassMultiplier DECIMAL(4,2);
 DECLARE @BasePriceTicket DECIMAL(12,2);
 DECLARE @PassengerFirstName NVARCHAR(50);
@@ -556,15 +510,22 @@ BEGIN
     SELECT TOP 1 @SeatClassID_f = SeatClassID, @SeatClassMultiplier = PriceMultiplier FROM SeatClasses ORDER BY NEWID();
     
     SET @BookingReference = UPPER(LEFT(CAST(NEWID() AS NVARCHAR(36)), 6));
+
+    -- CALCULATE PRICE FOR BOOKING (Since 1 Booking = 1 Passenger in this data gen logic)
+    SET @TicketPrice = @BasePriceTicket * @SeatClassMultiplier;
+    SET @TaxAmt = CAST(@TicketPrice * 0.1 AS DECIMAL(10,2));
+    SET @FeeAmt = CAST(@TicketPrice * 0.05 AS DECIMAL(10,2));
     
-    INSERT INTO Bookings (BookingReference, UserID, BookingDate, Status, Currency, ContactEmail, ContactPhone)
+    -- INSERT INTO BOOKINGS WITH PRICE, TAXES, FEES
+    INSERT INTO Bookings (BookingReference, UserID, BookingDate, Status, Currency, ContactEmail, ContactPhone, Price, Taxes, Fees)
     SELECT @BookingReference, @UserIDTicket, DATEADD(DAY, -ABS(CHECKSUM(NEWID())) % 30, GETDATE()), 'Confirmed', 'VND',
            (SELECT Email FROM Users WHERE UserID = @UserIDTicket),
-           (SELECT Phone FROM Users WHERE UserID = @UserIDTicket);
+           (SELECT Phone FROM Users WHERE UserID = @UserIDTicket),
+           @TicketPrice, @TaxAmt, @FeeAmt;
     
     SET @BookingID = SCOPE_IDENTITY();
     
-    -- Determine passenger type with realistic distribution (80% Adult, 15% Child, 5% Infant)
+    -- Determine passenger type
     SET @StatusDistribution = ABS(CHECKSUM(NEWID())) % 100;
     IF @StatusDistribution < 80
     BEGIN
@@ -607,15 +568,14 @@ BEGIN
     INSERT INTO BookingFlights (BookingID, FlightID, TripType) VALUES (@BookingID, @FlightIDTicket, 'OneWay');
     SET @BookingFlightID = SCOPE_IDENTITY();
     
-    -- Ticket status distribution (85% Issued, 10% CheckedIn, 5% Cancelled)
+    -- Ticket status
     SET @StatusDistribution = ABS(CHECKSUM(NEWID())) % 100;
     SET @TicketStatus = CASE WHEN @StatusDistribution < 85 THEN 'Issued' WHEN @StatusDistribution < 95 THEN 'CheckedIn' ELSE 'Cancelled' END;
     SET @TicketNumber = FORMAT(ABS(CHECKSUM(NEWID())) % 9999999999, '0000000000');
-    SET @TicketPrice = @BasePriceTicket * @SeatClassMultiplier;
     
-    INSERT INTO Tickets (BookingFlightID, PassengerID, SeatClassID, TicketNumber, Price, Taxes, Fees, Status)
-    VALUES (@BookingFlightID, @PassengerID, @SeatClassID_f, @TicketNumber, @TicketPrice, 
-            CAST(@TicketPrice * 0.1 AS DECIMAL(10,2)), CAST(@TicketPrice * 0.05 AS DECIMAL(10,2)), @TicketStatus);
+    -- INSERT INTO TICKETS (REMOVED Price, Taxes, Fees)
+    INSERT INTO Tickets (BookingFlightID, PassengerID, SeatClassID, TicketNumber, Status)
+    VALUES (@BookingFlightID, @PassengerID, @SeatClassID_f, @TicketNumber, @TicketStatus);
     
     SET @TicketCount = @TicketCount + 1;
     IF @TicketCount % 100 = 0 PRINT '    Tickets: ' + CAST(@TicketCount AS NVARCHAR(10));
@@ -624,24 +584,6 @@ END;
 DECLARE @BookingCountFinal INT;
 SELECT @BookingCountFinal = COUNT(*) FROM Bookings;
 PRINT '  ✓ Bookings: ' + CAST(@BookingCountFinal AS NVARCHAR(10));
-
-DECLARE @TicketCountFinal INT;
-SELECT @TicketCountFinal = COUNT(*) FROM Tickets;
-PRINT '  ✓ Tickets: ' + CAST(@TicketCountFinal AS NVARCHAR(10));
-
-DECLARE @PassengerCountFinal INT;
-SELECT @PassengerCountFinal = COUNT(*) FROM Passengers;
-PRINT '  ✓ Passengers: ' + CAST(@PassengerCountFinal AS NVARCHAR(10));
-
--- Display passenger type distribution
-PRINT '';
-PRINT '  Passenger Type Distribution:';
-SELECT 
-    PassengerType,
-    COUNT(*) as Count,
-    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Passengers), 2) AS NVARCHAR(10)) + '%' as Percentage
-FROM Passengers
-GROUP BY PassengerType;
 
 -- =============================================
 -- STEP 11: INSERT BOOKING SERVICES
@@ -656,10 +598,6 @@ SELECT TOP 300 b.BookingID, (SELECT TOP 1 ServiceID FROM Services ORDER BY NEWID
        (SELECT TOP 1 BasePrice FROM Services ORDER BY NEWID())
 FROM Bookings b INNER JOIN Passengers p ON b.BookingID = p.BookingID ORDER BY NEWID();
 
-DECLARE @BookingServiceCountFinal INT;
-SELECT @BookingServiceCountFinal = COUNT(*) FROM BookingServices;
-PRINT '  ✓ BookingServices: ' + CAST(@BookingServiceCountFinal AS NVARCHAR(10));
-
 -- =============================================
 -- STEP 12: INSERT PAYMENTS & PAYMENT HISTORY
 -- =============================================
@@ -670,18 +608,20 @@ PRINT 'STEP 12: Inserting Payments & PaymentHistory...';
 DELETE FROM Payments;
 DELETE FROM PaymentHistory;
 
+-- NOTE: Payment Amount is now calculated from Bookings (Price+Tax+Fee) + Services
 INSERT INTO Payments (BookingID, PaymentMethod, PaymentProvider, Amount, Currency, Status, TransactionID, ProcessedAt, CompletedAt)
 SELECT b.BookingID,
        CASE ABS(CHECKSUM(NEWID())) % 5 WHEN 0 THEN 'Credit Card' WHEN 1 THEN 'Debit Card' WHEN 2 THEN 'E-Wallet' WHEN 3 THEN 'Bank Transfer' ELSE 'Online Payment' END,
        CASE ABS(CHECKSUM(NEWID())) % 4 WHEN 0 THEN 'VNPay' WHEN 1 THEN 'Momo' WHEN 2 THEN 'ZaloPay' ELSE 'ATM' END,
-       ISNULL((SELECT SUM(t.Price + t.Taxes + t.Fees) FROM Tickets t INNER JOIN BookingFlights bf ON t.BookingFlightID = bf.BookingFlightID WHERE bf.BookingID = b.BookingID), 0) +
+       -- UPDATED CALCULATION:
+       ISNULL((b.Price + b.Taxes + b.Fees), 0) +
        ISNULL((SELECT SUM(bs.Quantity * bs.UnitPrice) FROM BookingServices bs WHERE bs.BookingID = b.BookingID), 0),
        'VND',
        CASE WHEN ABS(CHECKSUM(NEWID())) % 100 < 85 THEN 'Completed' WHEN ABS(CHECKSUM(NEWID())) % 100 < 95 THEN 'Pending' ELSE 'Failed' END,
        FORMAT(ABS(CHECKSUM(NEWID())) % 999999999999, '000000000000'),
        DATEADD(MINUTE, -ABS(CHECKSUM(NEWID())) % 1440, GETDATE()),
        CASE WHEN ABS(CHECKSUM(NEWID())) % 100 < 85 THEN DATEADD(MINUTE, 30, DATEADD(MINUTE, -ABS(CHECKSUM(NEWID())) % 1440, GETDATE())) ELSE NULL END
-FROM Bookings b WHERE EXISTS (SELECT 1 FROM Tickets t INNER JOIN BookingFlights bf ON t.BookingFlightID = bf.BookingFlightID WHERE bf.BookingID = b.BookingID);
+FROM Bookings b;
 
 INSERT INTO PaymentHistory (PaymentID, Status, TransactionTime, Note)
 SELECT PaymentID, Status, GETDATE(), 'Payment processed' FROM Payments;
@@ -689,20 +629,6 @@ SELECT PaymentID, Status, GETDATE(), 'Payment processed' FROM Payments;
 DECLARE @PaymentCountFinal INT;
 SELECT @PaymentCountFinal = COUNT(*) FROM Payments;
 PRINT '  ✓ Payments: ' + CAST(@PaymentCountFinal AS NVARCHAR(10));
-
-DECLARE @PaymentHistoryCountFinal INT;
-SELECT @PaymentHistoryCountFinal = COUNT(*) FROM PaymentHistory;
-PRINT '  ✓ PaymentHistory: ' + CAST(@PaymentHistoryCountFinal AS NVARCHAR(10));
-
--- Display payment status distribution
-PRINT '';
-PRINT '  Payment Status Distribution:';
-SELECT 
-    Status,
-    COUNT(*) as Count,
-    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Payments), 2) AS NVARCHAR(10)) + '%' as Percentage
-FROM Payments
-GROUP BY Status;
 
 -- =============================================
 -- STEP 13: INSERT PROMOTIONS & BOOKING PROMOTIONS
@@ -750,19 +676,12 @@ BEGIN
     SET @DiscountCount = @DiscountCount + 1;
 END;
 
+-- UPDATED LOGIC: Calculate discount based on Booking Price
 INSERT INTO BookingPromotions (BookingID, PromotionID, DiscountAmount, AppliedAt)
 SELECT TOP 250 b.BookingID, (SELECT TOP 1 PromotionID FROM Promotions WHERE IsActive = 1 ORDER BY NEWID()),
-       CAST(ISNULL((SELECT TOP 1 SUM(t.Price + t.Taxes + t.Fees) * 0.1 FROM Tickets t INNER JOIN BookingFlights bf ON t.BookingFlightID = bf.BookingFlightID WHERE bf.BookingID = b.BookingID), 0) AS DECIMAL(10,2)),
+       CAST(ISNULL((b.Price + b.Taxes + b.Fees) * 0.1, 0) AS DECIMAL(10,2)),
        DATEADD(DAY, -ABS(CHECKSUM(NEWID())) % 20, GETDATE())
 FROM Bookings b WHERE b.Status = 'Confirmed' ORDER BY NEWID();
-
-DECLARE @PromoCountFinal INT;
-SELECT @PromoCountFinal = COUNT(*) FROM Promotions;
-PRINT '  ✓ Promotions: ' + CAST(@PromoCountFinal AS NVARCHAR(10));
-
-DECLARE @BookingPromoCountFinal INT;
-SELECT @BookingPromoCountFinal = COUNT(*) FROM BookingPromotions;
-PRINT '  ✓ BookingPromotions: ' + CAST(@BookingPromoCountFinal AS NVARCHAR(10));
 
 -- =============================================
 -- STEP 14: INSERT NOTIFICATIONS
@@ -801,21 +720,6 @@ SELECT TOP 150 b.UserID, 'Promotion Offer',
        GETDATE(), GETDATE()
 FROM Bookings b ORDER BY NEWID();
 
-DECLARE @NotificationCountFinal INT;
-SELECT @NotificationCountFinal = COUNT(*) FROM Notifications;
-PRINT '  ✓ Notifications: ' + CAST(@NotificationCountFinal AS NVARCHAR(10));
-
--- Display notification type distribution
-PRINT '';
-PRINT '  Notification Type Distribution:';
-SELECT 
-    Type,
-    Channel,
-    COUNT(*) as Count
-FROM Notifications
-GROUP BY Type, Channel
-ORDER BY Type, Channel;
-
 -- =============================================
 -- STEP 15: INSERT AUDIT LOGS
 -- =============================================
@@ -837,10 +741,6 @@ SELECT TOP 150 @AdminIDForAudit,
        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
 FROM Bookings ORDER BY NEWID();
 
-DECLARE @AuditLogCountFinal INT;
-SELECT @AuditLogCountFinal = COUNT(*) FROM AuditLogs;
-PRINT '  ✓ AuditLogs: ' + CAST(@AuditLogCountFinal AS NVARCHAR(10));
-
 -- =============================================
 -- FINAL SUMMARY
 -- =============================================
@@ -851,7 +751,6 @@ PRINT N'   ✓ DATA IMPORT COMPLETE';
 PRINT N'==============================';
 PRINT N'';
 
--- Cleanup
 DROP TABLE #VietnamNames;
 DROP TABLE #InternationalNames;
 DROP TABLE #LastNames;
@@ -863,7 +762,7 @@ DROP TABLE #UserAccounts;
 
 PRINT N'';
 PRINT N'==============================';
-PRINT N'     DATABASE SUMMARY REPORT';
+PRINT N'      DATABASE SUMMARY REPORT';
 PRINT N'==============================';
 PRINT N'';
 
@@ -875,10 +774,8 @@ DECLARE @TotalBookings INT = (SELECT COUNT(*) FROM Bookings);
 DECLARE @TotalTickets INT = (SELECT COUNT(*) FROM Tickets);
 DECLARE @TotalUsers INT = (SELECT COUNT(*) FROM Users);
 DECLARE @TotalPayments INT = (SELECT COUNT(*) FROM Payments);
-DECLARE @TotalFlightPricing INT = (SELECT COUNT(*) FROM FlightPricing);
 
 PRINT '  • Total Flights: ' + CAST(@TotalFlights AS NVARCHAR(10));
-PRINT '  • Total FlightPricing Records: ' + CAST(@TotalFlightPricing AS NVARCHAR(10));
 PRINT '  • Total Bookings: ' + CAST(@TotalBookings AS NVARCHAR(10));
 PRINT '  • Total Tickets: ' + CAST(@TotalTickets AS NVARCHAR(10));
 PRINT '  • Total Users: ' + CAST(@TotalUsers AS NVARCHAR(10));
@@ -909,7 +806,7 @@ GROUP BY Status;
 
 PRINT N'';
 
--- Ticket Distribution
+-- Ticket Distribution (Modified to check Status only, as Price is gone)
 PRINT 'TICKET DISTRIBUTION BY STATUS:';
 PRINT '---';
 SELECT 
@@ -935,23 +832,6 @@ GROUP BY r.RoleName;
 
 PRINT N'';
 
--- FlightPricing by SeatClass
-PRINT 'FLIGHT PRICING BY SEAT CLASS:';
-PRINT '---';
-SELECT 
-    sc.DisplayName,
-    COUNT(*) as PricingRecords,
-    CAST(AVG(fp.Price) AS NVARCHAR(20)) as AvgPrice,
-    CAST(MIN(fp.Price) AS NVARCHAR(20)) as MinPrice,
-    CAST(MAX(fp.Price) AS NVARCHAR(20)) as MaxPrice,
-    SUM(fp.BookedSeats) as TotalBookedSeats
-FROM FlightPricing fp
-INNER JOIN SeatClasses sc ON fp.SeatClassID = sc.SeatClassID
-GROUP BY sc.DisplayName, sc.SeatClassID
-ORDER BY sc.SeatClassID;
-
-PRINT N'';
-
 -- Airlines with most flights
 PRINT 'TOP 5 AIRLINES BY FLIGHT COUNT:';
 PRINT '---';
@@ -963,84 +843,6 @@ FROM Flights f
 INNER JOIN Airlines a ON f.AirlineID = a.AirlineID
 GROUP BY a.AirlineName
 ORDER BY FlightCount DESC;
-
-PRINT N'';
-
--- Services by category
-PRINT 'SERVICES BY CATEGORY:';
-PRINT '---';
-SELECT 
-    Category,
-    COUNT(*) as ServiceCount,
-    CAST(AVG(BasePrice) AS NVARCHAR(20)) as AvgPrice
-FROM Services
-GROUP BY Category;
-
-PRINT N'';
-
--- =============================================
--- STAFF ACCOUNTS (10)
--- =============================================
-
-PRINT N'==============================';
-PRINT N'   STAFF ACCOUNTS (10)';
-PRINT N'==============================';
-PRINT N'';
-
-SELECT 
-    ROW_NUMBER() OVER (ORDER BY u.CreatedAt) AS 'No',
-    u.Email AS 'Email',
-    'StaffPass@' + RIGHT('00' + CAST(ROW_NUMBER() OVER (ORDER BY u.CreatedAt) AS VARCHAR(2)), 2) AS 'Password',
-    r.RoleName AS 'Role'
-FROM Users u
-INNER JOIN UserRoles ur ON u.UserID = ur.UserID
-INNER JOIN Roles r ON ur.RoleID = r.RoleID
-WHERE r.RoleName = 'Staff'
-ORDER BY u.Email;
-
-PRINT N'';
-
--- =============================================
--- CUSTOMER ACCOUNTS (89)
--- =============================================
-
-PRINT N'==============================';
-PRINT N'   CUSTOMER ACCOUNTS (89)';
-PRINT N'==============================';
-PRINT N'';
-
-SELECT TOP 10
-    ROW_NUMBER() OVER (ORDER BY u.CreatedAt) AS 'No',
-    u.Email AS 'Email',
-    'Pass@' + RIGHT('0000' + CAST(ROW_NUMBER() OVER (ORDER BY u.CreatedAt) AS VARCHAR(4)), 4) AS 'Password',
-    r.RoleName AS 'Role'
-FROM Users u
-INNER JOIN UserRoles ur ON u.UserID = ur.UserID
-INNER JOIN Roles r ON ur.RoleID = r.RoleID
-WHERE r.RoleName = 'Customer'
-ORDER BY u.Email;
-
-PRINT N'';
-PRINT '  (Showing first 10 of 89 customer accounts)';
-PRINT N'';
-
--- =============================================
--- ADMIN ACCOUNT
--- =============================================
-
-PRINT N'==============================';
-PRINT N'   ADMIN ACCOUNT';
-PRINT N'==============================';
-PRINT N'';
-
-SELECT 
-    u.Email AS 'Email',
-    'Admin@12345' AS 'Password',
-    r.RoleName AS 'Role'
-FROM Users u
-INNER JOIN UserRoles ur ON u.UserID = ur.UserID
-INNER JOIN Roles r ON ur.RoleID = r.RoleID
-WHERE r.RoleName = 'Admin';
 
 PRINT N'';
 PRINT N'==============================';
