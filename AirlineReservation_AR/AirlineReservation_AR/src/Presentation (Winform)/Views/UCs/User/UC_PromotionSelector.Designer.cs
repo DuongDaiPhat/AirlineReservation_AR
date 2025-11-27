@@ -71,7 +71,7 @@
             promoItemsFlowPnl.Name = "promoItemsFlowPnl";
             promoItemsFlowPnl.Padding = new Padding(0, 20, 0, 0);
             promoItemsFlowPnl.RightToLeft = RightToLeft.No;
-            promoItemsFlowPnl.Size = new Size(1125, 320);
+            promoItemsFlowPnl.Size = new Size(1125, 350);
             promoItemsFlowPnl.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -246,7 +246,7 @@
             Controls.Add(headerPnl);
             Controls.Add(promoItemsFlowPnl);
             Name = "UC_PromotionSelector";
-            Size = new Size(1125, 320);
+            Size = new Size(1125, 350);
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)proTypePic).EndInit();
