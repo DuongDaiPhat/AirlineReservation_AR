@@ -46,7 +46,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
             builder.HasIndex(t => t.BookingFlightId)
                 .HasDatabaseName("IX_Tickets_BookingFlight");
 
-            builder.HasCheckConstraint("CK_Ticket_Status", "[Status] IN ('Issued','CheckedIn','Boarded','Cancelled','Refunded')");
+            builder.HasCheckConstraint("CK_Ticket_Status", "[Status] IN ('Issued','CheckedIn','Boarded','Cancelled','Refunded', 'Rescheduled')");
             
 
             builder.HasOne(t => t.BookingFlight)

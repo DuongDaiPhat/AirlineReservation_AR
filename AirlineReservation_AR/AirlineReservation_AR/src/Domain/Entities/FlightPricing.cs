@@ -1,3 +1,4 @@
+using AirlineReservation_AR.src.Domain.Entities;
 using System;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
@@ -13,6 +14,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
         public Flight Flight { get; set; } = null!;
         public SeatClass SeatClass { get; set; } = null!;
 
+        public int FareRuleId { get; set; }
+        public FareRule FareRule { get; set; } = null!;
 
     }
 }
