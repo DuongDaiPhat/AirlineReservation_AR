@@ -452,7 +452,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             cboSeatClass.ForeColor = Color.Transparent;
             cboSeatClass.HoverState.BorderColor = Color.FromArgb(0, 164, 239);
             cboSeatClass.ItemHeight = 30;
-            cboSeatClass.Items.AddRange(new object[] { "Phổ thông", "Phổ thông đặc biệt", "Thương gia", "Hạng nhất" });
             cboSeatClass.Location = new Point(647, 77);
             cboSeatClass.Name = "cboSeatClass";
             cboSeatClass.ShadowDecoration.BorderRadius = 10;

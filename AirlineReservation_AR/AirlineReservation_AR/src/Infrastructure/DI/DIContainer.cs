@@ -60,6 +60,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
 
         private static IPromotionService? _promotionService;
         private static PromotionController? _promotionController;
+
+        private static ISeatClassService? _seatClassService;
+        private static SeatClassController? _seatClassController;
         public static void Init()
         {
             _config = new ConfigurationBuilder()
@@ -125,6 +128,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             //_bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
             _bookingController = new BookingController(_bookingService);
             _promotionController = new PromotionController(_promotionService);
+
+            _seatClassService = new SeatClassService();
+            _seatClassController = new SeatClassController(_seatClassService);
         }
 
         public static void SetCurrentUser(User user)
@@ -187,5 +193,8 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         public static PromotionController PromotionController =>
         _promotionController ?? throw new Exception("Promotion controller not initialized");
 
+        //seatClass
+        public static SeatClassController SeatClassController =>
+        _seatClassController ?? throw new Exception("SeatClass controller not initialized");
     }
 }
