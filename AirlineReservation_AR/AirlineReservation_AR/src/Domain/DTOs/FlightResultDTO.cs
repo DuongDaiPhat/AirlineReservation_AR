@@ -26,7 +26,16 @@ namespace AirlineReservation_AR.src.Domain.DTOs
         public int AvailableSeats { get; set; }
 
         public string AircraftType { get; set; }
+
+        // mới: ghế còn lại theo từng loại
+        public Dictionary<string, int> SeatsLeftByClass { get; set; }
+        public Dictionary<int, string> SeatClassesMap { get; set; }
+        public string SelectedSeatClassName { get; set; }
+
+        // mới: tổng số ghế trống
+        public int TotalSeatsLeft { get; set; }
     }
+
 
 
 }

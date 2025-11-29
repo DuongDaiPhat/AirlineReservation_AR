@@ -109,7 +109,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         {
             using var db = DIContainer.CreateDb();
 
-            // STEP 1: Lấy AirportId từ IATA
             var fromAirportId = await db.Airports
                 .Where(a => a.IataCode == p.FromCode)
                 .Select(a => a.AirportId)
@@ -120,7 +119,15 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                 .Select(a => a.AirportId)
                 .FirstAsync();
 
-            // STEP 2: Lấy toàn bộ chuyến bay theo ngày được chọn
+            // DayTabs trước
+            var dayTabs = new List<FlightDayPriceDTO>();
+            for (int offset = -3; offset <= 3; offset++)
+            {
+                var date = p.StartDate!.Value.AddDays(offset);
+                dayTabs.Add(new FlightDayPriceDTO { Date = date, LowestPrice = 0 });
+            }
+
+            // Lấy flight list
             var flights = await db.Flights
                 .Include(f => f.Airline)
                 .Include(f => f.Aircraft).ThenInclude(a => a.AircraftType)
@@ -133,13 +140,36 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                     f.FlightDate == p.StartDate)
                 .ToListAsync();
 
-            // STEP 3: Convert sang DTO
-            var all = flights.Select(f =>
+            if (!flights.Any())
             {
-                var priceRow = f.FlightPricings
-                               .FirstOrDefault(x => x.SeatClassId == p.SeatClassId);
+                return new FlightSearchResultDTO
+                {
+                    AllFlights = new List<FlightResultDTO>(),
+                    AirlineFilters = new List<AirlineFilterDTO>(),
+                    DayTabs = dayTabs
+                };
+            }
 
-                return new FlightResultDTO
+            // Convert SeatClassId => DisplayName
+            string selectedSeatClassName = await db.SeatClasses
+                .Where(s => s.SeatClassId == p.SeatClassId)
+                .Select(s => s.DisplayName)
+                .FirstAsync();
+
+            var seatClassMap = await db.SeatClasses
+                .ToDictionaryAsync(s => s.SeatClassId, s => s.DisplayName);
+
+            var resultList = new List<FlightResultDTO>();
+
+            foreach (var f in flights)
+            {
+                var seatsLeft = await GetSeatAvailabilityAsync(f.FlightId);
+
+                seatsLeft.TryGetValue(selectedSeatClassName, out int available);
+
+                var priceRow = f.FlightPricings.FirstOrDefault(x => x.SeatClassId == p.SeatClassId);
+
+                resultList.Add(new FlightResultDTO
                 {
                     FlightId = f.FlightId,
                     AirlineName = f.Airline.AirlineName,
@@ -156,31 +186,21 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                     DurationMinutes = f.DurationMinutes ?? 0,
 
                     Price = priceRow?.Price ?? f.BasePrice,
-                    AvailableSeats = priceRow != null
-                        ? (100 - priceRow.BookedSeats)
-                        : 50,
+
+                    AvailableSeats = available,
+                    SeatsLeftByClass = seatsLeft,
+                    SeatClassesMap = seatClassMap,
+                    SelectedSeatClassName = selectedSeatClassName,
+
+                    TotalSeatsLeft = seatsLeft.Values.Sum(),
 
                     AircraftType = f.Aircraft.AircraftType.DisplayName
-                };
-            })
-            .OrderBy(f => f.Price)
-            .ToList();
-            // STEP 4: DayTabs
-            var dayTabs = new List<FlightDayPriceDTO>();
-
-            for (int offset = -3; offset <= 3; offset++)
-            {
-                var date = p.StartDate.Value.AddDays(offset);
-
-                dayTabs.Add(new FlightDayPriceDTO
-                {
-                    Date = date,
-                    LowestPrice = 0 // không dùng đến, để bạn xử lý sau
                 });
             }
 
-            // STEP 5: Airline Filters
-            var airlineFilters = all
+            resultList = resultList.OrderBy(f => f.Price).ToList();
+
+            var airlineFilters = resultList
                 .GroupBy(f => f.AirlineName)
                 .Select(g => new AirlineFilterDTO
                 {
@@ -189,15 +209,51 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                 })
                 .ToList();
 
-            // RETURN RESULT
             return new FlightSearchResultDTO
             {
-                AllFlights = all,
+                AllFlights = resultList,
                 AirlineFilters = airlineFilters,
-                DayTabs = dayTabs,
-                BestFlight = null
+                DayTabs = dayTabs
             };
         }
+
+        // DisplayName-based response
+        public async Task<Dictionary<string, int>> GetSeatAvailabilityAsync(int flightId)
+        {
+            using var db = DIContainer.CreateDb();
+
+            var flight = await db.Flights
+                .AsNoTracking()
+                .FirstAsync(f => f.FlightId == flightId);
+
+            int aircraftId = flight.AircraftId;
+
+            var totalSeats = await db.AircraftSeatConfigs
+                .Where(c => c.AircraftId == aircraftId)
+                .ToListAsync();
+
+            var booked = await db.Tickets
+                .Where(t => t.BookingFlight.FlightId == flightId &&
+                            t.Status != "Cancelled" &&
+                            t.Status != "Refunded")
+                .GroupBy(t => t.SeatClassId)
+                .ToDictionaryAsync(g => g.Key, g => g.Count());
+
+            var seatClassNames = await db.SeatClasses
+                .ToDictionaryAsync(s => s.SeatClassId, s => s.DisplayName);
+
+            var result = new Dictionary<string, int>();
+
+            foreach (var cfg in totalSeats)
+            {
+                int b = booked.ContainsKey(cfg.SeatClassId) ? booked[cfg.SeatClassId] : 0;
+                result[seatClassNames[cfg.SeatClassId]] = cfg.SeatCount - b;
+            }
+
+            return result;
+        }
+
+
 
 
     }
