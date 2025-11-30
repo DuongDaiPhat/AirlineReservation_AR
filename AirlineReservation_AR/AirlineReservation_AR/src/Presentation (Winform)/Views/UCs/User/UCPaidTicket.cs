@@ -1,15 +1,16 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Globalization;
 
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
@@ -81,15 +82,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
 
         private void BtnDetail_Click(object? sender, EventArgs e)
         {
-            if (_booking == null || _flight == null || _ticket == null)
-                return;
+            if (_booking == null || _flight == null || _ticket == null) return;
 
-            // Tạo user control summary
-            var summary = new FlightTicketSummary();
-            summary.Dock = DockStyle.Fill;
-            summary.SetData(_booking, _flight, _ticket);
-
-            // Bọc trong 1 Form làm popup
             using (var dlg = new Form())
             {
                 dlg.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -97,11 +91,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                 dlg.MaximizeBox = false;
                 dlg.MinimizeBox = false;
                 dlg.ShowInTaskbar = false;
-                dlg.Text = "Ticket Summary";
+                dlg.Text = "Manage Booking";
+                dlg.Size = new Size(640, 750);
 
-                dlg.ClientSize = summary.Size; // 450x409 như designer
-                dlg.Controls.Add(summary);
+                var detailPage = new UCTicketDetail();
+                detailPage.Dock = DockStyle.Fill;
+                detailPage.SetData(_booking, _flight, _ticket);
 
+                dlg.Controls.Add(detailPage);
                 dlg.ShowDialog(this.FindForm());
             }
         }
