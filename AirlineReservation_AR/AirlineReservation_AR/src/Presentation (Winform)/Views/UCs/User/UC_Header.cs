@@ -31,21 +31,32 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         {
             InitializeComponent();
 
-            btnUserProfile.Click += btnUserProfile_Click;
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                return;
 
+            InitRuntime();
+        }
 
-            this.Load += UC_Header_Load;
+        private void InitRuntime()
+        {
+            var user = DIContainer.CurrentUser;
+            if (user != null)
+                btnUserProfile.Text = user.FullName;
         }
 
         private void UC_Header_Load(object? sender, EventArgs e)
         {
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                return;
 
             LoadUI();
         }
 
         public void LoadUI()
         {
-            btnUserProfile.Text = DIContainer.CurrentUser.FullName;
+            var user = DIContainer.CurrentUser;
+            if (user != null)
+                btnUserProfile.Text = user.FullName;
         }
 
         private void btnUserProfile_Click(object? sender, EventArgs e)
@@ -178,17 +189,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 Phone = user.Phone
 
             };
-            MyTicketClick.Invoke(p);
+            MyTicketClick?.Invoke(p);
         }
 
         private void btnBookings_Click(object sender, EventArgs e)
         {
-            BookingClick.Invoke();
+            BookingClick?.Invoke();
         }
 
         private void picLogo_Click(object sender, EventArgs e)
         {
-            HomeClick.Invoke();
+            HomeClick?.Invoke();
         }
 
         private void btnPromotion_Click(object sender, EventArgs e)
@@ -203,9 +214,5 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             }
         }
 
-        private void btnUserProfile_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }
