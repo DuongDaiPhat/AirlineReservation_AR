@@ -28,6 +28,9 @@ namespace MomoQR
         {
             InitializeComponent();
             _controller = DIContainer.paymentController;
+            paymentCheckTimer = new System.Windows.Forms.Timer();
+            paymentCheckTimer.Interval = 2000;
+            paymentCheckTimer.Tick += PaymentCheckTimer_Tick;
         }
         public void SetPayment(int bookingId, decimal amount)
         {
@@ -36,10 +39,6 @@ namespace MomoQR
             txtAmount.Text = amount.ToString("N0");
         }
 
-        private void cancelButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void txtAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -93,10 +92,8 @@ namespace MomoQR
             Process.Start(new ProcessStartInfo(payUrl) { UseShellExecute = true });
 
             paymentCheckTimer.Start();
+            payButton.Enabled = false;
         }
-
-
-
 
 
         private void payButton_MouseEnter(object sender, EventArgs e)
@@ -112,9 +109,6 @@ namespace MomoQR
         private void MomoQR_Load(object sender, EventArgs e)
         {
             lblWalletBalance.Text = $"Total amount: {_amount:N0} đ";
-            paymentCheckTimer = new System.Windows.Forms.Timer();
-            paymentCheckTimer.Interval = 2000;
-            paymentCheckTimer.Tick += PaymentCheckTimer_Tick;
 
         }
         private void PaymentCheckTimer_Tick(object sender, EventArgs e)
@@ -128,7 +122,7 @@ namespace MomoQR
 
             if (payment == null) return;
 
-            if (payment.Status == "Confirmed")
+            if (payment.Status == "Completed")
             {
                 paymentCheckTimer.Stop();
                 _controller.MarkSuccess(_bookingId, payment.TransactionId);

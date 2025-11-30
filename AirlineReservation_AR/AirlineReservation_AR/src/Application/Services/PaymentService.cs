@@ -214,12 +214,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             using var db = DIContainer.CreateDb();
 
             var payment = db.Payments.First(p => p.BookingId == bookingId);
-            var booking = db.Bookings.First(b => b.BookingId == bookingId);
-
-            // 1. Update Payment
-            payment.Status = "Success";
-            payment.TransactionId = momoTransId;
-            payment.ProcessedAt = DateTime.Now;
             payment.CompletedAt = DateTime.Now;
 
             // 2. Log history
@@ -228,11 +222,10 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
                 PaymentId = payment.PaymentId,
                 Status = "Success",
                 TransactionTime = DateTime.Now,
-                Note = "Thanh toán thành công MoMo"
+                Note = "Thanh toán thành công MoMo",
+                Payment = payment,
             });
 
-            // 3. Update Booking
-            booking.Status = "Paid";
 
             // 4. Add tickets
             var bookingFlightId = db.BookingFlights
