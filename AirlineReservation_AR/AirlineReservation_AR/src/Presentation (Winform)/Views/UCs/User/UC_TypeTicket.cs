@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace AR_Winform.Presentation.UControls.User
 {
-    public partial class TypeTicket : UserControl
+    public partial class UC_TypeTicket : UserControl
     {
         public event EventHandler<(int Adult, int Child, int Infant)> DoneClicked;
-        public TypeTicket()
+        public UC_TypeTicket()
         {
             InitializeComponent();
         }

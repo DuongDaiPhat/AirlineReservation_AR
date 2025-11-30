@@ -22,5 +22,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Services
         Task<bool> DeleteAsync(int flightId);
 
         Task<FlightSearchResultDTO> SearchAsync(FlightSearchParams p);
+        Task<Dictionary<string, int>> GetSeatAvailabilityAsync(int flightId);
     }
 }

@@ -18,6 +18,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         public event Action<FlightSearchParams> OnSearchSubmit;
         // Controller + data
         private readonly CityController _cityController;
+        private readonly SeatClassController _seatClassController;
         private List<CitySelectDTO> _cityItems = new();
 
         // Swap / filter flags
@@ -42,11 +43,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private int adult = 1;
         private int child = 0;
         private int infant = 0;
-
         public UC_FlightSearch()
         {
             InitializeComponent();
             _cityController = DIContainer.CityController;
+            _seatClassController = DIContainer.SeatClassController;
             InitializeCalendarFlowPanels();
             CreatePassengerPopup();
             Load += UC_FlightSearch_Load;
@@ -80,7 +81,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private async void UC_FlightSearch_Load(object? sender, EventArgs e)
         {
             var cities = await _cityController.GetAllCitiesAsync();
+            var seatClass = await _seatClassController.GetAll();
             _cityItems = cities.Select(c => new CitySelectDTO(c)).ToList();
+            BindSeatClass(seatClass);
             BindComboItems();
             if (this.ParentForm != null)
                 this.ParentForm.Controls.Add(passengerPopup);
@@ -498,6 +501,19 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             }
         }
 
+        private void BindSeatClass(List<SeatClass> seatClasses)
+        {
+            cboSeatClass.DataSource = seatClasses
+                .Select(x => new {
+                    x.SeatClassId,
+                    Display = $"{x.DisplayName} – {x.BaggageAllowanceKg ?? 0}kg - x{x.PriceMultiplier}VND"
+                })
+                .ToList();
+
+            cboSeatClass.DisplayMember = "Display";
+            cboSeatClass.ValueMember = "SeatClassId";
+        }
+
         // Bind city list
         private void BindComboItems()
         {
@@ -801,7 +817,7 @@ private void btnSearch_Click(object sender, EventArgs e)
         FromCode = (cboFrom.SelectedItem as CitySelectDTO).Code,
         ToCode = (cboTo.SelectedItem as CitySelectDTO).Code,
         StartDate = selectedStartDate,
-        SeatClassId = cboSeatClass.SelectedIndex + 1,
+        SeatClassId = (int)cboSeatClass.SelectedValue,
         Adult = adult,
         Child = child,
         Infant = infant
