@@ -19,5 +19,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
 
         public StaffDashboardStatsDTO GetTodayStats(Guid staffId)
             => _service.GetTodayStats(staffId);
+
+        public List<UncheckedTicketDTO> SearchUncheckedTickets(string keyword)
+            => _service.SearchUncheckedTickets(keyword);
     }
 }

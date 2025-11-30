@@ -44,5 +44,56 @@ namespace AirlineReservation_AR.src.Application.Services
                 CompletedTicketsToday = completed
             };
         }
+
+        public List<UncheckedTicketDTO> SearchUncheckedTickets(string keyword)
+        {
+            using var db = DIContainer.CreateDb();
+            
+            // Normalize keyword for search
+            var searchTerm = string.IsNullOrWhiteSpace(keyword) 
+                ? string.Empty 
+                : keyword.Trim().ToLower();
+
+            // Build query with proper joins
+            var query = (from t in db.Tickets
+                        join f in db.Flights on t.BookingFlightId equals f.FlightId
+                        join p in db.Passengers on t.PassengerId equals p.PassengerId
+                        where t.Status == "Issued"
+                        select new
+                        {
+                            Ticket = t,
+                            Flight = f,
+                            Passenger = p
+                        }).AsEnumerable(); // Load data first to avoid SQL translation issues
+
+            // Apply search filter
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(x =>
+                    (x.Ticket.BookingCode != null && x.Ticket.BookingCode.ToLower().Contains(searchTerm)) ||
+                    (x.Passenger.FullName != null && x.Passenger.FullName.ToLower().Contains(searchTerm)) ||
+                    (x.Flight.FlightNumber != null && x.Flight.FlightNumber.ToLower().Contains(searchTerm)) ||
+                    (x.Ticket.BookingFlight != null && x.Ticket.BookingFlight.ToLower().Contains(searchTerm))
+                );
+            }
+
+            // Project to DTO and order results
+            var results = query
+                .OrderBy(x => x.Flight.DepartureTime)
+                .Take(50)
+                .Select(x => new UncheckedTicketDTO
+                {
+                    BookingCode = x.Ticket.BookingCode,
+                    PassengerName = x.Passenger.FullName,
+                    FlightNumber = x.Flight.FlightNumber,
+                    DepartureDate = x.Flight.DepartureDate,
+                    FromAirport = x.Flight.FromAirportCode,
+                    ToAirport = x.Flight.ToAirportCode,
+                    SeatClass = x.Ticket.SeatClass
+                })
+                .ToList();
+
+            return results;
+        }
     }
 }
