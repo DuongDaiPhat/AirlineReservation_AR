@@ -44,6 +44,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
+            label1 = new Label();
             pictureBoxMenu = new PictureBox();
             flowLayoutPanelMenu = new FlowLayoutPanel();
             panel4 = new Panel();
@@ -70,7 +71,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             panelTopMain = new Panel();
             adminDashboardControlHight1 = new AdminDashboardControlHight();
             MenuTime = new System.Windows.Forms.Timer(components);
-            label1 = new Label();
             guna2CustomGradientPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxMenu).BeginInit();
             flowLayoutPanelMenu.SuspendLayout();
@@ -98,6 +98,16 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             guna2CustomGradientPanel1.Size = new Size(1280, 70);
             guna2CustomGradientPanel1.TabIndex = 2;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(79, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(95, 37);
+            label1.TabIndex = 1;
+            label1.Text = "Admin";
+            // 
             // pictureBoxMenu
             // 
             pictureBoxMenu.Location = new Point(12, 12);
@@ -121,7 +131,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             flowLayoutPanelMenu.Dock = DockStyle.Left;
             flowLayoutPanelMenu.Location = new Point(0, 70);
             flowLayoutPanelMenu.Name = "flowLayoutPanelMenu";
-            flowLayoutPanelMenu.Size = new Size(240, 730);
+            flowLayoutPanelMenu.Size = new Size(240, 780);
             flowLayoutPanelMenu.TabIndex = 5;
             flowLayoutPanelMenu.Click += Button_Click;
             // 
@@ -338,7 +348,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnCaiDat.FillColor = Color.Black;
             btnCaiDat.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCaiDat.ForeColor = Color.White;
-            btnCaiDat.Image = global::AirlineReservation_AR.Properties.Resources.download;
+            btnCaiDat.Image = Properties.Resources.download;
             btnCaiDat.ImageAlign = HorizontalAlignment.Left;
             btnCaiDat.ImageSize = new Size(30, 30);
             btnCaiDat.Location = new Point(0, 0);
@@ -364,14 +374,14 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             panelMain.Location = new Point(240, 150);
             panelMain.Margin = new Padding(0);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(1040, 650);
+            panelMain.Size = new Size(1040, 700);
             panelMain.TabIndex = 6;
             // 
             // adminDasboardControlSetting
             // 
-            adminDasboardControlSetting.dashboardImage = global::AirlineReservation_AR.Properties.Resources.download;
+            adminDasboardControlSetting.dashboardImage = Properties.Resources.download;
             adminDasboardControlSetting.description = "Cấu hình, thanh toán, email/SMS, database, bảo mật";
-            adminDasboardControlSetting.Location = new Point(750, 420);
+            adminDasboardControlSetting.Location = new Point(750, 356);
             adminDasboardControlSetting.Margin = new Padding(0);
             adminDasboardControlSetting.Name = "adminDasboardControlSetting";
             adminDasboardControlSetting.Size = new Size(260, 200);
@@ -383,7 +393,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             adminDasboardControlUsers.dashboardImage = Properties.Resources.team_management;
             adminDasboardControlUsers.description = "Quản lý khách hàng, phân quyền, lịch sử hoạt động";
-            adminDasboardControlUsers.Location = new Point(390, 420);
+            adminDasboardControlUsers.Location = new Point(390, 356);
             adminDasboardControlUsers.Margin = new Padding(0);
             adminDasboardControlUsers.Name = "adminDasboardControlUsers";
             adminDasboardControlUsers.Size = new Size(260, 200);
@@ -395,7 +405,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             adminDasboardControlBaoCao_ThongKe.dashboardImage = Properties.Resources.chart;
             adminDasboardControlBaoCao_ThongKe.description = "Dashboard KPI, doanh thu, chuyến bay, khách hàng";
-            adminDasboardControlBaoCao_ThongKe.Location = new Point(30, 420);
+            adminDasboardControlBaoCao_ThongKe.Location = new Point(30, 356);
             adminDasboardControlBaoCao_ThongKe.Margin = new Padding(0);
             adminDasboardControlBaoCao_ThongKe.Name = "adminDasboardControlBaoCao_ThongKe";
             adminDasboardControlBaoCao_ThongKe.Size = new Size(260, 200);
@@ -407,7 +417,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             adminDasboardControlGiaVe_KhuyenMai.dashboardImage = Properties.Resources.selling;
             adminDasboardControlGiaVe_KhuyenMai.description = "Quản lý giá, mã giảm giá, chương trình khuyến mãi";
-            adminDasboardControlGiaVe_KhuyenMai.Location = new Point(750, 190);
+            adminDasboardControlGiaVe_KhuyenMai.Location = new Point(750, 62);
             adminDasboardControlGiaVe_KhuyenMai.Margin = new Padding(0);
             adminDasboardControlGiaVe_KhuyenMai.Name = "adminDasboardControlGiaVe_KhuyenMai";
             adminDasboardControlGiaVe_KhuyenMai.Size = new Size(260, 200);
@@ -419,7 +429,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             adminDasboardControlDatVe_ThanhToan.dashboardImage = Properties.Resources.booking;
             adminDasboardControlDatVe_ThanhToan.description = "Booking, giao dịch, hoàn tiền, đặt vé thủ công";
-            adminDasboardControlDatVe_ThanhToan.Location = new Point(390, 190);
+            adminDasboardControlDatVe_ThanhToan.Location = new Point(390, 62);
             adminDasboardControlDatVe_ThanhToan.Margin = new Padding(0);
             adminDasboardControlDatVe_ThanhToan.Name = "adminDasboardControlDatVe_ThanhToan";
             adminDasboardControlDatVe_ThanhToan.Size = new Size(260, 200);
@@ -431,7 +441,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             adminDasboardControlQuanLyChuyenBay.dashboardImage = Properties.Resources.take_off;
             adminDasboardControlQuanLyChuyenBay.description = "Chuyến bay, tuyến bay, sân bay, máy bay (All-in-one)";
-            adminDasboardControlQuanLyChuyenBay.Location = new Point(30, 190);
+            adminDasboardControlQuanLyChuyenBay.Location = new Point(30, 62);
             adminDasboardControlQuanLyChuyenBay.Margin = new Padding(0);
             adminDasboardControlQuanLyChuyenBay.Name = "adminDasboardControlQuanLyChuyenBay";
             adminDasboardControlQuanLyChuyenBay.Size = new Size(260, 200);
@@ -466,21 +476,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             MenuTime.Interval = 15;
             MenuTime.Tick += MenuTime_Tick;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(79, 15);
-            label1.Name = "label1";
-            label1.Size = new Size(95, 37);
-            label1.TabIndex = 1;
-            label1.Text = "Admin";
-            // 
             // MenuAdminDashboard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1280, 800);
+            ClientSize = new Size(1280, 850);
             Controls.Add(panelMain);
             Controls.Add(panelTopMain);
             Controls.Add(flowLayoutPanelMenu);

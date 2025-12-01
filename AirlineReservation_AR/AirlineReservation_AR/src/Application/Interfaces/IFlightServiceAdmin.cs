@@ -10,5 +10,15 @@ namespace AirlineReservation_AR.src.Application.Interfaces
     public interface IFlightServiceAdmin
     {
         Task<IEnumerable<FlightListDtoAdmin>> GetAllFlightsAsync();
+        Task<PagedResult<FlightListDtoAdmin>> GetPagedFlightsAsync(int pageNumber, int pageSize);
+        Task<PagedResult<FlightListDtoAdmin>> SearchFlightsAsync(string searchTerm, int pageNumber, int pageSize);
+        Task RefreshCacheAsync();
+        void ClearCache();
+        bool IsCacheLoaded();
+        CacheInfo GetCacheInfo();
+
+        Task<bool> UpdateFlightAsync(FlightListDtoAdmin flight);
+        Task<bool> CancelFlightAsync(int flightId);
+        Task<FlightListDtoAdmin> GetFlightByIdAsync(int flightId);
     }
 }
