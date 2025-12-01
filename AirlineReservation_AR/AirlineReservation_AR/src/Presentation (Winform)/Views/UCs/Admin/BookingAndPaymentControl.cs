@@ -15,6 +15,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 {
     public partial class BookingAndPaymentControl : UserControl
     {
+        private int _currentPage = 1;
+        private int _pageSize = 20;
+        private int _totalRecords = 0;
+        private int _totalPages = 0;
+
         private List<BookingDtoAdmin> bookings = new();
         private List<BookingDtoAdmin> filteredBookings = new();
         private readonly BookingControllerAdmin _bookingController = DIContainer.BookingControllerAdmin;
@@ -27,6 +32,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             InitializeStyles();
             InitializeEvents();
             PopulateComboBoxes();
+            InitializePagination();
             this.Load += BookingAndPaymentControl_Load;
         }
 
@@ -34,7 +40,18 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         {
             await LoadBookingsAsync();
         }
-
+        private void InitializePagination()
+        {
+            // Đăng ký event khi người dùng chuyển trang
+            paginationControl.PageChanged += PaginationControl_PageChanged;
+            paginationControl.CurrentPage = 1;
+            paginationControl.TotalPages = 1;
+        }
+        private void PaginationControl_PageChanged(object sender, int pageNumber)
+        {
+            _currentPage = pageNumber;
+            RefreshDataGridView();
+        }
         private void InitializeDataGridView()
         {
             dgvBooking.Columns.Clear();
@@ -323,6 +340,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             dtpTuNgay.Value = DateTime.Now.AddMonths(-3);
             dtpDenNgay.Value = DateTime.Now;
             cboStatusBooking.SelectedIndex = cboStatusPayment.SelectedIndex = 0;
+            _currentPage = 1;
             ApplyFilters();
         }
 
@@ -368,14 +386,38 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
 
             filteredBookings = data.ToList();
+            if (_currentPage > _totalPages) _currentPage = _totalPages;
+            if (_currentPage < 1) _currentPage = 1;
+
+            UpdatePagination();
             RefreshDataGridView();
         }
+        private void UpdatePagination()
+        {
+            _totalRecords = filteredBookings.Count;
+            _totalPages = _totalRecords > 0
+                ? (int)Math.Ceiling((double)_totalRecords / _pageSize)
+                : 1;
 
+            if (_currentPage > _totalPages)
+            {
+                _currentPage = _totalPages;
+            }
+
+            // Cập nhật PaginationControl
+            paginationControl.TotalPages = _totalPages;
+            paginationControl.CurrentPage = _currentPage;
+        }
+        private List<BookingDtoAdmin> GetPagedData()
+        {
+            int skip = (_currentPage - 1) * _pageSize;
+            return filteredBookings.Skip(skip).Take(_pageSize).ToList();
+        }
         private void RefreshDataGridView()
         {
             dgvBooking.Rows.Clear();
-
-            foreach (var b in filteredBookings)
+            var pagedData = GetPagedData();
+            foreach (var b in pagedData)
             {
                 // Sử dụng FlightInfo từ DTO
                 var flightInfo = b.FlightInfo != null
