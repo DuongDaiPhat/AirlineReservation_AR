@@ -175,6 +175,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             linkLabel1.TabIndex = 20;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "Forgot password?";
+            linkLabel1.Visible = false;
             linkLabel1.Click += ForgotPS_Click;
             // 
             // passwordTB
@@ -254,6 +255,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             panel3.Name = "panel3";
             panel3.Size = new Size(45, 45);
             panel3.TabIndex = 14;
+            panel3.Visible = false;
             // 
             // pictureBox3
             // 
@@ -274,6 +276,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             panel2.Name = "panel2";
             panel2.Size = new Size(45, 45);
             panel2.TabIndex = 13;
+            panel2.Visible = false;
             // 
             // pictureBox2
             // 
@@ -295,6 +298,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             panel1.Name = "panel1";
             panel1.Size = new Size(223, 45);
             panel1.TabIndex = 9;
+            panel1.Visible = false;
             // 
             // label11
             // 

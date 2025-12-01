@@ -63,6 +63,10 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
 
         private static ISeatClassService? _seatClassService;
         private static SeatClassController? _seatClassController;
+
+        private static IStaffDashboardService? _staffDashboardService;
+        private static StaffDashboardController? _staffDashboardController;
+
         public static void Init()
         {
             _config = new ConfigurationBuilder()
@@ -104,6 +108,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _bookingService = new Application.Services.BookingServices();
             _paymentService = new PaymentService();
             _promotionService = new PromotionService();
+            _staffDashboardService = new StaffDashboardService();
 
             // Controller layer giữ nguyên
             _authController = new AuthenticationController(_authService);
@@ -131,6 +136,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
 
             _seatClassService = new SeatClassService();
             _seatClassController = new SeatClassController(_seatClassService);
+            _staffDashboardController = new StaffDashboardController(_staffDashboardService);
         }
 
         public static void SetCurrentUser(User user)
@@ -160,38 +166,50 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         //flights
         public static FlightController FlightController => 
             _flightController ?? throw new Exception("Flight controller not initialized");
+
         //booking
         public static BookingController BookingController =>
             _bookingController ?? throw new Exception("Booking controller not initialized");
 
+
         //public static IBookingService BookingService =>
         //    _bookingService ?? throw new Exception("BookingService not initialized");
+
         //payment
         public static PaymentController paymentController =>
             _paymentController ?? throw new Exception("Payment controller not initialized");
+
         //booking admin
         public static BookingControllerAdmin BookingControllerAdmin =>
             _bookingControllerAdmin ?? throw new Exception("Booking Admin controller not initialized");
+
         //flight admin
         public static FlightControllerAdmin FlightControllerAdmin =>
             _flightControllerAdmin ?? throw new Exception("Flight Admin controller not initialized");
+
         //pricing admin
         public static PricingControllerAdmin PricingControllerAdmin =>
             _pricingControllerAdmin ?? throw new Exception("Pricing Admin controller not initialized");
+
         //promotion admin
         public static PromotionControllerAdmin PromotionControllerAdmin =>
             _promotionControllerAdmin ?? throw new Exception("Promotion Admin controller not initialized");
+
         //report admin
         public static ReportControllerAdmin ReportControllerAdmin =>
             _reportController ?? throw new Exception("Report Admin controller not initialized");
+
         //payment
         public static PaymentController PaymentController =>
             _paymentController ?? throw new Exception("Payment controller not initialized");
 
-
         //promotion
         public static PromotionController PromotionController =>
         _promotionController ?? throw new Exception("Promotion controller not initialized");
+
+        // staff dashboard
+        public static StaffDashboardController StaffDashboardController =>
+        _staffDashboardController ?? throw new Exception("StaffDashboard controller not initialized");
 
         //seatClass
         public static SeatClassController SeatClassController =>
