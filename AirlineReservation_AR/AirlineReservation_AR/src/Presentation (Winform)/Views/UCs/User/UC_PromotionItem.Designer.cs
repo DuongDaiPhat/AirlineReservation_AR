@@ -58,7 +58,7 @@
             guna2PictureBox1.Location = new Point(0, 0);
             guna2PictureBox1.Name = "guna2PictureBox1";
             guna2PictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2PictureBox1.Size = new Size(340, 118);
+            guna2PictureBox1.Size = new Size(340, 145);
             guna2PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             guna2PictureBox1.TabIndex = 0;
             guna2PictureBox1.TabStop = false;
@@ -66,20 +66,20 @@
             // guna2HtmlLabel1
             // 
             guna2HtmlLabel1.BackColor = Color.Transparent;
-            guna2HtmlLabel1.Font = new Font("Fz Poppins", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            guna2HtmlLabel1.Location = new Point(135, 124);
+            guna2HtmlLabel1.Font = new Font("Fz Poppins", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            guna2HtmlLabel1.Location = new Point(135, 151);
             guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            guna2HtmlLabel1.Size = new Size(82, 24);
+            guna2HtmlLabel1.Size = new Size(89, 25);
             guna2HtmlLabel1.TabIndex = 1;
             guna2HtmlLabel1.Text = "Promo Period";
             // 
             // guna2HtmlLabel2
             // 
             guna2HtmlLabel2.BackColor = Color.Transparent;
-            guna2HtmlLabel2.Font = new Font("Fz Poppins", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            guna2HtmlLabel2.Location = new Point(3, 124);
+            guna2HtmlLabel2.Font = new Font("Fz Poppins", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            guna2HtmlLabel2.Location = new Point(6, 151);
             guna2HtmlLabel2.Name = "guna2HtmlLabel2";
-            guna2HtmlLabel2.Size = new Size(80, 24);
+            guna2HtmlLabel2.Size = new Size(87, 25);
             guna2HtmlLabel2.TabIndex = 2;
             guna2HtmlLabel2.Text = "Promo Name";
             // 
@@ -87,7 +87,7 @@
             // 
             desc.BackColor = Color.Transparent;
             desc.Font = new Font("Fz Poppins", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            desc.Location = new Point(3, 163);
+            desc.Location = new Point(6, 198);
             desc.Name = "desc";
             desc.Size = new Size(180, 25);
             desc.TabIndex = 3;
@@ -96,20 +96,20 @@
             // proValidFromLbl
             // 
             proValidFromLbl.BackColor = Color.Transparent;
-            proValidFromLbl.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            proValidFromLbl.Location = new Point(135, 141);
+            proValidFromLbl.Font = new Font("Fz Poppins SemBd", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            proValidFromLbl.Location = new Point(135, 168);
             proValidFromLbl.Name = "proValidFromLbl";
-            proValidFromLbl.Size = new Size(152, 25);
+            proValidFromLbl.Size = new Size(183, 28);
             proValidFromLbl.TabIndex = 4;
             proValidFromLbl.Text = "10 Jul 2025 - 1 Jan 2026";
             // 
             // proNameLbl
             // 
             proNameLbl.BackColor = Color.Transparent;
-            proNameLbl.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            proNameLbl.Location = new Point(3, 141);
+            proNameLbl.Font = new Font("Fz Poppins SemBd", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            proNameLbl.Location = new Point(6, 168);
             proNameLbl.Name = "proNameLbl";
-            proNameLbl.Size = new Size(88, 25);
+            proNameLbl.Size = new Size(104, 28);
             proNameLbl.TabIndex = 5;
             proNameLbl.Text = "Discount 022";
             // 
@@ -118,7 +118,7 @@
             betterFlowLayoutPanel1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             betterFlowLayoutPanel1.Controls.Add(betterFlowLayoutPanel2);
             betterFlowLayoutPanel1.Controls.Add(copyBtn);
-            betterFlowLayoutPanel1.Location = new Point(3, 186);
+            betterFlowLayoutPanel1.Location = new Point(3, 233);
             betterFlowLayoutPanel1.Name = "betterFlowLayoutPanel1";
             betterFlowLayoutPanel1.Size = new Size(334, 44);
             betterFlowLayoutPanel1.TabIndex = 7;
@@ -129,7 +129,7 @@
             betterFlowLayoutPanel2.Controls.Add(proCodeLbl);
             betterFlowLayoutPanel2.Location = new Point(3, 3);
             betterFlowLayoutPanel2.Name = "betterFlowLayoutPanel2";
-            betterFlowLayoutPanel2.Size = new Size(250, 38);
+            betterFlowLayoutPanel2.Size = new Size(256, 38);
             betterFlowLayoutPanel2.TabIndex = 0;
             // 
             // pictureBox1
@@ -147,12 +147,12 @@
             // 
             proCodeLbl.AutoSize = false;
             proCodeLbl.BackColor = Color.Transparent;
-            proCodeLbl.Font = new Font("Fz Poppins", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            proCodeLbl.Font = new Font("Fz Poppins", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             proCodeLbl.ForeColor = Color.DimGray;
             proCodeLbl.Location = new Point(42, 3);
             proCodeLbl.Margin = new Padding(6, 3, 3, 3);
             proCodeLbl.Name = "proCodeLbl";
-            proCodeLbl.Size = new Size(108, 31);
+            proCodeLbl.Size = new Size(138, 31);
             proCodeLbl.TabIndex = 2;
             proCodeLbl.Text = "DISCOUNT012";
             proCodeLbl.TextAlignment = ContentAlignment.MiddleLeft;
@@ -166,9 +166,9 @@
             copyBtn.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             copyBtn.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             copyBtn.FillColor = Color.LightSkyBlue;
-            copyBtn.Font = new Font("Fz Poppins SemBd", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            copyBtn.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             copyBtn.ForeColor = Color.MidnightBlue;
-            copyBtn.Location = new Point(259, 3);
+            copyBtn.Location = new Point(265, 3);
             copyBtn.Name = "copyBtn";
             copyBtn.ShadowDecoration.CustomizableEdges = customizableEdges4;
             copyBtn.Size = new Size(65, 38);
@@ -189,7 +189,7 @@
             Controls.Add(guna2HtmlLabel1);
             Controls.Add(guna2PictureBox1);
             Name = "UC_PromotionItem";
-            Size = new Size(340, 233);
+            Size = new Size(340, 280);
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox1).EndInit();
             betterFlowLayoutPanel1.ResumeLayout(false);
             betterFlowLayoutPanel2.ResumeLayout(false);

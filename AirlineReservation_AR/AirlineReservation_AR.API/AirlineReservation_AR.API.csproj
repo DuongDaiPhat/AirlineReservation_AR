@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<!-- Bật Web Server khi chạy net8.0-windows -->
+		<UseKestrel>true</UseKestrel>
+		<UseWebServer>true</UseWebServer>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\AirlineReservation_AR\AirlineReservation_AR.csproj" />
+	</ItemGroup>
+
+</Project>

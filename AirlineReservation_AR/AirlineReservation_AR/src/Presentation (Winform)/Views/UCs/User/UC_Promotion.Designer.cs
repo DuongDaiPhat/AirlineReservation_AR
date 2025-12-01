@@ -59,8 +59,8 @@
             btnAll = new Guna.UI2.WinForms.Guna2Button();
             promotionContentPnl = new Panel();
             searchPnl = new Guna.UI2.WinForms.Guna2Panel();
-            guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
-            guna2ImageButton1 = new Guna.UI2.WinForms.Guna2ImageButton();
+            txtSearchPromo = new Guna.UI2.WinForms.Guna2TextBox();
+            btnSearch = new Guna.UI2.WinForms.Guna2ImageButton();
             guna2Elipse2 = new Guna.UI2.WinForms.Guna2Elipse(components);
             guna2Elipse3 = new Guna.UI2.WinForms.Guna2Elipse(components);
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
@@ -234,8 +234,8 @@
             // searchPnl
             // 
             searchPnl.BorderRadius = 40;
-            searchPnl.Controls.Add(guna2TextBox1);
-            searchPnl.Controls.Add(guna2ImageButton1);
+            searchPnl.Controls.Add(txtSearchPromo);
+            searchPnl.Controls.Add(btnSearch);
             searchPnl.CustomizableEdges = customizableEdges16;
             searchPnl.Location = new Point(913, 57);
             searchPnl.Name = "searchPnl";
@@ -243,44 +243,45 @@
             searchPnl.Size = new Size(428, 50);
             searchPnl.TabIndex = 0;
             // 
-            // guna2TextBox1
+            // txtSearchPromo
             // 
-            guna2TextBox1.CustomizableEdges = customizableEdges13;
-            guna2TextBox1.DefaultText = "";
-            guna2TextBox1.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            guna2TextBox1.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            guna2TextBox1.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            guna2TextBox1.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            guna2TextBox1.Dock = DockStyle.Left;
-            guna2TextBox1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox1.Font = new Font("Fz Poppins", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            guna2TextBox1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox1.Location = new Point(0, 0);
-            guna2TextBox1.Margin = new Padding(3, 5, 3, 5);
-            guna2TextBox1.Name = "guna2TextBox1";
-            guna2TextBox1.PlaceholderForeColor = Color.DarkGray;
-            guna2TextBox1.PlaceholderText = "Type a promo that you want (e.g, flight discount)";
-            guna2TextBox1.SelectedText = "";
-            guna2TextBox1.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            guna2TextBox1.Size = new Size(375, 50);
-            guna2TextBox1.TabIndex = 1;
+            txtSearchPromo.CustomizableEdges = customizableEdges13;
+            txtSearchPromo.DefaultText = "";
+            txtSearchPromo.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtSearchPromo.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtSearchPromo.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtSearchPromo.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtSearchPromo.Dock = DockStyle.Left;
+            txtSearchPromo.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtSearchPromo.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtSearchPromo.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtSearchPromo.Location = new Point(0, 0);
+            txtSearchPromo.Margin = new Padding(3, 8, 3, 8);
+            txtSearchPromo.Name = "txtSearchPromo";
+            txtSearchPromo.PlaceholderForeColor = Color.DarkGray;
+            txtSearchPromo.PlaceholderText = "Type a promo that you want (e.g, flight discount)";
+            txtSearchPromo.SelectedText = "";
+            txtSearchPromo.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            txtSearchPromo.Size = new Size(368, 50);
+            txtSearchPromo.TabIndex = 1;
             // 
-            // guna2ImageButton1
+            // btnSearch
             // 
-            guna2ImageButton1.BackColor = Color.FromArgb(255, 128, 0);
-            guna2ImageButton1.CheckedState.ImageSize = new Size(64, 64);
-            guna2ImageButton1.Dock = DockStyle.Right;
-            guna2ImageButton1.HoverState.ImageSize = new Size(64, 64);
-            guna2ImageButton1.Image = Properties.Resources.search_white;
-            guna2ImageButton1.ImageOffset = new Point(0, 0);
-            guna2ImageButton1.ImageRotate = 0F;
-            guna2ImageButton1.ImageSize = new Size(25, 25);
-            guna2ImageButton1.Location = new Point(369, 0);
-            guna2ImageButton1.Name = "guna2ImageButton1";
-            guna2ImageButton1.PressedState.ImageSize = new Size(64, 64);
-            guna2ImageButton1.ShadowDecoration.CustomizableEdges = customizableEdges15;
-            guna2ImageButton1.Size = new Size(59, 50);
-            guna2ImageButton1.TabIndex = 0;
+            btnSearch.BackColor = Color.FromArgb(255, 128, 0);
+            btnSearch.CheckedState.ImageSize = new Size(25, 25);
+            btnSearch.Dock = DockStyle.Right;
+            btnSearch.HoverState.ImageSize = new Size(25, 25);
+            btnSearch.Image = Properties.Resources.search_white;
+            btnSearch.ImageOffset = new Point(0, 0);
+            btnSearch.ImageRotate = 0F;
+            btnSearch.ImageSize = new Size(25, 25);
+            btnSearch.Location = new Point(368, 0);
+            btnSearch.Name = "btnSearch";
+            btnSearch.PressedState.ImageSize = new Size(25, 25);
+            btnSearch.ShadowDecoration.CustomizableEdges = customizableEdges15;
+            btnSearch.Size = new Size(60, 50);
+            btnSearch.TabIndex = 0;
+            btnSearch.Click += btnSearch_Click;
             // 
             // guna2Elipse2
             // 
@@ -334,9 +335,9 @@
         private Guna.UI2.WinForms.Guna2Panel typePromotionPnl;
         private Panel promotionContentPnl;
         private Guna.UI2.WinForms.Guna2Panel searchPnl;
-        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton1;
+        private Guna.UI2.WinForms.Guna2ImageButton btnSearch;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse2;
-        private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
+        private Guna.UI2.WinForms.Guna2TextBox txtSearchPromo;
         private Guna.UI2.WinForms.Guna2Button btnAll;
         private Guna.UI2.WinForms.Guna2Button btnFlights;
         private Guna.UI2.WinForms.Guna2Button btnSpecialCampaigns;

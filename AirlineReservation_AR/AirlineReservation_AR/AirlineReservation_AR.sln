@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineReservation_AR", "AirlineReservation_AR.csproj", "{B426CA75-995D-4AF6-821D-AFE2D22EF3F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineReservation_AR.API", "..\AirlineReservation_AR.API\AirlineReservation_AR.API.csproj", "{9100AB34-F689-4B2C-A045-9A27CD1EF9B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B426CA75-995D-4AF6-821D-AFE2D22EF3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B426CA75-995D-4AF6-821D-AFE2D22EF3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B426CA75-995D-4AF6-821D-AFE2D22EF3F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9100AB34-F689-4B2C-A045-9A27CD1EF9B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9100AB34-F689-4B2C-A045-9A27CD1EF9B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9100AB34-F689-4B2C-A045-9A27CD1EF9B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9100AB34-F689-4B2C-A045-9A27CD1EF9B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

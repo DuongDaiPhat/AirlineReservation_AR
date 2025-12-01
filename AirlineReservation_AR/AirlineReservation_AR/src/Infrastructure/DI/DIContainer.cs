@@ -60,6 +60,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
 
         private static IPromotionService? _promotionService;
         private static PromotionController? _promotionController;
+
+        private static ISeatClassService? _seatClassService;
+        private static SeatClassController? _seatClassController;
         public static void Init()
         {
             _config = new ConfigurationBuilder()
@@ -91,7 +94,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _userService = new UserService();
             _cityService = new CityService();
             _flightService = new FlightService();
-            _bookingService = new Application.Services.BookingService();
+            _bookingService = new Application.Services.BookingServices();
             _paymentService = new PaymentService();
             _bookingServiceAdmin = new BookingServiceAdmin();
             _flightServiceAdmin = new FlightServiceAdmin();
@@ -100,7 +103,6 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _reportServiceAdmin = new ReportServiceAdmin(new AirlineReservationDbContext(DbOptions));
             _bookingService = new Application.Services.BookingServices();
             _paymentService = new PaymentService();
-
             _promotionService = new PromotionService();
 
             // Controller layer giữ nguyên
@@ -109,7 +111,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _cityController = new CityController(_cityService);
             _flightController = new FlightController(_flightService);
 
-            _bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
+        
             _bookingController = new BookingController(_bookingService);
             _paymentController = new PaymentController(_paymentService);
             _bookingControllerAdmin = new BookingControllerAdmin(_bookingServiceAdmin);
@@ -126,6 +128,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             //_bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
             _bookingController = new BookingController(_bookingService);
             _promotionController = new PromotionController(_promotionService);
+
+            _seatClassService = new SeatClassService();
+            _seatClassController = new SeatClassController(_seatClassService);
         }
 
         public static void SetCurrentUser(User user)
@@ -180,7 +185,7 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         public static ReportControllerAdmin ReportControllerAdmin =>
             _reportController ?? throw new Exception("Report Admin controller not initialized");
         //payment
-        public static PaymentController paymentController =>
+        public static PaymentController PaymentController =>
             _paymentController ?? throw new Exception("Payment controller not initialized");
 
 
@@ -188,5 +193,8 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         public static PromotionController PromotionController =>
         _promotionController ?? throw new Exception("Promotion controller not initialized");
 
+        //seatClass
+        public static SeatClassController SeatClassController =>
+        _seatClassController ?? throw new Exception("SeatClass controller not initialized");
     }
 }

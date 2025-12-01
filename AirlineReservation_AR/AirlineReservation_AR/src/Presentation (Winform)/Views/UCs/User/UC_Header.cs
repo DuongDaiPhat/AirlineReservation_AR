@@ -19,7 +19,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         public event Action<UserDTO> MyTicketClick;
         public event Action BookingClick;
         public event Action HomeClick;
-        public event Action PromotionClick;        public event Action<UserDTO> OpenMyBookingRequest;
+        public event Action PromotionClick; public event Action<UserDTO> OpenMyBookingRequest;
         public event Action<UserDTO> OpenMyTransactionRequest;
         public event Action<UserDTO> OpenAccountModifyRequest;
         public event Action LogoutRequest;
@@ -137,7 +137,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             };
 
 
-            ucProfile.Size = new Size(344, 392); 
+            ucProfile.Size = new Size(344, 392);
 
             ToolStripControlHost host = new ToolStripControlHost(ucProfile);
 
@@ -201,6 +201,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
             {
             }
+        }
+
+        private void btnUserProfile_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

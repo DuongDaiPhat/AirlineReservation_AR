@@ -3,7 +3,7 @@ using AirlineReservation_AR.Properties;
 
 namespace AR_Winform.Presentation.UControls.User
 {
-    partial class TypeTicket
+    partial class UC_TypeTicket
     {
         /// <summary> 
         /// Required designer variable.

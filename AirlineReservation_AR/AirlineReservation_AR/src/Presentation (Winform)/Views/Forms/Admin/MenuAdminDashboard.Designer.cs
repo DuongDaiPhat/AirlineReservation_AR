@@ -27,10 +27,10 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -43,7 +43,10 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
+            btnUserProfile = new Guna.UI2.WinForms.Guna2Button();
             label1 = new Label();
             pictureBoxMenu = new PictureBox();
             flowLayoutPanelMenu = new FlowLayoutPanel();
@@ -87,16 +90,40 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // guna2CustomGradientPanel1
             // 
+            guna2CustomGradientPanel1.Controls.Add(btnUserProfile);
             guna2CustomGradientPanel1.Controls.Add(label1);
             guna2CustomGradientPanel1.Controls.Add(pictureBoxMenu);
-            guna2CustomGradientPanel1.CustomizableEdges = customizableEdges1;
+            guna2CustomGradientPanel1.CustomizableEdges = customizableEdges3;
             guna2CustomGradientPanel1.Dock = DockStyle.Top;
             guna2CustomGradientPanel1.Location = new Point(0, 0);
             guna2CustomGradientPanel1.Margin = new Padding(0);
             guna2CustomGradientPanel1.Name = "guna2CustomGradientPanel1";
-            guna2CustomGradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2CustomGradientPanel1.Size = new Size(1280, 70);
+            guna2CustomGradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            guna2CustomGradientPanel1.Size = new Size(1280, 76);
             guna2CustomGradientPanel1.TabIndex = 2;
+            // 
+            // btnUserProfile
+            // 
+            btnUserProfile.Anchor = AnchorStyles.None;
+            btnUserProfile.BorderRadius = 20;
+            btnUserProfile.BorderThickness = 1;
+            btnUserProfile.CustomizableEdges = customizableEdges1;
+            btnUserProfile.DisabledState.BorderColor = Color.DarkGray;
+            btnUserProfile.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnUserProfile.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnUserProfile.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnUserProfile.FillColor = Color.White;
+            btnUserProfile.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnUserProfile.ForeColor = Color.DodgerBlue;
+            btnUserProfile.Image = Properties.Resources.user;
+            btnUserProfile.ImageSize = new Size(35, 35);
+            btnUserProfile.Location = new Point(1097, 3);
+            btnUserProfile.Name = "btnUserProfile";
+            btnUserProfile.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            btnUserProfile.Size = new Size(180, 70);
+            btnUserProfile.TabIndex = 6;
+            btnUserProfile.Text = "Đăng Xuất";
+            btnUserProfile.Click += btnUserProfile_Click;
             // 
             // label1
             // 
@@ -110,7 +137,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // pictureBoxMenu
             // 
-            pictureBoxMenu.Location = new Point(12, 12);
+            pictureBoxMenu.Location = new Point(8, 6);
             pictureBoxMenu.Name = "pictureBoxMenu";
             pictureBoxMenu.Size = new Size(40, 40);
             pictureBoxMenu.SizeMode = PictureBoxSizeMode.Zoom;
@@ -129,7 +156,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             flowLayoutPanelMenu.Controls.Add(panel5);
             flowLayoutPanelMenu.Controls.Add(panel6);
             flowLayoutPanelMenu.Dock = DockStyle.Left;
-            flowLayoutPanelMenu.Location = new Point(0, 70);
+            flowLayoutPanelMenu.Location = new Point(0, 76);
             flowLayoutPanelMenu.Name = "flowLayoutPanelMenu";
             flowLayoutPanelMenu.Size = new Size(240, 780);
             flowLayoutPanelMenu.TabIndex = 5;
@@ -148,7 +175,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // btnDashboard
             // 
             btnDashboard.BackColor = Color.Black;
-            btnDashboard.CustomizableEdges = customizableEdges3;
+            btnDashboard.CustomizableEdges = customizableEdges5;
             btnDashboard.DisabledState.BorderColor = Color.DarkGray;
             btnDashboard.DisabledState.CustomBorderColor = Color.DarkGray;
             btnDashboard.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -162,7 +189,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnDashboard.Location = new Point(0, 0);
             btnDashboard.Margin = new Padding(0);
             btnDashboard.Name = "btnDashboard";
-            btnDashboard.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btnDashboard.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnDashboard.Size = new Size(240, 80);
             btnDashboard.TabIndex = 2;
             btnDashboard.Text = "   Dashboard";
@@ -180,7 +207,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // btnQuanLyChuyenBay
             // 
-            btnQuanLyChuyenBay.CustomizableEdges = customizableEdges5;
+            btnQuanLyChuyenBay.CustomizableEdges = customizableEdges7;
             btnQuanLyChuyenBay.DisabledState.BorderColor = Color.DarkGray;
             btnQuanLyChuyenBay.DisabledState.CustomBorderColor = Color.DarkGray;
             btnQuanLyChuyenBay.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -194,7 +221,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnQuanLyChuyenBay.Location = new Point(0, 0);
             btnQuanLyChuyenBay.Margin = new Padding(0);
             btnQuanLyChuyenBay.Name = "btnQuanLyChuyenBay";
-            btnQuanLyChuyenBay.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            btnQuanLyChuyenBay.ShadowDecoration.CustomizableEdges = customizableEdges8;
             btnQuanLyChuyenBay.Size = new Size(240, 80);
             btnQuanLyChuyenBay.TabIndex = 1;
             btnQuanLyChuyenBay.Text = "   Quản lý chuyến bay ";
@@ -212,7 +239,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // btnDatVe_thanhToan
             // 
-            btnDatVe_thanhToan.CustomizableEdges = customizableEdges7;
+            btnDatVe_thanhToan.CustomizableEdges = customizableEdges9;
             btnDatVe_thanhToan.DisabledState.BorderColor = Color.DarkGray;
             btnDatVe_thanhToan.DisabledState.CustomBorderColor = Color.DarkGray;
             btnDatVe_thanhToan.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -226,7 +253,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnDatVe_thanhToan.Location = new Point(0, 0);
             btnDatVe_thanhToan.Margin = new Padding(0);
             btnDatVe_thanhToan.Name = "btnDatVe_thanhToan";
-            btnDatVe_thanhToan.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnDatVe_thanhToan.ShadowDecoration.CustomizableEdges = customizableEdges10;
             btnDatVe_thanhToan.Size = new Size(240, 80);
             btnDatVe_thanhToan.TabIndex = 2;
             btnDatVe_thanhToan.Text = "   Đặt vé và thanh toán";
@@ -244,7 +271,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // btnGiaVe_khuyenMai
             // 
-            btnGiaVe_khuyenMai.CustomizableEdges = customizableEdges9;
+            btnGiaVe_khuyenMai.CustomizableEdges = customizableEdges11;
             btnGiaVe_khuyenMai.DisabledState.BorderColor = Color.DarkGray;
             btnGiaVe_khuyenMai.DisabledState.CustomBorderColor = Color.DarkGray;
             btnGiaVe_khuyenMai.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -258,7 +285,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnGiaVe_khuyenMai.Location = new Point(0, 0);
             btnGiaVe_khuyenMai.Margin = new Padding(0);
             btnGiaVe_khuyenMai.Name = "btnGiaVe_khuyenMai";
-            btnGiaVe_khuyenMai.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            btnGiaVe_khuyenMai.ShadowDecoration.CustomizableEdges = customizableEdges12;
             btnGiaVe_khuyenMai.Size = new Size(240, 80);
             btnGiaVe_khuyenMai.TabIndex = 2;
             btnGiaVe_khuyenMai.Text = "   Gía vé và khuyễn mãi";
@@ -276,7 +303,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // btnBaoCao_thongKe
             // 
-            btnBaoCao_thongKe.CustomizableEdges = customizableEdges11;
+            btnBaoCao_thongKe.CustomizableEdges = customizableEdges13;
             btnBaoCao_thongKe.DisabledState.BorderColor = Color.DarkGray;
             btnBaoCao_thongKe.DisabledState.CustomBorderColor = Color.DarkGray;
             btnBaoCao_thongKe.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -290,7 +317,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnBaoCao_thongKe.Location = new Point(0, 0);
             btnBaoCao_thongKe.Margin = new Padding(0);
             btnBaoCao_thongKe.Name = "btnBaoCao_thongKe";
-            btnBaoCao_thongKe.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            btnBaoCao_thongKe.ShadowDecoration.CustomizableEdges = customizableEdges14;
             btnBaoCao_thongKe.Size = new Size(240, 80);
             btnBaoCao_thongKe.TabIndex = 2;
             btnBaoCao_thongKe.Text = "   Báo cáo và thống kê";
@@ -308,7 +335,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // btnKhachHang
             // 
-            btnKhachHang.CustomizableEdges = customizableEdges13;
+            btnKhachHang.CustomizableEdges = customizableEdges15;
             btnKhachHang.DisabledState.BorderColor = Color.DarkGray;
             btnKhachHang.DisabledState.CustomBorderColor = Color.DarkGray;
             btnKhachHang.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -322,7 +349,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnKhachHang.Location = new Point(0, 0);
             btnKhachHang.Margin = new Padding(0);
             btnKhachHang.Name = "btnKhachHang";
-            btnKhachHang.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            btnKhachHang.ShadowDecoration.CustomizableEdges = customizableEdges16;
             btnKhachHang.Size = new Size(240, 80);
             btnKhachHang.TabIndex = 2;
             btnKhachHang.Text = "   Khách hàng";
@@ -340,7 +367,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // btnCaiDat
             // 
-            btnCaiDat.CustomizableEdges = customizableEdges15;
+            btnCaiDat.CustomizableEdges = customizableEdges17;
             btnCaiDat.DisabledState.BorderColor = Color.DarkGray;
             btnCaiDat.DisabledState.CustomBorderColor = Color.DarkGray;
             btnCaiDat.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -354,7 +381,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnCaiDat.Location = new Point(0, 0);
             btnCaiDat.Margin = new Padding(0);
             btnCaiDat.Name = "btnCaiDat";
-            btnCaiDat.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            btnCaiDat.ShadowDecoration.CustomizableEdges = customizableEdges18;
             btnCaiDat.Size = new Size(240, 80);
             btnCaiDat.TabIndex = 2;
             btnCaiDat.Text = "   Cài đặt hệ thống";
@@ -371,10 +398,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             panelMain.Controls.Add(adminDasboardControlDatVe_ThanhToan);
             panelMain.Controls.Add(adminDasboardControlQuanLyChuyenBay);
             panelMain.Dock = DockStyle.Fill;
-            panelMain.Location = new Point(240, 150);
+            panelMain.Location = new Point(240, 156);
             panelMain.Margin = new Padding(0);
             panelMain.Name = "panelMain";
             panelMain.Size = new Size(1040, 700);
+
             panelMain.TabIndex = 6;
             // 
             // adminDasboardControlSetting
@@ -454,7 +482,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             panelTopMain.Controls.Add(adminDashboardControlHight1);
             panelTopMain.Dock = DockStyle.Top;
-            panelTopMain.Location = new Point(240, 70);
+            panelTopMain.Location = new Point(240, 76);
             panelTopMain.Margin = new Padding(0);
             panelTopMain.Name = "panelTopMain";
             panelTopMain.Size = new Size(1040, 80);
@@ -534,5 +562,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
         private Panel panelTopMain;
         private AdminDashboardControlHight adminDashboardControlHight1;
         private Label label1;
+        private Guna.UI2.WinForms.Guna2Button btnUserProfile;
     }
 }

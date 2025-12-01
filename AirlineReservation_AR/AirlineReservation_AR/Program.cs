@@ -4,8 +4,8 @@ using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Helpers;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User;
+using AirlineReservation_AR.src.Shared.Helper;
 using AR_Winform.Presentation.Forms;
-using MomoQR;
 namespace AirlineReservation_AR
 {
     internal static class Program
@@ -18,7 +18,6 @@ namespace AirlineReservation_AR
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            AppSettingsLoader.Load();
             ApplicationConfiguration.Initialize();
             DIContainer.Init();
             Application.Run(new SignInForm());

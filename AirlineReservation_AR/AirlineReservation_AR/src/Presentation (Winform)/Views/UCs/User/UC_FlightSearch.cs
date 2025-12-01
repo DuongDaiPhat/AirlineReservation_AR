@@ -18,6 +18,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         public event Action<FlightSearchParams> OnSearchSubmit;
         // Controller + data
         private readonly CityController _cityController;
+        private readonly SeatClassController _seatClassController;
         private List<CitySelectDTO> _cityItems = new();
 
         // Swap / filter flags
@@ -42,20 +43,15 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private int adult = 1;
         private int child = 0;
         private int infant = 0;
-
         public UC_FlightSearch()
         {
             InitializeComponent();
             _cityController = DIContainer.CityController;
+            _seatClassController = DIContainer.SeatClassController;
             InitializeCalendarFlowPanels();
             CreatePassengerPopup();
             Load += UC_FlightSearch_Load;
         }
-
-
-       
-
-
 
         // Khởi tạo FlowLayoutPanel cho lịch
         private void InitializeCalendarFlowPanels()
@@ -85,7 +81,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private async void UC_FlightSearch_Load(object? sender, EventArgs e)
         {
             var cities = await _cityController.GetAllCitiesAsync();
+            var seatClass = await _seatClassController.GetAll();
             _cityItems = cities.Select(c => new CitySelectDTO(c)).ToList();
+            BindSeatClass(seatClass);
             BindComboItems();
             if (this.ParentForm != null)
                 this.ParentForm.Controls.Add(passengerPopup);
@@ -503,6 +501,19 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             }
         }
 
+        private void BindSeatClass(List<SeatClass> seatClasses)
+        {
+            cboSeatClass.DataSource = seatClasses
+                .Select(x => new {
+                    x.SeatClassId,
+                    Display = $"{x.DisplayName} – {x.BaggageAllowanceKg ?? 0}kg - x{x.PriceMultiplier}VND"
+                })
+                .ToList();
+
+            cboSeatClass.DisplayMember = "Display";
+            cboSeatClass.ValueMember = "SeatClassId";
+        }
+
         // Bind city list
         private void BindComboItems()
         {
@@ -747,21 +758,73 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         }
 
         //chuyển hướng
-        private void btnSearch_Click(object sender, EventArgs e)
+private void btnSearch_Click(object sender, EventArgs e)
+{
+    // ===== VALIDATE FROM =====
+    if (cboFrom.SelectedItem == null)
+    {
+        MessageBox.Show("Vui lòng chọn điểm đi!", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        return;
+    }
+
+    // ===== VALIDATE TO =====
+    if (cboTo.SelectedItem == null)
+    {
+        MessageBox.Show("Vui lòng chọn điểm đến!", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        return;
+    }
+
+    // ===== VALIDATE START DATE =====
+    if (selectedStartDate == null)
+    {
+        MessageBox.Show("Vui lòng chọn ngày đi!", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        return;
+    }
+
+    // ===== VALIDATE RETURN DATE (IF ROUND TRIP) =====
+    if (guna2CustomCheckBox1.Checked)
+    {
+        if (selectedReturnDate == null)
         {
-            var p = new FlightSearchParams
-            {
-                FromCode = (cboFrom.SelectedItem as CitySelectDTO).Code,
-                ToCode = (cboTo.SelectedItem as CitySelectDTO).Code,
-                StartDate = selectedStartDate,
-                SeatClassId = cboSeatClass.SelectedIndex + 1,
-
-                Adult = adult,
-                Child = child,
-                Infant = infant
-            };
-
-            OnSearchSubmit?.Invoke(p);
+            MessageBox.Show("Vui lòng chọn ngày về!", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
         }
+
+        if (selectedReturnDate < selectedStartDate)
+        {
+            MessageBox.Show("Ngày về phải lớn hơn hoặc bằng ngày đi!", "Ngày không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+    }
+
+    // ===== VALIDATE SEAT CLASS =====
+    if (cboSeatClass.SelectedIndex < 0)
+    {
+        MessageBox.Show("Vui lòng chọn hạng ghế!", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        return;
+    }
+
+    // ===== VALIDATE PASSENGER =====
+    if (adult <= 0)
+    {
+        MessageBox.Show("Phải có ít nhất 1 người lớn!", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        return;
+    }
+
+    // ===== NẾU TẤT CẢ ĐỀU VALIDATE OK → TIẾP TỤC =====
+    var p = new FlightSearchParams
+    {
+        FromCode = (cboFrom.SelectedItem as CitySelectDTO).Code,
+        ToCode = (cboTo.SelectedItem as CitySelectDTO).Code,
+        StartDate = selectedStartDate,
+        SeatClassId = (int)cboSeatClass.SelectedValue,
+        Adult = adult,
+        Child = child,
+        Infant = infant
+    };
+
+    OnSearchSubmit?.Invoke(p);
+}
+
     }
 }
