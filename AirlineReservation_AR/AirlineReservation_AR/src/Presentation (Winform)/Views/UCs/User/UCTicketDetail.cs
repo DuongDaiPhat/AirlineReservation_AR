@@ -24,7 +24,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             InitializeComponent();
 
             btnETickets.Click += (s, e) => ShowETicket();
-            btnRefundReschedule.Click += (s, e) => ShowRefundReschedule();
+            btnRefundReschedule.Click += async (s, e) => ShowRefundReschedule();
             btnUpAdd.Click += (s, e) => ShowUpgradesAddons();
         }
 
@@ -64,12 +64,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             LoadContent(summary);
         }
 
-        private void ShowRefundReschedule()
+        private async void ShowRefundReschedule()
         {
             if (_booking == null || _ticket == null) return;
 
             var refundPage = new UCRefundRescheduleContent();
-            refundPage.SetData(_booking, _ticket); // nếu UC này cần data thì thêm sau
+            await refundPage.SetDataAsync(_booking, _ticket); // nếu UC này cần data thì thêm sau
             LoadContent(refundPage);
         }
 

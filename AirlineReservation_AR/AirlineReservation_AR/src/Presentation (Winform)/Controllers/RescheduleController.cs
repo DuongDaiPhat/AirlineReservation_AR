@@ -71,5 +71,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
                    $"------------------------------\n" +
                    $"TOTAL TO PAY:        {quote.TotalAmount:N0} {quote.Currency}";
         }
+        public async Task<List<AvailableFlightDto>> SearchAvailableFlightsForRescheduleAsync(Guid ticketId, DateTime newDate)
+        {
+            return await _rescheduleService.SearchAvailableFlightsForRescheduleAsync(ticketId, newDate);
+        }
     }
 }

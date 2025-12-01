@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             btnReschedule = new Guna.UI2.WinForms.Guna2Button();
             btnRefund = new Guna.UI2.WinForms.Guna2Button();
@@ -50,7 +50,7 @@
             // 
             // btnReschedule
             // 
-            btnReschedule.CustomizableEdges = customizableEdges5;
+            btnReschedule.CustomizableEdges = customizableEdges1;
             btnReschedule.DisabledState.BorderColor = Color.DarkGray;
             btnReschedule.DisabledState.CustomBorderColor = Color.DarkGray;
             btnReschedule.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -65,15 +65,16 @@
             btnReschedule.Margin = new Padding(0);
             btnReschedule.Name = "btnReschedule";
             btnReschedule.Padding = new Padding(5, 0, 0, 0);
-            btnReschedule.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            btnReschedule.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnReschedule.Size = new Size(624, 64);
             btnReschedule.TabIndex = 1;
             btnReschedule.Text = "Reschedule";
             btnReschedule.TextAlign = HorizontalAlignment.Left;
+            btnReschedule.Click += btnReschedule_Click;
             // 
             // btnRefund
             // 
-            btnRefund.CustomizableEdges = customizableEdges7;
+            btnRefund.CustomizableEdges = customizableEdges3;
             btnRefund.DisabledState.BorderColor = Color.DarkGray;
             btnRefund.DisabledState.CustomBorderColor = Color.DarkGray;
             btnRefund.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -88,7 +89,7 @@
             btnRefund.Margin = new Padding(0);
             btnRefund.Name = "btnRefund";
             btnRefund.Padding = new Padding(5, 0, 0, 0);
-            btnRefund.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnRefund.ShadowDecoration.CustomizableEdges = customizableEdges4;
             btnRefund.Size = new Size(624, 64);
             btnRefund.TabIndex = 2;
             btnRefund.Text = "Refund";

@@ -254,5 +254,68 @@ namespace AirlineReservation_AR.src.Application.Services
                 return new RescheduleResultDto { IsSuccess = false, ErrorMessage = "System Error: " + ex.Message };
             }
         }
+        public async Task<List<AvailableFlightDto>> SearchAvailableFlightsForRescheduleAsync(Guid ticketId, DateTime newDate)
+        {
+            using var db = DIContainer.CreateDb();
+
+            // Lấy vé gốc + flight + seat class
+            var ticket = await db.Tickets
+                .Include(t => t.BookingFlight)
+                    .ThenInclude(bf => bf.Flight)
+                .FirstOrDefaultAsync(t => t.TicketId == ticketId);
+
+            if (ticket == null)
+                throw new Exception("Ticket not found");
+
+            var originalFlight = ticket.BookingFlight.Flight;
+            var seatClassId = ticket.SeatClassId;
+
+            var dateOnly = newDate.Date;
+            var now = DateTime.Now;
+
+            // Query flight cùng route, cùng airline, đúng ngày mới
+            var flightsQuery = db.Flights
+                .Include(f => f.FlightPricings)
+                    .ThenInclude(fp => fp.FareRule)
+                .Where(f =>
+                    f.AirlineId == originalFlight.AirlineId &&
+                    f.DepartureAirportId == originalFlight.DepartureAirportId &&
+                    f.ArrivalAirportId == originalFlight.ArrivalAirportId &&
+                    f.FlightDate == dateOnly &&
+                    f.Status == "Available");
+
+            // Nếu là hôm nay thì lọc thêm giờ bay > hiện tại
+            flightsQuery = flightsQuery.Where(f =>
+                f.FlightDate > now.Date ||
+                (f.FlightDate == now.Date && f.DepartureTime > now.TimeOfDay));
+
+            var flights = await flightsQuery.ToListAsync();
+
+            // Map sang DTO – KHÔNG dùng First mà dùng FirstOrDefault rồi skip null
+            var result = flights
+                .Select(f =>
+                {
+                    var pricing = f.FlightPricings
+                        .FirstOrDefault(fp => fp.SeatClassId == seatClassId);
+
+                    // Flight này không có pricing cho hạng ghế của vé gốc → bỏ qua
+                    if (pricing == null)
+                        return null;
+
+                    return new AvailableFlightDto
+                    {
+                        FlightId = f.FlightId,
+                        FlightNumber = f.FlightNumber,
+                        DepartureTime = f.DepartureTime,
+                        ArrivalTime = f.ArrivalTime,
+                        Price = pricing.Price,
+                        FareRuleCode = pricing.FareRule?.FareCode ?? "UNKNOWN"
+                    };
+                })
+                .Where(dto => dto != null)
+                .ToList()!; // đã filter null
+
+            return result;
+        }
     }
 }

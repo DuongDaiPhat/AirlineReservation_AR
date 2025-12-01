@@ -23,5 +23,8 @@ namespace AirlineReservation_AR.src.Application.Interfaces
         /// Xác nhận đổi vé: Tạo Request, Thanh toán, Cập nhật vé
         /// </summary>
         Task<RescheduleResultDto> ConfirmRescheduleAsync(RescheduleQuoteRequestDto request);
+
+        Task<List<AvailableFlightDto>> SearchAvailableFlightsForRescheduleAsync(Guid ticketId, DateTime newDate);
+
     }
 }

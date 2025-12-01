@@ -1,6 +1,9 @@
-﻿using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Infrastructure.DI;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,5 +96,23 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
                 return false;
             }
         }
+        public async Task<Ticket> GetFullTicketAsync(Guid ticketId)
+        {
+            var _db = DIContainer.CreateDb();
+            return await _db.Tickets
+                .Include(t => t.BookingFlight)
+                    .ThenInclude(bf => bf.Flight)
+                        .ThenInclude(f => f.DepartureAirport)
+                .Include(t => t.BookingFlight)
+                    .ThenInclude(bf => bf.Flight)
+                        .ThenInclude(f => f.ArrivalAirport)
+                .Include(t => t.BookingFlight)
+                    .ThenInclude(bf => bf.Flight)
+                        .ThenInclude(f => f.Airline)
+                .Include(t => t.SeatClass)
+                .Include(t => t.BookingFlight.Booking)
+                .FirstAsync(t => t.TicketId == ticketId);
+        }
+
     }
 }

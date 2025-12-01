@@ -213,5 +213,11 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         //seatClass
         public static SeatClassController SeatClassController =>
         _seatClassController ?? throw new Exception("SeatClass controller not initialized");
+
+        public static RescheduleController RescheduleConroller =>
+        _rescheduleController ?? throw new Exception("Reschedule controller not initialized");
+
+        public static TicketDetailController TicketDetailController =>
+        _ticketDetailController ?? throw new Exception("Ticket Detail controller not initialized");
     }
 }
