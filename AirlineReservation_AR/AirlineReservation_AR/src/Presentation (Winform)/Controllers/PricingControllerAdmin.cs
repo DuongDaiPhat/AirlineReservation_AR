@@ -13,6 +13,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
     public class PricingControllerAdmin
     {
         private readonly IFlightPricingServiceAdmin _service;
+        private readonly IFlightServiceAdmin _flightServiceAdmin;
 
         public PricingControllerAdmin(IFlightPricingServiceAdmin service)
         {
@@ -75,5 +76,13 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
             };
             return await _service.GetPricingsWithFiltersAsync(filter);
         }
-    } 
+        public async Task<List<string>> GetAllRoutesAsync()
+        {
+            var flights = await _flightServiceAdmin.GetAllFlightsAsync();
+            return flights.Select(f => $"{f.Route}")
+                          .Distinct()
+                          .ToList();
+        }
+
+    }
 }

@@ -75,8 +75,13 @@
             colPayment = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
             colThaoTac = new DataGridViewTextBoxColumn();
+            panel3 = new Panel();
+            paginationControl = new PaginationControl();
+            panel2 = new Panel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvBooking).BeginInit();
+            panel3.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -379,11 +384,13 @@
             dgvBooking.BorderStyle = BorderStyle.None;
             dgvBooking.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvBooking.Columns.AddRange(new DataGridViewColumn[] { colBookingID, colKH, colChuyenBay, colMember, colNgayDat, colTotalPice, colPayment, colStatus, colThaoTac });
-            dgvBooking.Location = new Point(15, 215);
+            dgvBooking.Dock = DockStyle.Fill;
+            dgvBooking.Location = new Point(0, 0);
             dgvBooking.Margin = new Padding(0);
             dgvBooking.MultiSelect = false;
             dgvBooking.Name = "dgvBooking";
             dgvBooking.RowHeadersVisible = false;
+            dgvBooking.RowHeadersWidth = 51;
             dgvBooking.RowTemplate.Height = 50;
             dgvBooking.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBooking.Size = new Size(1010, 420);
@@ -393,6 +400,7 @@
             // colBookingID
             // 
             colBookingID.HeaderText = "Mã booking";
+            colBookingID.MinimumWidth = 6;
             colBookingID.Name = "colBookingID";
             colBookingID.ReadOnly = true;
             colBookingID.Width = 80;
@@ -400,6 +408,7 @@
             // colKH
             // 
             colKH.HeaderText = "Khách hàng";
+            colKH.MinimumWidth = 6;
             colKH.Name = "colKH";
             colKH.ReadOnly = true;
             colKH.Width = 200;
@@ -407,6 +416,7 @@
             // colChuyenBay
             // 
             colChuyenBay.HeaderText = "Chuyến bay";
+            colChuyenBay.MinimumWidth = 6;
             colChuyenBay.Name = "colChuyenBay";
             colChuyenBay.ReadOnly = true;
             colChuyenBay.Width = 110;
@@ -414,6 +424,7 @@
             // colMember
             // 
             colMember.HeaderText = "Số hành khách";
+            colMember.MinimumWidth = 6;
             colMember.Name = "colMember";
             colMember.ReadOnly = true;
             colMember.Width = 80;
@@ -421,6 +432,7 @@
             // colNgayDat
             // 
             colNgayDat.HeaderText = "Ngày đặt";
+            colNgayDat.MinimumWidth = 6;
             colNgayDat.Name = "colNgayDat";
             colNgayDat.ReadOnly = true;
             colNgayDat.Width = 110;
@@ -428,12 +440,15 @@
             // colTotalPice
             // 
             colTotalPice.HeaderText = "Tổng tiền";
+            colTotalPice.MinimumWidth = 6;
             colTotalPice.Name = "colTotalPice";
             colTotalPice.ReadOnly = true;
+            colTotalPice.Width = 125;
             // 
             // colPayment
             // 
             colPayment.HeaderText = "Thanh toán";
+            colPayment.MinimumWidth = 6;
             colPayment.Name = "colPayment";
             colPayment.ReadOnly = true;
             colPayment.Width = 110;
@@ -441,29 +456,72 @@
             // colStatus
             // 
             colStatus.HeaderText = "Trạng thái";
+            colStatus.MinimumWidth = 6;
             colStatus.Name = "colStatus";
             colStatus.ReadOnly = true;
+            colStatus.Width = 125;
             // 
             // colThaoTac
             // 
             colThaoTac.HeaderText = "Thao tác";
+            colThaoTac.MinimumWidth = 6;
             colThaoTac.Name = "colThaoTac";
             colThaoTac.Width = 120;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(paginationControl);
+            panel3.Dock = DockStyle.Bottom;
+            panel3.Location = new Point(15, 635);
+            panel3.Margin = new Padding(0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(1010, 50);
+            panel3.TabIndex = 3;
+            // 
+            // paginationControl
+            // 
+            paginationControl.ActiveBorderColor = Color.FromArgb(255, 105, 180);
+            paginationControl.ActiveButtonColor = Color.FromArgb(255, 105, 180);
+            paginationControl.ActiveTextColor = Color.White;
+            paginationControl.BackColor = Color.White;
+            paginationControl.Dock = DockStyle.Fill;
+            paginationControl.HoverButtonColor = Color.FromArgb(255, 200, 220);
+            paginationControl.InactiveBorderColor = Color.FromArgb(220, 220, 220);
+            paginationControl.InactiveButtonColor = Color.White;
+            paginationControl.InactiveTextColor = Color.FromArgb(120, 120, 120);
+            paginationControl.Location = new Point(0, 0);
+            paginationControl.Margin = new Padding(0);
+            paginationControl.Name = "paginationControl";
+            paginationControl.Size = new Size(1010, 50);
+            paginationControl.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(dgvBooking);
+            panel2.Dock = DockStyle.Fill;
+            panel2.Location = new Point(15, 215);
+            panel2.Margin = new Padding(0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1010, 420);
+            panel2.TabIndex = 4;
             // 
             // BookingAndPaymentControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(dgvBooking);
+            Controls.Add(panel2);
+            Controls.Add(panel3);
             Controls.Add(panel1);
             Margin = new Padding(0);
             Name = "BookingAndPaymentControl";
             Padding = new Padding(15);
-            Size = new Size(1040, 650);
+            Size = new Size(1040, 700);
             Load += BookingAndPaymentControl_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvBooking).EndInit();
+            panel3.ResumeLayout(false);
+            panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -496,5 +554,8 @@
         private DataGridViewTextBoxColumn colPayment;
         private DataGridViewTextBoxColumn colStatus;
         private DataGridViewTextBoxColumn colThaoTac;
+        private Panel panel3;
+        private PaginationControl paginationControl;
+        private Panel panel2;
     }
 }

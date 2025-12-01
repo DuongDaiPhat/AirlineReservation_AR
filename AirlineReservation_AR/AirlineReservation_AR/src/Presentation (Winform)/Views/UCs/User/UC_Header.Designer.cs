@@ -47,7 +47,7 @@
             pnlMain.Controls.Add(picLogo);
             pnlMain.Location = new Point(0, 0);
             pnlMain.Name = "pnlMain";
-            pnlMain.Size = new Size(1736, 786);
+            pnlMain.Size = new Size(1736, 100);
             pnlMain.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -58,7 +58,7 @@
             flowLayoutPanel1.Controls.Add(btnBookings);
             flowLayoutPanel1.Controls.Add(btnMyTickets);
             flowLayoutPanel1.Controls.Add(btnUserProfile);
-            flowLayoutPanel1.Location = new Point(552, 6);
+            flowLayoutPanel1.Location = new Point(552, 3);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(1075, 94);
             flowLayoutPanel1.TabIndex = 2;
@@ -199,7 +199,7 @@
             btnUserProfile.Size = new Size(180, 70);
             btnUserProfile.TabIndex = 5;
             btnUserProfile.Text = "User Name";
-            btnUserProfile.Click += btnUserProfile_Click_1;
+            btnUserProfile.Click += btnUserProfile_Click;
             // 
             // picLogo
             // 
@@ -209,7 +209,7 @@
             picLogo.FillColor = Color.Transparent;
             picLogo.Image = Properties.Resources.logo_blacktext;
             picLogo.ImageRotate = 0F;
-            picLogo.Location = new Point(30, 14);
+            picLogo.Location = new Point(3, 9);
             picLogo.Margin = new Padding(0);
             picLogo.Name = "picLogo";
             picLogo.ShadowDecoration.CustomizableEdges = customizableEdges11;
@@ -224,6 +224,7 @@
             Controls.Add(pnlMain);
             Name = "UC_Header";
             Size = new Size(1650, 100);
+            Load += UC_Header_Load;
             pnlMain.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
