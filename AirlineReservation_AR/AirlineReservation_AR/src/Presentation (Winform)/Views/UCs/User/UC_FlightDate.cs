@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AR_Winform.Presentation.UControls.User
 {
     public partial class UC_FlightDate : UserControl
     {
-        private DateTime currentMonth;  // tháng đang hiển thị
+        private DateTime currentMonth;
         private DateTime today = DateTime.Today;
         private List<Guna.UI2.WinForms.Guna2Button> dayButtons;
         public event EventHandler<DateTime> DaySelected;
@@ -38,7 +33,7 @@ namespace AR_Winform.Presentation.UControls.User
 
         private void RenderCalendar()
         {
-            dateLB.Text = currentMonth.ToString("MMMM yyyy"); // ví dụ: October 2025
+            dateLB.Text = currentMonth.ToString("MMMM yyyy");
 
             // Reset tất cả button
             foreach (var btn in dayButtons)
@@ -53,11 +48,18 @@ namespace AR_Winform.Presentation.UControls.User
             DateTime firstDay = new DateTime(currentMonth.Year, currentMonth.Month, 1);
             int daysInMonth = DateTime.DaysInMonth(currentMonth.Year, currentMonth.Month);
 
-            // Xác định vị trí bắt đầu (thứ mấy)
-            int startColumn = (int)firstDay.DayOfWeek;
-            if (startColumn == 0) startColumn = 7; // Chủ nhật cuối cột
+            // Xác định vị trí bắt đầu
+            // DayOfWeek: Sunday=0, Monday=1, Tuesday=2, ..., Saturday=6
+            // Layout: Mon(0), Tue(1), Wed(2), Thu(3), Fri(4), Sat(5), Sun(6)
+            int dayOfWeek = (int)firstDay.DayOfWeek;
+            int startColumn;
 
-            int index = startColumn - 1; // vị trí trong list (0-based)
+            if (dayOfWeek == 0) // Chủ nhật
+                startColumn = 6; // Cột cuối cùng
+            else
+                startColumn = dayOfWeek - 1; // Monday=0, Tuesday=1, ...
+
+            int index = startColumn;
 
             for (int day = 1; day <= daysInMonth; day++)
             {
@@ -70,16 +72,18 @@ namespace AR_Winform.Presentation.UControls.User
                     btn.Text = day.ToString();
                     btn.Tag = date;
 
-                    // Chỉ disable ngày quá khứ
+                    // Disable ngày quá khứ
                     if (date < today)
                     {
                         btn.Enabled = false;
                         btn.FillColor = Color.LightGray;
+                        btn.ForeColor = Color.DarkGray;
                     }
                     else
                     {
                         btn.Enabled = true;
                         btn.FillColor = Color.RoyalBlue;
+                        btn.ForeColor = Color.White;
                     }
 
                     btn.Click += Day_Click;
@@ -96,7 +100,7 @@ namespace AR_Winform.Presentation.UControls.User
         private void Day_Click(object sender, EventArgs e)
         {
             var btn = sender as Guna.UI2.WinForms.Guna2Button;
-            if (btn != null && DateTime.TryParse(btn.Tag?.ToString(), out DateTime date))
+            if (btn?.Tag is DateTime date)
             {
                 DaySelected?.Invoke(this, date);
             }
@@ -104,8 +108,15 @@ namespace AR_Winform.Presentation.UControls.User
 
         private void prevBtn_Click(object sender, EventArgs e)
         {
-            currentMonth = currentMonth.AddMonths(-1);
-            RenderCalendar();
+            // Không cho về quá khứ (tháng trước tháng hiện tại)
+            DateTime previousMonth = currentMonth.AddMonths(-1);
+            DateTime firstDayOfPreviousMonth = new DateTime(previousMonth.Year, previousMonth.Month, 1);
+
+            if (firstDayOfPreviousMonth >= new DateTime(today.Year, today.Month, 1))
+            {
+                currentMonth = previousMonth;
+                RenderCalendar();
+            }
         }
 
         private void nextBtn_Click(object sender, EventArgs e)
@@ -113,6 +124,5 @@ namespace AR_Winform.Presentation.UControls.User
             currentMonth = currentMonth.AddMonths(1);
             RenderCalendar();
         }
-        
     }
 }

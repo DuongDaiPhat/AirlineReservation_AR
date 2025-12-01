@@ -329,6 +329,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             resetBtn.Size = new Size(84, 40);
             resetBtn.TabIndex = 9;
             resetBtn.Text = "Reset";
+            resetBtn.Click += resetBtn_Click;
             // 
             // deBtn2
             // 
@@ -447,7 +448,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             labelPriceValue.Location = new Point(0, 350);
             labelPriceValue.Margin = new Padding(0);
             labelPriceValue.Name = "labelPriceValue";
-            labelPriceValue.Size = new Size(361, 17);
+            labelPriceValue.Size = new Size(427, 17);
             labelPriceValue.TabIndex = 55;
             labelPriceValue.Text = "500.000 VND - 10.000.000 VND";
             labelPriceValue.TextAlign = ContentAlignment.MiddleCenter;

@@ -15,16 +15,16 @@
 
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             pnlMain = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -47,20 +47,23 @@
             pnlMain.Controls.Add(picLogo);
             pnlMain.Location = new Point(0, 0);
             pnlMain.Name = "pnlMain";
-            pnlMain.Size = new Size(1736, 786);
+            pnlMain.Size = new Size(1650, 100);
             pnlMain.TabIndex = 0;
             // 
             // flowLayoutPanel1
             // 
-            flowLayoutPanel1.Controls.Add(guna2Button1);
-            flowLayoutPanel1.Controls.Add(btnPromotion);
-            flowLayoutPanel1.Controls.Add(guna2Button4);
-            flowLayoutPanel1.Controls.Add(btnBookings);
-            flowLayoutPanel1.Controls.Add(btnMyTickets);
             flowLayoutPanel1.Controls.Add(btnUserProfile);
-            flowLayoutPanel1.Location = new Point(552, 6);
+            flowLayoutPanel1.Controls.Add(btnMyTickets);
+            flowLayoutPanel1.Controls.Add(btnBookings);
+            flowLayoutPanel1.Controls.Add(btnPromotion);
+            flowLayoutPanel1.Controls.Add(guna2Button1);
+            flowLayoutPanel1.Controls.Add(guna2Button4);
+            flowLayoutPanel1.Dock = DockStyle.Right;
+            flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
+            flowLayoutPanel1.Location = new Point(575, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(1075, 94);
+            flowLayoutPanel1.RightToLeft = RightToLeft.No;
+            flowLayoutPanel1.Size = new Size(1075, 100);
             flowLayoutPanel1.TabIndex = 2;
             // 
             // guna2Button1
@@ -68,7 +71,7 @@
             guna2Button1.BorderColor = Color.Transparent;
             guna2Button1.BorderRadius = 10;
             guna2Button1.BorderThickness = 1;
-            guna2Button1.CustomizableEdges = customizableEdges1;
+            guna2Button1.CustomizableEdges = customizableEdges7;
             guna2Button1.DisabledState.BorderColor = Color.DarkGray;
             guna2Button1.DisabledState.CustomBorderColor = Color.DarkGray;
             guna2Button1.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -78,9 +81,9 @@
             guna2Button1.ForeColor = Color.Black;
             guna2Button1.Image = Properties.Resources.vietnam;
             guna2Button1.ImageSize = new Size(35, 35);
-            guna2Button1.Location = new Point(3, 3);
+            guna2Button1.Location = new Point(171, 3);
             guna2Button1.Name = "guna2Button1";
-            guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges8;
             guna2Button1.Size = new Size(150, 80);
             guna2Button1.TabIndex = 0;
             guna2Button1.Text = "VND | VN";
@@ -100,7 +103,7 @@
             btnPromotion.ForeColor = Color.Black;
             btnPromotion.Image = Properties.Resources.gift_voucher;
             btnPromotion.ImageSize = new Size(35, 35);
-            btnPromotion.Location = new Point(159, 3);
+            btnPromotion.Location = new Point(327, 3);
             btnPromotion.Name = "btnPromotion";
             btnPromotion.ShadowDecoration.CustomizableEdges = customizableEdges4;
             btnPromotion.Size = new Size(180, 80);
@@ -113,7 +116,7 @@
             guna2Button4.BorderColor = Color.Transparent;
             guna2Button4.BorderRadius = 10;
             guna2Button4.BorderThickness = 1;
-            guna2Button4.CustomizableEdges = customizableEdges5;
+            guna2Button4.CustomizableEdges = customizableEdges9;
             guna2Button4.DisabledState.BorderColor = Color.DarkGray;
             guna2Button4.DisabledState.CustomBorderColor = Color.DarkGray;
             guna2Button4.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -125,19 +128,20 @@
             guna2Button4.ImageAlign = HorizontalAlignment.Right;
             guna2Button4.ImageOffset = new Point(12, -2);
             guna2Button4.ImageSize = new Size(23, 23);
-            guna2Button4.Location = new Point(345, 3);
+            guna2Button4.Location = new Point(902, 89);
             guna2Button4.Name = "guna2Button4";
-            guna2Button4.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            guna2Button4.ShadowDecoration.CustomizableEdges = customizableEdges10;
             guna2Button4.Size = new Size(170, 80);
             guna2Button4.TabIndex = 3;
             guna2Button4.Text = "Support";
+            guna2Button4.Visible = false;
             // 
             // btnBookings
             // 
             btnBookings.BorderColor = Color.Transparent;
             btnBookings.BorderRadius = 10;
             btnBookings.BorderThickness = 1;
-            btnBookings.CustomizableEdges = customizableEdges7;
+            btnBookings.CustomizableEdges = customizableEdges5;
             btnBookings.DisabledState.BorderColor = Color.DarkGray;
             btnBookings.DisabledState.CustomBorderColor = Color.DarkGray;
             btnBookings.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -147,9 +151,9 @@
             btnBookings.ForeColor = Color.Black;
             btnBookings.Image = Properties.Resources.order;
             btnBookings.ImageSize = new Size(35, 35);
-            btnBookings.Location = new Point(521, 3);
+            btnBookings.Location = new Point(513, 3);
             btnBookings.Name = "btnBookings";
-            btnBookings.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnBookings.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnBookings.Size = new Size(160, 80);
             btnBookings.TabIndex = 2;
             btnBookings.Text = "Bookings";
@@ -170,7 +174,7 @@
             btnMyTickets.ForeColor = Color.Black;
             btnMyTickets.Image = Properties.Resources.airline_ticket;
             btnMyTickets.ImageSize = new Size(35, 35);
-            btnMyTickets.Location = new Point(687, 3);
+            btnMyTickets.Location = new Point(679, 3);
             btnMyTickets.Name = "btnMyTickets";
             btnMyTickets.ShadowDecoration.CustomizableEdges = customizableEdges4;
             btnMyTickets.Size = new Size(180, 80);
@@ -183,7 +187,7 @@
             btnUserProfile.Anchor = AnchorStyles.None;
             btnUserProfile.BorderRadius = 20;
             btnUserProfile.BorderThickness = 1;
-            btnUserProfile.CustomizableEdges = customizableEdges9;
+            btnUserProfile.CustomizableEdges = customizableEdges1;
             btnUserProfile.DisabledState.BorderColor = Color.DarkGray;
             btnUserProfile.DisabledState.CustomBorderColor = Color.DarkGray;
             btnUserProfile.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -193,9 +197,10 @@
             btnUserProfile.ForeColor = Color.DodgerBlue;
             btnUserProfile.Image = Properties.Resources.user;
             btnUserProfile.ImageSize = new Size(35, 35);
-            btnUserProfile.Location = new Point(873, 8);
+            btnUserProfile.Location = new Point(865, 8);
+            btnUserProfile.Margin = new Padding(3, 3, 30, 3);
             btnUserProfile.Name = "btnUserProfile";
-            btnUserProfile.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            btnUserProfile.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnUserProfile.Size = new Size(180, 70);
             btnUserProfile.TabIndex = 5;
             btnUserProfile.Text = "User Name";
@@ -205,11 +210,11 @@
             // 
             picLogo.BackColor = Color.Transparent;
             picLogo.Cursor = Cursors.Hand;
-            picLogo.CustomizableEdges = customizableEdges1;
+            picLogo.CustomizableEdges = customizableEdges7;
             picLogo.FillColor = Color.Transparent;
             picLogo.Image = Properties.Resources.logo_blacktext;
             picLogo.ImageRotate = 0F;
-            picLogo.Location = new Point(30, 14);
+            picLogo.Location = new Point(30, 9);
             picLogo.Margin = new Padding(0);
             picLogo.Name = "picLogo";
             picLogo.ShadowDecoration.CustomizableEdges = customizableEdges11;

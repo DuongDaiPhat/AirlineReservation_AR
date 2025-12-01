@@ -171,10 +171,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             linkLabel1.LinkColor = Color.FromArgb(66, 133, 244);
             linkLabel1.Location = new Point(239, 467);
             linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(147, 26);
+            linkLabel1.Size = new Size(148, 26);
             linkLabel1.TabIndex = 20;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "Forgot password?";
+            linkLabel1.Visible = false;
             linkLabel1.Click += ForgotPS_Click;
             // 
             // passwordTB
@@ -207,7 +208,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             label13.ForeColor = Color.Black;
             label13.Location = new Point(32, 390);
             label13.Name = "label13";
-            label13.Size = new Size(165, 26);
+            label13.Size = new Size(166, 26);
             label13.TabIndex = 17;
             label13.Text = "Enter your Password";
             // 
@@ -241,7 +242,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             label12.ForeColor = Color.Black;
             label12.Location = new Point(32, 291);
             label12.Name = "label12";
-            label12.Size = new Size(198, 26);
+            label12.Size = new Size(200, 26);
             label12.TabIndex = 15;
             label12.Text = "Enter your Email address";
             // 
@@ -254,6 +255,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             panel3.Name = "panel3";
             panel3.Size = new Size(45, 45);
             panel3.TabIndex = 14;
+            panel3.Visible = false;
             // 
             // pictureBox3
             // 
@@ -274,6 +276,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             panel2.Name = "panel2";
             panel2.Size = new Size(45, 45);
             panel2.TabIndex = 13;
+            panel2.Visible = false;
             // 
             // pictureBox2
             // 
@@ -295,6 +298,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             panel1.Name = "panel1";
             panel1.Size = new Size(223, 45);
             panel1.TabIndex = 9;
+            panel1.Visible = false;
             // 
             // label11
             // 
@@ -303,7 +307,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             label11.ForeColor = Color.FromArgb(66, 133, 244);
             label11.Location = new Point(53, 11);
             label11.Name = "label11";
-            label11.Size = new Size(157, 26);
+            label11.Size = new Size(159, 26);
             label11.TabIndex = 13;
             label11.Text = "Sign in with Google";
             // 
@@ -348,7 +352,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             label9.Font = new Font("Fz Poppins", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.Location = new Point(278, 39);
             label9.Name = "label9";
-            label9.Size = new Size(108, 26);
+            label9.Size = new Size(109, 26);
             label9.TabIndex = 6;
             label9.Text = "No Account?";
             // 
@@ -369,7 +373,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             label7.Font = new Font("Fz Poppins", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label7.Location = new Point(22, 29);
             label7.Name = "label7";
-            label7.Size = new Size(162, 42);
+            label7.Size = new Size(165, 42);
             label7.TabIndex = 4;
             label7.Text = "Welcome to";
             // 
@@ -411,7 +415,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             label2.ForeColor = Color.White;
             label2.Location = new Point(71, 185);
             label2.Name = "label2";
-            label2.Size = new Size(280, 62);
+            label2.Size = new Size(296, 62);
             label2.TabIndex = 8;
             label2.Text = "TRAVEL WORLD";
             // 
@@ -422,7 +426,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             label3.ForeColor = Color.White;
             label3.Location = new Point(81, 241);
             label3.Name = "label3";
-            label3.Size = new Size(355, 28);
+            label3.Size = new Size(374, 28);
             label3.TabIndex = 9;
             label3.Text = "From sunny beaches to vibrant cities, every";
             // 
@@ -433,7 +437,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             label4.ForeColor = Color.White;
             label4.Location = new Point(81, 269);
             label4.Name = "label4";
-            label4.Size = new Size(308, 28);
+            label4.Size = new Size(323, 28);
             label4.TabIndex = 10;
             label4.Text = "flight is a new chapter in your journey";
             // 
@@ -444,7 +448,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             label5.ForeColor = Color.White;
             label5.Location = new Point(81, 297);
             label5.Name = "label5";
-            label5.Size = new Size(173, 28);
+            label5.Size = new Size(180, 28);
             label5.TabIndex = 11;
             label5.Text = "to explore the world.";
             // 
