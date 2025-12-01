@@ -37,6 +37,16 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
                 .WithMany(f => f.BookingFlights)
                 .HasForeignKey(bf => bf.FlightId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Property(bf => bf.Status)
+                .HasMaxLength(20)
+                .HasDefaultValue("Booked");
+
+            builder.HasCheckConstraint(
+                "CK_BookingFlight_Status",
+                "[Status] IN ('Booked','Rescheduled','Cancelled')"
+            );
+
         }
     }
 }

@@ -100,11 +100,11 @@
             // 
             typePromotionLbl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             typePromotionLbl.BackColor = Color.Transparent;
-            typePromotionLbl.Font = new Font("Fz Poppins", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            typePromotionLbl.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             typePromotionLbl.Location = new Point(43, 3);
             typePromotionLbl.Margin = new Padding(7, 3, 3, 3);
             typePromotionLbl.Name = "typePromotionLbl";
-            typePromotionLbl.Size = new Size(196, 36);
+            typePromotionLbl.Size = new Size(182, 26);
             typePromotionLbl.TabIndex = 1;
             typePromotionLbl.Text = "Special Campaigns";
             // 
@@ -127,7 +127,7 @@
             seeMoreBtn.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             seeMoreBtn.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             seeMoreBtn.FillColor = Color.White;
-            seeMoreBtn.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            seeMoreBtn.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             seeMoreBtn.ForeColor = Color.DodgerBlue;
             seeMoreBtn.Location = new Point(176, 3);
             seeMoreBtn.Name = "seeMoreBtn";
@@ -148,7 +148,7 @@
             filterBtn.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             filterBtn.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             filterBtn.FillColor = Color.White;
-            filterBtn.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            filterBtn.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             filterBtn.ForeColor = Color.DodgerBlue;
             filterBtn.Image = Properties.Resources.filter;
             filterBtn.ImageSize = new Size(18, 18);
@@ -176,51 +176,51 @@
             filterMenu.RenderStyle.SelectionForeColor = Color.White;
             filterMenu.RenderStyle.SeparatorColor = Color.Gainsboro;
             filterMenu.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            filterMenu.Size = new Size(208, 134);
+            filterMenu.Size = new Size(209, 94);
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(204, 6);
+            toolStripSeparator1.Size = new Size(205, 6);
             // 
             // defaultToolStripMenuItem
             // 
-            defaultToolStripMenuItem.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            defaultToolStripMenuItem.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             defaultToolStripMenuItem.Name = "defaultToolStripMenuItem";
-            defaultToolStripMenuItem.Size = new Size(207, 28);
+            defaultToolStripMenuItem.Size = new Size(208, 22);
             defaultToolStripMenuItem.Text = "Default";
             defaultToolStripMenuItem.Click += defaultToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(204, 6);
+            toolStripSeparator2.Size = new Size(205, 6);
             // 
             // promoEndingSoonToolStripMenuItem
             // 
-            promoEndingSoonToolStripMenuItem.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            promoEndingSoonToolStripMenuItem.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             promoEndingSoonToolStripMenuItem.Name = "promoEndingSoonToolStripMenuItem";
-            promoEndingSoonToolStripMenuItem.Size = new Size(207, 28);
+            promoEndingSoonToolStripMenuItem.Size = new Size(208, 22);
             promoEndingSoonToolStripMenuItem.Text = "Promo ending soon";
             promoEndingSoonToolStripMenuItem.Click += promoEndingSoonToolStripMenuItem_Click;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(204, 6);
+            toolStripSeparator3.Size = new Size(205, 6);
             // 
             // promoEndingLaterToolStripMenuItem
             // 
-            promoEndingLaterToolStripMenuItem.Font = new Font("Fz Poppins SemBd", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            promoEndingLaterToolStripMenuItem.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             promoEndingLaterToolStripMenuItem.Name = "promoEndingLaterToolStripMenuItem";
-            promoEndingLaterToolStripMenuItem.Size = new Size(207, 28);
+            promoEndingLaterToolStripMenuItem.Size = new Size(208, 22);
             promoEndingLaterToolStripMenuItem.Text = "Promo ending later";
             promoEndingLaterToolStripMenuItem.Click += promoEndingLaterToolStripMenuItem_Click;
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(204, 6);
+            toolStripSeparator4.Size = new Size(205, 6);
             // 
             // headerPnl
             // 

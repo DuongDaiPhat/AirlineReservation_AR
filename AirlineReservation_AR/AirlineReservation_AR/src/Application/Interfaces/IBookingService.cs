@@ -18,6 +18,6 @@ namespace AirlineReservation_AR.src.Application.Interfaces
         Task<Booking?> GetByReferenceAsync(string bookingReference);
         Task<bool> UpdateAsync(Booking booking);
         Task<IEnumerable<Booking>> GetByDateRangeAsync(DateTime from, DateTime to);
-        Task<IEnumerable<Booking>> SearchAsync(string keyword);
+        Task<IEnumerable<Booking>> SearchAsync(string keyword); 
     }
 }

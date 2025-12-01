@@ -1,4 +1,4 @@
-﻿using System;
+﻿`using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,6 +61,14 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static IPromotionService? _promotionService;
         private static PromotionController? _promotionController;
 
+        private static IFareRuleService? _fareRuleService;
+        private static FareRuleController? _fareRuleController;
+
+        private static IRescheduleService? _rescheduleService;
+        private static RescheduleController? _rescheduleController;
+
+        private static TicketDetailController? _ticketDetailController;
+
         private static ISeatClassService? _seatClassService;
         private static SeatClassController? _seatClassController;
 
@@ -108,6 +116,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _bookingService = new Application.Services.BookingServices();
             _paymentService = new PaymentService();
             _promotionService = new PromotionService();
+            _fareRuleService = new FareRuleService();
+            _rescheduleService = new RescheduleService();
+        
             _staffDashboardService = new StaffDashboardService();
 
             // Controller layer giữ nguyên
@@ -133,7 +144,12 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             //_bookingService = new BookingService2(new AirlineReservationDbContext(DbOptions));
             _bookingController = new BookingController(_bookingService);
             _promotionController = new PromotionController(_promotionService);
-
+            _fareRuleController = new FareRuleController(_fareRuleService);
+            _rescheduleController = new RescheduleController(_rescheduleService);
+            _ticketDetailController = new TicketDetailController(
+                _rescheduleService,
+                _fareRuleService
+            );
             _seatClassService = new SeatClassService();
             _seatClassController = new SeatClassController(_seatClassService);
             _staffDashboardController = new StaffDashboardController(_staffDashboardService);
@@ -214,5 +230,11 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         //seatClass
         public static SeatClassController SeatClassController =>
         _seatClassController ?? throw new Exception("SeatClass controller not initialized");
+
+        public static RescheduleController RescheduleConroller =>
+        _rescheduleController ?? throw new Exception("Reschedule controller not initialized");
+
+        public static TicketDetailController TicketDetailController =>
+        _ticketDetailController ?? throw new Exception("Ticket Detail controller not initialized");
     }
 }

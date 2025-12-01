@@ -128,6 +128,7 @@ namespace MomoQR
                 _controller.MarkSuccess(_bookingId, payment.TransactionId);
 
                 MessageBox.Show("Thanh toán thành công! Vé đã được phát hành.");
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else if (payment.Status == "Failed" || payment.Status == "Canceled")
@@ -136,6 +137,7 @@ namespace MomoQR
                 _controller.MarkFailed(_bookingId, "MoMo trả về thất bại");
 
                 MessageBox.Show("Thanh toán thất bại hoặc bị huỷ!");
+                this.DialogResult = DialogResult.Cancel;
                 this.Close();
             }
         }

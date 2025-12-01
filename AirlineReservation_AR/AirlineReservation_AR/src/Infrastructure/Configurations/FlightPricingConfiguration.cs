@@ -46,6 +46,14 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
                 .WithMany(sc => sc.FlightPricings)
                 .HasForeignKey(fp => fp.SeatClassId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Property(fp => fp.FareRuleId)
+               .HasColumnName("FareRuleID");
+
+            builder.HasOne(fp => fp.FareRule)
+                .WithMany()
+                .HasForeignKey(fp => fp.FareRuleId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
