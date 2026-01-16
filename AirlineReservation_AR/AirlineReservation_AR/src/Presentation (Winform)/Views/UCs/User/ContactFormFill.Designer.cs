@@ -102,9 +102,9 @@
             lblNote.ForeColor = Color.Gray;
             lblNote.Location = new Point(0, 90);
             lblNote.Name = "lblNote";
-            lblNote.Size = new Size(463, 15);
+            lblNote.Size = new Size(425, 15);
             lblNote.TabIndex = 13;
-            lblNote.Text = "* Vui lòng điền đầy đủ thông tin để nhận vé điện tử và thông tin chuyến bay qua email";
+            lblNote.Text = "* Please fill in all information to receive e-ticket and flight information via email";
             // 
             // lblFirstName
             // 
@@ -113,9 +113,9 @@
             lblFirstName.ForeColor = Color.FromArgb(51, 51, 51);
             lblFirstName.Location = new Point(0, 10);
             lblFirstName.Name = "lblFirstName";
-            lblFirstName.Size = new Size(32, 17);
+            lblFirstName.Size = new Size(77, 17);
             lblFirstName.TabIndex = 0;
-            lblFirstName.Text = "Họ*";
+            lblFirstName.Text = "Last name*";
             // 
             // txtFirstName
             // 
@@ -133,9 +133,9 @@
             errorFirstName.ForeColor = Color.Red;
             errorFirstName.Location = new Point(0, 65);
             errorFirstName.Name = "errorFirstName";
-            errorFirstName.Size = new Size(194, 15);
+            errorFirstName.Size = new Size(191, 15);
             errorFirstName.TabIndex = 2;
-            errorFirstName.Text = "Rất tiếc, vui lòng chỉ nhập chữ (a-z)";
+            errorFirstName.Text = "Sorry, please enter letters only (a-z)";
             errorFirstName.Visible = false;
             // 
             // lblLastName
@@ -145,9 +145,9 @@
             lblLastName.ForeColor = Color.FromArgb(51, 51, 51);
             lblLastName.Location = new Point(270, 10);
             lblLastName.Name = "lblLastName";
-            lblLastName.Size = new Size(109, 17);
+            lblLastName.Size = new Size(153, 17);
             lblLastName.TabIndex = 3;
-            lblLastName.Text = "Tên đệm và tên*";
+            lblLastName.Text = "Middle and First name*";
             // 
             // txtLastName
             // 
@@ -165,9 +165,9 @@
             errorLastName.ForeColor = Color.Red;
             errorLastName.Location = new Point(270, 65);
             errorLastName.Name = "errorLastName";
-            errorLastName.Size = new Size(194, 15);
+            errorLastName.Size = new Size(191, 15);
             errorLastName.TabIndex = 5;
-            errorLastName.Text = "Rất tiếc, vui lòng chỉ nhập chữ (a-z)";
+            errorLastName.Text = "Sorry, please enter letters only (a-z)";
             errorLastName.Visible = false;
             // 
             // lblPhone
@@ -177,9 +177,9 @@
             lblPhone.ForeColor = Color.FromArgb(51, 51, 51);
             lblPhone.Location = new Point(540, 10);
             lblPhone.Name = "lblPhone";
-            lblPhone.Size = new Size(131, 17);
+            lblPhone.Size = new Size(107, 17);
             lblPhone.TabIndex = 6;
-            lblPhone.Text = "Điện thoại di động*";
+            lblPhone.Text = "Phone Number*";
             // 
             // cboPhoneCode
             // 
@@ -207,9 +207,9 @@
             errorPhone.ForeColor = Color.Red;
             errorPhone.Location = new Point(540, 65);
             errorPhone.Name = "errorPhone";
-            errorPhone.Size = new Size(197, 15);
+            errorPhone.Size = new Size(158, 15);
             errorPhone.TabIndex = 9;
-            errorPhone.Text = "Điện thoại di động là phần bắt buộc";
+            errorPhone.Text = "Phone number is mandatory";
             errorPhone.Visible = false;
             // 
             // lblEmail
@@ -239,9 +239,9 @@
             errorEmail.ForeColor = Color.Red;
             errorEmail.Location = new Point(820, 65);
             errorEmail.Name = "errorEmail";
-            errorEmail.Size = new Size(139, 15);
+            errorEmail.Size = new Size(135, 15);
             errorEmail.TabIndex = 12;
-            errorEmail.Text = "VD: email@example.com";
+            errorEmail.Text = "Ex: email@example.com";
             errorEmail.Visible = false;
             // 
             // pnlHeader
@@ -262,9 +262,9 @@
             lblSubtitle.ForeColor = Color.Gray;
             lblSubtitle.Location = new Point(60, 35);
             lblSubtitle.Name = "lblSubtitle";
-            lblSubtitle.Size = new Size(183, 15);
+            lblSubtitle.Size = new Size(80, 15);
             lblSubtitle.TabIndex = 2;
-            lblSubtitle.Text = "Đang nhập với tên Kha Phạm Tân";
+            lblSubtitle.Text = "Sign in as Kha";
             // 
             // lblTitle
             // 
@@ -273,9 +273,9 @@
             lblTitle.ForeColor = Color.FromArgb(51, 51, 51);
             lblTitle.Location = new Point(60, 8);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(477, 30);
+            lblTitle.Size = new Size(214, 30);
             lblTitle.TabIndex = 1;
-            lblTitle.Text = "Thông tin liên hệ (nhận vé/phiếu thanh toán)";
+            lblTitle.Text = "Contact Infomation";
             // 
             // picUserIcon
             // 

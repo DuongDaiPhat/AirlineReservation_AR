@@ -10,5 +10,8 @@ namespace AirlineReservation_AR.src.Application.Interfaces
     public interface IPromotionService
     {
         List<PromotionDTO> GetActivePromotions();
+        bool ApplyPromotion(string promoCode, int bookingId, decimal discountAmount);
+        decimal getDiscountPercentage(string promoCode, int bookingId, decimal totalAmount);
+
     }
 }

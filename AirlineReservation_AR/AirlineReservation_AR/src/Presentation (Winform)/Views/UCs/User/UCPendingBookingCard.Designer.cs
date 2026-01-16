@@ -32,12 +32,9 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             txtFromCtyToCty = new Guna.UI2.WinForms.Guna2HtmlLabel();
             txtBookingReference = new Guna.UI2.WinForms.Guna2HtmlLabel();
             btnPaymentStatus = new Guna.UI2.WinForms.Guna2Button();
-            bntDetail = new Guna.UI2.WinForms.Guna2Button();
             btnCancel = new Guna.UI2.WinForms.Guna2Button();
             SuspendLayout();
             // 
@@ -82,29 +79,10 @@
             btnPaymentStatus.TabIndex = 3;
             btnPaymentStatus.Text = "Waiting for payment method";
             // 
-            // bntDetail
-            // 
-            bntDetail.BorderRadius = 10;
-            bntDetail.CustomizableEdges = customizableEdges3;
-            bntDetail.DisabledState.BorderColor = Color.DarkGray;
-            bntDetail.DisabledState.CustomBorderColor = Color.DarkGray;
-            bntDetail.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            bntDetail.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            bntDetail.FillColor = Color.Transparent;
-            bntDetail.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold);
-            bntDetail.ForeColor = Color.DeepSkyBlue;
-            bntDetail.Location = new Point(836, 114);
-            bntDetail.Margin = new Padding(3, 2, 3, 2);
-            bntDetail.Name = "bntDetail";
-            bntDetail.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            bntDetail.Size = new Size(111, 24);
-            bntDetail.TabIndex = 4;
-            bntDetail.Text = "Detail";
-            // 
             // btnCancel
             // 
             btnCancel.BorderRadius = 10;
-            btnCancel.CustomizableEdges = customizableEdges5;
+            btnCancel.CustomizableEdges = customizableEdges3;
             btnCancel.DisabledState.BorderColor = Color.DarkGray;
             btnCancel.DisabledState.CustomBorderColor = Color.DarkGray;
             btnCancel.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -112,10 +90,10 @@
             btnCancel.FillColor = Color.Transparent;
             btnCancel.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold);
             btnCancel.ForeColor = Color.Crimson;
-            btnCancel.Location = new Point(738, 114);
+            btnCancel.Location = new Point(843, 114);
             btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
-            btnCancel.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            btnCancel.ShadowDecoration.CustomizableEdges = customizableEdges4;
             btnCancel.Size = new Size(92, 24);
             btnCancel.TabIndex = 5;
             btnCancel.Text = "Cancel";
@@ -126,7 +104,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             Controls.Add(btnCancel);
-            Controls.Add(bntDetail);
             Controls.Add(btnPaymentStatus);
             Controls.Add(txtBookingReference);
             Controls.Add(txtFromCtyToCty);
@@ -143,7 +120,6 @@
         private Guna.UI2.WinForms.Guna2HtmlLabel txtFromCtyToCty;
         private Guna.UI2.WinForms.Guna2HtmlLabel txtBookingReference;
         private Guna.UI2.WinForms.Guna2Button btnPaymentStatus;
-        private Guna.UI2.WinForms.Guna2Button bntDetail;
         private Guna.UI2.WinForms.Guna2Button btnCancel;
     }
 }

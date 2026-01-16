@@ -17,7 +17,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
     public partial class FlightManagementControl : UserControl
     {
         private int currentPage = 1;
-        private int pageSize = 20;
+        private const int pageSize = 20;
         private int totalRecords = 0;
         private int totalPages = 0;
         private List<FlightListDtoAdmin> allFlights = new List<FlightListDtoAdmin>();
@@ -127,6 +127,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             // Enter key in textbox
             txtFlightNo.KeyDown += TxtFlightNo_KeyDown;
+            paginationControl1.PageChanged += paginationControl1_PageChanged;
         }
 
         // ============================================
@@ -141,6 +142,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 dgvFlights.Enabled = false;
                 Cursor = Cursors.WaitCursor;
 
+                if (paginationControl1 != null)
+                    paginationControl1.Enabled = false;
                 // GỌI API LẤY DỮ LIỆU
                 var flights = await _flightController.GetAllFlightsAsync();
 
@@ -148,12 +151,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 allFlights = flights.ToList();
                 filteredFlights = new List<FlightListDtoAdmin>(allFlights);
                 totalRecords = filteredFlights.Count;
-
+                currentPage = 1;
                 // Hiển thị lên DataGridView
                 LoadFlightData();
 
                 // Tắt loading
                 dgvFlights.Enabled = true;
+                if (paginationControl1 != null)
+                    paginationControl1.Enabled = true;
                 Cursor = Cursors.Default;
             }
             catch (Exception ex)
@@ -162,6 +167,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 dgvFlights.Enabled = true;
+                //if (paginationControl1 != null)
+                //    paginationControl1.Enabled = true;
                 Cursor = Cursors.Default;
             }
         }
@@ -173,6 +180,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
             if (currentPage > totalPages && totalPages > 0)
                 currentPage = totalPages;
+
+            if (paginationControl1 != null)
+            {
+                paginationControl1.TotalPages = totalPages;
+                paginationControl1.CurrentPage = currentPage;
+            }
 
             // Get data for current page
             var pagedData = filteredFlights
@@ -201,6 +214,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
                 dgvFlights.Rows[rowIndex].Tag = flight;
             }
+            UpdatePaginationInfo();
+        }
+        private void UpdatePaginationInfo()
+        {
+            int firstItem = totalRecords > 0 ? (currentPage - 1) * pageSize + 1 : 0;
+            int lastItem = Math.Min(currentPage * pageSize, totalRecords);
         }
 
         private void BtnSearch_Click(object sender, EventArgs e)
@@ -223,9 +242,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             {
                 // Get filter values
                 string flightNo = txtFlightNo.Text.Trim().ToUpper();
-                string airline = cboAirline.SelectedItem?.ToString() ?? "Tất cả";
-                string status = cboStatus.SelectedItem?.ToString() ?? "Tất cả";
-                string destination = cboDestination.SelectedItem?.ToString() ?? "Tất cả";
+                string airline = cboAirline.SelectedItem?.ToString() ?? "All";
+                string status = cboStatus.SelectedItem?.ToString() ?? "All";
+                string destination = cboDestination.SelectedItem?.ToString() ?? "All";
                 DateTime filterDate = guna2DateTimePicker1.Value.Date;
 
                 // Apply filters
@@ -238,16 +257,20 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                         match = match && f.FlightCode.Contains(flightNo);
 
                     // Filter by airline
-                    if (airline != "Tất cả")
+                    if (airline != "All" && airline != "Tất cả")
                         match = match && f.Airline == airline;
 
                     // Filter by status
-                    if (status != "Tất cả")
+                    if (status != "All" && status != "Tất cả")
                         match = match && f.Status == status;
 
                     // Filter by destination
-                    if (destination != "Tất cả")
-                        match = match && f.Route.Contains(destination.Split('(')[1].TrimEnd(')'));
+                    if (destination != "All" && destination != "Tất cả")
+                    {
+                        string destCode = destination.Split('(', ')')[1].Trim();
+                        match &= f.Route.EndsWith(destCode)
+                        || f.Route.Contains(destCode);
+                    }
 
                     // Filter by date (optional - uncomment if needed)
                     // match = match && DateTime.Parse(f.Date).Date == filterDate;
@@ -313,14 +336,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 var btnView = new Rectangle(startX, startY, buttonWidth, buttonHeight);
                 DrawActionButton(e.Graphics, btnView, "👁", Color.FromArgb(0, 188, 212), "view");
 
-                // Button 2: Edit (Blue)
-                var btnEdit = new Rectangle(startX + buttonWidth + spacing, startY, buttonWidth, buttonHeight);
-                DrawActionButton(e.Graphics, btnEdit, "✏", Color.FromArgb(33, 150, 243), "edit");
-
-                // Button 3: Delete (Red)
-                var btnDelete = new Rectangle(startX + (buttonWidth + spacing) * 2, startY, buttonWidth, buttonHeight);
-                DrawActionButton(e.Graphics, btnDelete, "🗑", Color.FromArgb(244, 67, 54), "delete");
-
                 e.Handled = true;
             }
         }
@@ -358,10 +373,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             return path;
         }
 
-        // ============================================
-        // CELL FORMATTING (Status Badges)
-        // ============================================
-
         private void DgvFlights_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             // Format Status column with colored badges
@@ -371,19 +382,19 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
                 switch (status)
                 {
-                    case "Còn chỗ":
+                    case "Available":
                         e.CellStyle.BackColor = Color.FromArgb(200, 230, 201); // Light Green
                         e.CellStyle.ForeColor = Color.FromArgb(46, 125, 50); // Dark Green
                         e.CellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
                         break;
 
-                    case "Đã đầy":
+                    case "Full":
                         e.CellStyle.BackColor = Color.FromArgb(255, 249, 196); // Light Yellow
                         e.CellStyle.ForeColor = Color.FromArgb(245, 127, 23); // Dark Yellow
                         e.CellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
                         break;
 
-                    case "Đã hủy":
+                    case "Cancelled":
                         e.CellStyle.BackColor = Color.FromArgb(255, 205, 210); // Light Red
                         e.CellStyle.ForeColor = Color.FromArgb(198, 40, 40); // Dark Red
                         e.CellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
@@ -442,29 +453,28 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         // ACTION HANDLERS
         // ============================================
 
-        private void HandleViewFlight(FlightListDtoAdmin flight)
+        private async void HandleViewFlight(FlightListDtoAdmin flight)
         {
             try
             {
-                // TODO: Mở form xem chi tiết chuyến bay (readonly)
-                MessageBox.Show(
-                    $"Xem chi tiết chuyến bay:\n\n" +
-                    $"Mã: {flight.FlightCode}\n" +
-                    $"Hãng: {flight.Airline}\n" +
-                    $"Tuyến: {flight.Route}\n" +
-                    $"Ngày: {flight.FlightDate} {flight.DepartureTime}\n" +
-                    $"Máy bay: {flight.Aircraft}\n" +
-                    $"Giá: {flight.BasePrice}\n" +
-                    $"Ghế: {flight.AvailableSeats}\n" +
-                    $"Trạng thái: {flight.Status}",
-                    "Chi tiết chuyến bay",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                var fullFlightData = await _flightController.GetFlightByIdAsync(flight.FlightId);
 
-                // Hoặc mở form khác:
-                // var detailForm = new FlightDetailForm(flight);
-                // detailForm.ShowDialog();
+                if (fullFlightData == null)
+                {
+                    MessageBox.Show("Không tìm thấy thông tin chuyến bay!", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                // Mở form chi tiết với đầy đủ thông tin
+                var detailForm = new FlightDetailForm(flight);
+                detailForm.ShowDialog();
+
+                // Nếu có thay đổi, refresh lại danh sách
+                if (detailForm.DialogResult == DialogResult.OK)
+                {
+                    // Refresh lại DataGridView
+                    LoadFlightData();
+                }
             }
             catch (Exception ex)
             {
@@ -626,6 +636,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void paginationControl1_PageChanged(object sender, int e)
+        {
+            currentPage = e;
+            LoadFlightData();
         }
     }
 }

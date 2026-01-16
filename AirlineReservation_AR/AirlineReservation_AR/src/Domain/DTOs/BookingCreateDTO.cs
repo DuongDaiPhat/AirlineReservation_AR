@@ -20,7 +20,6 @@ namespace AirlineReservation_AR.src.Domain.DTOs
         public decimal TotalAmount { get; set; }
         public decimal TaxAmount { get; set; }
         public decimal TotalFee { get; set; }
-        public List<Passenger> Passengers { get; set; } = new();
-        public List<PassengerBaggageDTO> Baggages { get; set; } = new();
+        public List<PassengerWithServicesDTO> Passengers { get; set; }
     }
 }

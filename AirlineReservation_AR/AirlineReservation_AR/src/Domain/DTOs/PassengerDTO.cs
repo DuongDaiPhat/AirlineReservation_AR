@@ -9,7 +9,7 @@ namespace AirlineReservation_AR.src.Domain.DTOs
     public class PassengerDTO
     {
         public string PassengerType { get; set; } // Adult / Child / Infant
-
+        public int Index; // to identify passenger order
         public string Title { get; set; } // Mr / Mrs / Miss
         public string FirstName { get; set; }
         public string MiddleName { get; set; }

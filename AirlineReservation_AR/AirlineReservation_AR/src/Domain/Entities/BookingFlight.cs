@@ -12,5 +12,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
         public Booking Booking { get; set; } = null!;
         public Flight Flight { get; set; } = null!;
         public ICollection<Ticket> Tickets { get; set; } = new HashSet<Ticket>();
+
+        public string Status { get; set; } = "Booked";
     }
 }

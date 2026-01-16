@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.Domain.Entities;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context
 {
@@ -42,6 +43,9 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context
         public DbSet<BookingPromotion> BookingPromotions { get; set; } = null!;
         public DbSet<Notification> Notifications { get; set; } = null!;
         public DbSet<AuditLog> AuditLogs { get; set; } = null!;
+        public DbSet<FareRule> FareRules { get; set; } = null!;
+        public DbSet<RescheduleRequest> RescheduleRequests { get; set; } = null!;
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -3,172 +3,118 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Infrastructure.DI;
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
-
     public partial class SummaryBookingControl : UserControl
     {
-        private FlightResultDTO _flight;
-        private FlightSearchParams _params;
-        private List<PassengerDTO> _passengers;
-
+        private Dictionary<string, ServiceOption> _dataPassenger;
+        public decimal _totalFlightPrice = 0;
+        public decimal _totalServicePrice = 0;
         public SummaryBookingControl()
         {
             InitializeComponent();
+
         }
 
-        public void SetData(
-            FlightResultDTO flight,
-            FlightSearchParams p,
-            List<PassengerDTO> list)
+        private void guna2HtmlLabel2_Click(object sender, EventArgs e)
         {
-            _flight = flight;
-            _params = p;
-            _passengers = list;
 
-            RenderFlightInfo();
-            RenderSummaryList();
-            RenderTotal();
         }
 
-        // -----------------------------------------------------------
-        //  Flight Info Box
-        // -----------------------------------------------------------
-        private void RenderFlightInfo()
+        private void FlightTicketSummary_Load(object sender, EventArgs e)
         {
-            lblRoute.Text = $"{_flight.FromAirportCode} → {_flight.ToAirportCode}";
-            lblTime.Text = $"{_flight.DepartureTime:hh\\:mm} → {_flight.ArrivalTime:hh\\:mm}";
-            lblAirline.Text = $"{_flight.AirlineName}";
-            lblDates.Text = $"{_flight.FlightDate:ddd, dd MMM yyyy}";
+
+        }
+        public void SetData(FlightResultDTO flight,FlightSearchParams _param, Dictionary<string, ServiceOption> dataPasenger)
+        {
+            _dataPassenger = dataPasenger;
+            var user = DIContainer.CurrentUser;
+            txtPassengerInfo.RightToLeft = RightToLeft.Yes;
+            txtPassengerInfo.Text = $"Client: {user.FullName.ToString()}";
+            txtFromToPlace.Text = $"{flight.FromAirportName.ToString()}({flight.FromAirportCode.ToString()}) -> {flight.ToAirportName.ToString()}({flight.ToAirportCode.ToString()})";
+            txtAirline.Text = $"{flight.AirlineName.ToString()}";
+            txtSeatClass.Text = $"{flight.SelectedSeatClassName.ToString()}";
+            txtTOTime.Text = $"{flight.DepartureTime.ToString()}";
+            txtTODay.Text = $"{flight.FlightDate.ToString("ddd, dd MMM", System.Globalization.CultureInfo.InvariantCulture)}";
+            txtTOYear.Text = $"{flight.FlightDate.ToString("yyyy", System.Globalization.CultureInfo.InvariantCulture)}";
+            txtArrTime.Text = $"{flight.ArrivalTime.ToString()}";
+            txtArrDay.Text = $"{flight.FlightDate.AddMinutes(flight.DurationMinutes).ToString("ddd, dd MMM", System.Globalization.CultureInfo.InvariantCulture)}";
+            txtArrYear.Text = $"{flight.FlightDate.AddMinutes(flight.DurationMinutes).ToString("yyyy", System.Globalization.CultureInfo.InvariantCulture)}";
+            txtEstimateTime.Text = $"{(flight.DurationMinutes / 60).ToString("00")}h {(flight.DurationMinutes % 60).ToString("00")}m";
+            pasengerCbx.DataSource = _dataPassenger.ToList();
+            pasengerCbx.DisplayMember = "Key";
+            pasengerCbx.ValueMember = "Value";
+
+            int nAdult = _dataPassenger.Count(kvp => kvp.Key.StartsWith("Adult"));
+            int nChild = _dataPassenger.Count(kvp => kvp.Key.StartsWith("Child"));
+            int nInfant = _dataPassenger.Count(kvp => kvp.Key.StartsWith("Infant"));
+
+            _totalFlightPrice = (flight.Price * nAdult) + (flight.Price * 0.75m * nChild) + (flight.Price * 0.1m * nInfant);
+            _totalServicePrice = _dataPassenger.Values.Sum(s => s.totalPrice);
+            txtFlightPrice.Text = $"{_totalFlightPrice.ToString("N0")} VND";
+            txtServicePrice.Text = $"{_totalServicePrice.ToString("N0")} VND";
+            txtTotal.Text = $"{(_totalFlightPrice + _totalServicePrice).ToString("N0")} VND";
         }
 
-        // -----------------------------------------------------------
-        //  Price List
-        // -----------------------------------------------------------
-        private void RenderSummaryList()
+        private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            flowPriceList.Controls.Clear();
-
-            int adults = _params.Adult;
-            int children = _params.Child;
-            int infants = _params.Infant;
-
-            AddItem($"Người lớn x{adults}",
-                adults * _flight.Price);
-
-            if (children > 0)
-                AddItem($"Trẻ em x{children}",
-                    children * (_flight.Price * 0.9M)); // ví dụ Traveloka
-
-            if (infants > 0)
-                AddItem($"Em bé x{infants}",
-                    infants * (_flight.Price * 0.7M));
-        }
-
-        private void AddItem(string name, decimal price)
-        {
-            var lbl = new Label
+            if (pasengerCbx.SelectedItem is KeyValuePair<string, ServiceOption> item)
             {
-                Text = $"{name}",
-                Font = new Font("Segoe UI", 10),
-                AutoSize = true
-            };
-
-            var lblP = new Label
-            {
-                Text = $"{price:N0} VND",
-                Font = new Font("Segoe UI", 10),
-                AutoSize = true,
-                TextAlign = ContentAlignment.MiddleRight
-            };
-
-            var panel = new Panel
-            {
-                Width = 320,
-                Height = 25
-            };
-
-            lbl.Location = new Point(0, 3);
-            lblP.Location = new Point(200, 3);
-
-            panel.Controls.Add(lbl);
-            panel.Controls.Add(lblP);
-
-            flowPriceList.Controls.Add(panel);
-        }
-
-        // -----------------------------------------------------------
-        // Total
-        // -----------------------------------------------------------
-        private void RenderTotal()
-        {
-            decimal total = 0, totalVAT = 0;
-
-
-            total += (_params.Adult * _flight.Price);
-            total += (_params.Child * (_flight.Price * 0.9M));
-            total += (_params.Infant * (_flight.Price * 0.7M));
-            pricingVAT.Text = $"{total:N0} VND";
-            totalVAT += total * 1.1M;
-            lblTotalPrice.Text = $"{totalVAT:N0} VND";
-        }
-
-        public decimal TotalPrice
-        {
-            get
-            {
-                var text = lblTotalPrice.Text
-                    .Replace("VND", "")
-                    .Replace(",", "")
-                    .Trim();
-
-                if (decimal.TryParse(text, out var value))
-                    return value;
-
-                return 0;
+                loadService(item.Value);
             }
         }
-
-        public void AddExtraCost(string name, decimal amount)
+        private void loadService(ServiceOption option)
         {
-            // Thêm dòng phụ phí
-            var item = new Label
+            if (option.Baggage != null)
             {
-                Text = $"{name}: {amount:N0} VND",
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                AutoSize = true,
-                ForeColor = Color.DarkRed
-            };
-            flowPriceList.Controls.Add(item);
+                baggageTxt.Text = $"{option.Baggage.ServiceName.ToString()}";
+                baggagePrice.Text = $"{option.Baggage.BasePrice.ToString("N0")} VND";
+            }
+            else
+            {
+                baggageTxt.Text = "No Baggage";
+                baggagePrice.Text = "0";
+            }
 
-            // Lấy lại đúng total gốc từ pricingVAT
-            decimal baseTotal = decimal.Parse(
-                pricingVAT.Text.Replace("VND", "").Replace(",", "")
-            );
+            if (option.Meal != null)
+            {
+                mealTxt.Text = $"{option.Meal.ServiceName.ToString()} VND";
+                mealPrice.Text =$"{ option.Meal.BasePrice.ToString("N0")} VND" ;
+            }
+            else
+            {
+                mealTxt.Text = "No Meal";
+                mealPrice.Text = "0";
+            }
+            if (option.Priority != null)
+            {
+                priorityTxt.Text = $"{option.Priority.ServiceName.ToString()}";
+                priorityPrice.Text = $"{option.Priority.BasePrice.ToString("N0")} VND";
+            }
+            else
+            {
+                priorityTxt.Text = "No Priority";
+                priorityPrice.Text = "0";
 
-            decimal newTotal = baseTotal + amount;
+            }
+        }
+        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
+        {
 
-            lblTotalPrice.Text = $"{newTotal:N0} VND";
         }
 
-        public void ClearExtraCosts()
+        private void txtPassengerInfo_Click(object sender, EventArgs e)
         {
-            var toRemove = new List<Control>();
-            foreach (Control c in flowPriceList.Controls)
-            {
-                if (c.ForeColor == Color.DarkRed)
-                    toRemove.Add(c);
-            }
-            foreach (var item in toRemove)
-                flowPriceList.Controls.Remove(item);
 
-            RenderTotal();
         }
 
     }

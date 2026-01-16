@@ -13,8 +13,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
     {
         private FlightResultDTO _selectedFlight;
         private FlightSearchParams _searchParams;
-        private List<PassengerBaggageDTO> _savedBaggage = new();
 
+        private Dictionary<string, ServiceOption> _passengerServices = new();
+        List<PassengerWithServicesDTO> _passengerBundles = new();
         public UC_FilloutInform()
         {
             InitializeComponent();
@@ -26,6 +27,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             _searchParams = p;
             RenderContactForm();
             RenderPassengers();
+            renderPassengerSummary();
             RenderDefaultSummary();
         }
 
@@ -35,15 +37,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             var contact = new ContactFormFill();
             contact.Dock = DockStyle.Top;
             contactPnl.Controls.Add(contact);
-        }
-
-        private void RenderSummary(List<PassengerDTO> passengers)
-        {
-            pnlSummary.Controls.Clear();
-            var summary = new SummaryBookingControl();
-            summary.Dock = DockStyle.Fill;
-            summary.SetData(_selectedFlight, _searchParams, passengers);
-            pnlSummary.Controls.Add(summary);
         }
 
         private void RenderPassengers()
@@ -94,42 +87,43 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         }
         private void btnAddBaggage_Click(object sender, EventArgs e)
         {
-            var types = new List<string>();
-
-            // Lấy đúng loại từ PassengerFormFill
-            foreach (var pf in GetPassengerForms())
-                types.Add(pf.PassengerType);
-
-            var popup = new PopupAddBaggage(_selectedFlight, types, _savedBaggage);
-
-            if (popup.ShowDialog() == DialogResult.OK)
+            renderPassengerSummary();
+            var popup = new PopupAddBaggage(_passengerServices);
+            popup.OnServicesChanged += service =>
             {
-                var list = BuildPassengerList();
-                if (list != null) RenderSummary(list);
+                _passengerServices = service;
+                RenderDefaultSummary();
 
-                var baggageList = popup.SelectedBaggage;
-                UpdateSummaryWithBaggage(baggageList);
+            };
+            popup.ShowDialog();
+        }
 
-                MessageBox.Show("Đã chọn hành lý!",
-                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                _savedBaggage = popup.SelectedBaggage;
+        private void renderPassengerSummary()
+        {
+            // Adult
+            for (int i = 1; i <= _searchParams.Adult; i++)
+            {
+                string key = $"Adult {i}";
+                if (!_passengerServices.ContainsKey(key))
+                    _passengerServices[key] = new ServiceOption();
             }
 
+            // Child
+            for (int i = 1; i <= _searchParams.Child; i++)
+            {
+                string key = $"Child {i}";
+                if (!_passengerServices.ContainsKey(key))
+                    _passengerServices[key] = new ServiceOption();
+            }
+
+            // Infant
+            for (int i = 1; i <= _searchParams.Infant; i++)
+            {
+                string key = $"Infant {i}";
+                if (!_passengerServices.ContainsKey(key))
+                    _passengerServices[key] = new ServiceOption();
+            }
         }
-
-        private void UpdateSummaryWithBaggage(List<PassengerBaggageDTO> bag)
-        {
-            var summary = GetSummaryControl();
-            if (summary == null) return;
-
-            decimal baggageTotal = bag.Sum(x => x.Price);
-            summary.ClearExtraCosts();
-            summary.AddExtraCost("Hành lý", baggageTotal);
-        }
-
-
-
-
         private void guna2Button2_Click(object sender, EventArgs e)
         {
             // 1. Validate contact info
@@ -159,11 +153,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         }
 
 
-        private SummaryBookingControl GetSummaryControl()
-        {
-            return pnlSummary.Controls.OfType<SummaryBookingControl>().FirstOrDefault();
-        }
-
         private ContactFormFill GetContactForm()
         {
             return contactPnl.Controls.OfType<ContactFormFill>().FirstOrDefault();
@@ -173,12 +162,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         {
             return formPnl.Controls.OfType<PassengerFormFill>().ToList();
         }
-        private List<Passenger> BuildPassengerEntityList()
+        private void BuildPassengerEntityList()
         {
-            var result = new List<Passenger>();
-
+            _passengerBundles.Clear();
             foreach (var pf in GetPassengerForms())
             {
+                if (!pf.ValidatePassenger())
+                {
+                    MessageBox.Show("Passenger information is invalid");
+                    return;
+                }
+
                 var dto = pf.GetPassenger();
 
                 string gender = null;
@@ -214,11 +208,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                     CountryIssue = dto.CountryIssue,
                     ExpireDatePassport = dto.PassportExpire
                 };
+                string key = $"{dto.PassengerType} {dto.Index}";
+                var service = _passengerServices[key];
 
-                result.Add(passenger);
+                _passengerBundles.Add(new PassengerWithServicesDTO
+                {
+                    Passenger = passenger,
+                    SelectedServices = service
+                });
+
             }
 
-            return result;
         }
 
 
@@ -227,9 +227,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             var contactForm = GetContactForm();
             var contact = contactForm?.GetContact();
             var passengers = GetPassengerForms().Select(x => x.GetPassenger()).ToList();
-            var summary = GetSummaryControl();
+            BuildPassengerEntityList();
             var user = DIContainer.CurrentUser;
-
             return new BookingCreateDTO
             {
                 UserId = user.UserId,
@@ -238,40 +237,18 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 SpecialRequest = "",
                 FlightId = _selectedFlight.FlightId,
                 TripType = _searchParams.ReturnDate == null ? "OneWay" : "RoundTrip",
-                TotalAmount = summary != null ? summary.TotalPrice : 0,
-                TaxAmount = summary!= null ? summary.TotalPrice*0.1M : 0,
+                TotalAmount = summaryBookingControl1._totalServicePrice * 1.1M + summaryBookingControl1._totalFlightPrice,
+                TaxAmount = (summaryBookingControl1._totalServicePrice * 0.1M),
                 TotalFee = 0,
-                Passengers = BuildPassengerEntityList(),
-                Baggages = _savedBaggage
-
+                Passengers = _passengerBundles,
             };
         }
 
         private void RenderDefaultSummary()
         {
-            pnlSummary.Controls.Clear();
-
-            var defaultPassengers = new List<PassengerDTO>();
-            int adults = _searchParams.Adult;
-            int childs = _searchParams.Child;
-            int infants = _searchParams.Infant;
-
-            // Tạo DTO tạm mà không cần validate
-            for (int i = 0; i < adults; i++)
-                defaultPassengers.Add(new PassengerDTO { PassengerType = "Adult" });
-
-            for (int i = 0; i < childs; i++)
-                defaultPassengers.Add(new PassengerDTO { PassengerType = "Child" });
-
-            for (int i = 0; i < infants; i++)
-                defaultPassengers.Add(new PassengerDTO { PassengerType = "Infant" });
-
-            var summary = new SummaryBookingControl();
-            summary.Dock = DockStyle.Fill;
-            summary.SetData(_selectedFlight, _searchParams, defaultPassengers);
-
-            pnlSummary.Controls.Add(summary);
+          summaryBookingControl1.SetData(_selectedFlight, _searchParams, _passengerServices);
         }
+
 
     }
 }

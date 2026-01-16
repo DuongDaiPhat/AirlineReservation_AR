@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AR_AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Staff
+namespace AirlineReservation_AR.src.Domain.Enums
 {
-    internal class Class1
+    internal class Enums
     {
     }
 }

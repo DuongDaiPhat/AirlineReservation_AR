@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges28 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panelFilters = new Panel();
             btnAddFlight = new Guna.UI2.WinForms.Guna2Button();
             cboDestination = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -67,8 +67,13 @@
             colSeats = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
             colActions = new DataGridViewTextBoxColumn();
+            panel1 = new Panel();
+            paginationControl1 = new PaginationControl();
+            panel2 = new Panel();
             panelFilters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvFlights).BeginInit();
+            panel1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panelFilters
@@ -95,7 +100,7 @@
             // btnAddFlight
             // 
             btnAddFlight.BorderRadius = 8;
-            btnAddFlight.CustomizableEdges = customizableEdges15;
+            btnAddFlight.CustomizableEdges = customizableEdges1;
             btnAddFlight.DisabledState.BorderColor = Color.DarkGray;
             btnAddFlight.DisabledState.CustomBorderColor = Color.DarkGray;
             btnAddFlight.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -105,7 +110,7 @@
             btnAddFlight.Location = new Point(770, 110);
             btnAddFlight.Margin = new Padding(0);
             btnAddFlight.Name = "btnAddFlight";
-            btnAddFlight.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            btnAddFlight.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnAddFlight.Size = new Size(205, 40);
             btnAddFlight.TabIndex = 11;
             btnAddFlight.Text = "+ Thêm chuyến bay mới";
@@ -115,7 +120,7 @@
             // 
             cboDestination.BackColor = Color.Transparent;
             cboDestination.BorderRadius = 8;
-            cboDestination.CustomizableEdges = customizableEdges17;
+            cboDestination.CustomizableEdges = customizableEdges3;
             cboDestination.DrawMode = DrawMode.OwnerDrawFixed;
             cboDestination.DropDownStyle = ComboBoxStyle.DropDownList;
             cboDestination.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -125,14 +130,14 @@
             cboDestination.ItemHeight = 30;
             cboDestination.Location = new Point(20, 115);
             cboDestination.Name = "cboDestination";
-            cboDestination.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            cboDestination.ShadowDecoration.CustomizableEdges = customizableEdges4;
             cboDestination.Size = new Size(200, 36);
             cboDestination.TabIndex = 10;
             // 
             // btnSearch
             // 
             btnSearch.BorderRadius = 8;
-            btnSearch.CustomizableEdges = customizableEdges19;
+            btnSearch.CustomizableEdges = customizableEdges5;
             btnSearch.DisabledState.BorderColor = Color.DarkGray;
             btnSearch.DisabledState.CustomBorderColor = Color.DarkGray;
             btnSearch.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -143,7 +148,7 @@
             btnSearch.Location = new Point(810, 40);
             btnSearch.Margin = new Padding(0);
             btnSearch.Name = "btnSearch";
-            btnSearch.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            btnSearch.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnSearch.Size = new Size(120, 35);
             btnSearch.TabIndex = 9;
             btnSearch.Text = "🔍 Tìm kiếm";
@@ -153,7 +158,7 @@
             // 
             cboStatus.BackColor = Color.Transparent;
             cboStatus.BorderRadius = 8;
-            cboStatus.CustomizableEdges = customizableEdges21;
+            cboStatus.CustomizableEdges = customizableEdges7;
             cboStatus.DrawMode = DrawMode.OwnerDrawFixed;
             cboStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cboStatus.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -164,7 +169,7 @@
             cboStatus.Location = new Point(640, 40);
             cboStatus.Margin = new Padding(0);
             cboStatus.Name = "cboStatus";
-            cboStatus.ShadowDecoration.CustomizableEdges = customizableEdges22;
+            cboStatus.ShadowDecoration.CustomizableEdges = customizableEdges8;
             cboStatus.Size = new Size(150, 36);
             cboStatus.TabIndex = 8;
             // 
@@ -172,7 +177,7 @@
             // 
             guna2DateTimePicker1.BorderRadius = 8;
             guna2DateTimePicker1.Checked = true;
-            guna2DateTimePicker1.CustomizableEdges = customizableEdges23;
+            guna2DateTimePicker1.CustomizableEdges = customizableEdges9;
             guna2DateTimePicker1.FillColor = Color.White;
             guna2DateTimePicker1.Font = new Font("Segoe UI", 9F);
             guna2DateTimePicker1.Format = DateTimePickerFormat.Short;
@@ -181,7 +186,7 @@
             guna2DateTimePicker1.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
             guna2DateTimePicker1.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             guna2DateTimePicker1.Name = "guna2DateTimePicker1";
-            guna2DateTimePicker1.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            guna2DateTimePicker1.ShadowDecoration.CustomizableEdges = customizableEdges10;
             guna2DateTimePicker1.Size = new Size(180, 30);
             guna2DateTimePicker1.TabIndex = 7;
             guna2DateTimePicker1.Value = new DateTime(2025, 11, 20, 13, 12, 27, 30);
@@ -190,7 +195,7 @@
             // 
             cboAirline.BackColor = Color.Transparent;
             cboAirline.BorderRadius = 8;
-            cboAirline.CustomizableEdges = customizableEdges25;
+            cboAirline.CustomizableEdges = customizableEdges11;
             cboAirline.DrawMode = DrawMode.OwnerDrawFixed;
             cboAirline.DropDownStyle = ComboBoxStyle.DropDownList;
             cboAirline.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -201,7 +206,7 @@
             cboAirline.Location = new Point(240, 42);
             cboAirline.Margin = new Padding(0);
             cboAirline.Name = "cboAirline";
-            cboAirline.ShadowDecoration.CustomizableEdges = customizableEdges26;
+            cboAirline.ShadowDecoration.CustomizableEdges = customizableEdges12;
             cboAirline.Size = new Size(180, 36);
             cboAirline.TabIndex = 6;
             // 
@@ -250,7 +255,7 @@
             // txtFlightNo
             // 
             txtFlightNo.BorderRadius = 8;
-            txtFlightNo.CustomizableEdges = customizableEdges27;
+            txtFlightNo.CustomizableEdges = customizableEdges13;
             txtFlightNo.DefaultText = "";
             txtFlightNo.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtFlightNo.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -264,7 +269,7 @@
             txtFlightNo.Name = "txtFlightNo";
             txtFlightNo.PlaceholderText = "VD: VN210";
             txtFlightNo.SelectedText = "";
-            txtFlightNo.ShadowDecoration.CustomizableEdges = customizableEdges28;
+            txtFlightNo.ShadowDecoration.CustomizableEdges = customizableEdges14;
             txtFlightNo.Size = new Size(200, 30);
             txtFlightNo.TabIndex = 1;
             txtFlightNo.KeyDown += TxtFlightNo_KeyDown;
@@ -290,11 +295,12 @@
             dgvFlights.Columns.AddRange(new DataGridViewColumn[] { colFlightCode, colAirline, colRoute, colDate, colDuration, colDeparture, colAircraft, colPrice, colSeats, colStatus, colActions });
             dgvFlights.Dock = DockStyle.Fill;
             dgvFlights.GridColor = Color.FromArgb(224, 224, 224);
-            dgvFlights.Location = new Point(15, 190);
+            dgvFlights.Location = new Point(0, 0);
             dgvFlights.Margin = new Padding(0);
             dgvFlights.MultiSelect = false;
             dgvFlights.Name = "dgvFlights";
             dgvFlights.RowHeadersVisible = false;
+            dgvFlights.RowHeadersWidth = 51;
             dgvFlights.RowTemplate.Height = 50;
             dgvFlights.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvFlights.Size = new Size(1010, 445);
@@ -305,6 +311,7 @@
             // 
             colFlightCode.FillWeight = 176.981171F;
             colFlightCode.HeaderText = "MÃ CHUYẾN BAY";
+            colFlightCode.MinimumWidth = 6;
             colFlightCode.Name = "colFlightCode";
             colFlightCode.Width = 120;
             // 
@@ -312,6 +319,7 @@
             // 
             colAirline.FillWeight = 820.8122F;
             colAirline.HeaderText = "HÃNG";
+            colAirline.MinimumWidth = 6;
             colAirline.Name = "colAirline";
             colAirline.Width = 150;
             // 
@@ -319,6 +327,7 @@
             // 
             colRoute.FillWeight = 11.3562918F;
             colRoute.HeaderText = "TUYẾN BAY";
+            colRoute.MinimumWidth = 6;
             colRoute.Name = "colRoute";
             colRoute.Width = 120;
             // 
@@ -326,6 +335,7 @@
             // 
             colDate.FillWeight = 11.3562918F;
             colDate.HeaderText = "NGÀY BAY";
+            colDate.MinimumWidth = 6;
             colDate.Name = "colDate";
             colDate.Width = 120;
             // 
@@ -333,24 +343,31 @@
             // 
             colDuration.FillWeight = 11.3562918F;
             colDuration.HeaderText = "THỜI GIAN BAY";
+            colDuration.MinimumWidth = 6;
             colDuration.Name = "colDuration";
+            colDuration.Width = 125;
             // 
             // colDeparture
             // 
             colDeparture.FillWeight = 11.3562918F;
             colDeparture.HeaderText = "GIỜ KHỞI HÀNH";
+            colDeparture.MinimumWidth = 6;
             colDeparture.Name = "colDeparture";
+            colDeparture.Width = 125;
             // 
             // colAircraft
             // 
             colAircraft.FillWeight = 11.3562918F;
             colAircraft.HeaderText = "MÁY BAY";
+            colAircraft.MinimumWidth = 6;
             colAircraft.Name = "colAircraft";
+            colAircraft.Width = 125;
             // 
             // colPrice
             // 
             colPrice.FillWeight = 11.3562918F;
             colPrice.HeaderText = "GIÁ CƠ BẢN";
+            colPrice.MinimumWidth = 6;
             colPrice.Name = "colPrice";
             colPrice.Width = 120;
             // 
@@ -358,35 +375,80 @@
             // 
             colSeats.FillWeight = 11.3562918F;
             colSeats.HeaderText = "GHẾ TRỐNG";
+            colSeats.MinimumWidth = 6;
             colSeats.Name = "colSeats";
+            colSeats.Width = 125;
             // 
             // colStatus
             // 
             colStatus.FillWeight = 11.3562918F;
             colStatus.HeaderText = "TRẠNG THÁI";
+            colStatus.MinimumWidth = 6;
             colStatus.Name = "colStatus";
+            colStatus.Width = 125;
             // 
             // colActions
             // 
             colActions.FillWeight = 11.3562918F;
             colActions.HeaderText = "THAO TÁC";
+            colActions.MinimumWidth = 6;
             colActions.Name = "colActions";
             colActions.Width = 180;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(paginationControl1);
+            panel1.Dock = DockStyle.Bottom;
+            panel1.Location = new Point(15, 635);
+            panel1.Margin = new Padding(0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1010, 50);
+            panel1.TabIndex = 2;
+            // 
+            // paginationControl1
+            // 
+            paginationControl1.ActiveBorderColor = Color.FromArgb(255, 105, 180);
+            paginationControl1.ActiveButtonColor = Color.FromArgb(255, 105, 180);
+            paginationControl1.ActiveTextColor = Color.White;
+            paginationControl1.BackColor = Color.White;
+            paginationControl1.Dock = DockStyle.Fill;
+            paginationControl1.HoverButtonColor = Color.FromArgb(255, 200, 220);
+            paginationControl1.InactiveBorderColor = Color.FromArgb(220, 220, 220);
+            paginationControl1.InactiveButtonColor = Color.White;
+            paginationControl1.InactiveTextColor = Color.FromArgb(120, 120, 120);
+            paginationControl1.Location = new Point(0, 0);
+            paginationControl1.Margin = new Padding(0);
+            paginationControl1.Name = "paginationControl1";
+            paginationControl1.Size = new Size(1010, 50);
+            paginationControl1.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(dgvFlights);
+            panel2.Dock = DockStyle.Fill;
+            panel2.Location = new Point(15, 190);
+            panel2.Margin = new Padding(0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1010, 445);
+            panel2.TabIndex = 3;
             // 
             // FlightManagementControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            Controls.Add(dgvFlights);
+            Controls.Add(panel2);
+            Controls.Add(panel1);
             Controls.Add(panelFilters);
             Margin = new Padding(0);
             Name = "FlightManagementControl";
             Padding = new Padding(15);
-            Size = new Size(1040, 650);
+            Size = new Size(1040, 700);
             panelFilters.ResumeLayout(false);
             panelFilters.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvFlights).EndInit();
+            panel1.ResumeLayout(false);
+            panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -417,5 +479,8 @@
         private DataGridViewTextBoxColumn colStatus;
         private DataGridViewTextBoxColumn colActions;
         private Guna.UI2.WinForms.Guna2Button btnAddFlight;
+        private Panel panel1;
+        private PaginationControl paginationControl1;
+        private Panel panel2;
     }
 }

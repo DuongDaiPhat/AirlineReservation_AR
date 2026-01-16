@@ -7,6 +7,7 @@ using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
+using AirlineReservation_AR.src.Shared.Helper;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservation_AR.src.Application.Services
@@ -21,7 +22,7 @@ namespace AirlineReservation_AR.src.Application.Services
             var booking = new Booking
             {
                 UserId = dto.UserId,
-                BookingReference = "BK-" + DateTime.Now.Ticks,
+                BookingReference = BookingCodeGenerator.GenerateBookingCode(),
                 BookingDate = DateTime.Now,
                 Status = "Pending",
                 Currency = "VND",
@@ -48,28 +49,54 @@ namespace AirlineReservation_AR.src.Application.Services
 
             foreach (var p in dto.Passengers)
             {
-                p.BookingId = booking.BookingId;
-                db.Passengers.Add(p);
+                p.Passenger.BookingId = booking.BookingId;
+                db.Passengers.Add(p.Passenger);
             }
             db.SaveChanges();
 
-            foreach (var bg in dto.Baggages)
+            foreach (var bundle in dto.Passengers)
             {
-                // tìm đúng passenger theo PassengerIndex
-                var passenger = db.Passengers
-                    .Where(p => p.BookingId == booking.BookingId)
-                    .OrderBy(p => p.PassengerId)
-                    .Skip(bg.PassengerIndex - 1)
-                    .FirstOrDefault();
+               int passengerId = bundle.Passenger.PassengerId;
+               if(bundle.SelectedServices != null)
+               {
+                 if(bundle.SelectedServices.Baggage.ServiceId != 0)
+                 {
+                        db.BookingServices.Add(new BookingService
+                        {
+                            BookingId = booking.BookingId,
+                            PassengerId = passengerId,
+                            ServiceId = bundle.SelectedServices.Baggage.ServiceId,
+                            Quantity = 1,
+                            UnitPrice = bundle.SelectedServices.Baggage.BasePrice,
+                        });
+                 }
 
-                db.BookingServices.Add(new BookingService
-                {
-                    BookingId = booking.BookingId,
-                    PassengerId = passenger.PassengerId,
-                    ServiceId = bg.ServiceType,   // serviceType = baggage type
-                    Quantity = 1,
-                    UnitPrice = bg.Price
-                });
+                 if (bundle.SelectedServices.Meal.ServiceId != 0)
+                 {
+                        db.BookingServices.Add(new BookingService
+                        {
+                            BookingId = booking.BookingId,
+                            PassengerId = passengerId,
+                            ServiceId = bundle.SelectedServices.Meal.ServiceId,
+                            Quantity = 1,
+                            UnitPrice = bundle.SelectedServices.Meal.BasePrice,
+                        });
+                 }
+
+                 if (bundle.SelectedServices.Priority.ServiceId != 0)
+                 {
+                        db.BookingServices.Add(new BookingService
+                        {
+                            BookingId = booking.BookingId,
+                            PassengerId = passengerId,
+                            ServiceId = bundle.SelectedServices.Priority.ServiceId,
+                            Quantity = 1,
+                            UnitPrice = bundle.SelectedServices.Priority.BasePrice,
+                        });
+                  }
+
+                }
+
             }
             db.SaveChanges();
             return booking.BookingId;

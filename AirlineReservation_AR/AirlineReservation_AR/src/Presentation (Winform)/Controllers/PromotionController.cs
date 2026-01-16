@@ -20,5 +20,15 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
 
         public List<PromotionDTO> GetActivePromotions()
             => _promotionService.GetActivePromotions();
+
+        public bool ApplyPromotion(string promoCode, int bookingId, decimal totalAmount)
+        {
+            return _promotionService.ApplyPromotion(promoCode, bookingId, totalAmount);
+        }
+
+        public decimal getDiscountPercentage(string promoCode, int bookingId, decimal totalAmount)
+        {
+            return _promotionService.getDiscountPercentage(promoCode, bookingId, totalAmount);
+        }
     }
 }

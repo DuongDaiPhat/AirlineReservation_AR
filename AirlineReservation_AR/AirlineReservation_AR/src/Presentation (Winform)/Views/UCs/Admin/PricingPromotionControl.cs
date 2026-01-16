@@ -18,8 +18,21 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 {
     public partial class PricingPromotionControl : UserControl
     {
+        //private List<FlightPricingDtoAdmin> _flightPricings = new List<FlightPricingDtoAdmin>();
+        //private List<PromotionDtoAdmin> _promotions = new List<PromotionDtoAdmin>();
         private List<FlightPricingDtoAdmin> _flightPricings = new List<FlightPricingDtoAdmin>();
+        private List<FlightPricingDtoAdmin> _filteredPricings = new List<FlightPricingDtoAdmin>();
+
         private List<PromotionDtoAdmin> _promotions = new List<PromotionDtoAdmin>();
+        private List<PromotionDtoAdmin> _filteredPromotions = new List<PromotionDtoAdmin>();
+
+        private int _currentPricingPage = 1;
+        private int _pricingPageSize = 4;
+        private int _totalPricingPages = 1;
+
+        private int _currentPromoPage = 1;
+        private int _promoPageSize = 3;
+        private int _totalPromoPages = 1;
         public PricingPromotionControl()
         {
             InitializeComponent();
@@ -31,8 +44,31 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             //LoadPromoCards();
             //LoadStatCards();
             LoadDataAsync();
+            InitializePagination();
+        }
+        private void InitializePagination()
+        {
+            // Đăng ký events cho Pricing Pagination
+            paginationPricing.PageChanged += PaginationPricing_PageChanged;
+            paginationPricing.CurrentPage = 1;
+            paginationPricing.TotalPages = 1;
+
+            // Đăng ký events cho Promo Pagination
+            paginationPromo.PageChanged += PaginationPromo_PageChanged;
+            paginationPromo.CurrentPage = 1;
+            paginationPromo.TotalPages = 1;
+        }
+        private void PaginationPricing_PageChanged(object sender, int pageNumber)
+        {
+            _currentPricingPage = pageNumber;
+            LoadPricingCards();
         }
 
+        private void PaginationPromo_PageChanged(object sender, int pageNumber)
+        {
+            _currentPromoPage = pageNumber;
+            LoadPromoCards();
+        }
         private void RegisterEventHandlers()
         {
             // Hủy đăng ký cũ (phòng trường hợp được gọi nhiều lần)
@@ -91,6 +127,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             if (response.Success && response.Data != null)
             {
                 _flightPricings = response.Data.ToList();
+                _filteredPricings = _flightPricings.ToList();
+                _currentPricingPage = 1; // Reset về trang 1
+                UpdatePricingPagination();
             }
             else
             {
@@ -105,12 +144,86 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             if (response.Success && response.Data != null)
             {
                 _promotions = response.Data.ToList();
+                _filteredPromotions = _promotions.ToList();
+                _currentPromoPage = 1; // Reset về trang 1
+                UpdatePromoPagination();
             }
             else
             {
                 MessageBox.Show(response.Message, "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+        private void UpdatePricingPagination()
+        {
+            int totalRecords = _filteredPricings.Count;
+            _totalPricingPages = totalRecords > 0
+                ? (int)Math.Ceiling((double)totalRecords / _pricingPageSize)
+                : 1;
+
+            if (_currentPricingPage > _totalPricingPages)
+            {
+                _currentPricingPage = _totalPricingPages;
+            }
+
+            paginationPricing.TotalPages = _totalPricingPages;
+            paginationPricing.CurrentPage = _currentPricingPage;
+        }
+
+        private List<FlightPricingDtoAdmin> GetPagedPricings()
+        {
+            if (_filteredPricings == null || _filteredPricings.Count == 0)
+                return new List<FlightPricingDtoAdmin>();
+
+            _totalPricingPages = (int)Math.Ceiling((double)_filteredPricings.Count / _pricingPageSize);
+
+            if (_currentPricingPage < 1)
+                _currentPricingPage = 1;
+
+            if (_currentPricingPage > _totalPricingPages)
+                _currentPricingPage = _totalPricingPages;
+
+            int skip = (_currentPricingPage - 1) * _pricingPageSize;
+
+            return _filteredPricings
+                .Skip(skip)
+                .Take(_pricingPageSize)
+                .ToList();
+        }
+        private void UpdatePromoPagination()
+        {
+            int totalRecords = _filteredPromotions.Count;
+            _totalPromoPages = totalRecords > 0
+                ? (int)Math.Ceiling((double)totalRecords / _promoPageSize)
+                : 1;
+
+            if (_currentPromoPage > _totalPromoPages)
+            {
+                _currentPromoPage = _totalPromoPages;
+            }
+
+            paginationPromo.TotalPages = _totalPromoPages;
+            paginationPromo.CurrentPage = _currentPromoPage;
+        }
+
+        private List<PromotionDtoAdmin> GetPagedPromotions()
+        {
+            if (_filteredPromotions == null || _filteredPromotions.Count == 0)
+                return new List<PromotionDtoAdmin>();
+
+            _totalPromoPages = (int)Math.Ceiling((double)_filteredPromotions.Count / _promoPageSize);
+            if (_currentPromoPage < 1)
+                _currentPromoPage = 1;
+
+            if (_currentPromoPage > _totalPromoPages)
+                _currentPromoPage = _totalPromoPages;
+
+            int skip = (_currentPromoPage - 1) * _promoPageSize;
+
+            return _filteredPromotions
+                .Skip(skip)
+                .Take(_promoPageSize)
+                .ToList();
         }
 
         private void InitializeCustomStyles()
@@ -376,7 +489,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 var response = await DIContainer.PricingControllerAdmin.SearchPricings(filter);
                 if (response.Success && response.Data != null)
                 {
-                    _flightPricings = response.Data.ToList();
+                    _filteredPricings = response.Data.ToList();
+                    _currentPricingPage = 1; // Reset về trang 1 khi filter
+                    UpdatePricingPagination();
                     LoadPricingCards();
                 }
                 else
@@ -412,7 +527,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 var response = await DIContainer.PromotionControllerAdmin.SearchPromotions(filter);
                 if (response.Success && response.Data != null)
                 {
-                    _promotions = response.Data.ToList();
+                    _filteredPromotions = response.Data.ToList();
+                    _currentPromoPage = 1; // Reset về trang 1 khi filter
+                    UpdatePromoPagination();
                     LoadPromoCards();
                 }
                 else
@@ -478,16 +595,15 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             {
                 flpPricingCards.SuspendLayout();
                 flpPricingCards.Controls.Clear();
-
-                System.Diagnostics.Debug.WriteLine($"📊 Loading {_flightPricings.Count} pricing cards");
-
-                foreach (var pricing in _flightPricings)
+                var paged = GetPagedPricings();
+                System.Diagnostics.Debug.WriteLine($"📊 Loading {paged.Count} pricing cards");
+                foreach (var pricing in paged)
                 {
                     var card = CreatePricingCard(pricing);
                     flpPricingCards.Controls.Add(card);
                 }
 
-                if (_flightPricings.Count == 0)
+                if (paged.Count == 0)
                 {
                     var lblEmpty = new Label
                     {
@@ -512,6 +628,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 _isLoadingPricing = false;
             }
         }
+
         private Panel CreatePricingCard(FlightPricingDtoAdmin pricing)
         {
             var card = new Panel
@@ -623,13 +740,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         private void LoadPromoCards()
         {
             flpPromoCards.Controls.Clear();
-            foreach (var promo in _promotions)
+            var paged = GetPagedPromotions();
+            foreach (var promo in paged)
             {
                 var card = CreatePromoCard(promo);
                 flpPromoCards.Controls.Add(card);
             }
 
-            if (_promotions.Count == 0)
+            if (paged.Count == 0)
             {
                 var lblEmpty = new Label
                 {
