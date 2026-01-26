@@ -24,5 +24,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
         public Airport ArrivalAirport { get; set; } = null!;
         public ICollection<FlightPricing> FlightPricings { get; set; } = new HashSet<FlightPricing>();
         public ICollection<BookingFlight> BookingFlights { get; set; } = new HashSet<BookingFlight>();
+
     }
 }

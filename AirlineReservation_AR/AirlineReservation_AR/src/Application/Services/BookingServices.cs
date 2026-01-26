@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Domain.Exceptions;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Shared.Helper;
 using Microsoft.EntityFrameworkCore;
@@ -15,92 +17,161 @@ namespace AirlineReservation_AR.src.Application.Services
     public class BookingServices : IBookingService
     {
 
-        public int CreateBooking(BookingCreateDTO dto)
+        public int CreateBooking(BookingCreateDTO dto, BookingCreateDTO? reDto)
         {
             using var db = DIContainer.CreateDb();
+            using var transaction = db.Database.BeginTransaction();
 
-            var booking = new Booking
+            try
             {
-                UserId = dto.UserId,
-                BookingReference = BookingCodeGenerator.GenerateBookingCode(),
-                BookingDate = DateTime.Now,
-                Status = "Pending",
-                Currency = "VND",
-                ContactEmail = dto.ContactEmail,
-                ContactPhone = dto.ContactPhone,
-                SpecialRequests = dto.SpecialRequest,
-                Price = dto.TotalAmount,
-                Taxes = dto.TaxAmount,
-                Fees = dto.TotalFee
-            };
+                if (dto == null)
+                    throw new BusinessException("Outbound booking data is null");
 
-            db.Bookings.Add(booking);
-            db.SaveChanges();
+                bool isRoundTrip = dto.TripType == "RoundTrip";
 
-            db.BookingFlights.Add(new BookingFlight
-            {
-                BookingId = booking.BookingId,
-                FlightId = dto.FlightId,
-                TripType = dto.TripType
-            });
-            db.SaveChanges();
+                if (isRoundTrip && reDto == null)
+                    throw new BusinessException("Return booking data is required for round trip");
 
+                // 1. Booking
+                var booking = new Booking
+                {
+                    UserId = dto.UserId,
+                    BookingReference = BookingCodeGenerator.GenerateBookingCode(),
+                    BookingDate = DateTime.Now,
+                    Status = "Pending",
+                    Currency = "VND",
+                    ContactEmail = dto.ContactEmail,
+                    ContactPhone = dto.ContactPhone,
+                    SpecialRequests = dto.SpecialRequest,
+                    Price = dto.TotalAmount + (isRoundTrip ? reDto!.TotalAmount : 0),
+                    Taxes = dto.TaxAmount + (isRoundTrip ? reDto!.TaxAmount : 0),
+                    Fees = dto.TotalFee + (isRoundTrip ? reDto!.TotalFee : 0)
+                };
 
+                db.Bookings.Add(booking);
+                db.SaveChanges(); // PHẢI có để lấy BookingId
 
-            foreach (var p in dto.Passengers)
-            {
-                p.Passenger.BookingId = booking.BookingId;
-                db.Passengers.Add(p.Passenger);
-            }
-            db.SaveChanges();
+                // 2. Outbound BookingFlight (luôn có)
+                var outboundBF = new BookingFlight
+                {
+                    BookingId = booking.BookingId,
+                    FlightId = dto.FlightId
+                };
 
-            foreach (var bundle in dto.Passengers)
-            {
-               int passengerId = bundle.Passenger.PassengerId;
-               if(bundle.SelectedServices != null)
-               {
-                 if(bundle.SelectedServices.Baggage.ServiceId != 0)
-                 {
-                        db.BookingServices.Add(new BookingService
-                        {
-                            BookingId = booking.BookingId,
-                            PassengerId = passengerId,
-                            ServiceId = bundle.SelectedServices.Baggage.ServiceId,
-                            Quantity = 1,
-                            UnitPrice = bundle.SelectedServices.Baggage.BasePrice,
-                        });
-                 }
+                db.BookingFlights.Add(outboundBF);
+                db.SaveChanges(); // lấy BookingFlightId
 
-                 if (bundle.SelectedServices.Meal.ServiceId != 0)
-                 {
-                        db.BookingServices.Add(new BookingService
-                        {
-                            BookingId = booking.BookingId,
-                            PassengerId = passengerId,
-                            ServiceId = bundle.SelectedServices.Meal.ServiceId,
-                            Quantity = 1,
-                            UnitPrice = bundle.SelectedServices.Meal.BasePrice,
-                        });
-                 }
+                // 3. Return BookingFlight (nếu round trip)
+                BookingFlight? returnBF = null;
 
-                 if (bundle.SelectedServices.Priority.ServiceId != 0)
-                 {
-                        db.BookingServices.Add(new BookingService
-                        {
-                            BookingId = booking.BookingId,
-                            PassengerId = passengerId,
-                            ServiceId = bundle.SelectedServices.Priority.ServiceId,
-                            Quantity = 1,
-                            UnitPrice = bundle.SelectedServices.Priority.BasePrice,
-                        });
-                  }
+                if (isRoundTrip)
+                {
+                    returnBF = new BookingFlight
+                    {
+                        BookingId = booking.BookingId,
+                        FlightId = reDto!.FlightId
+                    };
 
+                    db.BookingFlights.Add(returnBF);
+                    db.SaveChanges();
                 }
 
+                // 4. Passengers
+                foreach (var p in dto.Passengers)
+                {
+                    p.Passenger.BookingId = booking.BookingId;
+                    db.Passengers.Add(p.Passenger);
+                }
+                db.SaveChanges();
+
+                // 5. Services - OUTBOUND
+                AddServices(
+                    db,
+                    booking.BookingId,
+                    outboundBF.BookingFlightId,
+                    dto.Passengers
+                );
+
+                // 6. Services - RETURN (chỉ khi có)
+                if (isRoundTrip && returnBF != null)
+                {
+                    AddServices(
+                        db,
+                        booking.BookingId,
+                        returnBF.BookingFlightId,
+                        reDto!.Passengers
+                    );
+                }
+
+                db.SaveChanges();
+                transaction.Commit();
+
+                return booking.BookingId;
             }
-            db.SaveChanges();
-            return booking.BookingId;
+            catch (BusinessException)
+            {
+                transaction.Rollback();
+                throw;
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                throw new BusinessException("Có lỗi xảy ra khi tạo booking", ex);
+            }
         }
+
+
+        private void AddServices(AirlineReservationDbContext db, int bookingId,int bookingFlightId,List<PassengerWithServicesDTO> passengers)
+        {
+            foreach (var bundle in passengers)
+            {
+                int passengerId = bundle.Passenger.PassengerId;
+                var s = bundle.SelectedServices;
+                if (s == null) continue;
+
+                if (s.Baggage?.ServiceId > 0)
+                {
+                    db.BookingServices.Add(new BookingService
+                    {
+                        BookingId = bookingId,              
+                        BookingFlightId = bookingFlightId,
+                        PassengerId = passengerId,
+                        ServiceId = s.Baggage.ServiceId,
+                        Quantity = 1,
+                        UnitPrice = s.Baggage.BasePrice
+                    });
+                }
+
+                if (s.Meal?.ServiceId > 0)
+                {
+                    db.BookingServices.Add(new BookingService
+                    {
+                        BookingId = bookingId,
+                        BookingFlightId = bookingFlightId,
+                        PassengerId = passengerId,
+                        ServiceId = s.Meal.ServiceId,
+                        Quantity = 1,
+                        UnitPrice = s.Meal.BasePrice
+                    });
+                }
+
+                if (s.Priority?.ServiceId > 0)
+                {
+                    db.BookingServices.Add(new BookingService
+                    {
+                        BookingId = bookingId,
+                        BookingFlightId = bookingFlightId,
+                        PassengerId = passengerId,
+                        ServiceId = s.Priority.ServiceId,
+                        Quantity = 1,
+                        UnitPrice = s.Priority.BasePrice
+                    });
+                }
+            }
+        }
+
+
+
 
         public async Task<IEnumerable<Booking>> GetAllWithDetailsAsync()
         {

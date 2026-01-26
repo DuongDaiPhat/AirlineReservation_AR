@@ -27,8 +27,14 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             pnlRight = new Panel();
             rightBody = new Helpers.BetterFlowLayoutPanel();
             noteBaggage = new Guna.UI2.WinForms.Guna2Panel();
@@ -44,6 +50,9 @@
             pictureBox4 = new PictureBox();
             txtPassengerInfo = new Guna.UI2.WinForms.Guna2HtmlLabel();
             bodyLeft = new Guna.UI2.WinForms.Guna2Panel();
+            guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            OneWay = new Guna.UI2.WinForms.Guna2Button();
+            RoundTrip = new Guna.UI2.WinForms.Guna2Button();
             guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             guna2HtmlLabel9 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             pictureBox1 = new PictureBox();
@@ -67,6 +76,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             bodyLeft.SuspendLayout();
+            guna2Panel2.SuspendLayout();
             guna2ShadowPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             guna2ShadowPanel2.SuspendLayout();
@@ -94,6 +104,7 @@
             // 
             rightBody.AutoScroll = true;
             rightBody.Controls.Add(noteBaggage);
+            rightBody.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             rightBody.Location = new Point(359, 128);
             rightBody.Name = "rightBody";
             rightBody.RightToLeft = RightToLeft.Yes;
@@ -252,16 +263,70 @@
             // 
             // bodyLeft
             // 
+            bodyLeft.Controls.Add(guna2Panel2);
             bodyLeft.Controls.Add(guna2ShadowPanel1);
             bodyLeft.Controls.Add(guna2ShadowPanel2);
             bodyLeft.Controls.Add(guna2ShadowPanel3);
             bodyLeft.CustomBorderColor = Color.Black;
-            bodyLeft.CustomizableEdges = customizableEdges7;
+            bodyLeft.CustomizableEdges = customizableEdges13;
             bodyLeft.Location = new Point(3, 128);
             bodyLeft.Name = "bodyLeft";
-            bodyLeft.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            bodyLeft.ShadowDecoration.CustomizableEdges = customizableEdges14;
             bodyLeft.Size = new Size(350, 422);
             bodyLeft.TabIndex = 4;
+            // 
+            // guna2Panel2
+            // 
+            guna2Panel2.BorderRadius = 10;
+            guna2Panel2.Controls.Add(OneWay);
+            guna2Panel2.Controls.Add(RoundTrip);
+            guna2Panel2.CustomizableEdges = customizableEdges11;
+            guna2Panel2.FillColor = Color.FromArgb(224, 224, 224);
+            guna2Panel2.Location = new Point(169, 15);
+            guna2Panel2.Name = "guna2Panel2";
+            guna2Panel2.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            guna2Panel2.Size = new Size(170, 43);
+            guna2Panel2.TabIndex = 4;
+            // 
+            // OneWay
+            // 
+            OneWay.BackColor = Color.FromArgb(224, 224, 224);
+            OneWay.BorderRadius = 8;
+            OneWay.CustomizableEdges = customizableEdges7;
+            OneWay.DisabledState.BorderColor = Color.DarkGray;
+            OneWay.DisabledState.CustomBorderColor = Color.DarkGray;
+            OneWay.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            OneWay.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            OneWay.FillColor = Color.White;
+            OneWay.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            OneWay.ForeColor = Color.FromArgb(37, 99, 235);
+            OneWay.Location = new Point(5, 3);
+            OneWay.Name = "OneWay";
+            OneWay.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            OneWay.Size = new Size(81, 36);
+            OneWay.TabIndex = 0;
+            OneWay.Text = "Oneway";
+            OneWay.Click += OnewayClick;
+            // 
+            // RoundTrip
+            // 
+            RoundTrip.BackColor = Color.FromArgb(224, 224, 224);
+            RoundTrip.BorderRadius = 8;
+            RoundTrip.CustomizableEdges = customizableEdges9;
+            RoundTrip.DisabledState.BorderColor = Color.DarkGray;
+            RoundTrip.DisabledState.CustomBorderColor = Color.DarkGray;
+            RoundTrip.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            RoundTrip.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            RoundTrip.FillColor = Color.FromArgb(224, 224, 224);
+            RoundTrip.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            RoundTrip.ForeColor = Color.DimGray;
+            RoundTrip.Location = new Point(87, 3);
+            RoundTrip.Name = "RoundTrip";
+            RoundTrip.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            RoundTrip.Size = new Size(79, 36);
+            RoundTrip.TabIndex = 1;
+            RoundTrip.Text = "Arround";
+            RoundTrip.Click += RoundTripClick;
             // 
             // guna2ShadowPanel1
             // 
@@ -270,7 +335,7 @@
             guna2ShadowPanel1.Controls.Add(pictureBox1);
             guna2ShadowPanel1.Cursor = Cursors.AppStarting;
             guna2ShadowPanel1.FillColor = Color.White;
-            guna2ShadowPanel1.Location = new Point(16, 29);
+            guna2ShadowPanel1.Location = new Point(23, 86);
             guna2ShadowPanel1.Name = "guna2ShadowPanel1";
             guna2ShadowPanel1.Radius = 8;
             guna2ShadowPanel1.ShadowColor = Color.Black;
@@ -305,7 +370,7 @@
             guna2ShadowPanel2.Controls.Add(pictureBox2);
             guna2ShadowPanel2.Controls.Add(guna2HtmlLabel1);
             guna2ShadowPanel2.FillColor = Color.White;
-            guna2ShadowPanel2.Location = new Point(16, 131);
+            guna2ShadowPanel2.Location = new Point(23, 188);
             guna2ShadowPanel2.Name = "guna2ShadowPanel2";
             guna2ShadowPanel2.Radius = 8;
             guna2ShadowPanel2.ShadowColor = Color.Black;
@@ -342,7 +407,7 @@
             guna2ShadowPanel3.Controls.Add(pictureBox3);
             guna2ShadowPanel3.Controls.Add(guna2HtmlLabel2);
             guna2ShadowPanel3.FillColor = Color.White;
-            guna2ShadowPanel3.Location = new Point(16, 236);
+            guna2ShadowPanel3.Location = new Point(23, 293);
             guna2ShadowPanel3.Name = "guna2ShadowPanel3";
             guna2ShadowPanel3.Radius = 8;
             guna2ShadowPanel3.ShadowColor = Color.Black;
@@ -448,6 +513,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             bodyLeft.ResumeLayout(false);
+            guna2Panel2.ResumeLayout(false);
             guna2ShadowPanel1.ResumeLayout(false);
             guna2ShadowPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -487,5 +553,8 @@
         private PictureBox pictureBox6;
         private Helpers.BetterFlowLayoutPanel rightBody;
         private Microsoft.Data.SqlClient.SqlCommandBuilder sqlCommandBuilder1;
+        private Guna.UI2.WinForms.Guna2Button OneWay;
+        private Guna.UI2.WinForms.Guna2Button RoundTrip;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel2;
     }
 }

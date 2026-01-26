@@ -127,10 +127,15 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                     : 0;
 
             // 5) Convert return flights
+
+            var dayTabsReturn = new List<FlightDayPriceDTO>();
+            var sevenDayPricesReturn = new List<FlightDayPriceDTO>();
             List<FlightResultDTO> returnResult = new();
             if (returnFlights != null)
             {
                 returnResult = await ConvertToResultDTO(returnFlights, p.SeatClassId, db);
+
+                sevenDayPricesReturn = await Get7DayPricesAsync(db, p.ToCode, p.FromCode, p.ReturnDate.Value, p.SeatClassId);
             }
 
             // 6) Build airline filters (from outbound only)
@@ -142,16 +147,27 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                     LogoUrl = g.First().AirlineLogo
                 })
                 .ToList();
+            
+            var retrunAirlineFilters = returnResult
+                .GroupBy(f => f.AirlineName)
+                .Select(g => new AirlineFilterDTO
+                {
+                    AirlineName = g.Key,
+                    LogoUrl = g.First().AirlineLogo
+                })
+                .ToList();
             // 1) Build day tabs (only for start date)
-            var dayTabs = BuildDayTabs(p.StartDate.Value, lowest);
-
             var sevenDayPrices = await Get7DayPricesAsync(db, p.FromCode, p.ToCode, p.StartDate.Value, p.SeatClassId);
+
             return new FlightSearchResultDTO
             {
                 OutboundFlights = outboundResult,
                 ReturnFlights = returnResult,
                 AirlineFilters = airlineFilters,
-                DayTabs = sevenDayPrices
+                RetrunAirlineFilters = retrunAirlineFilters,
+                DayTabs = sevenDayPrices,
+                RoundTrip = p.RoundTrip,
+                DayTabReturn = sevenDayPricesReturn
             };
         }
 
@@ -239,7 +255,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                     SelectedSeatClassName = selectedSeatClassName,
                     TotalSeatsLeft = seatsLeft.Values.Sum(),
 
-                    AircraftType = f.Aircraft.AircraftType.DisplayName
+                    AircraftType = f.Aircraft.AircraftType.DisplayName,
+                    FlightCode = f.FlightNumber
                 });
             }
 

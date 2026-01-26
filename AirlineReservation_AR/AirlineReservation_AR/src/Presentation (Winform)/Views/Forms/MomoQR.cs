@@ -157,6 +157,8 @@ namespace MomoQR
             {
                 paymentCheckTimer.Stop();
                 _controller.MarkSuccess(_bookingId, payment.TransactionId);
+                
+               _ =CallSendEmailApiAsync(_bookingId);
                 CloseLoading();
                 AnnouncementForm announcementForm = new AnnouncementForm();
                 announcementForm.SetAnnouncement(
@@ -184,6 +186,25 @@ namespace MomoQR
                 this.Close();
             }
         }
+
+        public async Task CallSendEmailApiAsync(int bookingId)
+        {
+            using var client = new HttpClient();
+
+            client.BaseAddress = new Uri("https://localhost:5001/");
+
+            var response = await client.PostAsync(
+                $"v1/api/EmailAPI/booking-confirmation/{bookingId}",
+                null
+            );
+
+            // Optional: check status
+            if (!response.IsSuccessStatusCode)
+            {
+                // log nhẹ, KHÔNG báo user
+            }
+        }
+
 
         private void btnClose_Click(object sender, EventArgs e)
         {

@@ -16,9 +16,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
     {
         private Form _nextForm;
         private bool _isSuccess = false;
+        public event Action OnComplete;
         public AnnouncementForm()
         {
             InitializeComponent();
+            Closes.Visible = false;
         }
 
         public void SetAnnouncement(string title, string content, bool isSuccess, Form newForm = null)
@@ -71,7 +73,18 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         private void completeBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
+            OnComplete?.Invoke();
             _nextForm?.Show();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
+        public void setClose()
+        {
+            Closes.Visible = true;
         }
     }
 }

@@ -5,11 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
+using AirlineReservation_AR.src.Application.Services.AI_Service;
 using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Domain.DTOs.AI_DTO;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.popup;
 using Guna.UI2.WinForms;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
@@ -21,6 +25,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private List<FlightResultDTO> _outboundOriginal = new();
         private List<FlightResultDTO> _outboundFiltered = new();
 
+        private List<FlightResultDTO> _returnOriginal = new();
+        private List<FlightResultDTO> _retrurnFlightFillterd = new();
         private const int MinPrice = 500_000;
         private const int MaxPrice = 10_000_000;
         private const int PriceBuffer = 500_000;
@@ -28,20 +34,63 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private string _selectedBudget = "ALL";
         private string _selectedTimeRange = "ALL";
 
+        private FlightResultDTO _selectedOutboundFlight = new();
+        private FlightResultDTO _selectedReturnFlight = new();
+        private LoadingForm _loadingForm;
+        private bool isReturnPage = false;
+        private DateTime _startDateOrigin;
+
+        public List<FlightDayPriceDTO> _originDayTabs { get; set; }
+        public List<FlightDayPriceDTO> _originDayTabReturn { get; set; }
+
+        public List<AirlineFilterDTO> _originReturnAirlineFilters { get; set; }
         public UC_FlightSearchResult(FlightSearchParams p)
         {
             InitializeComponent();
             _params = p;
             _controller = DIContainer.FlightController;
+            _startDateOrigin = p.StartDate ?? DateTime.Today;
         }
 
         private async void UC_FlightSearchResult_Load(object sender, EventArgs e)
         {
+
+            ShowLoading();
             var result = await _controller.SearchAsync(_params);
 
             _outboundOriginal = result.OutboundFlights ?? new();
             _outboundFiltered = new List<FlightResultDTO>(_outboundOriginal);
+            _returnOriginal = result.ReturnFlights ?? new();
+            _retrurnFlightFillterd = new List<FlightResultDTO>(_returnOriginal);
+            _originDayTabs = result.DayTabs;
+            _originDayTabReturn = result.DayTabReturn;
+            _originReturnAirlineFilters = result.RetrunAirlineFilters;
+            guna2CustomCheckBox1.Checked = _params.RoundTrip;
+            InitPriceTrackBar();
+            InitBudgetButtons();
+            InitDepartureTimeButtons();
+            DisableReturnTimeButtons();
 
+            RenderDayTabs(result.DayTabs);
+            RenderAirlineFilters(result.AirlineFilters);
+            RenderAllFlights(_outboundFiltered);
+            LoadYourFlights();
+            CloseLoading();
+        }
+
+        public async Task ReLoad()
+        {
+            ShowLoading();
+            var result = await _controller.SearchAsync(_params);
+
+            _outboundOriginal = result.OutboundFlights ?? new();
+            _outboundFiltered = new List<FlightResultDTO>(_outboundOriginal);
+            _returnOriginal = result.ReturnFlights ?? new();
+            _retrurnFlightFillterd = new List<FlightResultDTO>(_returnOriginal);
+            _originDayTabs = result.DayTabs;
+            _originDayTabReturn = result.DayTabReturn;
+            _originReturnAirlineFilters = result.RetrunAirlineFilters;
+            guna2CustomCheckBox1.Checked = _params.RoundTrip;
             InitPriceTrackBar();
             InitBudgetButtons();
             InitDepartureTimeButtons();
@@ -52,19 +101,56 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             RenderAllFlights(_outboundFiltered);
 
             LoadYourFlights();
+            CloseLoading();
         }
-
         private void LoadYourFlights()
         {
             fromAirportLeftLB.Text = _params.FromCity;
             toAirportLeftLB.Text = _params.ToCity;
             deDateLeftLB.Text = _params.StartDate?.ToString("ddd, dd MMM yyyy");
 
-            reLeftPicture.Visible = false;
-            reDateLeftLB.Visible = false;
-            fromAirportReLeftLB.Visible = false;
-            leftIcon.Visible = false;
-            toAirportReLeftLB.Visible = false;
+            if (_params.RoundTrip)
+            {
+                reDateLeftLB.Text = _params.ReturnDate?.ToString("ddd, dd MMM yyyy");
+                reLeftPicture.Enabled = true;
+                fromAirportReLeftLB.Text = _params.ToCity;
+                leftIcon.Enabled = true;
+                toAirportReLeftLB.Text = _params.FromCity;
+                guna2PictureBox1.Enabled = true;
+                toAirportLeftLB.Enabled = true;
+                leftIcon.Enabled = true;
+
+                reDateLeftLB.ForeColor = Color.DimGray;
+                reLeftPicture.FillColor = Color.DodgerBlue;
+                fromAirportReLeftLB.ForeColor = Color.DodgerBlue;
+                leftIcon.FillColor = Color.DodgerBlue;
+                toAirportReLeftLB.ForeColor = Color.DodgerBlue;
+
+                reBtn1.Enabled = true;
+                reBtn2.Enabled = true;
+                reBtn3.Enabled = true;
+                reBtn4.Enabled = true;
+                reBtn1.FillColor = Color.White;
+                reBtn2.FillColor = Color.White;
+                reBtn3.FillColor = Color.White;
+                reBtn4.FillColor = Color.White;
+            }
+            else
+            {
+                reLeftPicture.Enabled = false;
+                reDateLeftLB.Enabled = false;
+                fromAirportReLeftLB.Enabled = false;
+                leftIcon.Enabled = false;
+                toAirportReLeftLB.Enabled = false;
+                leftIcon.Enabled = false;
+                guna2PictureBox1.Enabled = false;
+                reLeftPicture.FillColor = Color.LightGray;
+                fromAirportReLeftLB.ForeColor = Color.LightGray;
+                leftIcon.FillColor = Color.LightGray;   
+                toAirportReLeftLB.ForeColor = Color.LightGray;
+                DisableReturnTimeButtons();
+            }
+
 
             tableLayoutPanel2.RowStyles[3].Height = 0;
             tableLayoutPanel2.RowStyles[4].Height = 0;
@@ -125,7 +211,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             foreach (var item in list)
             {
-                bool isSelected = item.Date.Date == _params.StartDate.Value.Date;
+                DateTime selectedDate = isReturnPage
+                        ? _params.ReturnDate.Value.Date
+                        : _params.StartDate.Value.Date;
+
+                bool isSelected = item.Date.Date == selectedDate;
                 bool isPast = item.Date.Date < today;
 
                 var panel = new Guna2Panel
@@ -172,17 +262,41 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 {
                     panel.Click += async (s, e) =>
                     {
-                        _params.StartDate = item.Date;
-                        var r = await _controller.SearchAsync(_params);
+                        ShowLoading();
+                        if (isReturnPage == false)
+                        {
+                            _params.StartDate = item.Date;
+                            var r = await _controller.SearchAsync(_params);
 
-                        _outboundOriginal = r.OutboundFlights ?? new();
-                        _outboundFiltered = new List<FlightResultDTO>(_outboundOriginal);
+                            _outboundOriginal = r.OutboundFlights ?? new();
+                            _outboundFiltered = new List<FlightResultDTO>(_outboundOriginal);
+                            _returnOriginal = r.ReturnFlights ?? new();
+                            _retrurnFlightFillterd = new List<FlightResultDTO>(_returnOriginal);
 
-                        RenderDayTabs(r.DayTabs);
-                        RenderAirlineFilters(r.AirlineFilters);
+                            RenderDayTabs(r.DayTabs);
+                            RenderAirlineFilters(r.AirlineFilters);
 
-                        ApplyAllFilters();
-                        LoadYourFlights();
+                            ApplyAllFilters();
+                            LoadYourFlights();
+                            CloseLoading();
+                        }
+                        else
+                        {
+                            _params.ReturnDate = item.Date;
+                            var r = await _controller.SearchAsync(_params);
+
+                            _outboundOriginal = r.OutboundFlights ?? new();
+                            _outboundFiltered = new List<FlightResultDTO>(_outboundOriginal);
+                            _returnOriginal = r.ReturnFlights ?? new();
+                            _retrurnFlightFillterd = new List<FlightResultDTO>(_returnOriginal);
+
+                            RenderDayTabs(r.DayTabReturn);
+                            RenderAirlineFilters(r.RetrunAirlineFilters);
+
+                            ApplyAllFilters();
+                            CloseLoading();
+                        }
+
                     };
                 }
 
@@ -209,10 +323,66 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 card.OnSelected += HandleSelectedFlight;
                 flowFlightCards.Controls.Add(card);
             }
+
+
+
         }
+
+        private void ShowReturnFlightUI(List<FlightResultDTO> list)
+        {
+            ShowLoading();
+            // 1. Xóa card outbound
+            flowFlightCards.Controls.Clear();
+
+            foreach (var f in list)
+            {
+                var card = new FlightCardControl(f);
+                card.Margin = new Padding(
+                    (flowFlightCards.Width - card.Width) / 2,
+                    10,
+                    0,
+                    10
+                );
+
+                // Khi chọn chuyến về → qua fill thông tin
+                card.OnSelected += (selectedReturn) =>
+                {
+                    _selectedReturnFlight = selectedReturn;
+                    int sl = _params.Adult + _params.Child + _params.Infant;
+                    var owner = this.FindForm();
+
+                    var comFirm = new ComfirmFlights();
+                    comFirm.setData(_selectedOutboundFlight, _selectedReturnFlight, sl, isReturnPage);
+                    comFirm.StartPosition = FormStartPosition.CenterParent;
+                    comFirm.OnComfirm += () =>
+                    {
+                        OpenFilloutInform(_selectedOutboundFlight, _selectedReturnFlight);
+                        
+                        return;
+                    };
+                    comFirm.OnCancel += async () =>
+                    {
+                        await ReLoad();
+                       
+                        AnnouncementForm announcementForm = new AnnouncementForm();
+                        announcementForm.SetAnnouncement("Chuyến bay đã được hũy thành công", "Quý khách có thể chọn lại chuyến bay mới" , true, null);
+                        announcementForm.Show();
+
+                        return;
+                    };
+                    comFirm.ShowDialog(owner);
+                    CloseLoading();
+                    //OpenFilloutInform(_selectedOutboundFlight, _selectedReturnFlight);
+                };
+
+                flowFlightCards.Controls.Add(card);
+            }
+        }
+
 
         private void HandleSelectedFlight(FlightResultDTO selected)
         {
+            ShowLoading();
             int totalPeople = _params.Adult + _params.Child;
 
             selected.SeatsLeftByClass.TryGetValue(selected.SelectedSeatClassName, out int seatsLeft);
@@ -227,17 +397,51 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 _params.Infant = popup.UpdatedParams.Infant;
                 _params.SeatClassId = popup.UpdatedParams.SeatClassId;
             }
+            if (_params.RoundTrip)
+            {
 
-            OpenFilloutInform(selected);
-        }
+                _selectedOutboundFlight = selected;
+                isReturnPage = true;
+                RenderDayTabs(_originDayTabReturn);
+                RenderAirlineFilters(_originReturnAirlineFilters);
+                ShowReturnFlightUI(_retrurnFlightFillterd);
+                CloseLoading();
+                return;
 
-        private void OpenFilloutInform(FlightResultDTO flight)
+
+            }
+            int sl = _params.Adult + _params.Child + _params.Infant;
+            var owner = this.FindForm();
+
+            var comFirm = new ComfirmFlights();
+            comFirm.setData(selected, _selectedReturnFlight, sl, isReturnPage);
+            comFirm.StartPosition = FormStartPosition.CenterParent;
+
+            comFirm.OnComfirm += () =>
+            {
+                OpenFilloutInform(selected, _selectedReturnFlight);
+                
+            };
+            comFirm.OnCancel += async () =>
+            {
+                await ReLoad();
+                AnnouncementForm announcementForm = new AnnouncementForm();
+                announcementForm.SetAnnouncement("Chuyến bay đã được hũy thành công", "Quý khách có thể chọn lại chuyến bay mới", false, null);
+                announcementForm.Show();
+                return;
+            };
+            comFirm.ShowDialog(owner);
+             CloseLoading();
+            //OpenFilloutInform(selected, _selectedReturnFlight);
+        }   
+
+        private void OpenFilloutInform(FlightResultDTO flight, FlightResultDTO retrunFlight)
         {
             var form = this.FindForm() as MainTravelokaForm;
             if (form == null) return;
 
             var screen = new UC_FilloutInform();
-            screen.SetFlightData(flight, _params);
+            screen.SetFlightData(flight, retrunFlight, _params);
             form.SwitchScreen(screen);
         }
 
@@ -305,7 +509,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
         private void ApplyAllFilters()
         {
-            var list = _outboundOriginal.ToList();
+            List<FlightResultDTO> list = isReturnPage
+                ? _returnOriginal.ToList()
+                : _outboundOriginal.ToList();
+
 
             if (airlineCombobox.SelectedIndex > 0)
             {
@@ -347,7 +554,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             list = list.OrderBy(f => f.DepartureTime).ToList();
 
-            _outboundFiltered = list;
+            if (isReturnPage)
+            {
+                ShowReturnFlightUI(list);
+                return;
+            }
             RenderAllFlights(list);
         }
 
@@ -370,9 +581,60 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             // Restore original flight list
             _outboundFiltered = new List<FlightResultDTO>(_outboundOriginal);
-
+            _retrurnFlightFillterd = new List<FlightResultDTO>(_returnOriginal);
             // Render
+            if (isReturnPage)
+            {
+
+                RenderAllFlights(_retrurnFlightFillterd);
+                return;
+            }
             RenderAllFlights(_outboundFiltered);
+
+        }
+
+        private void CloseLoading()
+        {
+            if (_loadingForm != null && !_loadingForm.IsDisposed)
+            {
+                _loadingForm.Close();
+                _loadingForm = null;
+            }
+        }
+
+        private void ShowLoading()
+        {
+            if (_loadingForm == null || _loadingForm.IsDisposed)
+            {
+                _loadingForm = new LoadingForm();
+                _loadingForm.Show();
+                _loadingForm.BringToFront();
+            }
+        }
+
+        private async void RoundTripChecked(object sender, EventArgs e)
+        {
+            
+            _params.RoundTrip = guna2CustomCheckBox1.Checked;
+            isReturnPage = false;
+
+            _params.ReturnDate = _params.RoundTrip
+                ? _params.ReturnDate ?? _startDateOrigin.AddDays(1)
+                : null;
+            await ReLoad();
+        }
+
+        private async void Swap_Click(object sender, EventArgs e)
+        {
+            string tmpCity = _params.FromCity;
+            string tmpCityCode = _params.FromCode;
+
+            _params.FromCity = _params.ToCity;
+            _params.FromCode = _params.ToCode;
+            _params.ToCity = tmpCity;
+            _params.ToCode = tmpCityCode;
+
+            await ReLoad();
         }
     }
 }
