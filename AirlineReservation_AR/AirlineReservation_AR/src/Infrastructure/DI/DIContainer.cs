@@ -85,11 +85,16 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             string conn = _config.GetConnectionString("AirlineReservationDatabase")
                ?? throw new Exception("Missing connection string");
 
-            // Build Options (không khởi tạo DbContext tại đây nữa)
             DbOptions = new DbContextOptionsBuilder<AirlineReservationDbContext>()
-                .UseSqlServer(conn)
+                .UseSqlServer(
+                    conn,
+                    opt => opt.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(5),
+                        errorNumbersToAdd: null
+                    )
+                )
                 .Options;
-
             _hasher = new PasswordHasher();
 
             var pricingRepo = new FlightPricingRepositoryAdmin(new AirlineReservationDbContext(DbOptions));
@@ -214,10 +219,6 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         //report admin
         public static ReportControllerAdmin ReportControllerAdmin =>
             _reportController ?? throw new Exception("Report Admin controller not initialized");
-
-        //payment
-        public static PaymentController PaymentController =>
-            _paymentController ?? throw new Exception("Payment controller not initialized");
 
         //promotion
         public static PromotionController PromotionController =>

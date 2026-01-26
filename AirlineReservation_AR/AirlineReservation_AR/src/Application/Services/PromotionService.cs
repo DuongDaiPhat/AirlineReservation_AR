@@ -6,15 +6,55 @@ using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Shared.Helper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AirlineReservation_AR.src.Domain.Exceptions;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
 {
     public class PromotionService : IPromotionService
     {
+        public bool ApplyPromotion(string promoCode, int bookingId, decimal discountAmount)
+        {
+            using var _db = DIContainer.CreateDb();
+            try
+            {
+
+                var promotion = _db.Promotions.FirstOrDefault(p =>
+                    p.PromoCode == promoCode &&
+                    p.IsActive &&
+                    p.ValidFrom <= DateTime.Now &&
+                    p.ValidTo >= DateTime.Now);
+
+                if (promotion == null)
+                    throw new BusinessException("Promotion is invalid or expired.");
+
+                if (promotion.UsageLimit.HasValue &&
+                    promotion.UsageCount >= promotion.UsageLimit.Value)
+                    throw new BusinessException("Promotion usage limit reached.");
+
+                var bookingPromotion = new BookingPromotion
+                {
+                    BookingId = bookingId,
+                    AppliedAt = DateTime.Now,
+                    DiscountAmount = discountAmount,
+                    PromotionId = promotion.PromotionId
+                };
+                promotion.UsageCount += 1;
+                _db.BookingPromotions.Add(bookingPromotion);
+                _db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error applying promotion: " + ex.Message);
+
+            }
+        }
+
         //private readonly AirlineReservationDbContext _context;
 
 
@@ -43,6 +83,52 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                     PromotionType = PromotionHelper.GetPromotionType(p.PromoName)
                 })
                 .ToList();
+        }
+
+        public decimal getDiscountPercentage(string promoCode, int bookingId, decimal totalAmount)
+        {
+            using var db = DIContainer.CreateDb();
+            var user = DIContainer.CurrentUser;
+
+            var promotion = db.Promotions.FirstOrDefault(p =>
+                p.PromoCode == promoCode &&
+                p.IsActive &&
+                p.ValidFrom <= DateTime.Now &&
+                p.ValidTo >= DateTime.Now);
+
+            if (promotion == null)
+                throw new BusinessException("Promotion is invalid or expired.");
+
+            if (promotion.UsageLimit.HasValue &&
+                promotion.UsageCount >= promotion.UsageLimit.Value)
+                throw new BusinessException("Promotion usage limit reached.");
+
+            int userUsedCount = db.BookingPromotions.Count(bp =>
+                bp.PromotionId == promotion.PromotionId &&
+                bp.Booking.UserId == user.UserId);
+
+            if (promotion.UserUsageLimit.HasValue &&
+                userUsedCount >= promotion.UserUsageLimit.Value)
+                throw new BusinessException("Promotion usage limit reached for this user.");
+
+            if (totalAmount < promotion.MinimumAmount)
+                throw new BusinessException("Booking amount does not meet promotion requirement.");
+
+            decimal discount;
+
+            if (promotion.DiscountType == "Percent")
+            {
+                discount = totalAmount * promotion.DiscountValue / 100;
+                if (promotion.MaximumDiscount.HasValue)
+                    discount = Math.Min(discount, promotion.MaximumDiscount.Value);
+            }
+            else
+            {
+                discount = promotion.DiscountValue;
+            }
+
+            return discount;
+
         }
 
         //public async Task<Promotion?> GetByIdAsync(int promotionId)

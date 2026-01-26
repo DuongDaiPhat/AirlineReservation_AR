@@ -103,6 +103,16 @@ namespace AirlineReservation_AR.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap app {
+            get {
+                object obj = ResourceManager.GetObject("app", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap arrow_right {
             get {
                 object obj = ResourceManager.GetObject("arrow-right", resourceCulture);
@@ -116,9 +126,6 @@ namespace AirlineReservation_AR.Properties {
         internal static System.Drawing.Bitmap arrow_right1 {
             get {
                 object obj = ResourceManager.GetObject("arrow-right1", resourceCulture);
-        internal static System.Drawing.Bitmap app {
-            get {
-                object obj = ResourceManager.GetObject("app", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

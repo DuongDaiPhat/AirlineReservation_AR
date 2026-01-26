@@ -34,6 +34,8 @@ namespace AirlineReservation_AR.src.Domain.DTOs
 
         // mới: tổng số ghế trống
         public int TotalSeatsLeft { get; set; }
+        public string FlightCode { get; set; }
+
     }
 
 

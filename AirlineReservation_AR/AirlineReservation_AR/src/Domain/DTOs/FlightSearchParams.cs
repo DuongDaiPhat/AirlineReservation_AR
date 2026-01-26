@@ -22,5 +22,7 @@ namespace AirlineReservation_AR.src.Domain.DTOs
 
         public int SeatClassId { get; set; }
         public bool RoundTrip { get; set; }
+        public string FromCity { get; set; }
+        public string ToCity { get; set; }
     }
 }

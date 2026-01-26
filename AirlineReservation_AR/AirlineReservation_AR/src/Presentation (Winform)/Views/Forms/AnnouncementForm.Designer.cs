@@ -31,19 +31,22 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnnouncementForm));
             pictureBox1 = new PictureBox();
             titleLabel = new Label();
             subtitleLabel = new Label();
             completeBtn = new Guna.UI2.WinForms.Guna2Button();
+            Closes = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Closes).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
             // 
             pictureBox1.Image = Resources.check;
-            pictureBox1.Location = new Point(0, 15);
+            pictureBox1.Location = new Point(96, 12);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(300, 72);
+            pictureBox1.Size = new Size(124, 72);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -87,11 +90,23 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             completeBtn.Visible = false;
             completeBtn.Click += completeBtn_Click;
             // 
+            // Closes
+            // 
+            Closes.Image = (Image)resources.GetObject("Closes.Image");
+            Closes.Location = new Point(268, 0);
+            Closes.Name = "Closes";
+            Closes.Size = new Size(32, 32);
+            Closes.SizeMode = PictureBoxSizeMode.AutoSize;
+            Closes.TabIndex = 8;
+            Closes.TabStop = false;
+            Closes.Click += pictureBox2_Click;
+            // 
             // AnnouncementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(300, 200);
+            Controls.Add(Closes);
             Controls.Add(completeBtn);
             Controls.Add(titleLabel);
             Controls.Add(pictureBox1);
@@ -101,7 +116,9 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AnnouncementForm";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Closes).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -110,5 +127,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         private Label titleLabel;
         private Label subtitleLabel;
         private Guna.UI2.WinForms.Guna2Button completeBtn;
+        private PictureBox Closes;
     }
 }

@@ -33,10 +33,19 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
 
             builder.HasCheckConstraint("CK_Quantity_Positive", "[Quantity] > 0");
 
+            builder.Property(bs => bs.BookingFlightId)
+                .HasColumnName("BookingFlightID")
+                .IsRequired();
+
             builder.HasOne(bs => bs.Booking)
                 .WithMany(b => b.BookingServices)
                 .HasForeignKey(bs => bs.BookingId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(bs => bs.BookingFlight)
+                    .WithMany(bf => bf.BookingServices)
+                    .HasForeignKey(bs => bs.BookingFlightId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(bs => bs.Service)
                 .WithMany(s => s.BookingServices)

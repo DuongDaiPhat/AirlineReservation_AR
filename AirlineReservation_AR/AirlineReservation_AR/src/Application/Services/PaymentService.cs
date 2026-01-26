@@ -244,7 +244,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
                     PassengerId = ps.PassengerId,
                     SeatClassId = 1,
                     TicketNumber = "TKT-" + Guid.NewGuid().ToString("N")[..10],
-                    Status = "Active"
+                    Status = "Issued"
                 });
             }
 

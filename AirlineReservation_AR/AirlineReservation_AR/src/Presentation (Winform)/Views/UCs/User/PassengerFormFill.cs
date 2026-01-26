@@ -78,7 +78,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             return new PassengerDTO
             {
                 PassengerType = this.PassengerType,
-
+                Index = PassengerIndex,
                 Title = cboTitle.Text,
                 LastName = txtLastName.Text,
                 MiddleName = txtMiddleFirstName.Text,

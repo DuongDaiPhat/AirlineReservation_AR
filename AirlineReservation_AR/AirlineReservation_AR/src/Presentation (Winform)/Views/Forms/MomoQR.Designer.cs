@@ -31,262 +31,469 @@ namespace MomoQR
         /// </summary>
         private void InitializeComponent()
         {
-            panelHeader = new Panel();
-            lblTitle = new Label();
-            btnClose = new Button();
-            panelMain = new Panel();
-            txtAmount = new TextBox();
-            lblAmount = new Label();
-            lblMessage = new Label();
-            txtMessage = new TextBox();
-            lblPaymentMethod = new Label();
-            panelWallet = new Panel();
-            lblWalletBalance = new Label();
-            lblWalletName = new Label();
-            picWallet = new PictureBox();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MomoQR));
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges28 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             payButton = new Button();
-            panelFooter = new Panel();
-            lblFooterNote = new Label();
-            panelHeader.SuspendLayout();
-            panelMain.SuspendLayout();
-            panelWallet.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picWallet).BeginInit();
-            panelFooter.SuspendLayout();
+            guna2PictureBox4 = new Guna.UI2.WinForms.Guna2PictureBox();
+            guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            pictureBox1 = new PictureBox();
+            guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            guna2HtmlLabel6 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            txtTotal = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            txtDiscount = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2HtmlLabel7 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            txtAmount = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            pictureBox2 = new PictureBox();
+            guna2HtmlLabel11 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2HtmlLabel10 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
+            guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
+            guna2HtmlLabel14 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2Panel4 = new Guna.UI2.WinForms.Guna2Panel();
+            guna2HtmlLabel13 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            pictureBox3 = new PictureBox();
+            guna2HtmlLabel12 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            txtPromoCode = new Guna.UI2.WinForms.Guna2TextBox();
+            guna2HtmlLabel15 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            pictureBox4 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            guna2Panel1.SuspendLayout();
+            guna2Panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox1).BeginInit();
+            guna2Panel3.SuspendLayout();
+            guna2Panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             SuspendLayout();
-            // 
-            // panelHeader
-            // 
-            panelHeader.BackColor = Color.FromArgb(165, 0, 100);
-            panelHeader.Controls.Add(lblTitle);
-            panelHeader.Controls.Add(btnClose);
-            panelHeader.Dock = DockStyle.Top;
-            panelHeader.Location = new Point(0, 0);
-            panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(400, 60);
-            panelHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(15, 15);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(197, 30);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "MOMO PAYMENT";
-            // 
-            // btnClose
-            // 
-            btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            btnClose.ForeColor = Color.White;
-            btnClose.Location = new Point(355, 10);
-            btnClose.Name = "btnClose";
-            btnClose.Size = new Size(40, 40);
-            btnClose.TabIndex = 1;
-            btnClose.Text = "✕";
-            btnClose.UseVisualStyleBackColor = true;
-            btnClose.Click += btnClose_Click;
-            // 
-            // panelMain
-            // 
-            panelMain.BackColor = Color.White;
-            panelMain.Controls.Add(txtAmount);
-            panelMain.Controls.Add(lblAmount);
-            panelMain.Controls.Add(lblMessage);
-            panelMain.Controls.Add(txtMessage);
-            panelMain.Controls.Add(lblPaymentMethod);
-            panelMain.Controls.Add(panelWallet);
-            panelMain.Controls.Add(payButton);
-            panelMain.Location = new Point(0, 60);
-            panelMain.Name = "panelMain";
-            panelMain.Padding = new Padding(20);
-            panelMain.Size = new Size(400, 444);
-            panelMain.TabIndex = 1;
-            // 
-            // txtAmount
-            // 
-            txtAmount.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtAmount.ForeColor = Color.FromArgb(165, 0, 100);
-            txtAmount.Location = new Point(20, 40);
-            txtAmount.Name = "txtAmount";
-            txtAmount.ReadOnly = true;
-            txtAmount.Size = new Size(360, 43);
-            txtAmount.TabIndex = 9;
-            txtAmount.Text = "5000";
-            txtAmount.KeyPress += txtAmount_KeyPress;
-            // 
-            // lblAmount
-            // 
-            lblAmount.AutoSize = true;
-            lblAmount.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblAmount.ForeColor = Color.Gray;
-            lblAmount.Location = new Point(20, 16);
-            lblAmount.Name = "lblAmount";
-            lblAmount.Size = new Size(69, 21);
-            lblAmount.TabIndex = 0;
-            lblAmount.Text = "Amount:";
-            // 
-            // lblMessage
-            // 
-            lblMessage.AutoSize = true;
-            lblMessage.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblMessage.ForeColor = Color.Gray;
-            lblMessage.Location = new Point(20, 108);
-            lblMessage.Name = "lblMessage";
-            lblMessage.Size = new Size(74, 21);
-            lblMessage.TabIndex = 4;
-            lblMessage.Text = "Message:";
-            // 
-            // txtMessage
-            // 
-            txtMessage.BorderStyle = BorderStyle.FixedSingle;
-            txtMessage.Font = new Font("Segoe UI", 11F);
-            txtMessage.Location = new Point(20, 132);
-            txtMessage.Multiline = true;
-            txtMessage.Name = "txtMessage";
-            txtMessage.Size = new Size(360, 84);
-            txtMessage.TabIndex = 5;
-            txtMessage.Text = "Transfer money";
-            // 
-            // lblPaymentMethod
-            // 
-            lblPaymentMethod.AutoSize = true;
-            lblPaymentMethod.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPaymentMethod.ForeColor = Color.Gray;
-            lblPaymentMethod.Location = new Point(20, 237);
-            lblPaymentMethod.Name = "lblPaymentMethod";
-            lblPaymentMethod.Size = new Size(131, 21);
-            lblPaymentMethod.TabIndex = 6;
-            lblPaymentMethod.Text = "Payment method:";
-            // 
-            // panelWallet
-            // 
-            panelWallet.BackColor = Color.FromArgb(250, 240, 245);
-            panelWallet.Controls.Add(lblWalletBalance);
-            panelWallet.Controls.Add(lblWalletName);
-            panelWallet.Controls.Add(picWallet);
-            panelWallet.Location = new Point(20, 261);
-            panelWallet.Name = "panelWallet";
-            panelWallet.Size = new Size(360, 80);
-            panelWallet.TabIndex = 7;
-            // 
-            // lblWalletBalance
-            // 
-            lblWalletBalance.AutoSize = true;
-            lblWalletBalance.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblWalletBalance.ForeColor = Color.Gray;
-            lblWalletBalance.Location = new Point(70, 43);
-            lblWalletBalance.Name = "lblWalletBalance";
-            lblWalletBalance.Size = new Size(193, 20);
-            lblWalletBalance.TabIndex = 2;
-            lblWalletBalance.Text = "Total amounts: 10,500,000 đ";
-            // 
-            // lblWalletName
-            // 
-            lblWalletName.AutoSize = true;
-            lblWalletName.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblWalletName.ForeColor = Color.FromArgb(165, 0, 100);
-            lblWalletName.Location = new Point(70, 18);
-            lblWalletName.Name = "lblWalletName";
-            lblWalletName.Size = new Size(132, 25);
-            lblWalletName.TabIndex = 1;
-            lblWalletName.Text = "MoMo Wallet";
-            // 
-            // picWallet
-            // 
-            picWallet.BackColor = Color.FromArgb(165, 0, 100);
-            picWallet.Location = new Point(15, 18);
-            picWallet.Name = "picWallet";
-            picWallet.Size = new Size(45, 45);
-            picWallet.TabIndex = 0;
-            picWallet.TabStop = false;
             // 
             // payButton
             // 
-            payButton.BackColor = Color.FromArgb(165, 0, 100);
+            payButton.BackColor = Color.FromArgb(219, 39, 119);
             payButton.FlatAppearance.BorderSize = 0;
             payButton.FlatStyle = FlatStyle.Flat;
-            payButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            payButton.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             payButton.ForeColor = Color.White;
-            payButton.Location = new Point(20, 371);
+            payButton.Location = new Point(19, 534);
             payButton.Name = "payButton";
-            payButton.Size = new Size(360, 50);
+            payButton.Size = new Size(395, 41);
             payButton.TabIndex = 8;
-            payButton.Text = "CONFIRM PAYMENT";
+            payButton.Text = "Thanh toán: ";
             payButton.UseVisualStyleBackColor = false;
             payButton.Click += payButton_Click;
             payButton.MouseEnter += payButton_MouseEnter;
             payButton.MouseLeave += payButton_MouseLeave;
             // 
-            // panelFooter
+            // guna2PictureBox4
             // 
-            panelFooter.BackColor = Color.FromArgb(245, 245, 245);
-            panelFooter.Controls.Add(lblFooterNote);
-            panelFooter.Dock = DockStyle.Bottom;
-            panelFooter.Location = new Point(0, 505);
-            panelFooter.Name = "panelFooter";
-            panelFooter.Size = new Size(400, 50);
-            panelFooter.TabIndex = 2;
+            guna2PictureBox4.BackColor = Color.FromArgb(249, 250, 251);
+            guna2PictureBox4.CustomizableEdges = customizableEdges15;
+            guna2PictureBox4.FillColor = Color.FromArgb(249, 250, 251);
+            guna2PictureBox4.Image = AirlineReservation_AR.Properties.Resources.horizontal_rule;
+            guna2PictureBox4.ImageRotate = 0F;
+            guna2PictureBox4.Location = new Point(16, 110);
+            guna2PictureBox4.Margin = new Padding(3, 2, 3, 2);
+            guna2PictureBox4.Name = "guna2PictureBox4";
+            guna2PictureBox4.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            guna2PictureBox4.Size = new Size(353, 10);
+            guna2PictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
+            guna2PictureBox4.TabIndex = 30;
+            guna2PictureBox4.TabStop = false;
             // 
-            // lblFooterNote
+            // guna2HtmlLabel1
             // 
-            lblFooterNote.Dock = DockStyle.Fill;
-            lblFooterNote.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblFooterNote.ForeColor = Color.Gray;
-            lblFooterNote.Location = new Point(0, 0);
-            lblFooterNote.Name = "lblFooterNote";
-            lblFooterNote.Size = new Size(400, 50);
-            lblFooterNote.TabIndex = 1;
-            lblFooterNote.Text = "Transaction secured by MoMo";
-            lblFooterNote.TextAlign = ContentAlignment.MiddleCenter;
+            guna2HtmlLabel1.BackColor = Color.Transparent;
+            guna2HtmlLabel1.Font = new Font("Segoe UI Emoji", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2HtmlLabel1.Location = new Point(161, 18);
+            guna2HtmlLabel1.Name = "guna2HtmlLabel1";
+            guna2HtmlLabel1.Size = new Size(175, 28);
+            guna2HtmlLabel1.TabIndex = 31;
+            guna2HtmlLabel1.Text = "Thanh toán MoMo";
+            // 
+            // guna2HtmlLabel2
+            // 
+            guna2HtmlLabel2.BackColor = Color.Transparent;
+            guna2HtmlLabel2.ForeColor = SystemColors.ControlDarkDark;
+            guna2HtmlLabel2.Location = new Point(162, 52);
+            guna2HtmlLabel2.Name = "guna2HtmlLabel2";
+            guna2HtmlLabel2.Size = new Size(92, 17);
+            guna2HtmlLabel2.TabIndex = 32;
+            guna2HtmlLabel2.Text = "Ví điện tử MoMo";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(80, 9);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(64, 64);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 33;
+            pictureBox1.TabStop = false;
+            // 
+            // guna2Panel1
+            // 
+            guna2Panel1.BorderColor = Color.LightSlateGray;
+            guna2Panel1.BorderRadius = 8;
+            guna2Panel1.BorderThickness = 1;
+            guna2Panel1.Controls.Add(guna2HtmlLabel6);
+            guna2Panel1.Controls.Add(txtTotal);
+            guna2Panel1.Controls.Add(txtDiscount);
+            guna2Panel1.Controls.Add(guna2HtmlLabel7);
+            guna2Panel1.Controls.Add(txtAmount);
+            guna2Panel1.Controls.Add(guna2HtmlLabel4);
+            guna2Panel1.Controls.Add(guna2HtmlLabel3);
+            guna2Panel1.Controls.Add(guna2PictureBox4);
+            guna2Panel1.CustomizableEdges = customizableEdges17;
+            guna2Panel1.FillColor = Color.FromArgb(249, 250, 251);
+            guna2Panel1.Location = new Point(19, 199);
+            guna2Panel1.Name = "guna2Panel1";
+            guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            guna2Panel1.Size = new Size(395, 166);
+            guna2Panel1.TabIndex = 34;
+            // 
+            // guna2HtmlLabel6
+            // 
+            guna2HtmlLabel6.BackColor = Color.Transparent;
+            guna2HtmlLabel6.Font = new Font("Segoe UI Semilight", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            guna2HtmlLabel6.ForeColor = SystemColors.ControlDarkDark;
+            guna2HtmlLabel6.Location = new Point(12, 83);
+            guna2HtmlLabel6.Name = "guna2HtmlLabel6";
+            guna2HtmlLabel6.Size = new Size(78, 22);
+            guna2HtmlLabel6.TabIndex = 39;
+            guna2HtmlLabel6.Text = "Khuyến mãi";
+            // 
+            // txtTotal
+            // 
+            txtTotal.BackColor = Color.Transparent;
+            txtTotal.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtTotal.ForeColor = Color.FromArgb(165, 0, 100);
+            txtTotal.Location = new Point(303, 125);
+            txtTotal.Name = "txtTotal";
+            txtTotal.Size = new Size(70, 22);
+            txtTotal.TabIndex = 38;
+            txtTotal.Text = "123456 đ";
+            // 
+            // txtDiscount
+            // 
+            txtDiscount.BackColor = Color.Transparent;
+            txtDiscount.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtDiscount.ForeColor = SystemColors.ControlDarkDark;
+            txtDiscount.Location = new Point(303, 83);
+            txtDiscount.Name = "txtDiscount";
+            txtDiscount.Size = new Size(70, 22);
+            txtDiscount.TabIndex = 37;
+            txtDiscount.Text = "123456 đ";
+            // 
+            // guna2HtmlLabel7
+            // 
+            guna2HtmlLabel7.BackColor = Color.Transparent;
+            guna2HtmlLabel7.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2HtmlLabel7.Location = new Point(15, 125);
+            guna2HtmlLabel7.Name = "guna2HtmlLabel7";
+            guna2HtmlLabel7.Size = new Size(76, 22);
+            guna2HtmlLabel7.TabIndex = 36;
+            guna2HtmlLabel7.Text = "Tổng cộng";
+            // 
+            // txtAmount
+            // 
+            txtAmount.BackColor = Color.Transparent;
+            txtAmount.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtAmount.ForeColor = SystemColors.ControlDarkDark;
+            txtAmount.Location = new Point(303, 54);
+            txtAmount.Name = "txtAmount";
+            txtAmount.Size = new Size(70, 22);
+            txtAmount.TabIndex = 34;
+            txtAmount.Text = "123456 đ";
+            // 
+            // guna2HtmlLabel4
+            // 
+            guna2HtmlLabel4.BackColor = Color.Transparent;
+            guna2HtmlLabel4.Font = new Font("Segoe UI Semilight", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            guna2HtmlLabel4.ForeColor = SystemColors.ControlDarkDark;
+            guna2HtmlLabel4.Location = new Point(12, 55);
+            guna2HtmlLabel4.Name = "guna2HtmlLabel4";
+            guna2HtmlLabel4.Size = new Size(60, 22);
+            guna2HtmlLabel4.TabIndex = 33;
+            guna2HtmlLabel4.Text = "Tạm tính";
+            // 
+            // guna2HtmlLabel3
+            // 
+            guna2HtmlLabel3.BackColor = Color.Transparent;
+            guna2HtmlLabel3.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2HtmlLabel3.Location = new Point(12, 15);
+            guna2HtmlLabel3.Name = "guna2HtmlLabel3";
+            guna2HtmlLabel3.Size = new Size(121, 22);
+            guna2HtmlLabel3.TabIndex = 32;
+            guna2HtmlLabel3.Text = "Chi tiết đơn hàng";
+            // 
+            // guna2Panel2
+            // 
+            guna2Panel2.BorderColor = Color.FromArgb(182, 23, 77);
+            guna2Panel2.BorderRadius = 8;
+            guna2Panel2.BorderThickness = 1;
+            guna2Panel2.Controls.Add(pictureBox2);
+            guna2Panel2.Controls.Add(guna2HtmlLabel11);
+            guna2Panel2.Controls.Add(guna2HtmlLabel10);
+            guna2Panel2.CustomizableEdges = customizableEdges19;
+            guna2Panel2.FillColor = Color.FromArgb(253, 242, 248);
+            guna2Panel2.Location = new Point(19, 109);
+            guna2Panel2.Name = "guna2Panel2";
+            guna2Panel2.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            guna2Panel2.Size = new Size(395, 57);
+            guna2Panel2.TabIndex = 35;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(14, 11);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(16, 16);
+            pictureBox2.SizeMode = PictureBoxSizeMode.AutoSize;
+            pictureBox2.TabIndex = 2;
+            pictureBox2.TabStop = false;
+            // 
+            // guna2HtmlLabel11
+            // 
+            guna2HtmlLabel11.BackColor = Color.Transparent;
+            guna2HtmlLabel11.ForeColor = Color.DeepPink;
+            guna2HtmlLabel11.Location = new Point(26, 33);
+            guna2HtmlLabel11.Name = "guna2HtmlLabel11";
+            guna2HtmlLabel11.Size = new Size(61, 17);
+            guna2HtmlLabel11.TabIndex = 1;
+            guna2HtmlLabel11.Text = "thanh toán";
+            // 
+            // guna2HtmlLabel10
+            // 
+            guna2HtmlLabel10.BackColor = Color.Transparent;
+            guna2HtmlLabel10.ForeColor = Color.DeepPink;
+            guna2HtmlLabel10.Location = new Point(37, 11);
+            guna2HtmlLabel10.Name = "guna2HtmlLabel10";
+            guna2HtmlLabel10.Size = new Size(346, 17);
+            guna2HtmlLabel10.TabIndex = 0;
+            guna2HtmlLabel10.Text = "Bạn sẽ nhận được QR Code của MoMo thanh toán sau khi ấn nút ";
+            // 
+            // guna2PictureBox1
+            // 
+            guna2PictureBox1.CustomizableEdges = customizableEdges21;
+            guna2PictureBox1.Image = AirlineReservation_AR.Properties.Resources.horizontal_rule;
+            guna2PictureBox1.ImageRotate = 0F;
+            guna2PictureBox1.Location = new Point(19, 83);
+            guna2PictureBox1.Margin = new Padding(3, 2, 3, 2);
+            guna2PictureBox1.Name = "guna2PictureBox1";
+            guna2PictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges22;
+            guna2PictureBox1.Size = new Size(395, 10);
+            guna2PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            guna2PictureBox1.TabIndex = 36;
+            guna2PictureBox1.TabStop = false;
+            // 
+            // guna2Panel3
+            // 
+            guna2Panel3.BorderColor = Color.LightSlateGray;
+            guna2Panel3.BorderRadius = 8;
+            guna2Panel3.BorderThickness = 1;
+            guna2Panel3.Controls.Add(guna2HtmlLabel14);
+            guna2Panel3.Controls.Add(guna2Panel4);
+            guna2Panel3.Controls.Add(pictureBox3);
+            guna2Panel3.Controls.Add(guna2HtmlLabel12);
+            guna2Panel3.Controls.Add(txtPromoCode);
+            guna2Panel3.CustomizableEdges = customizableEdges27;
+            guna2Panel3.FillColor = Color.FromArgb(249, 250, 251);
+            guna2Panel3.Location = new Point(19, 383);
+            guna2Panel3.Name = "guna2Panel3";
+            guna2Panel3.ShadowDecoration.CustomizableEdges = customizableEdges28;
+            guna2Panel3.Size = new Size(395, 110);
+            guna2Panel3.TabIndex = 37;
+            // 
+            // guna2HtmlLabel14
+            // 
+            guna2HtmlLabel14.BackColor = Color.Transparent;
+            guna2HtmlLabel14.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2HtmlLabel14.ForeColor = SystemColors.GrayText;
+            guna2HtmlLabel14.Location = new Point(17, 77);
+            guna2HtmlLabel14.Name = "guna2HtmlLabel14";
+            guna2HtmlLabel14.Size = new Size(147, 19);
+            guna2HtmlLabel14.TabIndex = 37;
+            guna2HtmlLabel14.Text = "Gợi ý: SALE10, NEW2024";
+            // 
+            // guna2Panel4
+            // 
+            guna2Panel4.BorderColor = Color.FromArgb(182, 23, 77);
+            guna2Panel4.BorderRadius = 8;
+            guna2Panel4.BorderThickness = 1;
+            guna2Panel4.Controls.Add(guna2HtmlLabel13);
+            guna2Panel4.CustomizableEdges = customizableEdges23;
+            guna2Panel4.FillColor = Color.FromArgb(219, 39, 119);
+            guna2Panel4.Location = new Point(291, 36);
+            guna2Panel4.Name = "guna2Panel4";
+            guna2Panel4.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            guna2Panel4.Size = new Size(92, 36);
+            guna2Panel4.TabIndex = 36;
+            guna2Panel4.Click += ApplyDiscount_Click;
+            // 
+            // guna2HtmlLabel13
+            // 
+            guna2HtmlLabel13.BackColor = Color.Transparent;
+            guna2HtmlLabel13.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2HtmlLabel13.ForeColor = SystemColors.ButtonHighlight;
+            guna2HtmlLabel13.Location = new Point(17, 9);
+            guna2HtmlLabel13.Name = "guna2HtmlLabel13";
+            guna2HtmlLabel13.Size = new Size(56, 19);
+            guna2HtmlLabel13.TabIndex = 0;
+            guna2HtmlLabel13.Text = "Áp dụng";
+            guna2HtmlLabel13.Click += ApplyDiscount_Click;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(16, 6);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(16, 16);
+            pictureBox3.SizeMode = PictureBoxSizeMode.AutoSize;
+            pictureBox3.TabIndex = 34;
+            pictureBox3.TabStop = false;
+            // 
+            // guna2HtmlLabel12
+            // 
+            guna2HtmlLabel12.BackColor = Color.Transparent;
+            guna2HtmlLabel12.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2HtmlLabel12.ForeColor = SystemColors.GrayText;
+            guna2HtmlLabel12.Location = new Point(37, 8);
+            guna2HtmlLabel12.Name = "guna2HtmlLabel12";
+            guna2HtmlLabel12.Size = new Size(78, 19);
+            guna2HtmlLabel12.TabIndex = 33;
+            guna2HtmlLabel12.Text = "Mã giảm giá";
+            // 
+            // txtPromoCode
+            // 
+            txtPromoCode.BackColor = Color.WhiteSmoke;
+            txtPromoCode.BorderColor = Color.PowderBlue;
+            txtPromoCode.BorderRadius = 8;
+            txtPromoCode.CustomizableEdges = customizableEdges25;
+            txtPromoCode.DefaultText = "Nhập mã giảm giá";
+            txtPromoCode.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtPromoCode.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtPromoCode.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtPromoCode.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtPromoCode.FocusedState.BorderColor = Color.LightBlue;
+            txtPromoCode.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtPromoCode.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtPromoCode.Location = new Point(19, 36);
+            txtPromoCode.Name = "txtPromoCode";
+            txtPromoCode.PlaceholderText = "";
+            txtPromoCode.SelectedText = "";
+            txtPromoCode.ShadowDecoration.CustomizableEdges = customizableEdges26;
+            txtPromoCode.Size = new Size(266, 36);
+            txtPromoCode.TabIndex = 0;
+            // 
+            // guna2HtmlLabel15
+            // 
+            guna2HtmlLabel15.BackColor = Color.Transparent;
+            guna2HtmlLabel15.Font = new Font("Segoe UI Semilight", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            guna2HtmlLabel15.ForeColor = SystemColors.ControlDarkDark;
+            guna2HtmlLabel15.Location = new Point(101, 598);
+            guna2HtmlLabel15.Name = "guna2HtmlLabel15";
+            guna2HtmlLabel15.Size = new Size(235, 22);
+            guna2HtmlLabel15.TabIndex = 38;
+            guna2HtmlLabel15.Text = "Giao dịch được bảo mật bởi MoMo";
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
+            pictureBox4.Location = new Point(392, 12);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(32, 32);
+            pictureBox4.SizeMode = PictureBoxSizeMode.AutoSize;
+            pictureBox4.TabIndex = 39;
+            pictureBox4.TabStop = false;
+            pictureBox4.Click += btnClose_Click;
             // 
             // MomoQR
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(400, 555);
-            Controls.Add(panelFooter);
-            Controls.Add(panelMain);
-            Controls.Add(panelHeader);
+            BackColor = Color.White;
+            ClientSize = new Size(434, 633);
+            Controls.Add(pictureBox4);
+            Controls.Add(guna2HtmlLabel15);
+            Controls.Add(guna2Panel3);
+            Controls.Add(guna2PictureBox1);
+            Controls.Add(guna2Panel2);
+            Controls.Add(guna2Panel1);
+            Controls.Add(pictureBox1);
+            Controls.Add(guna2HtmlLabel2);
+            Controls.Add(guna2HtmlLabel1);
+            Controls.Add(payButton);
             FormBorderStyle = FormBorderStyle.None;
             Name = "MomoQR";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MoMo Payment";
             Load += MomoQR_Load;
-            panelHeader.ResumeLayout(false);
-            panelHeader.PerformLayout();
-            panelMain.ResumeLayout(false);
-            panelMain.PerformLayout();
-            panelWallet.ResumeLayout(false);
-            panelWallet.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picWallet).EndInit();
-            panelFooter.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            guna2Panel1.ResumeLayout(false);
+            guna2Panel1.PerformLayout();
+            guna2Panel2.ResumeLayout(false);
+            guna2Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox1).EndInit();
+            guna2Panel3.ResumeLayout(false);
+            guna2Panel3.PerformLayout();
+            guna2Panel4.ResumeLayout(false);
+            guna2Panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panelHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Panel panelMain;
-        private System.Windows.Forms.Label lblAmount;
         private System.Windows.Forms.Label lblAmountValue;
         private System.Windows.Forms.Label lblRecipient;
         private System.Windows.Forms.TextBox txtRecipient;
-        private System.Windows.Forms.Label lblMessage;
-        private System.Windows.Forms.TextBox txtMessage;
-        private System.Windows.Forms.Label lblPaymentMethod;
-        private System.Windows.Forms.Panel panelWallet;
-        private System.Windows.Forms.Label lblWalletName;
-        private System.Windows.Forms.PictureBox picWallet;
         private System.Windows.Forms.Button payButton;
-        private System.Windows.Forms.Panel panelFooter;
-        private TextBox txtAmount;
-        private Label lblWalletBalance;
-        private Label lblFooterNote;
+        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox4;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel2;
+        private PictureBox pictureBox1;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel3;
+        private Guna.UI2.WinForms.Guna2HtmlLabel txtAmount;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel4;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel6;
+        private Guna.UI2.WinForms.Guna2HtmlLabel txtTotal;
+        private Guna.UI2.WinForms.Guna2HtmlLabel txtDiscount;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel7;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel2;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel10;
+        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
+        private PictureBox pictureBox2;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel11;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
+        private PictureBox pictureBox3;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel12;
+        private Guna.UI2.WinForms.Guna2TextBox txtPromoCode;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel4;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel13;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel14;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel15;
+        private PictureBox pictureBox4;
     }
 }

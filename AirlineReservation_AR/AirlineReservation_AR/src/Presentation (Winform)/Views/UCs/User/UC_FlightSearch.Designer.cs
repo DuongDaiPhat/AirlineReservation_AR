@@ -59,23 +59,29 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             lblDate = new Label();
             pnlInputs = new Panel();
             cboFrom = new Guna2ComboBox();
-            btnSwap = new Guna2CircleButton();
             panelReturnCalendar = new Guna2Panel();
+            Close2 = new PictureBox();
+            uC_FlightDate2 = new AR_Winform.Presentation.UControls.User.UC_FlightDate();
+            btnSwap = new Guna2CircleButton();
             cboTo = new Guna2ComboBox();
             btnSearch = new Guna2Button();
             btnStartDate = new Guna2Button();
             btnReturnDate = new Guna2Button();
             panelStartCalendar = new Guna2Panel();
+            Close1 = new PictureBox();
+            uC_FlightDate1 = new AR_Winform.Presentation.UControls.User.UC_FlightDate();
             cboSeatClass = new Guna2ComboBox();
             btnPassenger = new Guna2Button();
             flowDeals = new FlowLayoutPanel();
-            flowStartDays = new FlowLayoutPanel();
-            flowReturnDays = new FlowLayoutPanel();
             pnlMain.SuspendLayout();
             pnlSearchContainer.SuspendLayout();
             pnlTripType.SuspendLayout();
             pnlLabels.SuspendLayout();
             pnlInputs.SuspendLayout();
+            panelReturnCalendar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Close2).BeginInit();
+            panelStartCalendar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Close1).BeginInit();
             SuspendLayout();
             // 
             // pnlMain
@@ -110,7 +116,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlSearchContainer.ShadowDecoration.Depth = 20;
             pnlSearchContainer.ShadowDecoration.Enabled = true;
             pnlSearchContainer.ShadowDecoration.Shadow = new Padding(0, 0, 8, 8);
-            pnlSearchContainer.Size = new Size(1409, 634);
+            pnlSearchContainer.Size = new Size(1409, 643);
             pnlSearchContainer.TabIndex = 0;
             // 
             // lblTitle
@@ -121,7 +127,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(567, 51);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "App du lịch hàng đầu, một chạm đi bất cứ đâu";
+            lblTitle.Text = "The Peak Travel App, One Touch, Go Anywhere";
             lblTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // pnlTripType
@@ -157,7 +163,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2Button1.Size = new Size(150, 42);
             guna2Button1.TabIndex = 2;
-            guna2Button1.Text = "Một chiều/ Khứ hồi";
+            guna2Button1.Text = "OneWay/ Around";
             // 
             // btnRoundTrip
             // 
@@ -182,7 +188,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             btnRoundTrip.ShadowDecoration.CustomizableEdges = customizableEdges4;
             btnRoundTrip.Size = new Size(150, 42);
             btnRoundTrip.TabIndex = 1;
-            btnRoundTrip.Text = "Nhiều thành phố";
+            btnRoundTrip.Text = "Manny Cities";
             // 
             // pnlLabels
             // 
@@ -204,9 +210,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             guna2HtmlLabel1.ForeColor = Color.White;
             guna2HtmlLabel1.Location = new Point(864, 1);
             guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            guna2HtmlLabel1.Size = new Size(63, 23);
+            guna2HtmlLabel1.Size = new Size(89, 23);
             guna2HtmlLabel1.TabIndex = 4;
-            guna2HtmlLabel1.Text = "Khứ hồi";
+            guna2HtmlLabel1.Text = "Round-Trip";
             // 
             // guna2CustomCheckBox1
             // 
@@ -234,9 +240,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             lblFrom.ForeColor = Color.White;
             lblFrom.Location = new Point(5, 0);
             lblFrom.Name = "lblFrom";
-            lblFrom.Size = new Size(30, 21);
+            lblFrom.Size = new Size(49, 21);
             lblFrom.TabIndex = 0;
-            lblFrom.Text = "Từ";
+            lblFrom.Text = "From";
             // 
             // lblTo
             // 
@@ -245,9 +251,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             lblTo.ForeColor = Color.White;
             lblTo.Location = new Point(359, -1);
             lblTo.Name = "lblTo";
-            lblTo.Size = new Size(41, 21);
+            lblTo.Size = new Size(28, 21);
             lblTo.TabIndex = 1;
-            lblTo.Text = "Đến";
+            lblTo.Text = "To";
             // 
             // lblDate
             // 
@@ -256,16 +262,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             lblDate.ForeColor = Color.White;
             lblDate.Location = new Point(645, 2);
             lblDate.Name = "lblDate";
-            lblDate.Size = new Size(132, 21);
+            lblDate.Size = new Size(87, 21);
             lblDate.TabIndex = 2;
-            lblDate.Text = "Ngày khởi hành";
+            lblDate.Text = "Departure";
             // 
             // pnlInputs
             // 
             pnlInputs.BackColor = Color.Transparent;
             pnlInputs.Controls.Add(cboFrom);
-            pnlInputs.Controls.Add(btnSwap);
             pnlInputs.Controls.Add(panelReturnCalendar);
+            pnlInputs.Controls.Add(btnSwap);
             pnlInputs.Controls.Add(cboTo);
             pnlInputs.Controls.Add(btnSearch);
             pnlInputs.Controls.Add(btnStartDate);
@@ -273,7 +279,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlInputs.Controls.Add(panelStartCalendar);
             pnlInputs.Location = new Point(133, 188);
             pnlInputs.Name = "pnlInputs";
-            pnlInputs.Size = new Size(1120, 432);
+            pnlInputs.Size = new Size(1238, 443);
             pnlInputs.TabIndex = 3;
             // 
             // cboFrom
@@ -284,14 +290,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             cboFrom.BorderRadius = 10;
             cboFrom.CustomizableEdges = customizableEdges7;
             cboFrom.DrawMode = DrawMode.OwnerDrawFixed;
+            cboFrom.DropDownHeight = 200;
             cboFrom.DropDownStyle = ComboBoxStyle.DropDownList;
             cboFrom.FocusedColor = Color.FromArgb(0, 164, 239);
             cboFrom.FocusedState.BorderColor = Color.FromArgb(0, 164, 239);
             cboFrom.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             cboFrom.ForeColor = Color.FromArgb(50, 50, 50);
             cboFrom.HoverState.BorderColor = Color.FromArgb(0, 164, 239);
+            cboFrom.IntegralHeight = false;
             cboFrom.ItemHeight = 30;
             cboFrom.Location = new Point(0, 0);
+            cboFrom.MaxDropDownItems = 6;
             cboFrom.Name = "cboFrom";
             cboFrom.ShadowDecoration.BorderRadius = 10;
             cboFrom.ShadowDecoration.Color = Color.FromArgb(0, 164, 239);
@@ -299,6 +308,39 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             cboFrom.Size = new Size(280, 36);
             cboFrom.TabIndex = 5;
             cboFrom.TextOffset = new Point(10, 0);
+            // 
+            // panelReturnCalendar
+            // 
+            panelReturnCalendar.BorderRadius = 12;
+            panelReturnCalendar.Controls.Add(Close2);
+            panelReturnCalendar.Controls.Add(uC_FlightDate2);
+            panelReturnCalendar.CustomizableEdges = customizableEdges9;
+            panelReturnCalendar.FillColor = Color.FromArgb(224, 224, 224);
+            panelReturnCalendar.Location = new Point(767, 53);
+            panelReturnCalendar.Name = "panelReturnCalendar";
+            panelReturnCalendar.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            panelReturnCalendar.Size = new Size(455, 370);
+            panelReturnCalendar.TabIndex = 0;
+            panelReturnCalendar.Visible = false;
+            // 
+            // Close2
+            // 
+            Close2.Image = Properties.Resources.close;
+            Close2.Location = new Point(417, 12);
+            Close2.Name = "Close2";
+            Close2.Size = new Size(32, 29);
+            Close2.SizeMode = PictureBoxSizeMode.StretchImage;
+            Close2.TabIndex = 2;
+            Close2.TabStop = false;
+            Close2.Click += pictureBox2_Click;
+            // 
+            // uC_FlightDate2
+            // 
+            uC_FlightDate2.Dock = DockStyle.Bottom;
+            uC_FlightDate2.Location = new Point(0, 50);
+            uC_FlightDate2.Name = "uC_FlightDate2";
+            uC_FlightDate2.Size = new Size(455, 320);
+            uC_FlightDate2.TabIndex = 1;
             // 
             // btnSwap
             // 
@@ -320,23 +362,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             btnSwap.ImageSize = new Size(25, 25);
             btnSwap.Location = new Point(295, 0);
             btnSwap.Name = "btnSwap";
-            btnSwap.ShadowDecoration.CustomizableEdges = customizableEdges9;
+            btnSwap.ShadowDecoration.CustomizableEdges = customizableEdges11;
             btnSwap.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             btnSwap.Size = new Size(40, 40);
             btnSwap.TabIndex = 1;
             btnSwap.Click += BtnSwap_Click;
-            // 
-            // panelReturnCalendar
-            // 
-            panelReturnCalendar.BorderRadius = 12;
-            panelReturnCalendar.CustomizableEdges = customizableEdges10;
-            panelReturnCalendar.FillColor = Color.White;
-            panelReturnCalendar.Location = new Point(754, 56);
-            panelReturnCalendar.Name = "panelReturnCalendar";
-            panelReturnCalendar.ShadowDecoration.CustomizableEdges = customizableEdges11;
-            panelReturnCalendar.Size = new Size(350, 331);
-            panelReturnCalendar.TabIndex = 0;
-            panelReturnCalendar.Visible = false;
             // 
             // cboTo
             // 
@@ -346,14 +376,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             cboTo.BorderRadius = 10;
             cboTo.CustomizableEdges = customizableEdges12;
             cboTo.DrawMode = DrawMode.OwnerDrawFixed;
+            cboTo.DropDownHeight = 200;
             cboTo.DropDownStyle = ComboBoxStyle.DropDownList;
             cboTo.FocusedColor = Color.FromArgb(0, 164, 239);
             cboTo.FocusedState.BorderColor = Color.FromArgb(0, 164, 239);
             cboTo.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             cboTo.ForeColor = Color.FromArgb(50, 50, 50);
             cboTo.HoverState.BorderColor = Color.FromArgb(0, 164, 239);
+            cboTo.IntegralHeight = false;
             cboTo.ItemHeight = 30;
             cboTo.Location = new Point(350, 0);
+            cboTo.MaxDropDownItems = 6;
             cboTo.Name = "cboTo";
             cboTo.ShadowDecoration.BorderRadius = 10;
             cboTo.ShadowDecoration.Color = Color.FromArgb(0, 164, 239);
@@ -406,7 +439,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             btnStartDate.ShadowDecoration.CustomizableEdges = customizableEdges17;
             btnStartDate.Size = new Size(178, 50);
             btnStartDate.TabIndex = 7;
-            btnStartDate.Text = "Chọn ngày đi";
+            btnStartDate.Text = "Departure Date";
             btnStartDate.Click += BtnStartDate_Click;
             // 
             // btnReturnDate
@@ -422,20 +455,41 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             btnReturnDate.ShadowDecoration.CustomizableEdges = customizableEdges19;
             btnReturnDate.Size = new Size(178, 50);
             btnReturnDate.TabIndex = 8;
-            btnReturnDate.Text = "Chọn ngày về";
+            btnReturnDate.Text = "Arrival Date";
             btnReturnDate.Click += BtnReturnDate_Click;
             // 
             // panelStartCalendar
             // 
             panelStartCalendar.BorderRadius = 12;
+            panelStartCalendar.Controls.Add(Close1);
+            panelStartCalendar.Controls.Add(uC_FlightDate1);
             panelStartCalendar.CustomizableEdges = customizableEdges20;
-            panelStartCalendar.FillColor = Color.White;
-            panelStartCalendar.Location = new Point(368, 56);
+            panelStartCalendar.FillColor = Color.FromArgb(224, 224, 224);
+            panelStartCalendar.Location = new Point(295, 53);
             panelStartCalendar.Name = "panelStartCalendar";
             panelStartCalendar.ShadowDecoration.CustomizableEdges = customizableEdges21;
-            panelStartCalendar.Size = new Size(350, 331);
+            panelStartCalendar.Size = new Size(455, 370);
             panelStartCalendar.TabIndex = 9;
             panelStartCalendar.Visible = false;
+            // 
+            // Close1
+            // 
+            Close1.Image = Properties.Resources.close;
+            Close1.Location = new Point(417, 12);
+            Close1.Name = "Close1";
+            Close1.Size = new Size(32, 29);
+            Close1.SizeMode = PictureBoxSizeMode.StretchImage;
+            Close1.TabIndex = 1;
+            Close1.TabStop = false;
+            Close1.Click += pictureBox1_Click;
+            // 
+            // uC_FlightDate1
+            // 
+            uC_FlightDate1.Dock = DockStyle.Bottom;
+            uC_FlightDate1.Location = new Point(0, 50);
+            uC_FlightDate1.Name = "uC_FlightDate1";
+            uC_FlightDate1.Size = new Size(455, 320);
+            uC_FlightDate1.TabIndex = 0;
             // 
             // cboSeatClass
             // 
@@ -459,7 +513,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             cboSeatClass.ShadowDecoration.CustomizableEdges = customizableEdges23;
             cboSeatClass.ShadowDecoration.Depth = 8;
             cboSeatClass.Size = new Size(280, 36);
-            cboSeatClass.StartIndex = 0;
             cboSeatClass.TabIndex = 6;
             cboSeatClass.TextOffset = new Point(10, 0);
             cboSeatClass.Enter += Combo_Enter;
@@ -479,7 +532,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             btnPassenger.ShadowDecoration.CustomizableEdges = customizableEdges25;
             btnPassenger.Size = new Size(259, 36);
             btnPassenger.TabIndex = 7;
-            btnPassenger.Text = "👤 1 Người lớn, 0 Trẻ em, 0 Em bé";
+            btnPassenger.Text = "👤 1 Adult, 0 Child, 0 Infant";
             btnPassenger.Click += BtnPassenger_Click;
             // 
             // flowDeals
@@ -490,20 +543,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             flowDeals.Name = "flowDeals";
             flowDeals.Size = new Size(1409, 145);
             flowDeals.TabIndex = 1;
-            // 
-            // flowStartDays
-            // 
-            flowStartDays.Location = new Point(0, 0);
-            flowStartDays.Name = "flowStartDays";
-            flowStartDays.Size = new Size(200, 100);
-            flowStartDays.TabIndex = 0;
-            // 
-            // flowReturnDays
-            // 
-            flowReturnDays.Location = new Point(0, 0);
-            flowReturnDays.Name = "flowReturnDays";
-            flowReturnDays.Size = new Size(200, 100);
-            flowReturnDays.TabIndex = 0;
             // 
             // UC_FlightSearch
             // 
@@ -520,6 +559,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlLabels.ResumeLayout(false);
             pnlLabels.PerformLayout();
             pnlInputs.ResumeLayout(false);
+            panelReturnCalendar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)Close2).EndInit();
+            panelStartCalendar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)Close1).EndInit();
             ResumeLayout(false);
         }
 
@@ -602,5 +645,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private Guna2Panel panelStartCalendar;
         private Guna2Button btnStartDate;
         private Guna2Button btnReturnDate;
+        private AR_Winform.Presentation.UControls.User.UC_FlightDate uC_FlightDate2;
+        private AR_Winform.Presentation.UControls.User.UC_FlightDate uC_FlightDate1;
+        private PictureBox Close2;
+        private PictureBox Close1;
     }
 }

@@ -109,98 +109,37 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         {
             using var db = DIContainer.CreateDb();
 
-            var fromAirportId = await db.Airports
-                .Where(a => a.IataCode == p.FromCode)
-                .Select(a => a.AirportId)
-                .FirstAsync();
 
-            var toAirportId = await db.Airports
-                .Where(a => a.IataCode == p.ToCode)
-                .Select(a => a.AirportId)
-                .FirstAsync();
+            // 2) OUTBOUND FLIGHTS
+            var outboundFlights = await LoadFlightsAsync(db, p.FromCode, p.ToCode, p.StartDate!.Value);
 
-            // DayTabs trước
-            var dayTabs = new List<FlightDayPriceDTO>();
-            for (int offset = -3; offset <= 3; offset++)
+            // 3) RETURN FLIGHTS (optional)
+            List<Flight>? returnFlights = null;
+            if (p.ReturnDate != null)
             {
-                var date = p.StartDate!.Value.AddDays(offset);
-                dayTabs.Add(new FlightDayPriceDTO { Date = date, LowestPrice = 0 });
+                returnFlights = await LoadFlightsAsync(db, p.ToCode, p.FromCode, p.ReturnDate.Value);
             }
 
-            // Lấy flight list
-            var flights = await db.Flights
-                .Include(f => f.Airline)
-                .Include(f => f.Aircraft).ThenInclude(a => a.AircraftType)
-                .Include(f => f.DepartureAirport)
-                .Include(f => f.ArrivalAirport)
-                .Include(f => f.FlightPricings)
-                .Where(f =>
-                    f.DepartureAirportId == fromAirportId &&
-                    f.ArrivalAirportId == toAirportId &&
-                    f.FlightDate == p.StartDate)
-                .ToListAsync();
+            // 4) Convert outbound flights
+            var outboundResult = await ConvertToResultDTO(outboundFlights, p.SeatClassId, db);
+            decimal lowest = outboundResult.Any()
+                    ? outboundResult.Min(f => f.Price)
+                    : 0;
 
-            if (!flights.Any())
+            // 5) Convert return flights
+
+            var dayTabsReturn = new List<FlightDayPriceDTO>();
+            var sevenDayPricesReturn = new List<FlightDayPriceDTO>();
+            List<FlightResultDTO> returnResult = new();
+            if (returnFlights != null)
             {
-                return new FlightSearchResultDTO
-                {
-                    AllFlights = new List<FlightResultDTO>(),
-                    AirlineFilters = new List<AirlineFilterDTO>(),
-                    DayTabs = dayTabs
-                };
+                returnResult = await ConvertToResultDTO(returnFlights, p.SeatClassId, db);
+
+                sevenDayPricesReturn = await Get7DayPricesAsync(db, p.ToCode, p.FromCode, p.ReturnDate.Value, p.SeatClassId);
             }
 
-            // Convert SeatClassId => DisplayName
-            string selectedSeatClassName = await db.SeatClasses
-                .Where(s => s.SeatClassId == p.SeatClassId)
-                .Select(s => s.DisplayName)
-                .FirstAsync();
-
-            var seatClassMap = await db.SeatClasses
-                .ToDictionaryAsync(s => s.SeatClassId, s => s.DisplayName);
-
-            var resultList = new List<FlightResultDTO>();
-
-            foreach (var f in flights)
-            {
-                var seatsLeft = await GetSeatAvailabilityAsync(f.FlightId);
-
-                seatsLeft.TryGetValue(selectedSeatClassName, out int available);
-
-                var priceRow = f.FlightPricings.FirstOrDefault(x => x.SeatClassId == p.SeatClassId);
-
-                resultList.Add(new FlightResultDTO
-                {
-                    FlightId = f.FlightId,
-                    AirlineName = f.Airline.AirlineName,
-                    AirlineLogo = f.Airline.LogoUrl,
-
-                    FromAirportCode = f.DepartureAirport.IataCode,
-                    ToAirportCode = f.ArrivalAirport.IataCode,
-                    FromAirportName = f.DepartureAirport.AirportName,
-                    ToAirportName = f.ArrivalAirport.AirportName,
-
-                    FlightDate = f.FlightDate,
-                    DepartureTime = f.DepartureTime,
-                    ArrivalTime = f.ArrivalTime,
-                    DurationMinutes = f.DurationMinutes ?? 0,
-
-                    Price = priceRow?.Price ?? f.BasePrice,
-
-                    AvailableSeats = available,
-                    SeatsLeftByClass = seatsLeft,
-                    SeatClassesMap = seatClassMap,
-                    SelectedSeatClassName = selectedSeatClassName,
-
-                    TotalSeatsLeft = seatsLeft.Values.Sum(),
-
-                    AircraftType = f.Aircraft.AircraftType.DisplayName
-                });
-            }
-
-            resultList = resultList.OrderBy(f => f.Price).ToList();
-
-            var airlineFilters = resultList
+            // 6) Build airline filters (from outbound only)
+            var airlineFilters = outboundResult
                 .GroupBy(f => f.AirlineName)
                 .Select(g => new AirlineFilterDTO
                 {
@@ -208,14 +147,30 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                     LogoUrl = g.First().AirlineLogo
                 })
                 .ToList();
+            
+            var retrunAirlineFilters = returnResult
+                .GroupBy(f => f.AirlineName)
+                .Select(g => new AirlineFilterDTO
+                {
+                    AirlineName = g.Key,
+                    LogoUrl = g.First().AirlineLogo
+                })
+                .ToList();
+            // 1) Build day tabs (only for start date)
+            var sevenDayPrices = await Get7DayPricesAsync(db, p.FromCode, p.ToCode, p.StartDate.Value, p.SeatClassId);
 
             return new FlightSearchResultDTO
             {
-                AllFlights = resultList,
+                OutboundFlights = outboundResult,
+                ReturnFlights = returnResult,
                 AirlineFilters = airlineFilters,
-                DayTabs = dayTabs
+                RetrunAirlineFilters = retrunAirlineFilters,
+                DayTabs = sevenDayPrices,
+                RoundTrip = p.RoundTrip,
+                DayTabReturn = sevenDayPricesReturn
             };
         }
+
 
         // DisplayName-based response
         public async Task<Dictionary<string, int>> GetSeatAvailabilityAsync(int flightId)
@@ -252,6 +207,164 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
 
             return result;
         }
+
+
+        private async Task<List<FlightResultDTO>> ConvertToResultDTO(List<Flight> flights, int seatClassId, AirlineReservationDbContext db)
+        {
+            if (!flights.Any()) return new List<FlightResultDTO>();
+
+            string selectedSeatClassName = await db.SeatClasses
+                .Where(s => s.SeatClassId == seatClassId)
+                .Select(s => s.DisplayName)
+                .FirstAsync();
+
+            var seatClassMap = await db.SeatClasses
+                .ToDictionaryAsync(s => s.SeatClassId, s => s.DisplayName);
+
+            var result = new List<FlightResultDTO>();
+
+            foreach (var f in flights)
+            {
+                var seatsLeft = await GetSeatAvailabilityAsync(f.FlightId);
+
+                seatsLeft.TryGetValue(selectedSeatClassName, out int available);
+
+                var priceRow = f.FlightPricings.FirstOrDefault(x => x.SeatClassId == seatClassId);
+
+                result.Add(new FlightResultDTO
+                {
+                    FlightId = f.FlightId,
+                    AirlineName = f.Airline.AirlineName,
+                    AirlineLogo = f.Airline.LogoUrl,
+
+                    FromAirportCode = f.DepartureAirport.IataCode,
+                    ToAirportCode = f.ArrivalAirport.IataCode,
+                    FromAirportName = f.DepartureAirport.AirportName,
+                    ToAirportName = f.ArrivalAirport.AirportName,
+
+                    FlightDate = f.FlightDate,
+                    DepartureTime = f.DepartureTime,
+                    ArrivalTime = f.ArrivalTime,
+                    DurationMinutes = f.DurationMinutes ?? 0,
+
+                    Price = priceRow?.Price ?? f.BasePrice,
+
+                    AvailableSeats = available,
+                    SeatsLeftByClass = seatsLeft,
+                    SeatClassesMap = seatClassMap,
+                    SelectedSeatClassName = selectedSeatClassName,
+                    TotalSeatsLeft = seatsLeft.Values.Sum(),
+
+                    AircraftType = f.Aircraft.AircraftType.DisplayName,
+                    FlightCode = f.FlightNumber
+                });
+            }
+
+            return result.OrderBy(f => f.Price).ToList();
+        }
+
+        private async Task<List<Flight>> LoadFlightsAsync(
+            AirlineReservationDbContext db,
+            string fromCode,
+            string toCode,
+            DateTime date)
+        {
+            var fromAirportId = await db.Airports
+                .Where(a => a.IataCode == fromCode)
+                .Select(a => a.AirportId)
+                .FirstAsync();
+
+            var toAirportId = await db.Airports
+                .Where(a => a.IataCode == toCode)
+                .Select(a => a.AirportId)
+                .FirstAsync();
+
+            return await db.Flights
+                .Include(f => f.Airline)
+                .Include(f => f.Aircraft).ThenInclude(a => a.AircraftType)
+                .Include(f => f.DepartureAirport)
+                .Include(f => f.ArrivalAirport)
+                .Include(f => f.FlightPricings)
+                .Where(f =>
+                    f.DepartureAirportId == fromAirportId &&
+                    f.ArrivalAirportId == toAirportId &&
+                    f.FlightDate == date)
+                .ToListAsync();
+        }
+
+        private List<FlightDayPriceDTO> BuildDayTabs(DateTime start, decimal lowestPrice)
+        {
+            var list = new List<FlightDayPriceDTO>();
+
+            for (int offset = -3; offset <= 3; offset++)
+            {
+                var date = start.AddDays(offset);
+
+                list.Add(new FlightDayPriceDTO
+                {
+                    Date = date,
+                    LowestPrice = (offset == 0 ? lowestPrice : 0)
+                });
+            }
+
+            return list;
+        }
+
+        private async Task<List<FlightDayPriceDTO>> Get7DayPricesAsync(
+            AirlineReservationDbContext db,
+            string fromCode,
+            string toCode,
+            DateTime startDate,
+            int seatClassId)
+        {
+            var list = new List<FlightDayPriceDTO>();
+
+            var fromAirportId = await db.Airports
+                .Where(a => a.IataCode == fromCode)
+                .Select(a => a.AirportId)
+                .FirstAsync();
+
+            var toAirportId = await db.Airports
+                .Where(a => a.IataCode == toCode)
+                .Select(a => a.AirportId)
+                .FirstAsync();
+
+            for (int offset = -3; offset <= 3; offset++)
+            {
+                var date = startDate.AddDays(offset);
+
+                var query = await db.Flights
+                    .Where(f =>
+                        f.DepartureAirportId == fromAirportId &&
+                        f.ArrivalAirportId == toAirportId &&
+                        f.FlightDate == date)
+                    .Select(f => new
+                    {
+                        BasePrice = f.BasePrice,
+                        ExtraPrice = f.FlightPricings
+                            .Where(x => x.SeatClassId == seatClassId)
+                            .Select(x => x.Price)
+                            .FirstOrDefault()
+                    })
+                    .ToListAsync();
+
+                decimal lowestPrice = 0;
+
+                if (query.Any())
+                {
+                    lowestPrice = query.Min(x => x.ExtraPrice == 0 ? x.BasePrice : x.ExtraPrice);
+                }
+
+                list.Add(new FlightDayPriceDTO
+                {
+                    Date = date,
+                    LowestPrice = lowestPrice
+                });
+            }
+
+            return list;
+        }
+
 
 
 

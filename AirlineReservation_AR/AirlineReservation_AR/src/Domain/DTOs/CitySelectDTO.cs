@@ -12,8 +12,6 @@ namespace AirlineReservation_AR.src.Domain.DTOs
         public string Code { get; set; }
         public string DisplayName { get; set; }
 
-        public CitySelectDTO() { }
-
         public CitySelectDTO(City city)
         {
             Code = city.CityCode;

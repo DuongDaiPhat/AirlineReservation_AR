@@ -132,7 +132,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             this.lblSeatsTitle.ForeColor = System.Drawing.Color.FromArgb(100, 100, 100);
             this.lblSeatsTitle.Location = new System.Drawing.Point(15, 88);
             this.lblSeatsTitle.Size = new System.Drawing.Size(90, 20);
-            this.lblSeatsTitle.Text = "Ghế còn lại:";
+            this.lblSeatsTitle.Text = "Remain Seats:";
             this.lblSeatsTitle.BackColor = System.Drawing.Color.Transparent;
             this.lblSeatsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Domain.Exceptions;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.popup;
 
@@ -11,23 +13,77 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
     public partial class UC_FilloutInform : UserControl
     {
-        private FlightResultDTO _selectedFlight;
-        private FlightSearchParams _searchParams;
-        private List<PassengerBaggageDTO> _savedBaggage = new();
+        //private FlightResultDTO _selectedFlight, _selectedRetrunFlight;
 
+        //private Dictionary<string, ServiceOption> _passengerServices = new();
+        //List<PassengerWithServicesDTO> _passengerBundles = new();
+
+        //private Dictionary<string, ServiceOption> _passengerServicesReturn = new();
+        //List<PassengerWithServicesDTO> _passengerBundlesReturn = new();
+
+        private FlightSearchParams _searchParams;
+
+        private FlightSegmentContext _outboundSegment;
+        private FlightSegmentContext _returnSegment; // null nếu one-way
+        private bool isRoundTripCheck = false;
+        private LoadingForm _loadingForm;
         public UC_FilloutInform()
         {
             InitializeComponent();
         }
 
-        public void SetFlightData(FlightResultDTO flight, FlightSearchParams p)
-        {
-            _selectedFlight = flight;
-            _searchParams = p;
-            RenderContactForm();
-            RenderPassengers();
-            RenderDefaultSummary();
+        //public void SetFlightData(FlightResultDTO flight, FlightResultDTO returnFlight ,FlightSearchParams p)
+        //{
+        //    _selectedFlight = flight;
+        //    _selectedRetrunFlight = returnFlight;
+        //    _searchParams = p;
+        //    RenderContactForm();
+        //    RenderPassengers();
+        //    renderPassengerSummary();
+        //    RenderDefaultSummary();
+        //}
+
+        public void SetFlightData(FlightResultDTO flight, FlightResultDTO returnFlight, FlightSearchParams p)
+                {
+                    _searchParams = p;
+
+                    _outboundSegment = new FlightSegmentContext
+                    {
+                        Flight = flight
+                    };
+
+                    if (returnFlight != null)
+                    {
+                        _returnSegment = new FlightSegmentContext
+                        {
+                            Flight = returnFlight
+                        };
+                    }
+
+                    RenderContactForm();
+                    RenderPassengers();
+
+                    InitPassengerServices(_outboundSegment);
+
+                    if (_returnSegment != null)
+                        InitPassengerServices(_returnSegment);
+
+                    RenderDefaultSummary();
         }
+
+        private void InitPassengerServices(FlightSegmentContext segment)
+        {
+            for (int i = 1; i <= _searchParams.Adult; i++)
+                segment.PassengerServices.TryAdd($"Adult {i}", new ServiceOption());
+
+            for (int i = 1; i <= _searchParams.Child; i++)
+                segment.PassengerServices.TryAdd($"Child {i}", new ServiceOption());
+
+            for (int i = 1; i <= _searchParams.Infant; i++)
+                segment.PassengerServices.TryAdd($"Infant {i}", new ServiceOption());
+        }
+
+
 
         private void RenderContactForm()
         {
@@ -35,15 +91,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             var contact = new ContactFormFill();
             contact.Dock = DockStyle.Top;
             contactPnl.Controls.Add(contact);
-        }
-
-        private void RenderSummary(List<PassengerDTO> passengers)
-        {
-            pnlSummary.Controls.Clear();
-            var summary = new SummaryBookingControl();
-            summary.Dock = DockStyle.Fill;
-            summary.SetData(_selectedFlight, _searchParams, passengers);
-            pnlSummary.Controls.Add(summary);
         }
 
         private void RenderPassengers()
@@ -68,8 +115,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
         private bool IsInternationalFlight()
         {
-            return _selectedFlight.FromAirportCode != "VN"
-                   && _selectedFlight.ToAirportCode != "VN";
+            return _outboundSegment.Flight.FromAirportCode != "VN"
+                   && _outboundSegment.Flight.ToAirportCode != "VN";
         }
 
         private List<PassengerDTO> BuildPassengerList()
@@ -94,75 +141,108 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         }
         private void btnAddBaggage_Click(object sender, EventArgs e)
         {
-            var types = new List<string>();
+            var popup = new PopupAddBaggage(_outboundSegment.PassengerServices, _returnSegment.PassengerServices);
 
-            // Lấy đúng loại từ PassengerFormFill
-            foreach (var pf in GetPassengerForms())
-                types.Add(pf.PassengerType);
-
-            var popup = new PopupAddBaggage(_selectedFlight, types, _savedBaggage);
-
-            if (popup.ShowDialog() == DialogResult.OK)
+            popup.OnServicesChanged += service =>
             {
-                var list = BuildPassengerList();
-                if (list != null) RenderSummary(list);
+                _outboundSegment.PassengerServices = service;
+                RenderDefaultSummary();
 
-                var baggageList = popup.SelectedBaggage;
-                UpdateSummaryWithBaggage(baggageList);
-
-                MessageBox.Show("Đã chọn hành lý!",
-                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                _savedBaggage = popup.SelectedBaggage;
-            }
-
+            };
+            popup.OnServicesReturnChanged += service =>
+            {
+                _returnSegment.PassengerServices = service;
+                RenderDefaultSummary();
+            };
+            popup.ShowDialog();
         }
 
-        private void UpdateSummaryWithBaggage(List<PassengerBaggageDTO> bag)
-        {
-            var summary = GetSummaryControl();
-            if (summary == null) return;
+        //private void renderPassengerSummary()
+        //{
+        //    // Adult
+        //    for (int i = 1; i <= _searchParams.Adult; i++)
+        //    {
+        //        string key = $"Adult {i}";
+        //        if (!_passengerServices.ContainsKey(key))
+        //            _passengerServices[key] = new ServiceOption();
+        //    }
 
-            decimal baggageTotal = bag.Sum(x => x.Price);
-            summary.ClearExtraCosts();
-            summary.AddExtraCost("Hành lý", baggageTotal);
-        }
+        //    // Child
+        //    for (int i = 1; i <= _searchParams.Child; i++)
+        //    {
+        //        string key = $"Child {i}";
+        //        if (!_passengerServices.ContainsKey(key))
+        //            _passengerServices[key] = new ServiceOption();
+        //    }
 
-
-
-
+        //    // Infant
+        //    for (int i = 1; i <= _searchParams.Infant; i++)
+        //    {
+        //        string key = $"Infant {i}";
+        //        if (!_passengerServices.ContainsKey(key))
+        //            _passengerServices[key] = new ServiceOption();
+        //    }
+        //}
         private void guna2Button2_Click(object sender, EventArgs e)
         {
-            // 1. Validate contact info
-            var contact = GetContactForm();
-            if (contact == null || !contact.ValidateContact())
+            ShowLoading();
+
+            try
             {
-                MessageBox.Show("Vui lòng kiểm tra lại thông tin liên hệ.",
-                    "Thông tin chưa hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                // 1. Validate contact info
+                var contact = GetContactForm();
+                if (contact == null || !contact.ValidateContact())
+                {
+                        AnnouncementForm announcementForm = new AnnouncementForm();
+                        announcementForm.SetAnnouncement("Vui long kiểm tra lại thông tin liên hệ", "Thông tin liên hệ chưa hợp lệ" , false, null);
+                        announcementForm.Show();
+                    return;
+                }
+
+                // 2. Validate passenger info
+                var passengers = BuildPassengerList();
+                if (passengers == null)
+                    return;
+
+                // 3. Build DTOs
+                var outboundDto = BuildBookingDTO(_outboundSegment);
+                BookingCreateDTO returnDto = null;
+
+                if (_returnSegment != null)
+                    returnDto = BuildBookingDTO(_returnSegment);
+
+                // 4. Save booking
+                int bookingId = DIContainer.BookingController.CreateBooking(
+                    outboundDto,
+                    returnDto
+                );
+
+                // 5. Payment
+                var form = new MomoQR.MomoQR();
+                form.SetPayment(bookingId, outboundDto.TotalAmount);
+                form.ShowDialog();
+        }
+            catch (BusinessException ex)
+            {
+                AnnouncementForm announcementForm = new AnnouncementForm();
+                announcementForm.SetAnnouncement("Lỗi nghiệp vụ", ex.Message, false, null);
+                announcementForm.Show();
             }
+            catch (Exception ex)
+            {
+                // TODO: log ex (file / db / serilog)
+                AnnouncementForm announcementForm = new AnnouncementForm();
+                announcementForm.SetAnnouncement("Hệ thống gặp sự cố, vui lòng thử lại sau", "Lỗi hệ thống:" + ex.Message , false, null);
+                announcementForm.Show();
 
-            // 2. Validate all passenger forms
-            var passengers = BuildPassengerList();
-            if (passengers == null)
-                return;
-
-            // 3. Build DTO
-            var dto = BuildBookingDTO();
-
-            // 4. Save to DB
-            int bookingId = DIContainer.BookingController.CreateBooking(dto);
-
-            // 5. Payment
-            var form = new MomoQR.MomoQR();
-            form.SetPayment(bookingId, dto.TotalAmount);
-            form.ShowDialog();
+            }
+            finally
+            {
+                CloseLoading();
+            }
         }
 
 
-        private SummaryBookingControl GetSummaryControl()
-        {
-            return pnlSummary.Controls.OfType<SummaryBookingControl>().FirstOrDefault();
-        }
 
         private ContactFormFill GetContactForm()
         {
@@ -173,32 +253,15 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         {
             return formPnl.Controls.OfType<PassengerFormFill>().ToList();
         }
-        private List<Passenger> BuildPassengerEntityList()
+        private void BuildPassengerEntityList()
         {
-            var result = new List<Passenger>();
+            _outboundSegment.PassengerBundles.Clear();
+            _returnSegment?.PassengerBundles.Clear();
 
             foreach (var pf in GetPassengerForms())
             {
                 var dto = pf.GetPassenger();
-
-                string gender = null;
-
-                switch (dto.Title?.Trim().ToLower())
-                {
-                    case "Mr":
-                        gender = "Male";
-                        break;
-
-                    case "Ms":
-                    case "Mrs":
-                    case "Miss":
-                        gender = "Female";
-                        break;
-
-                    default:
-                        gender = dto.Gender;
-                        break;
-                }
+                string key = $"{dto.PassengerType} {dto.Index}";
 
                 var passenger = new Passenger
                 {
@@ -208,70 +271,132 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                     MiddleName = dto.MiddleName,
                     LastName = dto.LastName,
                     DateOfBirth = dto.DateOfBirth,
-                    Gender = gender,
+                    Gender = dto.Gender,
                     IdNumber = dto.PassportNumber,
                     Nationality = dto.Nationality,
                     CountryIssue = dto.CountryIssue,
                     ExpireDatePassport = dto.PassportExpire
                 };
 
-                result.Add(passenger);
-            }
+                // OUTBOUND
+                _outboundSegment.PassengerBundles.Add(new PassengerWithServicesDTO
+                {
+                    Passenger = passenger,
+                    SelectedServices = _outboundSegment.PassengerServices[key]
+                });
 
-            return result;
+                // RETURN
+                if (_returnSegment != null)
+                {
+                    _returnSegment.PassengerBundles.Add(new PassengerWithServicesDTO
+                    {
+                        Passenger = passenger,
+                        SelectedServices = _returnSegment.PassengerServices[key]
+                    });
+                }
+            }
         }
 
 
-        private BookingCreateDTO BuildBookingDTO()
-        {
+
+        private BookingCreateDTO BuildBookingDTO(FlightSegmentContext _selectedFlight) 
+        { 
             var contactForm = GetContactForm();
             var contact = contactForm?.GetContact();
             var passengers = GetPassengerForms().Select(x => x.GetPassenger()).ToList();
-            var summary = GetSummaryControl();
+            BuildPassengerEntityList();
+            var pricing = CalculatePricing(_selectedFlight, _searchParams.Adult, _searchParams.Child, _searchParams.Infant);
             var user = DIContainer.CurrentUser;
-
             return new BookingCreateDTO
             {
                 UserId = user.UserId,
                 ContactEmail = contact?.Email ?? "",
                 ContactPhone = contact?.Phone ?? "",
                 SpecialRequest = "",
-                FlightId = _selectedFlight.FlightId,
+                FlightId = _selectedFlight.Flight.FlightId,
                 TripType = _searchParams.ReturnDate == null ? "OneWay" : "RoundTrip",
-                TotalAmount = summary != null ? summary.TotalPrice : 0,
-                TaxAmount = summary!= null ? summary.TotalPrice*0.1M : 0,
+                TotalAmount = pricing.TotalAmount,
+                TaxAmount = pricing.TaxAmount,
                 TotalFee = 0,
-                Passengers = BuildPassengerEntityList(),
-                Baggages = _savedBaggage
-
+                Passengers = _selectedFlight.PassengerBundles,
             };
         }
 
         private void RenderDefaultSummary()
         {
-            pnlSummary.Controls.Clear();
-
-            var defaultPassengers = new List<PassengerDTO>();
-            int adults = _searchParams.Adult;
-            int childs = _searchParams.Child;
-            int infants = _searchParams.Infant;
-
-            // Tạo DTO tạm mà không cần validate
-            for (int i = 0; i < adults; i++)
-                defaultPassengers.Add(new PassengerDTO { PassengerType = "Adult" });
-
-            for (int i = 0; i < childs; i++)
-                defaultPassengers.Add(new PassengerDTO { PassengerType = "Child" });
-
-            for (int i = 0; i < infants; i++)
-                defaultPassengers.Add(new PassengerDTO { PassengerType = "Infant" });
-
-            var summary = new SummaryBookingControl();
-            summary.Dock = DockStyle.Fill;
-            summary.SetData(_selectedFlight, _searchParams, defaultPassengers);
-
-            pnlSummary.Controls.Add(summary);
+            summaryBookingControl1.SetData(
+                _outboundSegment.Flight,
+                _returnSegment?.Flight,
+                _outboundSegment.PassengerServices,
+                _returnSegment?.PassengerServices
+            );
         }
+
+        private void CloseLoading()
+        {
+            if (_loadingForm != null && !_loadingForm.IsDisposed)
+            {
+                _loadingForm.Close();
+                _loadingForm = null;
+            }
+        }
+
+        private void ShowLoading()
+        {
+            if (_loadingForm == null || _loadingForm.IsDisposed)
+            {
+                _loadingForm = new LoadingForm();
+                _loadingForm.Show();
+                _loadingForm.BringToFront();
+            }
+        }
+
+        public static PricingResult CalculatePricing(
+            FlightSegmentContext segment,
+            int adult,
+            int child,
+            int infant)
+        {
+            if (segment == null)
+                throw new BusinessException("Flight segment is null");
+
+            if (segment.Flight == null)
+                throw new BusinessException("Flight data is missing");
+
+            var basePrice = segment.Flight.Price;
+
+            // 1 Flight price (GIỐNG SUMMARY)
+            decimal flightPrice =
+                (basePrice * adult) +
+                (basePrice * 0.75m * child) +
+                (basePrice * 0.1m * infant);
+
+            //  Service price
+            decimal servicePrice = segment.PassengerServices
+                .Values
+                .Sum(s => s.totalPrice);
+
+            // 3 Tax (10% trên flight)
+            decimal taxRate = 0.1M;
+            decimal tax = flightPrice * taxRate;
+
+            // 4 Total
+            decimal total = flightPrice + servicePrice + tax;
+
+            // 5 Set ngược lại context (để UI + DTO dùng)
+            segment.TotalFlightPrice = flightPrice;
+            segment.TotalServicePrice = servicePrice;
+
+            return new PricingResult
+            {
+                FlightPrice = flightPrice,
+                ServicePrice = servicePrice,
+                TaxAmount = tax,
+                TotalAmount = total
+            };
+        }
+
+
 
     }
 }

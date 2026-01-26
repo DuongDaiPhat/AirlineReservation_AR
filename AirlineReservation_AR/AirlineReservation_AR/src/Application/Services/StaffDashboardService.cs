@@ -67,33 +67,33 @@ namespace AirlineReservation_AR.src.Application.Services
                         }).AsEnumerable(); // Load data first to avoid SQL translation issues
 
             // Apply search filter
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                query = query.Where(x =>
-                    (x.Ticket.BookingCode != null && x.Ticket.BookingCode.ToLower().Contains(searchTerm)) ||
-                    (x.Passenger.FullName != null && x.Passenger.FullName.ToLower().Contains(searchTerm)) ||
-                    (x.Flight.FlightNumber != null && x.Flight.FlightNumber.ToLower().Contains(searchTerm)) ||
-                    (x.Ticket.BookingFlight != null && x.Ticket.BookingFlight.ToLower().Contains(searchTerm))
-                );
-            }
+            //if (!string.IsNullOrEmpty(searchTerm))
+            //{
+            //    query = query.Where(x =>
+            //        (x.Ticket.BookingCode != null && x.Ticket.BookingCode.ToLower().Contains(searchTerm)) ||
+            //        (x.Passenger.FullName != null && x.Passenger.FullName.ToLower().Contains(searchTerm)) ||
+            //        (x.Flight.FlightNumber != null && x.Flight.FlightNumber.ToLower().Contains(searchTerm)) ||
+            //        (x.Ticket.BookingFlight != null && x.Ticket.BookingFlight.ToLower().Contains(searchTerm))
+            //    );
+            //}
 
-            // Project to DTO and order results
-            var results = query
-                .OrderBy(x => x.Flight.DepartureTime)
-                .Take(50)
-                .Select(x => new UncheckedTicketDTO
-                {
-                    BookingCode = x.Ticket.BookingCode,
-                    PassengerName = x.Passenger.FullName,
-                    FlightNumber = x.Flight.FlightNumber,
-                    DepartureDate = x.Flight.DepartureDate,
-                    FromAirport = x.Flight.FromAirportCode,
-                    ToAirport = x.Flight.ToAirportCode,
-                    SeatClass = x.Ticket.SeatClass
-                })
-                .ToList();
+            //// Project to DTO and order results
+            //var results = query
+            //    .OrderBy(x => x.Flight.DepartureTime)
+            //    .Take(50)
+            //    .Select(x => new UncheckedTicketDTO
+            //    {
+            //        BookingCode = x.Ticket.BookingCode,
+            //        PassengerName = x.Passenger.FullName,
+            //        FlightNumber = x.Flight.FlightNumber,
+            //        DepartureDate = x.Flight.DepartureDate,
+            //        FromAirport = x.Flight.FromAirportCode,
+            //        ToAirport = x.Flight.ToAirportCode,
+            //        SeatClass = x.Ticket.SeatClass
+            //    })
+            //    .ToList();
 
-            return results;
+            return null;
         }
     }
 }

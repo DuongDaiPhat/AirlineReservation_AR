@@ -63,7 +63,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             lblRoute.Text = dto.FromAirportCode;
 
             decimal priceInMillions = dto.Price / 1000;
-            lblPrice.Text = $"{priceInMillions:N3} VNĐ/khách";
+            lblPrice.Text = $"{priceInMillions:N3} VNĐ/Passenger";
 
             TimeSpan duration = dto.ArrivalTime - dto.DepartureTime;
             lblDuration.Text = $"{duration.Hours}h {duration.Minutes}m";
@@ -82,7 +82,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             {
                 Label lblNoData = new Label
                 {
-                    Text = $"Còn {dto.TotalSeatsLeft} ghế trống",
+                    Text = $"{dto.TotalSeatsLeft} Remain seats",
                     Font = new Font("Segoe UI", 8F),
                     ForeColor = Color.FromArgb(100, 100, 100),
                     AutoSize = true
@@ -155,7 +155,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             Label lblSeats = new Label
             {
-                Text = $"{seatsLeft} ghế",
+                Text = $"{seatsLeft} seat",
                 Font = new Font("Segoe UI", 8F, FontStyle.Bold),
                 ForeColor = seatsLeft < 5 ? Color.FromArgb(231, 76, 60) : color,
                 Location = new Point(28, 15),
