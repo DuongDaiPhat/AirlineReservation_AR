@@ -238,8 +238,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             }
             finally
             {
-                CloseLoading();
-            }
+    CloseLoading();
+        }
         }
 
 

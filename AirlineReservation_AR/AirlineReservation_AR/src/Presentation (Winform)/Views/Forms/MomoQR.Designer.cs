@@ -31,21 +31,21 @@ namespace MomoQR
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MomoQR));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges28 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             payButton = new Button();
             guna2PictureBox4 = new Guna.UI2.WinForms.Guna2PictureBox();
             guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -105,14 +105,14 @@ namespace MomoQR
             // guna2PictureBox4
             // 
             guna2PictureBox4.BackColor = Color.FromArgb(249, 250, 251);
-            guna2PictureBox4.CustomizableEdges = customizableEdges15;
+            guna2PictureBox4.CustomizableEdges = customizableEdges1;
             guna2PictureBox4.FillColor = Color.FromArgb(249, 250, 251);
             guna2PictureBox4.Image = AirlineReservation_AR.Properties.Resources.horizontal_rule;
             guna2PictureBox4.ImageRotate = 0F;
             guna2PictureBox4.Location = new Point(16, 110);
             guna2PictureBox4.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox4.Name = "guna2PictureBox4";
-            guna2PictureBox4.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            guna2PictureBox4.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2PictureBox4.Size = new Size(353, 10);
             guna2PictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             guna2PictureBox4.TabIndex = 30;
@@ -161,11 +161,11 @@ namespace MomoQR
             guna2Panel1.Controls.Add(guna2HtmlLabel4);
             guna2Panel1.Controls.Add(guna2HtmlLabel3);
             guna2Panel1.Controls.Add(guna2PictureBox4);
-            guna2Panel1.CustomizableEdges = customizableEdges17;
+            guna2Panel1.CustomizableEdges = customizableEdges3;
             guna2Panel1.FillColor = Color.FromArgb(249, 250, 251);
             guna2Panel1.Location = new Point(19, 199);
             guna2Panel1.Name = "guna2Panel1";
-            guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges4;
             guna2Panel1.Size = new Size(395, 166);
             guna2Panel1.TabIndex = 34;
             // 
@@ -190,6 +190,7 @@ namespace MomoQR
             txtTotal.Size = new Size(70, 22);
             txtTotal.TabIndex = 38;
             txtTotal.Text = "123456 đ";
+            txtTotal.TextAlignment = ContentAlignment.MiddleRight;
             // 
             // txtDiscount
             // 
@@ -201,6 +202,7 @@ namespace MomoQR
             txtDiscount.Size = new Size(70, 22);
             txtDiscount.TabIndex = 37;
             txtDiscount.Text = "123456 đ";
+            txtDiscount.TextAlignment = ContentAlignment.MiddleRight;
             // 
             // guna2HtmlLabel7
             // 
@@ -222,6 +224,7 @@ namespace MomoQR
             txtAmount.Size = new Size(70, 22);
             txtAmount.TabIndex = 34;
             txtAmount.Text = "123456 đ";
+            txtAmount.TextAlignment = ContentAlignment.MiddleRight;
             // 
             // guna2HtmlLabel4
             // 
@@ -252,11 +255,11 @@ namespace MomoQR
             guna2Panel2.Controls.Add(pictureBox2);
             guna2Panel2.Controls.Add(guna2HtmlLabel11);
             guna2Panel2.Controls.Add(guna2HtmlLabel10);
-            guna2Panel2.CustomizableEdges = customizableEdges19;
+            guna2Panel2.CustomizableEdges = customizableEdges5;
             guna2Panel2.FillColor = Color.FromArgb(253, 242, 248);
             guna2Panel2.Location = new Point(19, 109);
             guna2Panel2.Name = "guna2Panel2";
-            guna2Panel2.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            guna2Panel2.ShadowDecoration.CustomizableEdges = customizableEdges6;
             guna2Panel2.Size = new Size(395, 57);
             guna2Panel2.TabIndex = 35;
             // 
@@ -292,13 +295,13 @@ namespace MomoQR
             // 
             // guna2PictureBox1
             // 
-            guna2PictureBox1.CustomizableEdges = customizableEdges21;
+            guna2PictureBox1.CustomizableEdges = customizableEdges7;
             guna2PictureBox1.Image = AirlineReservation_AR.Properties.Resources.horizontal_rule;
             guna2PictureBox1.ImageRotate = 0F;
             guna2PictureBox1.Location = new Point(19, 83);
             guna2PictureBox1.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox1.Name = "guna2PictureBox1";
-            guna2PictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges22;
+            guna2PictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges8;
             guna2PictureBox1.Size = new Size(395, 10);
             guna2PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             guna2PictureBox1.TabIndex = 36;
@@ -314,11 +317,11 @@ namespace MomoQR
             guna2Panel3.Controls.Add(pictureBox3);
             guna2Panel3.Controls.Add(guna2HtmlLabel12);
             guna2Panel3.Controls.Add(txtPromoCode);
-            guna2Panel3.CustomizableEdges = customizableEdges27;
+            guna2Panel3.CustomizableEdges = customizableEdges13;
             guna2Panel3.FillColor = Color.FromArgb(249, 250, 251);
             guna2Panel3.Location = new Point(19, 383);
             guna2Panel3.Name = "guna2Panel3";
-            guna2Panel3.ShadowDecoration.CustomizableEdges = customizableEdges28;
+            guna2Panel3.ShadowDecoration.CustomizableEdges = customizableEdges14;
             guna2Panel3.Size = new Size(395, 110);
             guna2Panel3.TabIndex = 37;
             // 
@@ -339,11 +342,11 @@ namespace MomoQR
             guna2Panel4.BorderRadius = 8;
             guna2Panel4.BorderThickness = 1;
             guna2Panel4.Controls.Add(guna2HtmlLabel13);
-            guna2Panel4.CustomizableEdges = customizableEdges23;
+            guna2Panel4.CustomizableEdges = customizableEdges9;
             guna2Panel4.FillColor = Color.FromArgb(219, 39, 119);
             guna2Panel4.Location = new Point(291, 36);
             guna2Panel4.Name = "guna2Panel4";
-            guna2Panel4.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            guna2Panel4.ShadowDecoration.CustomizableEdges = customizableEdges10;
             guna2Panel4.Size = new Size(92, 36);
             guna2Panel4.TabIndex = 36;
             guna2Panel4.Click += ApplyDiscount_Click;
@@ -386,8 +389,8 @@ namespace MomoQR
             txtPromoCode.BackColor = Color.WhiteSmoke;
             txtPromoCode.BorderColor = Color.PowderBlue;
             txtPromoCode.BorderRadius = 8;
-            txtPromoCode.CustomizableEdges = customizableEdges25;
-            txtPromoCode.DefaultText = "Nhập mã giảm giá";
+            txtPromoCode.CustomizableEdges = customizableEdges11;
+            txtPromoCode.DefaultText = "";
             txtPromoCode.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtPromoCode.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
             txtPromoCode.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
@@ -397,9 +400,9 @@ namespace MomoQR
             txtPromoCode.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             txtPromoCode.Location = new Point(19, 36);
             txtPromoCode.Name = "txtPromoCode";
-            txtPromoCode.PlaceholderText = "";
+            txtPromoCode.PlaceholderText = "Nhập mã giãm giá ở đây...";
             txtPromoCode.SelectedText = "";
-            txtPromoCode.ShadowDecoration.CustomizableEdges = customizableEdges26;
+            txtPromoCode.ShadowDecoration.CustomizableEdges = customizableEdges12;
             txtPromoCode.Size = new Size(266, 36);
             txtPromoCode.TabIndex = 0;
             // 

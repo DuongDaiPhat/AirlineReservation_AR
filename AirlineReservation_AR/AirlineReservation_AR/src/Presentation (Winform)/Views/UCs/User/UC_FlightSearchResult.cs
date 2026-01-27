@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text.Json;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -19,6 +21,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
     public partial class UC_FlightSearchResult : UserControl
     {
+        private readonly HttpClient _httpClient = new HttpClient();
+        private const string API_BASE_URL = "http://localhost:5080";
+
         private readonly FlightSearchParams _params;
         private readonly FlightController _controller;
 
@@ -40,10 +45,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private bool isReturnPage = false;
         private DateTime _startDateOrigin;
 
+        private System.Windows.Forms.Timer _chatAnimTimer;
+        private bool _isOpening = false;
+        private int _targetWidth = 322;   // width khi mở hoàn toàn
+        private int _step = 20;
+
         public List<FlightDayPriceDTO> _originDayTabs { get; set; }
         public List<FlightDayPriceDTO> _originDayTabReturn { get; set; }
 
         public List<AirlineFilterDTO> _originReturnAirlineFilters { get; set; }
+
         public UC_FlightSearchResult(FlightSearchParams p)
         {
             InitializeComponent();
@@ -66,6 +77,13 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             _originDayTabReturn = result.DayTabReturn;
             _originReturnAirlineFilters = result.RetrunAirlineFilters;
             guna2CustomCheckBox1.Checked = _params.RoundTrip;
+
+            _chatAnimTimer = new System.Windows.Forms.Timer();
+            _chatAnimTimer.Interval = 15; // càng nhỏ càng mượt
+            _chatAnimTimer.Tick += ChatAnimTimer_Tick;
+
+            ChatBox.Width = 0;
+            ChatBox.Visible = false;
             InitPriceTrackBar();
             InitBudgetButtons();
             InitDepartureTimeButtons();
@@ -91,6 +109,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             _originDayTabReturn = result.DayTabReturn;
             _originReturnAirlineFilters = result.RetrunAirlineFilters;
             guna2CustomCheckBox1.Checked = _params.RoundTrip;
+            _chatAnimTimer = new System.Windows.Forms.Timer();
+            _chatAnimTimer.Interval = 15; // càng nhỏ càng mượt
+            _chatAnimTimer.Tick += ChatAnimTimer_Tick;
+
+            ChatBox.Width = 0;
+            ChatBox.Visible = false;
             InitPriceTrackBar();
             InitBudgetButtons();
             InitDepartureTimeButtons();
@@ -146,7 +170,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 guna2PictureBox1.Enabled = false;
                 reLeftPicture.FillColor = Color.LightGray;
                 fromAirportReLeftLB.ForeColor = Color.LightGray;
-                leftIcon.FillColor = Color.LightGray;   
+                leftIcon.FillColor = Color.LightGray;
                 toAirportReLeftLB.ForeColor = Color.LightGray;
                 DisableReturnTimeButtons();
             }
@@ -328,6 +352,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
         }
 
+
+
         private void ShowReturnFlightUI(List<FlightResultDTO> list)
         {
             ShowLoading();
@@ -357,15 +383,15 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                     comFirm.OnComfirm += () =>
                     {
                         OpenFilloutInform(_selectedOutboundFlight, _selectedReturnFlight);
-                        
+
                         return;
                     };
                     comFirm.OnCancel += async () =>
                     {
                         await ReLoad();
-                       
+
                         AnnouncementForm announcementForm = new AnnouncementForm();
-                        announcementForm.SetAnnouncement("Chuyến bay đã được hũy thành công", "Quý khách có thể chọn lại chuyến bay mới" , true, null);
+                        announcementForm.SetAnnouncement("Chuyến bay đã được hũy thành công", "Quý khách có thể chọn lại chuyến bay mới", true, null);
                         announcementForm.Show();
 
                         return;
@@ -420,7 +446,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             comFirm.OnComfirm += () =>
             {
                 OpenFilloutInform(selected, _selectedReturnFlight);
-                
+
             };
             comFirm.OnCancel += async () =>
             {
@@ -431,9 +457,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 return;
             };
             comFirm.ShowDialog(owner);
-             CloseLoading();
+            CloseLoading();
             //OpenFilloutInform(selected, _selectedReturnFlight);
-        }   
+        }
 
         private void OpenFilloutInform(FlightResultDTO flight, FlightResultDTO retrunFlight)
         {
@@ -614,7 +640,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
         private async void RoundTripChecked(object sender, EventArgs e)
         {
-            
+
             _params.RoundTrip = guna2CustomCheckBox1.Checked;
             isReturnPage = false;
 
@@ -636,5 +662,165 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             await ReLoad();
         }
+
+        private void AIClick_Click(object sender, EventArgs e)
+        {
+            _isOpening = !ChatBox.Visible;
+            ChatBox.Visible = !ChatBox.Visible;
+            _chatAnimTimer.Start();
+        }
+
+        private void ChatAnimTimer_Tick(object sender, EventArgs e)
+        {
+            if (_isOpening)
+            {
+                ChatBox.Width += _step;
+
+                if (ChatBox.Width >= _targetWidth)
+                {
+                    ChatBox.Width = _targetWidth;
+                    _chatAnimTimer.Stop();
+                }
+            }
+            else
+            {
+                ChatBox.Width -= _step;
+
+                if (ChatBox.Width <= 0)
+                {
+                    ChatBox.Width = 0;
+                    ChatBox.Visible = false;
+                    _chatAnimTimer.Stop();
+                }
+            }
+        }
+
+        private void AddBubbleToFlow(Control bubble, bool isUser)
+        {
+            // wrapper = 1 dòng chat
+            var wrapper = new Panel
+            {
+                Width = flowChat.ClientSize.Width - 20, // full width
+                AutoSize = true,
+                Margin = new Padding(0, 8, 0, 8)
+            };
+
+            // bubble tự resize theo text
+            bubble.AutoSize = true;
+
+            wrapper.Controls.Add(bubble);
+
+            // căn trái / phải
+            if (isUser)
+            {
+                bubble.Left = wrapper.Width - bubble.Width;
+                bubble.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            }
+            else
+            {
+                bubble.Left = 0;
+                bubble.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            }
+
+            flowChat.Controls.Add(wrapper);
+
+            // auto scroll xuống cuối
+            flowChat.ScrollControlIntoView(wrapper);
+        }
+
+
+        private async void CallAI_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ShowLoading();
+
+                if (string.IsNullOrWhiteSpace(txtAI.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập preference", "Thông báo");
+                    return;
+                }
+                
+                var txtUserBubble = new TextBox();
+                txtUserBubble.Text = txtAI.Text;
+                txtUserBubble.Font = new Font(
+                    "Segoe UI Semibold",
+                    10F,
+                    FontStyle.Regular
+                );
+                AddBubbleToFlow(txtUserBubble, true);
+
+                txtUserBubble.Text = "Đang phân tích...";
+                AddBubbleToFlow(txtUserBubble, false);
+                var request = new
+                {
+                    userText = txtAI.Text
+                };
+
+                var json = JsonSerializer.Serialize(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync(
+                    $"{API_BASE_URL}/v1/api/AI/analyze-preference",
+                    content
+                );
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"API Error: {errorContent}");
+                }
+
+                var responseJson = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize<ApiResponse>(
+                     responseJson,
+                     new JsonSerializerOptions
+                     {
+                         PropertyNameCaseInsensitive = true
+                     }
+                 );
+
+
+                if (!result.success)
+                {
+                    throw new Exception(result.error ?? "Unknown error");
+                }
+
+                var userPreference = result.data;
+
+                // Chọn source flights
+                List<FlightResultDTO> sourceFlights = isReturnPage
+                    ? _returnOriginal
+                    : _outboundOriginal;
+
+                // 3️⃣ Khởi tạo service
+                var bestFlightService = new BestFlightService(sourceFlights);
+
+                // 4️⃣ Rank flights
+                var rankedFlights = bestFlightService.RankFlights(
+                    sourceFlights,
+                    userPreference,
+                    f => 0
+                );
+                txtUserBubble.Text = "Kết quả tìm kím đã có!";
+                AddBubbleToFlow(txtUserBubble, false);
+                //  Render lại UI
+                RenderAllFlights(rankedFlights);
+                CloseLoading();
+            }
+            catch (Exception ex)
+            {
+                CloseLoading();
+                AnnouncementForm announcementForm = new AnnouncementForm();
+                announcementForm.SetAnnouncement(
+                    "Lỗi hệ thống",
+                    $"Không thể kết nối AI: {ex.Message}",
+                    false,
+                    null
+                );
+                announcementForm.Show();
+            }
+        }
+
     }
 }

@@ -216,7 +216,14 @@ namespace MomoQR
             _loadingForm = new LoadingForm();
             _loadingForm.Show();
             _loadingForm.BringToFront();
-
+            if(string.IsNullOrWhiteSpace(txtPromoCode.Text))
+            {
+                CloseLoading();
+                AnnouncementForm announcementForm = new AnnouncementForm();
+                announcementForm.SetAnnouncement("Lỗi áp dụng mã giảm giá", "Mã giảm giá không tồn tại.", false, null);
+                announcementForm.Show();
+                return;
+            }
             _promoCode = txtPromoCode.Text.Trim();
             try
             {
