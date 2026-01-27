@@ -76,12 +76,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges48 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges46 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges47 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges44 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges45 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges42 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges43 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges40 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges41 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges42 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges43 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges44 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges45 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             flowDayTabs = new FlowLayoutPanel();
             pnlLeftFilters = new Panel();
             panel1 = new Panel();
@@ -127,15 +127,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             reLeftPicture = new Guna.UI2.WinForms.Guna2PictureBox();
             guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(components);
             pnlFlowResuilt = new Guna.UI2.WinForms.Guna2Panel();
-            flowFlightCards = new BetterFlowLayoutPanel();
-            pictureBox1 = new PictureBox();
-            flowResults = new FlowLayoutPanel();
-            ChatBox = new Guna.UI2.WinForms.Guna2GradientPanel();
-            guna2GradientPanel1 = new Guna.UI2.WinForms.Guna2GradientPanel();
+            ChatBox = new Guna.UI2.WinForms.Guna2Panel();
+            flowChat = new BetterFlowLayoutPanel();
             guna2PictureBox4 = new Guna.UI2.WinForms.Guna2PictureBox();
-            pictureBox2 = new PictureBox();
-            guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
-            betterFlowLayoutPanel1 = new BetterFlowLayoutPanel();
+            CallAI = new PictureBox();
+            txtAI = new Guna.UI2.WinForms.Guna2TextBox();
+            guna2GradientPanel1 = new Guna.UI2.WinForms.Guna2GradientPanel();
+            label3 = new Label();
+            AIClick = new PictureBox();
+            flowFlightCards = new BetterFlowLayoutPanel();
+            flowResults = new FlowLayoutPanel();
             pnlLeftFilters.SuspendLayout();
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -149,11 +150,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)reLeftPicture).BeginInit();
             pnlFlowResuilt.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            flowResults.SuspendLayout();
             ChatBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)CallAI).BeginInit();
+            guna2GradientPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)AIClick).BeginInit();
+            flowResults.SuspendLayout();
             SuspendLayout();
             // 
             // flowDayTabs
@@ -854,7 +856,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlFlowResuilt.BackColor = Color.Transparent;
             pnlFlowResuilt.BorderRadius = 16;
             pnlFlowResuilt.Controls.Add(ChatBox);
-            pnlFlowResuilt.Controls.Add(pictureBox1);
+            pnlFlowResuilt.Controls.Add(AIClick);
             pnlFlowResuilt.Controls.Add(flowFlightCards);
             pnlFlowResuilt.CustomizableEdges = customizableEdges48;
             pnlFlowResuilt.Location = new Point(23, 12);
@@ -869,6 +871,119 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlFlowResuilt.Size = new Size(1152, 714);
             pnlFlowResuilt.TabIndex = 1;
             // 
+            // ChatBox
+            // 
+            ChatBox.BackColor = Color.Transparent;
+            ChatBox.BorderRadius = 20;
+            ChatBox.BorderThickness = 1;
+            ChatBox.Controls.Add(flowChat);
+            ChatBox.Controls.Add(guna2PictureBox4);
+            ChatBox.Controls.Add(CallAI);
+            ChatBox.Controls.Add(txtAI);
+            ChatBox.Controls.Add(guna2GradientPanel1);
+            ChatBox.CustomizableEdges = customizableEdges46;
+            ChatBox.FillColor = Color.WhiteSmoke;
+            ChatBox.Location = new Point(102, 5);
+            ChatBox.Name = "ChatBox";
+            ChatBox.ShadowDecoration.CustomizableEdges = customizableEdges47;
+            ChatBox.Size = new Size(322, 295);
+            ChatBox.TabIndex = 0;
+            // 
+            // flowChat
+            // 
+            flowChat.AutoScroll = true;
+            flowChat.BackColor = Color.WhiteSmoke;
+            flowChat.FlowDirection = FlowDirection.TopDown;
+            flowChat.Location = new Point(0, 55);
+            flowChat.Name = "flowChat";
+            flowChat.Size = new Size(322, 180);
+            flowChat.TabIndex = 34;
+            flowChat.Visible = false;
+            // 
+            // guna2PictureBox4
+            // 
+            guna2PictureBox4.BackColor = Color.FromArgb(249, 250, 251);
+            guna2PictureBox4.CustomizableEdges = customizableEdges40;
+            guna2PictureBox4.FillColor = Color.FromArgb(249, 250, 251);
+            guna2PictureBox4.Image = Properties.Resources.horizontal_rule;
+            guna2PictureBox4.ImageRotate = 0F;
+            guna2PictureBox4.Location = new Point(4, 237);
+            guna2PictureBox4.Margin = new Padding(3, 2, 3, 2);
+            guna2PictureBox4.Name = "guna2PictureBox4";
+            guna2PictureBox4.ShadowDecoration.CustomizableEdges = customizableEdges41;
+            guna2PictureBox4.Size = new Size(314, 10);
+            guna2PictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
+            guna2PictureBox4.TabIndex = 31;
+            guna2PictureBox4.TabStop = false;
+            // 
+            // CallAI
+            // 
+            CallAI.Image = (Image)resources.GetObject("CallAI.Image");
+            CallAI.Location = new Point(278, 253);
+            CallAI.Name = "CallAI";
+            CallAI.Size = new Size(32, 32);
+            CallAI.SizeMode = PictureBoxSizeMode.AutoSize;
+            CallAI.TabIndex = 32;
+            CallAI.TabStop = false;
+            CallAI.Click += CallAI_Click;
+            // 
+            // txtAI
+            // 
+            txtAI.BorderColor = Color.Silver;
+            txtAI.BorderRadius = 10;
+            txtAI.CustomizableEdges = customizableEdges42;
+            txtAI.DefaultText = "";
+            txtAI.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtAI.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtAI.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtAI.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtAI.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtAI.Font = new Font("Segoe UI", 9F);
+            txtAI.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtAI.Location = new Point(6, 251);
+            txtAI.Name = "txtAI";
+            txtAI.PlaceholderForeColor = Color.Gray;
+            txtAI.PlaceholderText = "Nhập tin nhắn...";
+            txtAI.SelectedText = "";
+            txtAI.ShadowDecoration.CustomizableEdges = customizableEdges43;
+            txtAI.Size = new Size(259, 36);
+            txtAI.TabIndex = 33;
+            // 
+            // guna2GradientPanel1
+            // 
+            guna2GradientPanel1.BorderRadius = 20;
+            guna2GradientPanel1.Controls.Add(label3);
+            guna2GradientPanel1.CustomizableEdges = customizableEdges44;
+            guna2GradientPanel1.FillColor = Color.FromArgb(102, 126, 234);
+            guna2GradientPanel1.FillColor2 = Color.FromArgb(118, 75, 162);
+            guna2GradientPanel1.Location = new Point(0, 0);
+            guna2GradientPanel1.Name = "guna2GradientPanel1";
+            guna2GradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges45;
+            guna2GradientPanel1.Size = new Size(322, 75);
+            guna2GradientPanel1.TabIndex = 0;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.ForeColor = SystemColors.ControlLightLight;
+            label3.Location = new Point(6, 13);
+            label3.Name = "label3";
+            label3.Size = new Size(169, 30);
+            label3.TabIndex = 0;
+            label3.Text = "Quick Search AI";
+            // 
+            // AIClick
+            // 
+            AIClick.Image = (Image)resources.GetObject("AIClick.Image");
+            AIClick.Location = new Point(47, 5);
+            AIClick.Name = "AIClick";
+            AIClick.Size = new Size(32, 32);
+            AIClick.SizeMode = PictureBoxSizeMode.AutoSize;
+            AIClick.TabIndex = 0;
+            AIClick.TabStop = false;
+            AIClick.Click += AIClick_Click;
+            // 
             // flowFlightCards
             // 
             flowFlightCards.AutoScroll = true;
@@ -878,16 +993,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             flowFlightCards.Name = "flowFlightCards";
             flowFlightCards.Size = new Size(1151, 670);
             flowFlightCards.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(47, 5);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(32, 32);
-            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
             // 
             // flowResults
             // 
@@ -900,92 +1005,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             flowResults.Padding = new Padding(20, 10, 20, 10);
             flowResults.Size = new Size(1200, 750);
             flowResults.TabIndex = 0;
-            // 
-            // ChatBox
-            // 
-            ChatBox.BackColor = Color.MintCream;
-            ChatBox.BorderRadius = 20;
-            ChatBox.BorderThickness = 1;
-            ChatBox.Controls.Add(betterFlowLayoutPanel1);
-            ChatBox.Controls.Add(guna2TextBox1);
-            ChatBox.Controls.Add(pictureBox2);
-            ChatBox.Controls.Add(guna2PictureBox4);
-            ChatBox.Controls.Add(guna2GradientPanel1);
-            ChatBox.CustomizableEdges = customizableEdges46;
-            ChatBox.Location = new Point(109, 5);
-            ChatBox.Name = "ChatBox";
-            ChatBox.ShadowDecoration.CustomizableEdges = customizableEdges47;
-            ChatBox.Size = new Size(322, 295);
-            ChatBox.TabIndex = 1;
-            // 
-            // guna2GradientPanel1
-            // 
-            guna2GradientPanel1.BorderRadius = 20;
-            guna2GradientPanel1.CustomizableEdges = customizableEdges44;
-            guna2GradientPanel1.FillColor = Color.FromArgb(102, 126, 234);
-            guna2GradientPanel1.FillColor2 = Color.FromArgb(118, 75, 162);
-            guna2GradientPanel1.Location = new Point(3, 3);
-            guna2GradientPanel1.Name = "guna2GradientPanel1";
-            guna2GradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges45;
-            guna2GradientPanel1.Size = new Size(316, 75);
-            guna2GradientPanel1.TabIndex = 0;
-            // 
-            // guna2PictureBox4
-            // 
-            guna2PictureBox4.BackColor = Color.FromArgb(249, 250, 251);
-            guna2PictureBox4.CustomizableEdges = customizableEdges42;
-            guna2PictureBox4.FillColor = Color.FromArgb(249, 250, 251);
-            guna2PictureBox4.Image = Properties.Resources.horizontal_rule;
-            guna2PictureBox4.ImageRotate = 0F;
-            guna2PictureBox4.Location = new Point(4, 233);
-            guna2PictureBox4.Margin = new Padding(3, 2, 3, 2);
-            guna2PictureBox4.Name = "guna2PictureBox4";
-            guna2PictureBox4.ShadowDecoration.CustomizableEdges = customizableEdges43;
-            guna2PictureBox4.Size = new Size(314, 10);
-            guna2PictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
-            guna2PictureBox4.TabIndex = 31;
-            guna2PictureBox4.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(277, 251);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(32, 32);
-            pictureBox2.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox2.TabIndex = 32;
-            pictureBox2.TabStop = false;
-            // 
-            // guna2TextBox1
-            // 
-            guna2TextBox1.BorderColor = Color.Silver;
-            guna2TextBox1.BorderRadius = 10;
-            guna2TextBox1.CustomizableEdges = customizableEdges40;
-            guna2TextBox1.DefaultText = "";
-            guna2TextBox1.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            guna2TextBox1.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            guna2TextBox1.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            guna2TextBox1.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            guna2TextBox1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox1.Font = new Font("Segoe UI", 9F);
-            guna2TextBox1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox1.Location = new Point(6, 248);
-            guna2TextBox1.Name = "guna2TextBox1";
-            guna2TextBox1.PlaceholderForeColor = Color.Gray;
-            guna2TextBox1.PlaceholderText = "Nhập tin nhắn...";
-            guna2TextBox1.SelectedText = "";
-            guna2TextBox1.ShadowDecoration.CustomizableEdges = customizableEdges41;
-            guna2TextBox1.Size = new Size(259, 36);
-            guna2TextBox1.TabIndex = 33;
-            // 
-            // betterFlowLayoutPanel1
-            // 
-            betterFlowLayoutPanel1.AutoScroll = true;
-            betterFlowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
-            betterFlowLayoutPanel1.Location = new Point(2, 67);
-            betterFlowLayoutPanel1.Name = "betterFlowLayoutPanel1";
-            betterFlowLayoutPanel1.Size = new Size(319, 175);
-            betterFlowLayoutPanel1.TabIndex = 34;
             // 
             // UC_FlightSearchResult
             // 
@@ -1017,12 +1036,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             ((System.ComponentModel.ISupportInitialize)reLeftPicture).EndInit();
             pnlFlowResuilt.ResumeLayout(false);
             pnlFlowResuilt.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            flowResults.ResumeLayout(false);
             ChatBox.ResumeLayout(false);
             ChatBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)CallAI).EndInit();
+            guna2GradientPanel1.ResumeLayout(false);
+            guna2GradientPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)AIClick).EndInit();
+            flowResults.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -1072,12 +1093,13 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         public Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
         private Guna.UI2.WinForms.Guna2CustomCheckBox guna2CustomCheckBox1;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel2;
-        private PictureBox pictureBox1;
-        private Guna.UI2.WinForms.Guna2GradientPanel ChatBox;
+        private PictureBox AIClick;
         private Guna.UI2.WinForms.Guna2GradientPanel guna2GradientPanel1;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox4;
-        private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
-        private PictureBox pictureBox2;
-        private BetterFlowLayoutPanel betterFlowLayoutPanel1;
+        private Guna.UI2.WinForms.Guna2TextBox txtAI;
+        private BetterFlowLayoutPanel flowChat;
+        private Guna.UI2.WinForms.Guna2Panel ChatBox;
+        private PictureBox CallAI;
+        private Label label3;
     }
 }

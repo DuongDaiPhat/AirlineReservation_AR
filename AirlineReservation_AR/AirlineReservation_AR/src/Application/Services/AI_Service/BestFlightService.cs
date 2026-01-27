@@ -34,6 +34,7 @@ namespace AirlineReservation_AR.src.Application.Services.AI_Service
                     return new { Flight = f, Score = score };
                 })
                 .OrderByDescending(x => x.Score)
+                .Take(3)
                 .Select(x => x.Flight)
                 .ToList();
         }

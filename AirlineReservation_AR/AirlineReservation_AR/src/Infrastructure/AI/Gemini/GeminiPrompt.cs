@@ -1,35 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AirlineReservation_AR.src.Infrastructure.AI.Gemini
+﻿namespace AirlineReservation_AR.src.Infrastructure.AI.Gemini
 {
     public static class GeminiPrompt
     {
         public const string PreferencePrompt = @"
-You are an AI that converts flight preferences into JSON.
+You are a backend JSON generator.
 
-Rules:
-- Return ONLY valid JSON.
-- Weights must be between 0 and 1.
-- Total weights must sum to 1.
-- Transit weight must always be 0 (direct flights only).
-- If no airline mentioned, preferredAirlines is empty.
+Your task:
+Convert the user's flight preference text into STRICT JSON.
 
-JSON format:
+VERY IMPORTANT RULES:
+- Output ONLY raw JSON
+- NO markdown
+- NO ```json
+- NO explanation
+- NO comments
+- NO extra text
+- JSON must be parsable by System.Text.Json
+
+Constraints:
+- All weights must be numbers between 0 and 1
+- Total weight must equal exactly 1
+- Transit is ALWAYS 0 (direct flights only)
+- If user does not mention airline, preferredAirlines must be an empty array
+
+JSON schema (MUST MATCH EXACTLY):
 {
   ""weights"": {
     ""price"": number,
     ""time"": number,
     ""duration"": number,
-    ""transit"": number,
+    ""transit"": 0,
     ""airline"": number
   },
   ""preferredAirlines"": []
 }
+
+Return ONLY the JSON object.
 ";
     }
-
 }
