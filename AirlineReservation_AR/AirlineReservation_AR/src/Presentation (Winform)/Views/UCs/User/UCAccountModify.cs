@@ -207,9 +207,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             if (!ok)
             {
-                AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Cập nhật không thành công", "Thông tin không hợp lệ", false, null);
-                announcementForm1.Show();
+                AnnouncementForm announcementForm = new AnnouncementForm();
+                announcementForm.SetAnnouncement("Cập nhật không thành công", "Thông tin không hợp lệ", false, null);
+                announcementForm.Show();
                 return;
             }
 

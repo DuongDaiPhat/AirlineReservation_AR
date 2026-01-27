@@ -861,7 +861,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlFlowResuilt.Controls.Add(AIClick);
             pnlFlowResuilt.Controls.Add(flowFlightCards);
             pnlFlowResuilt.CustomizableEdges = customizableEdges48;
-            pnlFlowResuilt.Location = new Point(23, 12);
+            pnlFlowResuilt.Location = new Point(26, 15);
             pnlFlowResuilt.Margin = new Padding(3, 2, 3, 2);
             pnlFlowResuilt.Name = "pnlFlowResuilt";
             pnlFlowResuilt.ShadowDecoration.BorderRadius = 16;

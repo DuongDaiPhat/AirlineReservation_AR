@@ -37,8 +37,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         {
             passwordTB.UseSystemPasswordChar = true; // mặc định che
             confirmPasswordTB.UseSystemPasswordChar = true;
-            showPassword.Image = Resources.view; // mặc định eye open
-            showConfirmedPassword.Image = Resources.view;
+            showPassword.Image = Resources.hide; // mặc định eye open
+            showConfirmedPassword.Image = Resources.hide;
         }
 
         private void SignIn_Click(object sender, EventArgs e)
@@ -89,7 +89,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             var addRole = await _userContrller.AddUserRoleAsync(emailTB.Text, 3);
             if (!addRole.Success)
             {
-             
+
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
                 announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Lý do: {addRole.Message}", false, null);
                 announcementForm1.Show();
@@ -135,6 +135,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
                 confirmPasswordTB.UseSystemPasswordChar = true;
                 showConfirmedPassword.Image = Resources.hide;
             }
+        }
+
+        private void passwordTB_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -316,6 +316,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             passwordTB.ShadowDecoration.CustomizableEdges = customizableEdges10;
             passwordTB.Size = new Size(345, 45);
             passwordTB.TabIndex = 19;
+            passwordTB.TextChanged += passwordTB_TextChanged;
             // 
             // label13
             // 

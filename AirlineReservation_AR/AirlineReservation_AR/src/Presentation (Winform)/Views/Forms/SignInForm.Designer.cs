@@ -136,7 +136,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // 
             // showPassword
             // 
-            showPassword.Image = Resources.view;
+            showPassword.Image = Resources.hide;
+            showPassword.InitialImage = Resources.hide;
             showPassword.Location = new Point(327, 424);
             showPassword.Name = "showPassword";
             showPassword.Size = new Size(35, 35);
@@ -154,7 +155,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             guna2Button1.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             guna2Button1.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             guna2Button1.FillColor = Color.FromArgb(0, 137, 237);
-            guna2Button1.Font = new Font("Fz Poppins", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2Button1.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             guna2Button1.ForeColor = Color.White;
             guna2Button1.Location = new Point(36, 514);
             guna2Button1.Name = "guna2Button1";
@@ -167,11 +168,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Font = new Font("Fz Poppins", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            linkLabel1.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             linkLabel1.LinkColor = Color.FromArgb(66, 133, 244);
             linkLabel1.Location = new Point(239, 467);
             linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(148, 26);
+            linkLabel1.Size = new Size(129, 18);
             linkLabel1.TabIndex = 20;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "Forgot password?";
@@ -189,7 +190,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             passwordTB.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             passwordTB.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             passwordTB.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            passwordTB.Font = new Font("Fz Poppins", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            passwordTB.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             passwordTB.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             passwordTB.Location = new Point(36, 419);
             passwordTB.Margin = new Padding(4, 5, 4, 5);
@@ -204,11 +205,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font = new Font("Fz Poppins", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label13.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label13.ForeColor = Color.Black;
             label13.Location = new Point(32, 390);
             label13.Name = "label13";
-            label13.Size = new Size(166, 26);
+            label13.Size = new Size(147, 18);
             label13.TabIndex = 17;
             label13.Text = "Enter your Password";
             // 
@@ -223,7 +224,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             emailTB.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             emailTB.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             emailTB.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            emailTB.Font = new Font("Fz Poppins", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            emailTB.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             emailTB.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             emailTB.Location = new Point(36, 320);
             emailTB.Margin = new Padding(4, 5, 4, 5);
@@ -238,11 +239,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("Fz Poppins", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label12.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label12.ForeColor = Color.Black;
             label12.Location = new Point(32, 291);
             label12.Name = "label12";
-            label12.Size = new Size(200, 26);
+            label12.Size = new Size(174, 18);
             label12.TabIndex = 15;
             label12.Text = "Enter your Email address";
             // 
@@ -303,11 +304,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("Fz Poppins", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label11.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label11.ForeColor = Color.FromArgb(66, 133, 244);
             label11.Location = new Point(53, 11);
             label11.Name = "label11";
-            label11.Size = new Size(159, 26);
+            label11.Size = new Size(135, 18);
             label11.TabIndex = 13;
             label11.Text = "Sign in with Google";
             // 
@@ -325,11 +326,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // 
             label10.AutoSize = true;
             label10.BackColor = Color.White;
-            label10.Font = new Font("Fz Poppins SemBd", 30F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label10.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label10.ForeColor = Color.Black;
             label10.Location = new Point(17, 118);
             label10.Name = "label10";
-            label10.Size = new Size(166, 70);
+            label10.Size = new Size(150, 46);
             label10.TabIndex = 8;
             label10.Text = "Sign In";
             // 
@@ -337,11 +338,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // 
             label8.AutoSize = true;
             label8.Cursor = Cursors.Hand;
-            label8.Font = new Font("Fz Poppins", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(0, 137, 237);
             label8.Location = new Point(278, 61);
             label8.Name = "label8";
-            label8.Size = new Size(70, 26);
+            label8.Size = new Size(67, 18);
             label8.TabIndex = 5;
             label8.Text = "Sign Up";
             label8.Click += SignUp_Click;
@@ -349,31 +350,31 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Fz Poppins", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label9.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.Location = new Point(278, 39);
             label9.Name = "label9";
-            label9.Size = new Size(109, 26);
+            label9.Size = new Size(94, 18);
             label9.TabIndex = 6;
             label9.Text = "No Account?";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Fz Poppins", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(0, 137, 237);
             label6.Location = new Point(22, 65);
             label6.Name = "label6";
-            label6.Size = new Size(201, 42);
+            label6.Size = new Size(211, 29);
             label6.TabIndex = 3;
             label6.Text = "TRAVEL WORLD";
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Fz Poppins", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label7.Location = new Point(22, 29);
             label7.Name = "label7";
-            label7.Size = new Size(165, 42);
+            label7.Size = new Size(141, 29);
             label7.TabIndex = 4;
             label7.Text = "Welcome to";
             // 
@@ -400,55 +401,55 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Fz Poppins", 33.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Microsoft Sans Serif", 33.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
             label1.Location = new Point(71, 122);
             label1.Name = "label1";
-            label1.Size = new Size(247, 79);
+            label1.Size = new Size(222, 52);
             label1.TabIndex = 7;
             label1.Text = "Sign In to";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Fz Poppins", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Microsoft Sans Serif", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.White;
             label2.Location = new Point(71, 185);
             label2.Name = "label2";
-            label2.Size = new Size(296, 62);
+            label2.Size = new Size(289, 39);
             label2.TabIndex = 8;
             label2.Text = "TRAVEL WORLD";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Fz Poppins", 12F);
+            label3.Font = new Font("Microsoft Sans Serif", 12F);
             label3.ForeColor = Color.White;
             label3.Location = new Point(81, 241);
             label3.Name = "label3";
-            label3.Size = new Size(374, 28);
+            label3.Size = new Size(311, 20);
             label3.TabIndex = 9;
             label3.Text = "From sunny beaches to vibrant cities, every";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Fz Poppins", 12F);
+            label4.Font = new Font("Microsoft Sans Serif", 12F);
             label4.ForeColor = Color.White;
             label4.Location = new Point(81, 269);
             label4.Name = "label4";
-            label4.Size = new Size(323, 28);
+            label4.Size = new Size(267, 20);
             label4.TabIndex = 10;
             label4.Text = "flight is a new chapter in your journey";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Fz Poppins", 12F);
+            label5.Font = new Font("Microsoft Sans Serif", 12F);
             label5.ForeColor = Color.White;
             label5.Location = new Point(81, 297);
             label5.Name = "label5";
-            label5.Size = new Size(180, 28);
+            label5.Size = new Size(150, 20);
             label5.TabIndex = 11;
             label5.Text = "to explore the world.";
             // 

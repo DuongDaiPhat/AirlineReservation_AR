@@ -40,7 +40,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         public void SignInForm_Load(object sender, EventArgs e)
         {
             passwordTB.UseSystemPasswordChar = true; // mặc định che
-            showPassword.Image = Resources.view; // mặc định eye open
+            showPassword.Image = Resources.hide; // mặc định eye open
         }
 
         private void SignUp_Click(object sender, EventArgs e)
@@ -152,13 +152,13 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             {
                 // Hiện mật khẩu
                 passwordTB.UseSystemPasswordChar = false;
-                showPassword.Image = Resources.hide;
+                showPassword.Image = Resources.view;
             }
             else
             {
                 // Ẩn mật khẩu
                 passwordTB.UseSystemPasswordChar = true;
-                showPassword.Image = Resources.view;
+                showPassword.Image = Resources.hide;
             }
         }
     }
