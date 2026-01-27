@@ -273,7 +273,7 @@ INSERT INTO @InternationalAirports VALUES (1), (11), (12), (13), (14), (15), (16
 
 WHILE @DomesticCount < @DomesticTarget
 BEGIN
-    DECLARE @FlightDate DATE = CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 31, '2025-11-20') AS DATE);
+    DECLARE @FlightDate DATE = CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 31, '2026-1-20') AS DATE);
     DECLARE @Departure INT = (SELECT TOP 1 AirportID FROM @DomesticAirports ORDER BY NEWID());
     DECLARE @Arrival INT = (SELECT TOP 1 AirportID FROM @DomesticAirports WHERE AirportID != @Departure ORDER BY NEWID());
     DECLARE @AirlineID INT = (SELECT TOP 1 AirlineID FROM Airlines WHERE IATACode IN ('VN', 'VJ', 'QH') ORDER BY NEWID());
@@ -307,7 +307,7 @@ END;
 
 WHILE @InternationalCount < @InternationalTarget
 BEGIN
-    SET @FlightDate = CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 31, '2025-11-20') AS DATE);
+    SET @FlightDate = CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 31, '2026-1-20') AS DATE);
     SET @Departure = (SELECT TOP 1 AirportID FROM @InternationalAirports ORDER BY NEWID());
     SET @Arrival = (SELECT TOP 1 AirportID FROM @InternationalAirports WHERE AirportID != @Departure ORDER BY NEWID());
     SET @AirlineID = (SELECT TOP 1 AirlineID FROM Airlines ORDER BY NEWID());
