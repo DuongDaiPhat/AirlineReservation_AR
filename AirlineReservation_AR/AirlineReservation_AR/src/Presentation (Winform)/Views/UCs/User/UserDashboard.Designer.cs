@@ -240,6 +240,7 @@
             btnMyBooking.Margin = new Padding(3, 2, 3, 2);
             btnMyBooking.Name = "btnMyBooking";
             btnMyBooking.Padding = new Padding(9, 0, 0, 0);
+            btnMyBooking.RightToLeft = RightToLeft.No;
             btnMyBooking.ShadowDecoration.CustomizableEdges = customizableEdges12;
             btnMyBooking.Size = new Size(455, 68);
             btnMyBooking.TabIndex = 18;
@@ -336,7 +337,7 @@
             pnlContent.Margin = new Padding(3, 2, 3, 2);
             pnlContent.Name = "pnlContent";
             pnlContent.ShadowDecoration.CustomizableEdges = customizableEdges19;
-            pnlContent.Size = new Size(947, 801);
+            pnlContent.Size = new Size(947, 757);
             pnlContent.TabIndex = 5;
             // 
             // guna2HtmlLabel1
