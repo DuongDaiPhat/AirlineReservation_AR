@@ -91,13 +91,15 @@
             // 
             // Prices
             // 
+            Prices.AutoSize = false;
             Prices.BackColor = Color.Transparent;
             Prices.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Prices.Location = new Point(568, 167);
+            Prices.Location = new Point(486, 167);
             Prices.Name = "Prices";
-            Prices.Size = new Size(107, 27);
+            Prices.Size = new Size(189, 27);
             Prices.TabIndex = 30;
             Prices.Text = "2.450.000 ₫";
+            Prices.TextAlignment = ContentAlignment.MiddleRight;
             // 
             // Airline
             // 
@@ -141,11 +143,12 @@
             ToCode.BackColor = Color.Transparent;
             ToCode.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             ToCode.ForeColor = SystemColors.ControlDarkDark;
-            ToCode.Location = new Point(644, 82);
+            ToCode.Location = new Point(568, 82);
             ToCode.Name = "ToCode";
-            ToCode.Size = new Size(35, 23);
+            ToCode.Size = new Size(111, 23);
             ToCode.TabIndex = 26;
             ToCode.Text = "SGN";
+            ToCode.TextAlignment = ContentAlignment.MiddleRight;
             // 
             // ToCity
             // 
@@ -153,11 +156,12 @@
             ToCity.AutoSize = false;
             ToCity.BackColor = Color.Transparent;
             ToCity.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ToCity.Location = new Point(568, 49);
+            ToCity.Location = new Point(525, 49);
             ToCity.Name = "ToCity";
-            ToCity.Size = new Size(111, 27);
+            ToCity.Size = new Size(154, 27);
             ToCity.TabIndex = 25;
             ToCity.Text = "Hồ Chí Minh";
+            ToCity.TextAlignment = ContentAlignment.MiddleRight;
             // 
             // ToHours
             // 
