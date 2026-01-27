@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User;
@@ -50,8 +51,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private async void btnReschedule_Click(object sender, EventArgs e)
         {
             if (_ticket == null || _booking == null)
-            {
-                MessageBox.Show("Không có dữ liệu vé.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            { 
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Đổi lịch không thành công", "Không có dữ liệu vé", false, null);
+                announcementForm1.Show();
                 return;
             }
 
@@ -60,12 +63,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             if (!eligibility.CanReschedule)
             {
-                MessageBox.Show(
-                    eligibility.Reason ?? "This ticket is non-refundable.",
-                    "Can't reschedule",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Hoàn vé không thành công", "Vé không hoàn được", false, null);
+                announcementForm1.Show();
                 return;
             }
 
@@ -76,7 +76,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
                 if (frm.RescheduleSucceeded)
                 {
-                    MessageBox.Show("Đổi lịch thành công!");
+                    AnnouncementForm announcementForm1 = new AnnouncementForm();
+                    announcementForm1.SetAnnouncement("Đổi lịch thành công", "Vé của bạn đã được đổi lịch", true, null);
+                    announcementForm1.Show();
                     // Gọi method reload dữ liệu ngoài UCPaidTickets nếu bạn có
                     OnRescheduleSuccess?.Invoke();
                 }

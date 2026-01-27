@@ -240,6 +240,7 @@
             btnMyBooking.Margin = new Padding(3, 2, 3, 2);
             btnMyBooking.Name = "btnMyBooking";
             btnMyBooking.Padding = new Padding(9, 0, 0, 0);
+            btnMyBooking.RightToLeft = RightToLeft.No;
             btnMyBooking.ShadowDecoration.CustomizableEdges = customizableEdges12;
             btnMyBooking.Size = new Size(455, 68);
             btnMyBooking.TabIndex = 18;

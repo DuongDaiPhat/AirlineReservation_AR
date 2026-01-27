@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Application.Services;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Helpers;
@@ -206,8 +207,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             if (!ok)
             {
-                MessageBox.Show("Failed to update account.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Cập nhật không thành công", "Thông tin không hợp lệ", false, null);
+                announcementForm1.Show();
                 return;
             }
 
@@ -220,8 +222,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             DIContainer.CurrentUser.CityCode = cityCode;
 
             AccountUpdated?.Invoke(this, EventArgs.Empty);
-            MessageBox.Show("Account updated.",
-                "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            AnnouncementForm announcementForm1 = new AnnouncementForm();
+            announcementForm1.SetAnnouncement("Cập nhật thành công", "Đã cập nhật thông tin tài khoản", true, null);
+            announcementForm1.Show();
         }
 
         // ================== VALIDATION ==================

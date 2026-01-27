@@ -161,7 +161,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             flowDayTabs.Dock = DockStyle.Top;
             flowDayTabs.Location = new Point(450, 0);
             flowDayTabs.Name = "flowDayTabs";
-            flowDayTabs.Padding = new Padding(10, 10, 10, 10);
+            flowDayTabs.Padding = new Padding(10);
             flowDayTabs.Size = new Size(1200, 90);
             flowDayTabs.TabIndex = 2;
             // 
@@ -172,7 +172,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlLeftFilters.Dock = DockStyle.Left;
             pnlLeftFilters.Location = new Point(0, 0);
             pnlLeftFilters.Name = "pnlLeftFilters";
-            pnlLeftFilters.Padding = new Padding(10, 10, 10, 10);
+            pnlLeftFilters.Padding = new Padding(10);
             pnlLeftFilters.Size = new Size(450, 840);
             pnlLeftFilters.TabIndex = 3;
             // 
@@ -747,7 +747,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             deDateLeftLB.Location = new Point(62, 2);
             deDateLeftLB.Margin = new Padding(4, 2, 4, 2);
             deDateLeftLB.Name = "deDateLeftLB";
-            deDateLeftLB.Size = new Size(92, 17);
+            deDateLeftLB.Size = new Size(92, 18);
             deDateLeftLB.TabIndex = 4;
             deDateLeftLB.Text = "Fri, 31 Oct 2025";
             deDateLeftLB.TextAlignment = ContentAlignment.MiddleLeft;
