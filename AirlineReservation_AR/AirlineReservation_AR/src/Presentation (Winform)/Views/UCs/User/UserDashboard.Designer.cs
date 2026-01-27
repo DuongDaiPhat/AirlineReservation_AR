@@ -336,7 +336,7 @@
             pnlContent.Margin = new Padding(3, 2, 3, 2);
             pnlContent.Name = "pnlContent";
             pnlContent.ShadowDecoration.CustomizableEdges = customizableEdges19;
-            pnlContent.Size = new Size(947, 801);
+            pnlContent.Size = new Size(947, 757);
             pnlContent.TabIndex = 5;
             // 
             // guna2HtmlLabel1
