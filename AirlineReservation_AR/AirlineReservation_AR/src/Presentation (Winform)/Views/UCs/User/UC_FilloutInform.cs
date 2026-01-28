@@ -183,7 +183,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         //            _passengerServices[key] = new ServiceOption();
         //    }
         //}
-        private void guna2Button2_Click(object sender, EventArgs e)
+        private async void guna2Button2_Click(object sender, EventArgs e)
         {
             ShowLoading();
 
@@ -211,15 +211,15 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 if (_returnSegment != null)
                     returnDto = BuildBookingDTO(_returnSegment);
 
-                // 4. Save booking
-                Task<int> bookingId = DIContainer.BookingController.CreateBooking(
+                // 4. Save booking (await không chặn UI thread)
+                int bookingId = await DIContainer.BookingController.CreateBooking(
                     outboundDto,
                     returnDto
                 );
 
                 // 5. Payment
                 var form = new MomoQR.MomoQR();
-                form.SetPayment(bookingId.Result, outboundDto.TotalAmount);
+                form.SetPayment(bookingId, outboundDto.TotalAmount);
                 form.ShowDialog();
         }
             catch (BusinessException ex)

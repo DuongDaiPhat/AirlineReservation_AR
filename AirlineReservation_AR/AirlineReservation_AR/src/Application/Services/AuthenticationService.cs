@@ -33,10 +33,10 @@ namespace AirlineReservation_AR.src.Application.Services
             // Check email đã tồn tại chưa
             var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (existingUser != null)
-                throw new Exception("Email already exists.");
+                throw new Exception("Email đã tồn tại.");
             if (await _db.Users.AnyAsync(u => u.Phone == phone))
             {
-                throw new Exception("Phone number already exists");
+                throw new Exception("Số điện thoại đã tồn tại");
             }
             var hashed = _passwordHasher.HashPassword(password);
 
@@ -57,12 +57,22 @@ namespace AirlineReservation_AR.src.Application.Services
 
             if(result > 0)
             {
-                await AuditLogService
-                    .LogSimpleActionAsync(
+                Console.WriteLine($"[Auth] User {email} registered successfully with ID {user.UserId}");
+                Console.WriteLine($"[Auth] Calling LogSimpleAction...");
+                
+                // Log audit sau khi registration hoàn tất
+                // Dùng phiên bản sync để tránh xung đột transaction
+                await AuditLogService.LogSimpleActionAsync(
                     user.UserId,
                     TableNameAuditLog.Users,
                     OperationAuditLog.register,
                     user.UserId.ToString());
+                
+                Console.WriteLine($"[Auth] LogSimpleAction completed");
+            }
+            else
+            {
+                Console.WriteLine($"[Auth] Registration failed - SaveChanges returned {result}");
             }
 
             return user;
@@ -90,6 +100,19 @@ namespace AirlineReservation_AR.src.Application.Services
 
             if (roleId == 0)
                 roleId = 3; // nếu chưa gán role thì mặc định là user thường
+
+            Console.WriteLine($"[Auth] User {email} logged in successfully");
+            Console.WriteLine($"[Auth] Calling LogSimpleAction for login...");
+
+            // Log login audit
+            // Dùng phiên bản sync để tránh xung đột transaction
+            AuditLogService.LogSimpleAction(
+                user.UserId,
+                TableNameAuditLog.Users,
+                OperationAuditLog.login,
+                user.UserId.ToString());
+
+            Console.WriteLine($"[Auth] LogSimpleAction for login completed");
 
             return new LoginResultDTO
             {

@@ -1,6 +1,6 @@
 ﻿-- =============================================
 -- AIRLINE RESERVATION SYSTEM - FINAL DATA (UPDATED SCHEMA)
--- Date Range: 20/11/2025 - 20/12/2025
+-- Date Range: 20/1/2025 - 20/2/2025
 -- Note: Price, Taxes, Fees moved from Tickets to Bookings
 -- =============================================
 
@@ -40,20 +40,20 @@ IF OBJECT_ID('tempdb..#LastNames') IS NOT NULL DROP TABLE #LastNames;
 
 CREATE TABLE #VietnamNames (FirstName NVARCHAR(50));
 INSERT INTO #VietnamNames VALUES
-('Nguyên'), ('Hùng'), ('Minh'), ('Tuấn'), ('Khoa'),
-('Hương'), ('Linh'), ('Phương'), ('Thanh'), ('Trang'),
+(N'Nguyên'), (N'Hùng'), (N'Minh'), (N'Tuấn'), (N'Khoa'),
+(N'Hương'), (N'Linh'), (N'Phương'), (N'Thanh'), (N'Trang'),
 ('Hằng'), ('Dũng'), ('Kiên'), ('Long'), ('Hiệp'),
 ('Tâm'), ('Quyên'), ('Vân'), ('Oanh'), ('Ý');
 
 CREATE TABLE #InternationalNames (FirstName NVARCHAR(50));
 INSERT INTO #InternationalNames VALUES
-('John'), ('Emma'), ('Liam'), ('Olivia'), ('Noah'),
-('Ava'), ('Ethan'), ('Sophia'), ('Mason'), ('Isabella');
+(N'John'), (N'Emma'), (N'Liam'), (N'Olivia'), (N'Noah'),
+(N'Ava'), (N'Ethan'), (N'Sophia'), (N'Mason'), (N'Isabella');
 
 CREATE TABLE #LastNames (LastName NVARCHAR(50));
 INSERT INTO #LastNames VALUES
 ('Smith'), ('Johnson'), ('Williams'), ('Jones'), ('Brown'),
-('Nguyễn'), ('Trần'), ('Phạm'), ('Lê'), ('Đặng');
+(N'Nguyễn'), (N'Trần'), (N'Phạm'), (N'Lê'), (N'Đặng');
 
 PRINT '  ✓ Helper tables created';
 

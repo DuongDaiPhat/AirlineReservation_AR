@@ -48,8 +48,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Domain.Entities
             builder.Property(al => al.UserAgent)
                 .HasMaxLength(255);
 
-            builder.HasCheckConstraint("CK_Operation_Valid", "[Operation] IN ('INSERT','UPDATE','DELETE','SELECT')");
-
             builder.HasOne(al => al.User)
                 .WithMany(u => u.AuditLogs)
                 .HasForeignKey(al => al.UserId)

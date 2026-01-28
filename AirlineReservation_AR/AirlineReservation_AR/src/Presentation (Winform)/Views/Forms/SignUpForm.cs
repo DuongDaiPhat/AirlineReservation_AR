@@ -1,4 +1,8 @@
-﻿using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
+﻿using AirlineReservation_AR.Properties;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
+using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
+using AirlineReservation_AR.src.Infrastructure.DI;
+using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
@@ -9,9 +13,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AirlineReservation_AR.Properties;
-using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
-using AirlineReservation_AR.src.Infrastructure.DI;
 //using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 //using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 

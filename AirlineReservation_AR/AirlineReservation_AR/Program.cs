@@ -21,7 +21,6 @@ namespace AirlineReservation_AR
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             DIContainer.Init();
-            AuditLogService.Initialize(DIContainer.CreateDb());
             Application.Run(new SignInForm());
         }
     }

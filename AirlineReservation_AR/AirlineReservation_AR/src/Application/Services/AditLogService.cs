@@ -16,16 +16,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
     /// </summary>
     public static class AuditLogService
     {
-        private static AirlineReservationDbContext _dbContext;
-
-        /// <summary>
-        /// Khởi tạo DbContext cho service
-        /// </summary>
-        public static void Initialize(AirlineReservationDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
         /// <summary>
         /// Lưu hành động vào audit log
         /// </summary>
@@ -43,15 +33,20 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
             string recordId,
             object oldValues = null,
             object newValues = null,
-            string ipAddress = null)
+            string? ipAddress = null)
         {
             try
             {
-                if (_dbContext == null)
+                // Validate dữ liệu đầu vào
+                if (string.IsNullOrWhiteSpace(tableName))
                 {
-                    AnnouncementForm announcementForm1 = new AnnouncementForm();
-                    announcementForm1.SetAnnouncement("AuditLogService chưa được khởi tạo", $"Thiếu Initialize", false, null);
-                    announcementForm1.Show();
+                    Console.WriteLine("Lỗi: tableName không được trống");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(operation))
+                {
+                    Console.WriteLine("Lỗi: operation không được trống");
                     return;
                 }
 
@@ -61,8 +56,20 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                 string userAgent = $"Machine: {computerName} | OS: {osVersion}";
 
                 // Chuyển đổi object sang JSON string
-                string oldValuesJson = oldValues != null ? JsonSerializer.Serialize(oldValues) : null;
-                string newValuesJson = newValues != null ? JsonSerializer.Serialize(newValues) : null;
+                string oldValuesJson = null;
+                string newValuesJson = null;
+
+                try
+                {
+                    oldValuesJson = oldValues != null ? JsonSerializer.Serialize(oldValues) : null;
+                    newValuesJson = newValues != null ? JsonSerializer.Serialize(newValues) : null;
+                }
+                catch (Exception jsonEx)
+                {
+                    Console.WriteLine($"Lỗi serialize JSON: {jsonEx.Message}");
+                    oldValuesJson = oldValues?.ToString();
+                    newValuesJson = newValues?.ToString();
+                }
 
                 // Tạo đối tượng AuditLog
                 var auditLog = new AuditLog
@@ -70,22 +77,66 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                     UserId = userId,
                     TableName = tableName,
                     Operation = operation,
-                    RecordId = recordId,
+                    RecordId = recordId ?? "N/A",
                     OldValues = oldValuesJson,
                     NewValues = newValuesJson,
                     Timestamp = DateTime.UtcNow,
-                    IpAddress = ipAddress,
+                    IpAddress = ipAddress ?? "",
                     UserAgent = userAgent
                 };
 
-                // Thêm vào database
-                _dbContext.AuditLogs.Add(auditLog);
-                await _dbContext.SaveChangesAsync();
+                // TẠO DbContext RIÊNG cho audit log để tránh xung đột transaction
+                using (var auditDbContext = DIContainer.CreateDb())
+                {
+                    auditDbContext.AuditLogs.Add(auditLog);
+                    int savedCount = await auditDbContext.SaveChangesAsync();
+
+                    if (savedCount > 0)
+                    {
+                        Console.WriteLine($"AuditLog lưu thành công: {tableName} - {operation} - {recordId}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Cảnh báo: AuditLog không được lưu (savedCount = 0)");
+                    }
+                }
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string errorMsg = $"Lỗi Database:\n" +
+                    $"Message: {dbEx.Message}\n" +
+                    $"Inner Exception: {dbEx.InnerException?.Message}\n" +
+                    $"Table: {tableName}, Operation: {operation}, RecordId: {recordId}\n\n" +
+                    $"Entries in error:\n";
+
+                if (dbEx.Entries != null)
+                {
+                    foreach (var entry in dbEx.Entries)
+                    {
+                        errorMsg += $"- Entity: {entry.Entity.GetType().Name}, State: {entry.State}\n";
+                    }
+                }
+
+                AnnouncementForm form = new AnnouncementForm();
+                form.SetAnnouncement("Lỗi lưu Database - Audit Log", errorMsg, false, null);
+                form.Show();
+                form.Focus();
+
+                Console.WriteLine($"DbUpdateException: {errorMsg}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi khi lưu AuditLog: {ex.Message}");
-                // Log lỗi ra file hoặc console, không throw exception để không ảnh hưởng đến flow chính
+                string errorMsg = $"Lỗi hệ thống:\n" +
+                    $"Type: {ex.GetType().Name}\n" +
+                    $"Message: {ex.Message}\n" +
+                    $"StackTrace: {ex.StackTrace}";
+
+                AnnouncementForm form = new AnnouncementForm();
+                form.SetAnnouncement("Lỗi hệ thống - Audit Log", errorMsg, false, null);
+                form.Show();
+                form.Focus();
+
+                Console.WriteLine($"Exception: {errorMsg}");
             }
         }
 
@@ -103,30 +154,107 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         }
 
         /// <summary>
-        /// Lưu log cần oldValues, newValues
+        /// Lưu log không async (fire-and-forget) - dùng khi đã có transaction mở
         /// </summary>
-
-        public static async Task LogActionAsync(
+        public static void LogSimpleAction(
             Guid? userId,
             string tableName,
             string operation,
             string recordId = null,
-            string oldValue = null,
-            string newValue = null,
             string ipAddress = null)
         {
-            await LogActionAsync(userId, tableName, operation, recordId, oldValue, newValue, ipAddress);
+            try
+            {
+                Console.WriteLine($"[AuditLog] Bắt đầu LogSimpleAction: {tableName} - {operation} - {recordId}");
+
+                // Validate dữ liệu đầu vào
+                if (string.IsNullOrWhiteSpace(tableName))
+                {
+                    Console.WriteLine("[AuditLog] Lỗi: tableName không được trống");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(operation))
+                {
+                    Console.WriteLine("[AuditLog] Lỗi: operation không được trống");
+                    return;
+                }
+
+                // Lấy thông tin User Agent
+                string computerName = Environment.MachineName;
+                string osVersion = Environment.OSVersion.ToString();
+                string userAgent = $"Machine: {computerName} | OS: {osVersion}";
+
+                // Tạo đối tượng AuditLog
+                var auditLog = new AuditLog
+                {
+                    UserId = userId,
+                    TableName = tableName,
+                    Operation = operation,
+                    RecordId = recordId ?? "N/A",
+                    OldValues = null,
+                    NewValues = null,
+                    Timestamp = DateTime.UtcNow,
+                    IpAddress = ipAddress ?? "",
+                    UserAgent = userAgent
+                };
+
+                Console.WriteLine($"[AuditLog] Tạo AuditLog object thành công");
+
+                // TẠO DbContext RIÊNG cho audit log
+                using (var auditDbContext = DIContainer.CreateDb())
+                {
+                    Console.WriteLine($"[AuditLog] DbContext được tạo");
+
+                    // Kiểm tra xem DbSet có được register không
+                    var dbSet = auditDbContext.AuditLogs;
+                    if (dbSet == null)
+                    {
+                        Console.WriteLine("[AuditLog] Lỗi: AuditLogs DbSet không được register trong DbContext");
+                        return;
+                    }
+
+                    Console.WriteLine($"[AuditLog] DbSet<AuditLog> tồn tại");
+
+                    auditDbContext.AuditLogs.Add(auditLog);
+                    Console.WriteLine($"[AuditLog] AuditLog được add vào DbContext");
+
+                    int savedCount = auditDbContext.SaveChanges();
+                    Console.WriteLine($"[AuditLog] SaveChanges() trả về: {savedCount}");
+
+                    if (savedCount > 0)
+                    {
+                        Console.WriteLine($"✓ [AuditLog] Lưu thành công: {tableName} - {operation} - {recordId}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[AuditLog] Cảnh báo: SaveChanges trả về 0");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[AuditLog] Lỗi: {ex.GetType().Name}");
+                Console.WriteLine($"[AuditLog] Message: {ex.Message}");
+                Console.WriteLine($"[AuditLog] StackTrace: {ex.StackTrace}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"[AuditLog] InnerException: {ex.InnerException.Message}");
+                }
+            }
         }
+
         /// <summary>
         /// Lấy log theo ID
         /// </summary>
         public static async Task<AuditLog> GetByIdAsync(long logId)
         {
-            if (_dbContext == null) return null;
-
-            return await _dbContext.AuditLogs
-                .Include(a => a.User)
-                .FirstOrDefaultAsync(a => a.LogId == logId);
+            using (var db = DIContainer.CreateDb())
+            {
+                return await db.AuditLogs
+                    .Include(a => a.User)
+                    .FirstOrDefaultAsync(a => a.LogId == logId);
+            }
         }
 
         /// <summary>
@@ -134,13 +262,14 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         /// </summary>
         public static async Task<List<AuditLog>> GetAllAsync(int pageNumber = 1, int pageSize = 100)
         {
-            if (_dbContext == null) return new List<AuditLog>();
-
-            return await _dbContext.AuditLogs
-                .OrderByDescending(a => a.Timestamp)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+            using (var db = DIContainer.CreateDb())
+            {
+                return await db.AuditLogs
+                    .OrderByDescending(a => a.Timestamp)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+            }
         }
 
         /// <summary>
@@ -148,14 +277,15 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         /// </summary>
         public static async Task<List<AuditLog>> GetByUserAsync(Guid userId, int pageNumber = 1, int pageSize = 50)
         {
-            if (_dbContext == null) return new List<AuditLog>();
-
-            return await _dbContext.AuditLogs
-                .Where(a => a.UserId == userId)
-                .OrderByDescending(a => a.Timestamp)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+            using (var db = DIContainer.CreateDb())
+            {
+                return await db.AuditLogs
+                    .Where(a => a.UserId == userId)
+                    .OrderByDescending(a => a.Timestamp)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+            }
         }
 
         /// <summary>
@@ -163,14 +293,15 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         /// </summary>
         public static async Task<List<AuditLog>> GetByTableAsync(string tableName, int pageNumber = 1, int pageSize = 50)
         {
-            if (_dbContext == null) return new List<AuditLog>();
-
-            return await _dbContext.AuditLogs
-                .Where(a => a.TableName == tableName)
-                .OrderByDescending(a => a.Timestamp)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+            using (var db = DIContainer.CreateDb())
+            {
+                return await db.AuditLogs
+                    .Where(a => a.TableName == tableName)
+                    .OrderByDescending(a => a.Timestamp)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+            }
         }
 
         /// <summary>
@@ -178,12 +309,13 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         /// </summary>
         public static async Task<List<AuditLog>> GetByRecordAsync(string tableName, string recordId)
         {
-            if (_dbContext == null) return new List<AuditLog>();
-
-            return await _dbContext.AuditLogs
-                .Where(a => a.TableName == tableName && a.RecordId == recordId)
-                .OrderByDescending(a => a.Timestamp)
-                .ToListAsync();
+            using (var db = DIContainer.CreateDb())
+            {
+                return await db.AuditLogs
+                    .Where(a => a.TableName == tableName && a.RecordId == recordId)
+                    .OrderByDescending(a => a.Timestamp)
+                    .ToListAsync();
+            }
         }
 
         /// <summary>
@@ -191,14 +323,15 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         /// </summary>
         public static async Task<List<AuditLog>> GetByDateRangeAsync(DateTime from, DateTime to, int pageNumber = 1, int pageSize = 50)
         {
-            if (_dbContext == null) return new List<AuditLog>();
-
-            return await _dbContext.AuditLogs
-                .Where(a => a.Timestamp >= from && a.Timestamp <= to)
-                .OrderByDescending(a => a.Timestamp)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+            using (var db = DIContainer.CreateDb())
+            {
+                return await db.AuditLogs
+                    .Where(a => a.Timestamp >= from && a.Timestamp <= to)
+                    .OrderByDescending(a => a.Timestamp)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+            }
         }
 
         /// <summary>
@@ -206,14 +339,15 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         /// </summary>
         public static async Task<List<AuditLog>> GetByOperationAsync(string operation, int pageNumber = 1, int pageSize = 50)
         {
-            if (_dbContext == null) return new List<AuditLog>();
-
-            return await _dbContext.AuditLogs
-                .Where(a => a.Operation == operation)
-                .OrderByDescending(a => a.Timestamp)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+            using (var db = DIContainer.CreateDb())
+            {
+                return await db.AuditLogs
+                    .Where(a => a.Operation == operation)
+                    .OrderByDescending(a => a.Timestamp)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+            }
         }
 
         /// <summary>
@@ -221,9 +355,10 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         /// </summary>
         public static async Task<int> CountAsync()
         {
-            if (_dbContext == null) return 0;
-
-            return await _dbContext.AuditLogs.CountAsync();
+            using (var db = DIContainer.CreateDb())
+            {
+                return await db.AuditLogs.CountAsync();
+            }
         }
 
         /// <summary>
@@ -231,283 +366,99 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         /// </summary>
         public static async Task<int> DeleteOldLogsAsync(DateTime beforeDate)
         {
-            if (_dbContext == null) return 0;
-
-            var logsToDelete = await _dbContext.AuditLogs
-                .Where(a => a.Timestamp < beforeDate)
-                .ToListAsync();
-
-            _dbContext.AuditLogs.RemoveRange(logsToDelete);
-            return await _dbContext.SaveChangesAsync();
-        }
-
-        /// <summary>
-        /// Chuyển đổi tên bảng kỹ thuật thành tên thân thiện tiếng Việt
-        /// </summary>
-        public static string GetTableDisplayName(string tableName)
-        {
-            if (string.IsNullOrWhiteSpace(tableName))
-                return "Không xác định";
-
-            var tableNameMapping = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            using (var db = DIContainer.CreateDb())
             {
-                { "BookingFlights", "Chuyến bay đặt" },
-                { "BookingServices", "Dịch vụ đặt" },
-                { "Flights", "Chuyến bay" },
-                { "FlightPricing", "Giá chuyến bay" },
-                { "Passengers", "Hành khách" },
-                { "Tickets", "Vé máy bay" },
-                { "Payments", "Thanh toán" },
-                { "PaymentHistory", "Lịch sử thanh toán" },
-                { "Users", "Người dùng" },
-                { "Bookings", "Đặt chuyến" },
-                { "Promotions", "Khuyến mãi" },
-                { "Airlines", "Hãng hàng không" },
-                { "Airports", "Sân bay" },
-                { "Aircraft", "Máy bay" },
-                { "SeatClasses", "Hạng ghế" },
-                { "Services", "Dịch vụ" }
-            };
+                var logsToDelete = await db.AuditLogs
+                    .Where(a => a.Timestamp < beforeDate)
+                    .ToListAsync();
 
-            return tableNameMapping.ContainsKey(tableName)
-                ? tableNameMapping[tableName]
-                : tableName;
-        }
-
-        /// <summary>
-        /// Chuyển đổi loại hành động kỹ thuật thành mô tả thân thiện tiếng Việt
-        /// </summary>
-        public static string GetOperationDisplayName(string operation)
-        {
-            if (string.IsNullOrWhiteSpace(operation))
-                return "Không xác định";
-
-            var operationMapping = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                { "create", "Tạo mới" },
-                { "update", "Cập nhật" },
-                { "delete", "Xóa" },
-                { "login", "Đăng nhập" },
-                { "logout", "Đăng xuất" },
-                { "register", "Đăng ký" },
-                { "apply", "Áp dụng" },
-                { "calculate", "Tính toán" },
-                { "process", "Xử lý" },
-                { "complete", "Hoàn thành" },
-                { "cancel", "Hủy" },
-                { "refund", "Hoàn tiền" },
-                { "checkin", "Check-in" },
-                { "checkout", "Check-out" }
-            };
-
-            return operationMapping.ContainsKey(operation)
-                ? operationMapping[operation]
-                : operation;
-        }
-
-        /// <summary>
-        /// Format timestamp thành chuỗi thân thiện với người dùng (Tiếng Việt)
-        /// </summary>
-        public static string GetFormattedTimestamp(DateTime timestamp)
-        {
-            var vietnamTime = TimeZoneInfo.ConvertTime(timestamp, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"));
-            
-            var now = DateTime.Now;
-            var timespan = now - vietnamTime;
-
-            if (timespan.TotalSeconds < 60)
-                return "Vừa xong";
-            
-            if (timespan.TotalMinutes < 60)
-                return $"{(int)timespan.TotalMinutes} phút trước";
-            
-            if (timespan.TotalHours < 24)
-                return $"{(int)timespan.TotalHours} giờ trước";
-            
-            if (timespan.TotalDays < 7)
-                return $"{(int)timespan.TotalDays} ngày trước";
-            
-            if (timespan.TotalDays < 30)
-                return $"{(int)timespan.TotalDays / 7} tuần trước";
-            
-            if (timespan.TotalDays < 365)
-                return $"{(int)timespan.TotalDays / 30} tháng trước";
-            
-            return vietnamTime.ToString("dd/MM/yyyy HH:mm:ss");
-        }
-
-        /// <summary>
-        /// Format timestamp thành chuỗi đầy đủ (Tiếng Việt)
-        /// </summary>
-        public static string GetFormattedTimestampFull(DateTime timestamp)
-        {
-            var vietnamTime = TimeZoneInfo.ConvertTime(timestamp, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"));
-            return vietnamTime.ToString("dd/MM/yyyy HH:mm:ss");
-        }
-
-        /// <summary>
-        /// Lấy tên người dùng từ ID (tạm thời trả về ID nếu không tìm thấy user)
-        /// </summary>
-        public static string GetUserDisplayName(Guid? userId)
-        {
-            if (!userId.HasValue || userId == Guid.Empty)
-                return "Hệ thống";
-
-            try
-            {
-                if (_dbContext == null)
-                    return userId.ToString();
-
-                var user = _dbContext.Users.FirstOrDefault(u => u.UserId == userId);
-                if (user != null)
-                    return !string.IsNullOrWhiteSpace(user.FullName) ? user.FullName : user.Email;
+                db.AuditLogs.RemoveRange(logsToDelete);
+                return await db.SaveChangesAsync();
             }
-            catch { }
-
-            return userId.ToString()[..8];
         }
 
         /// <summary>
-        /// Trích xuất thông tin máy tính từ UserAgent
+        /// Kiểm tra kết nối database và bảng AuditLog
         /// </summary>
-        public static Dictionary<string, string> ParseUserAgent(string userAgent)
+        public static async Task<(bool Success, string Message)> TestConnectionAsync()
         {
-            var result = new Dictionary<string, string>
-            {
-                { "MachineName", "Không xác định" },
-                { "OSVersion", "Không xác định" }
-            };
-
-            if (string.IsNullOrWhiteSpace(userAgent))
-                return result;
-
             try
             {
-                var parts = userAgent.Split('|');
-                foreach (var part in parts)
+                using (var db = DIContainer.CreateDb())
                 {
-                    var kv = part.Trim().Split(':');
-                    if (kv.Length == 2)
+                    // Kiểm tra kết nối
+                    await db.Database.OpenConnectionAsync();
+                    await db.Database.CloseConnectionAsync();
+                    
+                    // Kiểm tra bảng AuditLog
+                    int count = await db.AuditLogs.CountAsync();
+                    
+                    return (true, $"✓ Kết nối database thành công. Số logs hiện có: {count}");
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, $"✗ Lỗi kết nối: {ex.Message}\n{ex.InnerException?.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Tạo log test để kiểm tra
+        /// </summary>
+        public static async Task<(bool Success, string Message)> TestLogCreationAsync()
+        {
+            try
+            {
+                var testLog = new AuditLog
+                {
+                    UserId = Guid.NewGuid(),
+                    TableName = "TestTable",
+                    Operation = "test",
+                    RecordId = "test-1",
+                    OldValues = null,
+                    NewValues = null,
+                    Timestamp = DateTime.UtcNow,
+                    IpAddress = "",
+                    UserAgent = "Test Agent"
+                };
+
+                using (var db = DIContainer.CreateDb())
+                {
+                    db.AuditLogs.Add(testLog);
+                    int result = await db.SaveChangesAsync();
+                    
+                    if (result > 0)
                     {
-                        result[kv[0].Trim()] = kv[1].Trim();
+                        // Xóa log test
+                        var createdLog = await db.AuditLogs
+                            .Where(a => a.TableName == "TestTable" && a.RecordId == "test-1")
+                            .FirstOrDefaultAsync();
+                        
+                        if (createdLog != null)
+                        {
+                            db.AuditLogs.Remove(createdLog);
+                            await db.SaveChangesAsync();
+                        }
+                        
+                        return (true, "Lưu audit log test thành công");
+                    }
+                    else
+                    {
+                        return (false, "Không thể lưu audit log (savedCount = 0)");
                     }
                 }
             }
-            catch { }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Tạo DTO hiển thị cho UI từ AuditLog (thân thiện, dễ đọc)
-        /// </summary>
-        public class AuditLogDisplayDTO
-        {
-            public long LogId { get; set; }
-            public string UserName { get; set; }
-            public string TableDisplayName { get; set; }
-            public string OperationDisplayName { get; set; }
-            public string RecordId { get; set; }
-            public string OldValues { get; set; }
-            public string NewValues { get; set; }
-            public string Timestamp { get; set; }
-            public string TimestampFull { get; set; }
-            public string IpAddress { get; set; }
-            public string MachineName { get; set; }
-            public string OSVersion { get; set; }
-            public string Summary { get; set; }
-        }
-
-        /// <summary>
-        /// Chuyển đổi AuditLog thành DTO hiển thị
-        /// </summary>
-        public static AuditLogDisplayDTO ConvertToDisplayDTO(AuditLog log)
-        {
-            if (log == null)
-                return null;
-
-            var userAgentInfo = ParseUserAgent(log.UserAgent);
-
-            var displayDTO = new AuditLogDisplayDTO
+            catch (DbUpdateException dbEx)
             {
-                LogId = log.LogId,
-                UserName = GetUserDisplayName(log.UserId),
-                TableDisplayName = GetTableDisplayName(log.TableName),
-                OperationDisplayName = GetOperationDisplayName(log.Operation),
-                RecordId = log.RecordId ?? "N/A",
-                OldValues = log.OldValues ?? "Không có",
-                NewValues = log.NewValues ?? "Không có",
-                Timestamp = GetFormattedTimestamp(log.Timestamp),
-                TimestampFull = GetFormattedTimestampFull(log.Timestamp),
-                IpAddress = log.IpAddress ?? "N/A",
-                MachineName = userAgentInfo.ContainsKey("Machine") ? userAgentInfo["Machine"] : "Không xác định",
-                OSVersion = userAgentInfo.ContainsKey("OS") ? userAgentInfo["OS"] : "Không xác định",
-                Summary = $"{GetOperationDisplayName(log.Operation)} {GetTableDisplayName(log.TableName)} (ID: {log.RecordId})"
-            };
-
-            return displayDTO;
-        }
-
-        /// <summary>
-        /// Chuyển đổi danh sách AuditLog thành danh sách DTO hiển thị
-        /// </summary>
-        public static List<AuditLogDisplayDTO> ConvertToDisplayDTOs(List<AuditLog> logs)
-        {
-            return logs?.Select(ConvertToDisplayDTO).Where(x => x != null).ToList() ?? new List<AuditLogDisplayDTO>();
-        }
-
-        /// <summary>
-        /// Lấy tất cả logs và chuyển đổi thành DTO hiển thị
-        /// </summary>
-        public static async Task<List<AuditLogDisplayDTO>> GetAllDisplayAsync(int pageNumber = 1, int pageSize = 100)
-        {
-            var logs = await GetAllAsync(pageNumber, pageSize);
-            return ConvertToDisplayDTOs(logs);
-        }
-
-        /// <summary>
-        /// Lấy logs của user cụ thể và chuyển đổi thành DTO hiển thị
-        /// </summary>
-        public static async Task<List<AuditLogDisplayDTO>> GetByUserDisplayAsync(Guid userId, int pageNumber = 1, int pageSize = 50)
-        {
-            var logs = await GetByUserAsync(userId, pageNumber, pageSize);
-            return ConvertToDisplayDTOs(logs);
-        }
-
-        /// <summary>
-        /// Lấy logs của bảng cụ thể và chuyển đổi thành DTO hiển thị
-        /// </summary>
-        public static async Task<List<AuditLogDisplayDTO>> GetByTableDisplayAsync(string tableName, int pageNumber = 1, int pageSize = 50)
-        {
-            var logs = await GetByTableAsync(tableName, pageNumber, pageSize);
-            return ConvertToDisplayDTOs(logs);
-        }
-
-        /// <summary>
-        /// Lấy logs của bản ghi cụ thể và chuyển đổi thành DTO hiển thị
-        /// </summary>
-        public static async Task<List<AuditLogDisplayDTO>> GetByRecordDisplayAsync(string tableName, string recordId)
-        {
-            var logs = await GetByRecordAsync(tableName, recordId);
-            return ConvertToDisplayDTOs(logs);
-        }
-
-        /// <summary>
-        /// Lấy logs trong khoảng thời gian và chuyển đổi thành DTO hiển thị
-        /// </summary>
-        public static async Task<List<AuditLogDisplayDTO>> GetByDateRangeDisplayAsync(DateTime from, DateTime to, int pageNumber = 1, int pageSize = 50)
-        {
-            var logs = await GetByDateRangeAsync(from, to, pageNumber, pageSize);
-            return ConvertToDisplayDTOs(logs);
-        }
-
-        /// <summary>
-        /// Lấy logs theo loại hành động và chuyển đổi thành DTO hiển thị
-        /// </summary>
-        public static async Task<List<AuditLogDisplayDTO>> GetByOperationDisplayAsync(string operation, int pageNumber = 1, int pageSize = 50)
-        {
-            var logs = await GetByOperationAsync(operation, pageNumber, pageSize);
-            return ConvertToDisplayDTOs(logs);
+                string msg = $"Lỗi Database:\n{dbEx.Message}\n";
+                if (dbEx.InnerException != null)
+                    msg += $"Inner: {dbEx.InnerException.Message}";
+                return (false, msg);
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Lỗi: {ex.GetType().Name}\n{ex.Message}");
+            }
         }
     }
 }
