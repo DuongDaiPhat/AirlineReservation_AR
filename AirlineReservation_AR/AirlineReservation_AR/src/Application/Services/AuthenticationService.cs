@@ -4,6 +4,7 @@ using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
 using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Domain.Exceptions;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using Azure;
 using Microsoft.EntityFrameworkCore;
@@ -121,5 +122,29 @@ namespace AirlineReservation_AR.src.Application.Services
             };
         }
 
+        public async Task<bool> ForgotPassWord(string email, string newPassword)
+        {
+            using var db = DIContainer.CreateDb();
+            try
+            {
+                var user = await db.Users.FirstOrDefaultAsync(u => u.Email == email);
+                if (db == null)
+                {
+                    throw new BusinessException("Tài khoảng theo email này chưa được đăng kí trong hệ thông");
+
+                }
+
+                user.PasswordHash = _passwordHasher.HashPassword(newPassword);
+                db.Users.Update(user);
+                await db.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                throw new BusinessException("Đặt lại mật khẩu thất bại. Vui lòng thử lại sau.");
+            }
+        }
     }
+
 }

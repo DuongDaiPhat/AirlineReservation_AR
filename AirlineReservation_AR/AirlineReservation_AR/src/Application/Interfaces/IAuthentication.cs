@@ -13,5 +13,6 @@ namespace AirlineReservation_AR.src.Application.Interfaces
         Task<LoginResultDTO?> LoginAsync(string email, string password);
 
         Task<User> RegisterAsync(string fullName, string email, string password, string? phone = null);
+        Task<bool> ForgotPassWord(string email, string newPassword);
     }
 }

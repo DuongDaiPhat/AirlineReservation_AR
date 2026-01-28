@@ -45,7 +45,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context
         public DbSet<AuditLog> AuditLogs { get; set; } = null!;
         public DbSet<FareRule> FareRules { get; set; } = null!;
         public DbSet<RescheduleRequest> RescheduleRequests { get; set; } = null!;
-
+        public DbSet<PasswordResetOtp> PasswordResetOtps { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

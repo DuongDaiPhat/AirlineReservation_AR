@@ -4,6 +4,8 @@ using AirlineReservation_AR.API.Services;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using AirlineReservation_AR.API.Services.Momo.Configurations;
+using AirlineReservation_AR.API.Services.Email;
+using AirlineReservation_AR.src.Application.Services.AI_Service;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,9 +28,12 @@ builder.Services.AddScoped<MomoServiceAPI>();
 builder.Services.AddScoped<IPaymentAPI, PaymentAPIServices>();
 builder.Services.AddScoped<IPaymentCallbackService, PaymentCallbackService>();
 
-
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<GeminiPreferenceService>();
 
 var app = builder.Build();
+
+
 
 // 3. Configure pipeline
 if (app.Environment.IsDevelopment())
