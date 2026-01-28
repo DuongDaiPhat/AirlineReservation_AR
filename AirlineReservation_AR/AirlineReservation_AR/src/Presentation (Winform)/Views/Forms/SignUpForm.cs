@@ -37,8 +37,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         {
             passwordTB.UseSystemPasswordChar = true; // mặc định che
             confirmPasswordTB.UseSystemPasswordChar = true;
-            showPassword.Image = Resources.view; // mặc định eye open
-            showConfirmedPassword.Image = Resources.view;
+            showPassword.Image = Resources.hide; // mặc định eye open
+            showConfirmedPassword.Image = Resources.hide;
         }
 
         private void SignIn_Click(object sender, EventArgs e)
@@ -53,7 +53,9 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         {
             if (emailTB.Text == "" && userNameTB.Text == "" && numberTB.Text == "" && passwordTB.Text == "" && confirmPasswordTB.Text == "")
             {
-                MessageBox.Show("Vui lòng điền thông tin yêu câu.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Vui lòng điền đầy đủ thông tin", false, null);
+                announcementForm1.Show();
                 return;
             }
             if (!validation.IsValidGoogleEmail(emailTB.Text)) return;
@@ -61,7 +63,9 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             if (!validation.IsValidPassword(passwordTB.Text)) return;
             if (!Equals(passwordTB.Text, confirmPasswordTB.Text))
             {
-                MessageBox.Show("Mật khẩu không đồng bộ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Mật khẩu không đồng bộ", false, null);
+                announcementForm1.Show();
                 return;
             }
 
@@ -76,20 +80,24 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             {
                 MessageBox.Show("Đăng ký thất bại! Vui lòng thử lại.",
                                 "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Sđt, Email hoặc tên tài khoản đã được sử dụng", false, null);
+                announcementForm1.Show();
                 return;
             }
 
             var addRole = await _userContrller.AddUserRoleAsync(emailTB.Text, 3);
             if (!addRole.Success)
             {
-                MessageBox.Show("Đăng ký thành công nhưng không thể gán role người dùng.\n" +
-                                $"Lý do: {addRole.Message}",
-                                "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Lý do: {addRole.Message}", false, null);
+                announcementForm1.Show();
             }
 
-            MessageBox.Show("Đăng ký thành công!", "Thành công",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            AnnouncementForm announcementForm = new AnnouncementForm();
+            announcementForm.SetAnnouncement("Đăng ký thành công", "Hãy đăng nhập để tiếp tục", true, null);
+            announcementForm.Show();
 
             //Điều hướng sang SignIn
             SignInForm signin = new SignInForm();
@@ -103,13 +111,13 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             {
                 // Hiện mật khẩu
                 passwordTB.UseSystemPasswordChar = false;
-                showPassword.Image = Resources.hide;
+                showPassword.Image = Resources.view;
             }
             else
             {
                 // Ẩn mật khẩu
                 passwordTB.UseSystemPasswordChar = true;
-                showPassword.Image = Resources.view;
+                showPassword.Image = Resources.hide;
             }
         }
 
@@ -119,14 +127,19 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             {
                 // Hiện mật khẩu
                 confirmPasswordTB.UseSystemPasswordChar = false;
-                showConfirmedPassword.Image = Resources.hide;
+                showConfirmedPassword.Image = Resources.view;
             }
             else
             {
                 // Ẩn mật khẩu
                 confirmPasswordTB.UseSystemPasswordChar = true;
-                showConfirmedPassword.Image = Resources.view;
+                showConfirmedPassword.Image = Resources.hide;
             }
+        }
+
+        private void passwordTB_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

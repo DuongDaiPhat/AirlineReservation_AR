@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Application.Services;
 using AirlineReservation_AR.src.Domain.DTOs;
@@ -91,6 +92,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Hoàn vé không thành công", "Lỗi khi hủy booking", false, null);
+                announcementForm1.Show();
             }
         }
         private async void ExpirationTimer_Tick(object? sender, EventArgs e)

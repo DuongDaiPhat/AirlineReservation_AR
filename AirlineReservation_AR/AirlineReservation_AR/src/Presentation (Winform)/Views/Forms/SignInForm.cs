@@ -58,22 +58,25 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             if (string.IsNullOrWhiteSpace(emailTB.Text) ||
                 string.IsNullOrWhiteSpace(passwordTB.Text))
             {
-                MessageBox.Show("Vui lòng nhập email và mật khẩu.", "Lỗi",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Đăng nhập không thành công", "Vui lòng nhập email hoặc mật khẩu", false, null);
+                announcementForm1.Show();
                 return;
             }
 
             if (!validation.IsValidGoogleEmail(emailTB.Text))
             {
-                MessageBox.Show("Email không hợp lệ.", "Lỗi",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Đăng nhập không thành công", "Email không hợp lệ", false, null);
+                announcementForm1.Show();
                 return;
             }
 
             if (!validation.IsValidPassword(passwordTB.Text))
             {
-                MessageBox.Show("Mật khẩu không hợp lệ.", "Lỗi",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Đăng nhập không thành công", "Mật khẩu không hợp lệ", false, null);
+                announcementForm1.Show();
                 return;
             }
 
