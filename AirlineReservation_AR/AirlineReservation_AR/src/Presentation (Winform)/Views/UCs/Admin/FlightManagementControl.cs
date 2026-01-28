@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin;
@@ -24,11 +25,13 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         private List<FlightListDtoAdmin> filteredFlights = new List<FlightListDtoAdmin>();
 
         private readonly FlightControllerAdmin _flightController = DIContainer.FlightControllerAdmin;
+        private readonly ILookupService _lookupService = DIContainer.LookupService;
+        
         public FlightManagementControl()
         {
             InitializeComponent();
             InitializeStyles();
-            InitializeData();
+            _ = InitializeFiltersAsync();  // Load dropdowns from DB
             InitializeEvents();
 
             LoadFlightDataAsync();
@@ -69,49 +72,51 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             dgvFlights.Cursor = Cursors.Hand;
         }
 
-        private void InitializeData()
+        private async Task InitializeFiltersAsync()
         {
-            // ComboBox - Hãng hàng không
-            cboAirline.Items.Clear();
-            cboAirline.Items.AddRange(new object[]
+            try
             {
-                "All",
-                "Vietnam Airlines",
-                "VietJet Air",
-                "Bamboo Airways",
-                "Vietravel Airlines",
-                "Pacific Airlines"
-            });
-            cboAirline.SelectedIndex = 0;
+                // Airlines dropdown - Load from DB
+                var airlines = await _lookupService.GetAirlinesAsync();
+                cboAirline.Items.Clear();
+                cboAirline.Items.Add("All");
+                foreach (var airline in airlines)
+                {
+                    cboAirline.Items.Add(airline);
+                }
+                cboAirline.DisplayMember = "DisplayName";
+                cboAirline.SelectedIndex = 0;
 
-            // ComboBox - Trạng thái
-            cboStatus.Items.Clear();
-            cboStatus.Items.AddRange(new object[]
+                // Airports dropdown - Load from DB
+                var airports = await _lookupService.GetAirportsAsync();
+                cboDestination.Items.Clear();
+                cboDestination.Items.Add("All");
+                foreach (var airport in airports)
+                {
+                    cboDestination.Items.Add(airport);
+                }
+                cboDestination.DisplayMember = "DisplayName";
+                cboDestination.SelectedIndex = 0;
+
+                // Flight statuses dropdown - Load from service
+                var statuses = await _lookupService.GetFlightStatusesAsync();
+                cboStatus.Items.Clear();
+                cboStatus.Items.Add("All");
+                foreach (var status in statuses)
+                {
+                    cboStatus.Items.Add(status);
+                }
+                cboStatus.DisplayMember = "DisplayName";
+                cboStatus.SelectedIndex = 0;
+
+                // DateTimePicker
+                guna2DateTimePicker1.Value = DateTime.Now;
+            }
+            catch (Exception ex)
             {
-                "All",
-                "Available",
-                "Full",
-                "Cancelled"
-            });
-            cboStatus.SelectedIndex = 0;
-
-            // ComboBox - Sân bay đến
-            cboDestination.Items.Clear();
-            cboDestination.Items.AddRange(new object[]
-            {
-                "All",
-                "Hanoi (HAN)",
-                "Da Nang (DAD)",
-                "Phu Quoc (PQC)",
-                "Nha Trang (CXR)",
-                "Can Tho (VCA)",
-                "Hue (HUI)",
-                "Vinh (VII)"
-            });
-            cboDestination.SelectedIndex = 0;
-
-            // DateTimePicker
-            guna2DateTimePicker1.Value = DateTime.Now;
+                MessageBox.Show($"Error loading filters: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void InitializeEvents()
@@ -138,24 +143,26 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         {
             try
             {
-                // Hiển thị loading (optional)
+                // Show loading indicator
                 dgvFlights.Enabled = false;
                 Cursor = Cursors.WaitCursor;
 
                 if (paginationControl1 != null)
                     paginationControl1.Enabled = false;
-                // GỌI API LẤY DỮ LIỆU
+                    
+                // Fetch data from API
                 var flights = await _flightController.GetAllFlightsAsync();
 
-                // Gán vào list
+                // Assign to lists
                 allFlights = flights.ToList();
                 filteredFlights = new List<FlightListDtoAdmin>(allFlights);
                 totalRecords = filteredFlights.Count;
                 currentPage = 1;
-                // Hiển thị lên DataGridView
+                
+                // Display in DataGridView
                 LoadFlightData();
 
-                // Tắt loading
+                // Hide loading indicator
                 dgvFlights.Enabled = true;
                 if (paginationControl1 != null)
                     paginationControl1.Enabled = true;
@@ -163,12 +170,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}", "Lỗi",
+                MessageBox.Show($"Error loading flight data: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 dgvFlights.Enabled = true;
-                //if (paginationControl1 != null)
-                //    paginationControl1.Enabled = true;
                 Cursor = Cursors.Default;
             }
         }

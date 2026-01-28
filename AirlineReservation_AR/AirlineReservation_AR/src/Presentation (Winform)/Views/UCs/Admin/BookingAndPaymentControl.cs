@@ -1,5 +1,6 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Application.Services;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
@@ -23,6 +24,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         private List<BookingDtoAdmin> bookings = new();
         private List<BookingDtoAdmin> filteredBookings = new();
         private readonly BookingControllerAdmin _bookingController = DIContainer.BookingControllerAdmin;
+        private readonly ILookupService _lookupService = DIContainer.LookupService;
 
         public BookingAndPaymentControl()
         {
@@ -31,7 +33,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             InitializeDataGridView();
             InitializeStyles();
             InitializeEvents();
-            PopulateComboBoxes();
+            _ = InitializeFiltersAsync();
             InitializePagination();
             this.Load += BookingAndPaymentControl_Load;
         }
@@ -247,11 +249,37 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             dgvBooking.CellPainting += DgvBooking_CellPainting;
         }
 
-        private void PopulateComboBoxes()
+        private async Task InitializeFiltersAsync()
         {
-            cboStatusBooking.Items.AddRange(new[] { "Tất cả", "Đã xác nhận", "Chờ xác nhận", "Đã hủy" });
-            cboStatusPayment.Items.AddRange(new[] { "Tất cả", "Đã thanh toán", "Chờ thanh toán", "Thất bại" });
-            cboStatusBooking.SelectedIndex = cboStatusPayment.SelectedIndex = 0;
+            try
+            {
+                // Booking statuses from LookupService
+                var bookingStatuses = await _lookupService.GetBookingStatusesAsync();
+                cboStatusBooking.Items.Clear();
+                cboStatusBooking.Items.Add("All");
+                foreach (var status in bookingStatuses)
+                {
+                    cboStatusBooking.Items.Add(status);
+                }
+                cboStatusBooking.DisplayMember = "DisplayName";
+                cboStatusBooking.SelectedIndex = 0;
+
+                // Payment statuses from LookupService
+                var paymentStatuses = await _lookupService.GetPaymentStatusesAsync();
+                cboStatusPayment.Items.Clear();
+                cboStatusPayment.Items.Add("All");
+                foreach (var status in paymentStatuses)
+                {
+                    cboStatusPayment.Items.Add(status);
+                }
+                cboStatusPayment.DisplayMember = "DisplayName";
+                cboStatusPayment.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading filters: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private async Task LoadBookingsAsync()
@@ -272,8 +300,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                     filteredBookings = new List<BookingDtoAdmin>(bookings);
                     ApplyFilters();
 
-                    MessageBox.Show($"✓ Đã tải {bookings.Count} booking thành công!",
-                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"✓ Loaded {bookings.Count} bookings successfully!",
+                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -363,26 +391,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             data = data.Where(b => b.BookingDate.Date >= dtpTuNgay.Value.Date &&
                                   b.BookingDate.Date <= dtpDenNgay.Value.Date);
 
-            // Lọc theo trạng thái booking
-            if (cboStatusBooking.SelectedIndex > 0)
+            // Filter by booking status (NO MANUAL TRANSLATION)
+            if (cboStatusBooking.SelectedIndex > 0 && cboStatusBooking.SelectedItem is StatusSelectDto bookingStatus)
             {
-                string statusFilter = cboStatusBooking.SelectedItem.ToString();
-                if (statusFilter == "Đã xác nhận") statusFilter = "Confirmed";
-                else if (statusFilter == "Chờ xác nhận") statusFilter = "Pending";
-                else if (statusFilter == "Đã hủy") statusFilter = "Cancelled";
-
-                data = data.Where(b => b.Status?.Equals(statusFilter, StringComparison.OrdinalIgnoreCase) ?? false);
+                data = data.Where(b => b.Status?.Equals(bookingStatus.Code, StringComparison.OrdinalIgnoreCase) ?? false);
             }
 
-            // Lọc theo trạng thái thanh toán (sử dụng PaymentStatus từ DTO)
-            if (cboStatusPayment.SelectedIndex > 0)
+            // Filter by payment status (NO MANUAL TRANSLATION)
+            if (cboStatusPayment.SelectedIndex > 0 && cboStatusPayment.SelectedItem is StatusSelectDto paymentStatus)
             {
-                string paymentFilter = cboStatusPayment.SelectedItem.ToString();
-                if (paymentFilter == "Đã thanh toán") paymentFilter = "Completed";
-                else if (paymentFilter == "Chờ thanh toán") paymentFilter = "Pending";
-                else if (paymentFilter == "Thất bại") paymentFilter = "Failed";
-
-                data = data.Where(b => b.PaymentStatus?.Equals(paymentFilter, StringComparison.OrdinalIgnoreCase) ?? false);
+                data = data.Where(b => b.PaymentStatus?.Equals(paymentStatus.Code, StringComparison.OrdinalIgnoreCase) ?? false);
             }
 
             filteredBookings = data.ToList();

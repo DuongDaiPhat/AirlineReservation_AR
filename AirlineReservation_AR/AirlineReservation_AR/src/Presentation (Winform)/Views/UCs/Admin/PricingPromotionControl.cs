@@ -33,16 +33,15 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         private int _currentPromoPage = 1;
         private int _promoPageSize = 3;
         private int _totalPromoPages = 1;
+        
+        private readonly ILookupService _lookupService = DIContainer.LookupService;
+        
         public PricingPromotionControl()
         {
             InitializeComponent();
             InitializeCustomStyles();
-            //LoadSampleData();
-            InitializeFilters();
+            _ = InitializeFiltersAsync();  // Load from DB
             RegisterEventHandlers();
-            //LoadPricingCards();
-            //LoadPromoCards();
-            //LoadStatCards();
             LoadDataAsync();
             InitializePagination();
         }
@@ -113,8 +112,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}",
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error loading data: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -298,52 +297,67 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             dgvHistory.AllowUserToAddRows = false;
             dgvHistory.ReadOnly = true;
         }
-        private void InitializeFilters()
+        private async Task InitializeFiltersAsync()
         {
-            // Flight Pricing Filters
-            cboRoute.Items.AddRange(new object[]
+            try
             {
-                "Tất cả", "SGN - HAN", "HAN - DAD", "SGN - PQC", "DAD - SGN"
-            });
-            cboRoute.SelectedIndex = 0;
+                // Flight Pricing Filters
+                
+                // Routes - Load from actual flight data
+                var routes = await _lookupService.GetActiveRoutesAsync();
+                cboRoute.Items.Clear();
+                cboRoute.Items.Add("All");
+                foreach (var route in routes)
+                {
+                    cboRoute.Items.Add(route);
+                }
+                cboRoute.DisplayMember = "DisplayName";
+                cboRoute.SelectedIndex = 0;
 
-            cboSeatClass.Items.AddRange(new object[]
+                // Seat Classes - Load from DB
+                var seatClasses = await _lookupService.GetSeatClassesAsync();
+                cboSeatClass.Items.Clear();
+                cboSeatClass.Items.Add("All");
+                foreach (var sc in seatClasses)
+                {
+                    cboSeatClass.Items.Add(sc);
+                }
+                cboSeatClass.DisplayMember = "DisplayName";
+                cboSeatClass.SelectedIndex = 0;
+
+                // Discount filter
+                cboDiscount.Items.AddRange(new object[]
+                {
+                    "All", "Above 10%", "Above 20%", "Above 30%"
+                });
+                cboDiscount.SelectedIndex = 0;
+
+                // Promo Filters
+                txtPromoSearch.PlaceholderText = "Search promo code or name...";
+
+                cboPromoStatus.Items.AddRange(new object[]
+                {
+                    "All", "Active", "Paused", "Expired"
+                });
+                cboPromoStatus.SelectedIndex = 0;
+
+                cboPromoType.Items.AddRange(new object[]
+                {
+                    "All", "Percentage", "Fixed Amount"
+                });
+                cboPromoType.SelectedIndex = 0;
+
+                cboPromoSort.Items.AddRange(new object[]
+                {
+                    "Newest", "Most Used", "Highest Value"
+                });
+                cboPromoSort.SelectedIndex = 0;
+            }
+            catch (Exception ex)
             {
-                "Tất cả", "Economy", "Business", "First Class"
-            });
-            cboSeatClass.SelectedIndex = 0;
-
-            cboDiscount.Items.AddRange(new object[]
-            {
-                "Tất cả", "Trên 10%", "Trên 20%", "Trên 30%"
-            });
-            cboDiscount.SelectedIndex = 0;
-
-            // Promo Filters
-            txtPromoSearch.PlaceholderText = "Tìm mã hoặc tên khuyến mãi...";
-
-            cboPromoStatus.Items.AddRange(new object[]
-            {
-                "Tất cả", "Đang hoạt động", "Tạm dừng", "Hết hạn"
-            });
-            cboPromoStatus.SelectedIndex = 0;
-
-            cboPromoType.Items.AddRange(new object[]
-            {
-                "Tất cả", "Phần trăm", "Số tiền cố định"
-            });
-            cboPromoType.SelectedIndex = 0;
-
-            cboPromoSort.Items.AddRange(new object[]
-            {
-                "Mới nhất", "Nhiều lượt dùng", "Giá trị cao nhất"
-            });
-            cboPromoSort.SelectedIndex = 0;
-
-            //// Events
-            //btnSearchFlights.Click += (s, e) => ApplyFlightFilters();
-            //txtPromoSearch.TextChanged += (s, e) => ApplyPromoFilters();
-            //cboPromoStatus.SelectedIndexChanged += (s, e) => ApplyPromoFilters();
+                MessageBox.Show($"Error loading filters: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         //private void LoadStatCards()
         //{

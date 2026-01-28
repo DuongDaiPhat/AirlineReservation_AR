@@ -45,7 +45,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi tải danh sách người dùng: {ex.Message}", "Lỗi",
+                MessageBox.Show($"Error loading users: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
