@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace AirlineReservation_AR.src.Application.Services
 {
-    internal class Authentication: IAuthentication
+    internal class Authentication : IAuthentication
     {
 
         private readonly PasswordHasher _passwordHasher;
@@ -79,7 +79,7 @@ namespace AirlineReservation_AR.src.Application.Services
             return user;
         }
 
-        public async Task<LoginResultDTO?> LoginAsync(string email, string password)
+       public async Task<LoginResultDTO?> LoginAsync(string email, string password)
         {
             using var _db = DIContainer.CreateDb();
             // Tìm user theo email
@@ -121,7 +121,6 @@ namespace AirlineReservation_AR.src.Application.Services
                 RoleId = roleId
             };
         }
-
         public async Task<bool> ForgotPassWord(string email, string newPassword)
         {
             using var db = DIContainer.CreateDb();
