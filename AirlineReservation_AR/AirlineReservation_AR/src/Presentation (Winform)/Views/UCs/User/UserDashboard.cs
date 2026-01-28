@@ -19,6 +19,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
     {
         public event Action UpdatedUIRequest;
         public event Action LogoutRequest;
+
         private UserDTO _user;
         private UserService _userService;
         public UserDashboard(UserDTO user)
@@ -90,6 +91,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             pnlContent.Controls.Add(uc);
 
+        }
+
+        public void LoadMyActivity()
+        {
+            pnlContent.Controls.Clear();
+
+            var uc = new MyActivitiesPage(_user.UserId);
+
+            uc.Dock = DockStyle.Fill;
+
+            pnlContent.Controls.Add(uc);
         }
 
         public void Logout()
@@ -166,6 +178,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private void UserDashboard_Load_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnMyActivity_Click(object sender, EventArgs e)
+        {
+            LoadMyActivity();
         }
     }
 }

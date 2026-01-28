@@ -27,9 +27,17 @@ namespace AirlineReservation_AR
             ucHeader.BookingClick += LoadSearchPage;
             ucHeader.HomeClick += LoadHomePage;
             ucHeader.PromotionClick += LoadPromotionPage;
-
+            ucHeader.ActivityClick += UserDashBoardWithMyActivityLoad;
             // Mặc định load trang tìm kiếm
             LoadSearchPage();
+        }
+
+        private void UserDashBoardWithMyActivityLoad(UserDTO user)
+        {
+            var dashboard = new UserDashboard(user);
+            DashBoardInit(dashboard);
+            dashboard.LoadMyActivity();
+            SwitchScreen(dashboard);
         }
 
         private void LoadResultPage(FlightSearchParams p)
@@ -127,5 +135,6 @@ namespace AirlineReservation_AR
             dashboard.UpdatedUIRequest += UpdatedUI;
             dashboard.LogoutRequest += HandleLogout;
         }
+
     }
 }

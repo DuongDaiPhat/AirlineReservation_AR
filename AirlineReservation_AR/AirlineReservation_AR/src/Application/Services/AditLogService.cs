@@ -460,5 +460,41 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                 return (false, $"Lỗi: {ex.GetType().Name}\n{ex.Message}");
             }
         }
+        /// <summary>
+        /// Ánh xạ operation (hành động) sang văn bản thân thiện với người dùng
+        /// </summary>
+        public static string MapOperationToFriendlyText(string operation)
+        {
+            return operation?.ToLower() switch
+            {
+                "create" => "Tạo mới",
+                "update" => "Cập nhật",
+                "delete" => "Xóa",
+                "login" => "Đăng nhập",
+                "logout" => "Đăng xuất",
+                "register" => "Đăng ký",
+                _ => operation
+            };
+        }
+
+        /// <summary>
+        /// Ánh xạ tableName sang văn bản thân thiện với người dùng
+        /// </summary>
+        public static string MapTableNameToFriendlyText(string tableName)
+        {
+            return tableName switch
+            {
+                "BookingFlights" => "Đặt chuyến bay",
+                "BookingServices" => "Dịch vụ đặt thêm",
+                "Flights" => "Chuyến bay",
+                "FlightPricing" => "Giá chuyến bay",
+                "Passengers" => "Hành khách",
+                "Tickets" => "Vé máy bay",
+                "Payments" => "Thanh toán",
+                "PaymentHistory" => "Lịch sử thanh toán",
+                "Users" => "Người dùng",
+                _ => tableName
+            };
+        }
     }
 }

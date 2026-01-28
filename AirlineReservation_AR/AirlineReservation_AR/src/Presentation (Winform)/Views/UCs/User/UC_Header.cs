@@ -1,4 +1,9 @@
-﻿using System;
+﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Infrastructure.DI;
+using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User;
+using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,10 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
-using AirlineReservation_AR.src.Domain.DTOs;
-using AirlineReservation_AR.src.Infrastructure.DI;
-using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User;
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
@@ -19,12 +20,13 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         public event Action<UserDTO> MyTicketClick;
         public event Action BookingClick;
         public event Action HomeClick;
-        public event Action PromotionClick; public event Action<UserDTO> OpenMyBookingRequest;
+        public event Action<UserDTO> ActivityClick;
+        public event Action PromotionClick; 
+        public event Action<UserDTO> OpenMyBookingRequest;
         public event Action<UserDTO> OpenMyTransactionRequest;
         public event Action<UserDTO> OpenAccountModifyRequest;
+        public event Action<UserDTO> OpenActivityRequest;
         public event Action LogoutRequest;
-
-
 
         private ToolStripDropDown _popup;
         public UC_Header()
@@ -145,6 +147,26 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 _popup?.Close();
 
                 LogoutRequest?.Invoke();
+            };
+
+            ucProfile.ActivityClick += (s, args) =>
+            {
+                _popup?.Close();
+
+                var user = DIContainer.CurrentUser;
+                var p = new UserDTO
+                {
+                    UserId = user.UserId,
+
+                    UserName = user.FullName,
+
+                    Email = user.Email,
+
+                    Phone = user.Phone
+
+                };
+
+                OpenActivityRequest?.Invoke(p);
             };
 
 

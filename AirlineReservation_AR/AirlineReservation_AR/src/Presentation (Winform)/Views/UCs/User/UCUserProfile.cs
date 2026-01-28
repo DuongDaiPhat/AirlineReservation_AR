@@ -20,6 +20,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         public EventHandler PurchaseListClick;
         public EventHandler AccountClick;
         public EventHandler LogoutClick;
+        public EventHandler ActivityClick;
         public UCUserProfile(UserDTO user)
         {
             InitializeComponent();
@@ -87,6 +88,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 return letters.Substring(0, 1);
 
             return letters.Substring(0, 2);
+        }
+
+        private void btnMyActivity_Click(object sender, EventArgs e)
+        {
+            ActivityClick?.Invoke(sender, EventArgs.Empty);
         }
     }
 }
