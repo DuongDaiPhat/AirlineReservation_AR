@@ -132,7 +132,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
             else
             {
-                MessageBox.Show(response.Message, "Thông báo",
+                MessageBox.Show(response.Message, "Notification",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -144,12 +144,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             {
                 _promotions = response.Data.ToList();
                 _filteredPromotions = _promotions.ToList();
-                _currentPromoPage = 1; // Reset về trang 1
+                _currentPromoPage = 1; // Reset to page 1
                 UpdatePromoPagination();
             }
             else
             {
-                MessageBox.Show(response.Message, "Thông báo",
+                MessageBox.Show(response.Message, "Notification",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -567,9 +567,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             var selected = cboDiscount.SelectedItem?.ToString();
             return selected switch
             {
-                "Trên 10%" => 10,
-                "Trên 20%" => 20,
-                "Trên 30%" => 30,
+                "Above 10%" => 10,
+                "Above 20%" => 20,
+                "Above 30%" => 30,
                 _ => null
             };
         }
@@ -578,8 +578,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             var selected = cboPromoStatus.SelectedItem?.ToString();
             return selected switch
             {
-                "Đang hoạt động" => true,
-                "Tạm dừng" => false,
+                "Active" => true,
+                "Paused" => false,
                 _ => null
             };
         }
@@ -588,8 +588,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             var selected = cboPromoSort.SelectedItem?.ToString();
             return selected switch
             {
-                "Nhiều lượt dùng" => "most_used",
-                "Giá trị cao nhất" => "highest_value",
+                "Most Used" => "most_used",
+                "Highest Value" => "highest_value",
                 _ => "newest"
             };
         }
@@ -621,7 +621,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 {
                     var lblEmpty = new Label
                     {
-                        Text = "Không có dữ liệu giá vé",
+
+                        Text = "No pricing data available",
                         Font = new Font("Segoe UI", 12, FontStyle.Italic),
                         ForeColor = Color.Gray,
                         AutoSize = true,
@@ -683,7 +684,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             var lblDiscount = new Label
             {
-                Text = $"🔥 Giảm {pricing.DiscountPercent}%",
+
+                Text = $"🔥 {pricing.DiscountPercent}% OFF",
                 BackColor = Color.FromArgb(100, 255, 255, 255),
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
@@ -721,7 +723,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             var lblClass = new Label
             {
-                Text = $"Hạng: {pricing.SeatClass}",
+
+                Text = $"Class: {pricing.SeatClass}",
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 9),
                 Location = new Point(10, 10),
@@ -731,7 +734,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             var lblSeats = new Label
             {
-                Text = $"Đã bán: {pricing.BookedSeats} | Còn: {pricing.AvailableSeats}",
+
+                Text = $"Sold: {pricing.BookedSeats} | Avail: {pricing.AvailableSeats}",
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 9),
                 Location = new Point(10, 35),
@@ -765,7 +769,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             {
                 var lblEmpty = new Label
                 {
-                    Text = "Không có dữ liệu khuyến mãi",
+                    Text = "No promotion data available",
                     Font = new Font("Segoe UI", 12, FontStyle.Italic),
                     ForeColor = Color.Gray,
                     AutoSize = true,
@@ -847,11 +851,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             // Info rows
             int yPos = 200;
-            AddInfoRow(card, "Giá trị tối thiểu:", $"{promo.MinimumAmount:N0} ₫", yPos);
+            AddInfoRow(card, "Min Amount:", $"{promo.MinimumAmount:N0} ₫", yPos);
             yPos += 30;
-            AddInfoRow(card, "Giảm tối đa:", $"{promo.MaximumDiscount:N0} ₫", yPos);
+            AddInfoRow(card, "Max Discount:", $"{promo.MaximumDiscount:N0} ₫", yPos);
             yPos += 30;
-            AddInfoRow(card, "Số lần sử dụng:", $"{promo.UsageCount} / {promo.UsageLimit}", yPos);
+            AddInfoRow(card, "Usage:", $"{promo.UsageCount} / {promo.UsageLimit}", yPos);
             yPos += 30;
 
             // Progress bar
@@ -874,7 +878,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             card.Controls.Add(pnlProgress);
 
             yPos += 20;
-            AddInfoRow(card, "Thời gian:", $"{promo.ValidFrom:dd/MM} - {promo.ValidTo:dd/MM}", yPos);
+            AddInfoRow(card, "Validity:", $"{promo.ValidFrom:dd/MM} - {promo.ValidTo:dd/MM}", yPos);
 
             // Action buttons
             var pnlActions = new Panel
@@ -885,7 +889,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             var btnEdit = new Button
             {
-                Text = "✏️ Sửa",
+                Text = "✏️ Edit",
                 Location = new Point(0, 0),
                 Size = new Size(115, 40),
                 BackColor = Color.FromArgb(0, 123, 255),
@@ -898,7 +902,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             var btnToggle = new Button
             {
-                Text = promo.IsActive ? "⏸ Tạm dừng" : "▶ Kích hoạt",
+                Text = promo.IsActive ? "⏸ Pause" : "▶ Activate",
                 Location = new Point(122, 0),
                 Size = new Size(115, 40),
                 BackColor = promo.IsActive ? Color.FromArgb(40, 167, 69) : Color.FromArgb(108, 117, 125),
@@ -974,14 +978,24 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         }
         private void EditPricing(FlightPricingDtoAdmin pricing)
         {
-            MessageBox.Show($"Chỉnh sửa giá vé: {pricing.PricingId}", "Edit",
-                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+            using (var form = new Views.Forms.Admin.EditPricingForm(pricing))
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    LoadDataAsync();
+                }
+            }
         }
 
         private void EditPromo(PromotionDtoAdmin promo)
         {
-            MessageBox.Show($"Chỉnh sửa khuyến mãi: {promo.PromoCode}", "Edit",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            using (var form = new Views.Forms.Admin.AddPromotionForm(promo))
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    LoadDataAsync();
+                }
+            }
         }
 
         private async Task TogglePromoAsync(PromotionDtoAdmin promo)
@@ -991,14 +1005,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 var response = await DIContainer.PromotionControllerAdmin.TogglePromotion(promo.PromotionId);
                 if (response.Success)
                 {
-                    MessageBox.Show(response.Message, "Thành công",
+                    MessageBox.Show(response.Message, "Success",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     await LoadPromotionDataAsync();
                     LoadPromoCards();
                 }
                 else
                 {
-                    MessageBox.Show(response.Message, "Lỗi",
+                    MessageBox.Show(response.Message, "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -1012,8 +1026,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         private async Task DeletePromoAsync(PromotionDtoAdmin promo)
         {
             var result = MessageBox.Show(
-                $"Bạn có chắc chắn muốn xóa mã khuyến mãi '{promo.PromoCode}'?",
-                "Xác nhận xóa",
+                $"Are you sure you want to delete promotion '{promo.PromoCode}'?",
+                "Confirm Delete",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
@@ -1024,20 +1038,20 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                     var response = await DIContainer.PromotionControllerAdmin.DeletePromotion(promo.PromotionId);
                     if (response.Success)
                     {
-                        MessageBox.Show("Đã xóa mã khuyến mãi!", "Thành công",
+                        MessageBox.Show("Promotion deleted successfully!", "Success",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                         await LoadPromotionDataAsync();
                         LoadPromoCards();
                     }
                     else
                     {
-                        MessageBox.Show(response.Message, "Lỗi",
+                        MessageBox.Show(response.Message, "Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi",
+                    MessageBox.Show($"Error: {ex.Message}", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -1045,7 +1059,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         private void ShowAddPromoDialog()
         {
             // TODO: Implement Add Promotion Dialog
-            MessageBox.Show("Form thêm khuyến mãi sẽ được triển khai", "Thông báo",
+            MessageBox.Show("Add Promotion feature to be implemented", "Notification",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

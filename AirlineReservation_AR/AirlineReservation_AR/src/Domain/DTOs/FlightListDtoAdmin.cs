@@ -10,6 +10,10 @@ namespace AirlineReservation_AR.src.Domain.DTOs
     {
         public int FlightId { get; set; }
         public string FlightCode { get; set; } = string.Empty;
+        public int AirlineId { get; set; }
+        public int AircraftId { get; set; }
+        public int DepartureAirportId { get; set; }
+        public int ArrivalAirportId { get; set; }
 
         public string Route { get; set; } = string.Empty; // SGN → HAN
         public string Airline { get; set; } = string.Empty;

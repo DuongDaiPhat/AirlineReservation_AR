@@ -18,6 +18,9 @@ namespace AirlineReservation_AR.src.Application.Interfaces
         // Routes (derived from active flights)
         Task<List<RouteSelectDto>> GetActiveRoutesAsync();
         
+        // Aircrafts
+        Task<List<AircraftSelectDto>> GetAircraftsAsync(bool activeOnly = true);
+        
         // Seat Classes
         Task<List<SeatClassSelectDto>> GetSeatClassesAsync();
         

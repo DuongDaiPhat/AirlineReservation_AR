@@ -100,6 +100,42 @@ namespace AirlineReservation_AR.src.Application.Services
         
         #endregion
         
+        #region Aircrafts
+
+        public async Task<List<AircraftSelectDto>> GetAircraftsAsync(bool activeOnly = true)
+        {
+            var cacheKey = $"Aircrafts_{activeOnly}";
+
+            if (_cache.TryGetValue(cacheKey, out List<AircraftSelectDto> cached))
+                return cached;
+
+            using var db = DIContainer.CreateDb();
+
+            var query = db.Aircraft
+                .Include(a => a.Seats)
+                .AsQueryable();
+
+            var aircrafts = await query
+                .OrderBy(a => a.AircraftName)
+                .Select(a => new AircraftSelectDto
+                {
+                    Id = a.AircraftId,
+                    Name = a.AircraftName ?? "Unknown",
+                    TotalSeats = a.Seats.Count
+                })
+                .ToListAsync();
+
+            _cache.Set(cacheKey, aircrafts, new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = _cacheDuration,
+                Size = 1
+            });
+
+            return aircrafts;
+        }
+
+        #endregion
+
         #region Routes
         
         public async Task<List<RouteSelectDto>> GetActiveRoutesAsync()

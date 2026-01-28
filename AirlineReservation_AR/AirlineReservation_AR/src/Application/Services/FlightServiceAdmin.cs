@@ -22,7 +22,7 @@ namespace AirlineReservation_AR.src.Application.Services
 
             var flights = await db.Flights
                 .Include(f => f.Airline)
-                .Include(f => f.Aircraft).ThenInclude(a => a.Seats)
+                .Include(f => f.Aircraft).ThenInclude(a => a.SeatConfigurations)
                 .Include(f => f.DepartureAirport)
                 .Include(f => f.ArrivalAirport)
                 .Include(f => f.FlightPricings)
@@ -31,6 +31,10 @@ namespace AirlineReservation_AR.src.Application.Services
                 {
                     FlightId = f.FlightId,
                     FlightCode = f.FlightNumber,
+                    AirlineId = f.AirlineId,
+                    AircraftId = f.AircraftId,
+                    DepartureAirportId = f.DepartureAirportId,
+                    ArrivalAirportId = f.ArrivalAirportId,
                     Route = f.DepartureAirport.AirportName + " → " + f.ArrivalAirport.AirportName,
                     Airline = f.Airline.AirlineName,
                     Aircraft = f.Aircraft.AircraftName ?? "Unknown",
@@ -38,8 +42,8 @@ namespace AirlineReservation_AR.src.Application.Services
                     DepartureTime = f.DepartureTime,
                     ArrivalTime = f.ArrivalTime,
                     BasePrice = f.BasePrice,
-                    TotalSeats = f.Aircraft.Seats.Count(),
-                    BookedSeats = f.BookingFlights.Count(bf => bf.Booking.Status == "CONFIRMED"),
+                    TotalSeats = f.Aircraft.SeatConfigurations.Sum(sc => sc.SeatCount),
+                    BookedSeats = f.BookingFlights.Count(bf => bf.Booking.Status.ToUpper() == "CONFIRMED"),
                     Status = f.Status ?? "Scheduled"
                 })
                 .ToListAsync();
@@ -193,6 +197,38 @@ namespace AirlineReservation_AR.src.Application.Services
                 };
             }
         }
+        public async Task<bool> CreateFlightAsync(CreateFlightDtoAdmin flightDto)
+        {
+            try
+            {
+                using var db = DIContainer.CreateDb();
+
+                var flight = new AirlineReservation.Domain.Entities.Flight
+                {
+                    FlightNumber = flightDto.FlightCode,
+                    AirlineId = flightDto.AirlineId,
+                    DepartureAirportId = flightDto.DepartureAirportId,
+                    ArrivalAirportId = flightDto.ArrivalAirportId,
+                    AircraftId = flightDto.AircraftId,
+                    FlightDate = flightDto.FlightDate,
+                    DepartureTime = flightDto.DepartureTime,
+                    ArrivalTime = flightDto.ArrivalTime,
+                    BasePrice = flightDto.BasePrice,
+                    Status = flightDto.Status
+                };
+
+                db.Flights.Add(flight);
+                await db.SaveChangesAsync();
+
+                ClearCache();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error creating flight: {ex.Message}", ex);
+            }
+        }
+
         public async Task<bool> UpdateFlightAsync(FlightListDtoAdmin flightDto)
         {
             try
@@ -204,11 +240,12 @@ namespace AirlineReservation_AR.src.Application.Services
 
                 if (flight == null)
                 {
-                    throw new Exception($"Không tìm thấy chuyến bay với ID: {flightDto.FlightId}");
+                    throw new Exception($"Flight not found with ID: {flightDto.FlightId}");
                 }
 
                 // Cập nhật các trường
                 flight.FlightNumber = flightDto.FlightCode;
+                flight.AircraftId = flightDto.AircraftId;
                 flight.FlightDate = flightDto.FlightDate;
                 flight.DepartureTime = flightDto.DepartureTime;
                 flight.ArrivalTime = flightDto.ArrivalTime;
@@ -225,8 +262,9 @@ namespace AirlineReservation_AR.src.Application.Services
             }
             catch (Exception ex)
             {
-                // Log error nếu cần
-                throw new Exception($"Lỗi khi cập nhật chuyến bay: {ex.Message}", ex);
+                // Log error if needed
+                var innerMessage = ex.InnerException != null ? ex.InnerException.Message : "";
+                throw new Exception($"Error updating flight: {ex.Message}. Inner: {innerMessage}", ex);
             }
         }
 
@@ -240,10 +278,10 @@ namespace AirlineReservation_AR.src.Application.Services
 
                 if (flight == null)
                 {
-                    throw new Exception($"Không tìm thấy chuyến bay với ID: {flightId}");
+                    throw new Exception($"Flight not found with ID: {flightId}");
                 }
 
-                // Cập nhật trạng thái thành Cancelled
+                // Update status to Cancelled
                 flight.Status = "Cancelled";
 
                 await db.SaveChangesAsync();
@@ -255,7 +293,41 @@ namespace AirlineReservation_AR.src.Application.Services
             }
             catch (Exception ex)
             {
-                throw new Exception($"Lỗi khi hủy chuyến bay: {ex.Message}", ex);
+                throw new Exception($"Error cancelling flight: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<bool> DeleteFlightAsync(int flightId)
+        {
+            try
+            {
+                using var db = DIContainer.CreateDb();
+
+                var flight = await db.Flights
+                    .Include(f => f.BookingFlights)
+                    .FirstOrDefaultAsync(f => f.FlightId == flightId);
+
+                if (flight == null)
+                {
+                    throw new Exception($"Flight not found with ID: {flightId}");
+                }
+
+                if (flight.BookingFlights != null && flight.BookingFlights.Any())
+                {
+                     // If bookings exist, we cannot hard delete due to FK or business rule.
+                     // Suggest cancelling instead.
+                     throw new InvalidOperationException($"Cannot delete flight {flight.FlightNumber} because it has existing bookings. Please cancel the flight instead.");
+                }
+
+                db.Flights.Remove(flight);
+                await db.SaveChangesAsync();
+
+                ClearCache();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                 throw new Exception($"Error deleting flight: {ex.Message}", ex);
             }
         }
         public async Task<FlightListDtoAdmin> GetFlightByIdAsync(int flightId)
@@ -264,7 +336,7 @@ namespace AirlineReservation_AR.src.Application.Services
 
             var flight = await db.Flights
                 .Include(f => f.Airline)
-                .Include(f => f.Aircraft)
+                .Include(f => f.Aircraft).ThenInclude(a => a.SeatConfigurations)
                 .Include(f => f.DepartureAirport)
                 .Include(f => f.ArrivalAirport)
                 .Where(f => f.FlightId == flightId)
@@ -272,6 +344,10 @@ namespace AirlineReservation_AR.src.Application.Services
                 {
                     FlightId = f.FlightId,
                     FlightCode = f.FlightNumber,
+                    AirlineId = f.AirlineId,
+                    AircraftId = f.AircraftId,
+                    DepartureAirportId = f.DepartureAirportId,
+                    ArrivalAirportId = f.ArrivalAirportId,
                     Route = f.DepartureAirport.AirportName + " → " + f.ArrivalAirport.AirportName,
                     Airline = f.Airline.AirlineName,
                     Aircraft = f.Aircraft.AircraftName ?? "Unknown",
@@ -279,8 +355,8 @@ namespace AirlineReservation_AR.src.Application.Services
                     DepartureTime = f.DepartureTime,
                     ArrivalTime = f.ArrivalTime,
                     BasePrice = f.BasePrice,
-                    TotalSeats = f.Aircraft.Seats.Count(),
-                    BookedSeats = f.BookingFlights.Count(bf => bf.Booking.Status == "CONFIRMED"),
+                    TotalSeats = f.Aircraft.SeatConfigurations.Sum(sc => sc.SeatCount),
+                    BookedSeats = f.BookingFlights.Count(bf => bf.Booking.Status.ToUpper() == "CONFIRMED"),
                     Status = f.Status ?? "Scheduled"
                 })
                 .FirstOrDefaultAsync();
