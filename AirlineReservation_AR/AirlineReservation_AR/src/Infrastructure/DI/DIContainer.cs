@@ -75,6 +75,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
         private static IStaffDashboardService? _staffDashboardService;
         private static StaffDashboardController? _staffDashboardController;
 
+        private static ILookupService? _lookupService;
+
+
         public static void Init()
         {
             _config = new ConfigurationBuilder()
@@ -125,6 +128,10 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
             _rescheduleService = new RescheduleService();
         
             _staffDashboardService = new StaffDashboardService();
+
+            // Lookup service for dropdowns
+            _lookupService = new LookupService();
+
 
             // Controller layer giữ nguyên
             _authController = new AuthenticationController(_authService);
@@ -237,5 +244,9 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
 
         public static TicketDetailController TicketDetailController =>
         _ticketDetailController ?? throw new Exception("Ticket Detail controller not initialized");
+
+        // Lookup service for dropdowns
+        public static ILookupService LookupService =>
+            _lookupService ?? throw new Exception("Lookup service not initialized");
     }
 }

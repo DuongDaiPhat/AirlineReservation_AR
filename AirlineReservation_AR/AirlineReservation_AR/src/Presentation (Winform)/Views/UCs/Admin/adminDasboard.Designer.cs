@@ -74,7 +74,7 @@
             labelAdminDashboardControlDescription.Name = "labelAdminDashboardControlDescription";
             labelAdminDashboardControlDescription.Size = new Size(230, 50);
             labelAdminDashboardControlDescription.TabIndex = 2;
-            labelAdminDashboardControlDescription.Text = "Chuyến bay, tuyến bay, sân bay, máy bay (All-in-one)";
+            labelAdminDashboardControlDescription.Text = "Flights, Routes, Airports, Aircraft (All-in-one)";
             // 
             // labelAdminDashboardControlTitle
             // 
@@ -85,7 +85,7 @@
             labelAdminDashboardControlTitle.Name = "labelAdminDashboardControlTitle";
             labelAdminDashboardControlTitle.Size = new Size(230, 30);
             labelAdminDashboardControlTitle.TabIndex = 1;
-            labelAdminDashboardControlTitle.Text = "Quản lý chuyến bay";
+            labelAdminDashboardControlTitle.Text = "Flight Management";
             // 
             // pictureBoxAdminDashboardControl
             // 

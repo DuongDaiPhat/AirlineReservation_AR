@@ -1,18 +1,14 @@
 ﻿using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+using AirlineReservation_AR.src.Presentation__Winform_.Theme;
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
 {
     partial class AddEditFlightForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -24,44 +20,50 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-
         private Label lblFlightCode;
         private Label lblAirline;
-        private Label lblRoute;
-        private Label lblDeparture;
+        private Label lblDepartureAirport;
+        private Label lblArrivalAirport;
+        private Label lblDate;
+        private Label lblTime;
         private Label lblAircraft;
         private Label lblPrice;
         private Label lblStatus;
+
         private TextBox txtFlightCode;
-        private TextBox txtRoute;
-        private TextBox txtAirline;
-        private DateTimePicker dtDeparture;
-        private TextBox txtAircraft;
+        private ComboBox cboAirline;
+        private ComboBox cboDeparture;
+        private ComboBox cboArrival;
+        private DateTimePicker dtDate;
+        private DateTimePicker dtTimeDeparture;
+        private DateTimePicker dtTimeArrival;
+        private ComboBox cboAircraft;
         private NumericUpDown numPrice;
         private ComboBox cbStatus;
+        
         private Button btnSave;
         private Button btnCancel;
 
         private void InitializeComponent()
         {
-            // ==== Tạo controls ====
             lblFlightCode = new Label();
             lblAirline = new Label();
-            lblRoute = new Label();
-            lblDeparture = new Label();
+            lblDepartureAirport = new Label();
+            lblArrivalAirport = new Label();
+            lblDate = new Label();
+            lblTime = new Label();
             lblAircraft = new Label();
             lblPrice = new Label();
             lblStatus = new Label();
 
             txtFlightCode = new TextBox();
-            txtAirline = new TextBox();
-            txtRoute = new TextBox();
-            dtDeparture = new DateTimePicker();
-            txtAircraft = new TextBox();
+            cboAirline = new ComboBox();
+            cboDeparture = new ComboBox();
+            cboArrival = new ComboBox();
+            dtDate = new DateTimePicker();
+            dtTimeDeparture = new DateTimePicker();
+            dtTimeArrival = new DateTimePicker();
+            cboAircraft = new ComboBox();
             numPrice = new NumericUpDown();
             cbStatus = new ComboBox();
 
@@ -71,128 +73,165 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
             ((ISupportInitialize)numPrice).BeginInit();
             SuspendLayout();
 
-
             int startX = 30;
-            int labelWidth = 120;
-            int textboxWidth = 220;
-            int spacingY = 40;
+            int labelWidth = 140;
+            int controlWidth = 250;
+            int spacingY = 45;
             int currentY = 30;
 
-
-            // ========== LABEL + INPUT ==========
-
             // Flight Code
-            lblFlightCode.Text = "Số hiệu chuyến bay:";
+            lblFlightCode.Text = "Flight Number:";
             lblFlightCode.Location = new Point(startX, currentY);
+            lblFlightCode.AutoSize = true;
+            
             txtFlightCode.Location = new Point(startX + labelWidth, currentY - 3);
-            txtFlightCode.Width = textboxWidth;
-
+            txtFlightCode.Size = new Size(controlWidth, 25);
+            
             currentY += spacingY;
 
             // Airline
-            lblAirline.Text = "Hãng hàng không:";
+            lblAirline.Text = "Airline:";
             lblAirline.Location = new Point(startX, currentY);
-            txtAirline.Location = new Point(startX + labelWidth, currentY - 3);
-            txtAirline.Width = textboxWidth;
+            lblAirline.AutoSize = true;
+
+            cboAirline.Location = new Point(startX + labelWidth, currentY - 3);
+            cboAirline.Size = new Size(controlWidth, 25);
+            cboAirline.DropDownStyle = ComboBoxStyle.DropDownList;
 
             currentY += spacingY;
 
-            // Route
-            lblRoute.Text = "Tuyến bay (VD: SGN-HAN):";
-            lblRoute.Location = new Point(startX, currentY);
-            txtRoute.Location = new Point(startX + labelWidth, currentY - 3);
-            txtRoute.Width = textboxWidth;
+            // Departure Airport
+            lblDepartureAirport.Text = "Departure Airport:";
+            lblDepartureAirport.Location = new Point(startX, currentY);
+            lblDepartureAirport.AutoSize = true;
+
+            cboDeparture.Location = new Point(startX + labelWidth, currentY - 3);
+            cboDeparture.Size = new Size(controlWidth, 25);
+            cboDeparture.DropDownStyle = ComboBoxStyle.DropDownList;
 
             currentY += spacingY;
 
-            // Departure Time
-            lblDeparture.Text = "Ngày/Giờ khởi hành:";
-            lblDeparture.Location = new Point(startX, currentY);
-            dtDeparture.Location = new Point(startX + labelWidth, currentY - 3);
-            dtDeparture.Width = textboxWidth;
+            // Arrival Airport
+            lblArrivalAirport.Text = "Arrival Airport:";
+            lblArrivalAirport.Location = new Point(startX, currentY);
+            lblArrivalAirport.AutoSize = true;
+
+            cboArrival.Location = new Point(startX + labelWidth, currentY - 3);
+            cboArrival.Size = new Size(controlWidth, 25);
+            cboArrival.DropDownStyle = ComboBoxStyle.DropDownList;
 
             currentY += spacingY;
-
+            
             // Aircraft
-            lblAircraft.Text = "Máy bay:";
+            lblAircraft.Text = "Aircraft:";
             lblAircraft.Location = new Point(startX, currentY);
-            txtAircraft.Location = new Point(startX + labelWidth, currentY - 3);
-            txtAircraft.Width = textboxWidth;
+            lblAircraft.AutoSize = true;
+
+            cboAircraft.Location = new Point(startX + labelWidth, currentY - 3);
+            cboAircraft.Size = new Size(controlWidth, 25);
+            cboAircraft.DropDownStyle = ComboBoxStyle.DropDownList;
 
             currentY += spacingY;
+
+            // Date
+            lblDate.Text = "Flight Date:";
+            lblDate.Location = new Point(startX, currentY);
+            lblDate.AutoSize = true;
+
+            dtDate.Location = new Point(startX + labelWidth, currentY - 3);
+            dtDate.Size = new Size(controlWidth, 25);
+            dtDate.Format = DateTimePickerFormat.Short;
+
+            currentY += spacingY;
+
+            // Time
+            lblTime.Text = "Dep - Arr Time:";
+            lblTime.Location = new Point(startX, currentY);
+            lblTime.AutoSize = true;
+
+            dtTimeDeparture.Location = new Point(startX + labelWidth, currentY - 3);
+            dtTimeDeparture.Size = new Size(110, 25);
+            dtTimeDeparture.Format = DateTimePickerFormat.Time;
+            dtTimeDeparture.ShowUpDown = true;
+
+            dtTimeArrival.Location = new Point(startX + labelWidth + 120, currentY - 3);
+            dtTimeArrival.Size = new Size(110, 25);
+            dtTimeArrival.Format = DateTimePickerFormat.Time;
+            dtTimeArrival.ShowUpDown = true;
+
+            currentY += spacingY;
+
 
             // Price
-            lblPrice.Text = "Giá vé:";
+            lblPrice.Text = "Base Price:";
             lblPrice.Location = new Point(startX, currentY);
+            lblPrice.AutoSize = true;
+
             numPrice.Location = new Point(startX + labelWidth, currentY - 3);
+            numPrice.Size = new Size(controlWidth, 25);
             numPrice.Maximum = 100000000;
             numPrice.DecimalPlaces = 0;
-            numPrice.Width = textboxWidth;
 
             currentY += spacingY;
 
             // Status
-            lblStatus.Text = "Trạng thái:";
+            lblStatus.Text = "Status:";
             lblStatus.Location = new Point(startX, currentY);
+            lblStatus.AutoSize = true;
+
             cbStatus.Location = new Point(startX + labelWidth, currentY - 3);
-            cbStatus.Width = textboxWidth;
+            cbStatus.Size = new Size(controlWidth, 25);
             cbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbStatus.Items.AddRange(new string[]
-            {
-        "Đang bay",
-        "Hoãn",
-        "Hủy",
-        "Đang chuẩn bị"
-            });
+            cbStatus.Items.AddRange(new string[] { "Available", "Full", "Delayed", "Cancelled", "Completed" });
+            cbStatus.SelectedIndex = 0;
 
-            currentY += spacingY + 10;
+            currentY += spacingY + 20;
 
-
-            // ===== Buttons =====
-            btnSave.Text = "Lưu";
-            btnSave.BackColor = Color.LightGreen;
-            btnSave.Location = new Point(startX, currentY);
-            btnSave.Width = 120;
+            // Buttons
+            btnSave.Text = "Save Flight";
+            btnSave.Location = new Point(startX + 60, currentY);
+            btnSave.Size = new Size(140, 40);
+            btnSave.BackColor = Color.FromArgb(76, 175, 80); // Should use UIConstants
+            btnSave.ForeColor = Color.White;
+            btnSave.FlatStyle = FlatStyle.Flat;
             btnSave.Click += btnSave_Click;
 
-            btnCancel.Text = "Hủy";
-            btnCancel.BackColor = Color.LightCoral;
-            btnCancel.Location = new Point(startX + 140, currentY);
-            btnCancel.Width = 120;
+            btnCancel.Text = "Cancel";
+            btnCancel.Location = new Point(startX + 220, currentY);
+            btnCancel.Size = new Size(140, 40);
+            btnCancel.BackColor = Color.FromArgb(244, 67, 54);
+            btnCancel.ForeColor = Color.White;
+            btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Click += btnCancel_Click;
 
+            // Add Controls
+            Controls.AddRange(new Control[] {
+                lblFlightCode, txtFlightCode,
+                lblAirline, cboAirline,
+                lblDepartureAirport, cboDeparture,
+                lblArrivalAirport, cboArrival,
+                lblDate, dtDate,
+                lblTime, dtTimeDeparture, dtTimeArrival,
+                lblAircraft, cboAircraft,
+                lblPrice, numPrice,
+                lblStatus, cbStatus,
+                btnSave, btnCancel
+            });
 
-            // ==== Add Controls ====
-            Controls.Add(lblFlightCode);
-            Controls.Add(lblAirline);
-            Controls.Add(lblRoute);
-            Controls.Add(lblDeparture);
-            Controls.Add(lblAircraft);
-            Controls.Add(lblPrice);
-            Controls.Add(lblStatus);
-
-            Controls.Add(txtFlightCode);
-            Controls.Add(txtAirline);
-            Controls.Add(txtRoute);
-            Controls.Add(dtDeparture);
-            Controls.Add(txtAircraft);
-            Controls.Add(numPrice);
-            Controls.Add(cbStatus);
-
-            Controls.Add(btnSave);
-            Controls.Add(btnCancel);
-
-
-            // ==== Form ====
-            ClientSize = new Size(430, 430);
+            // Form
+            ClientSize = new Size(460, currentY + 70);
             Name = "AddEditFlightForm";
-            Text = "Thêm/Chỉnh sửa chuyến bay";
+            Text = "Add New Flight";
+            StartPosition = FormStartPosition.CenterScreen;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
 
             ((ISupportInitialize)(numPrice)).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
-    }
 
         #endregion
+    }
 }

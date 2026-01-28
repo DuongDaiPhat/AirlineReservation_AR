@@ -122,7 +122,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnUserProfile.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnUserProfile.Size = new Size(180, 70);
             btnUserProfile.TabIndex = 6;
-            btnUserProfile.Text = "Đăng Xuất";
+            btnUserProfile.Text = "Logout";
             btnUserProfile.Click += btnUserProfile_Click;
             // 
             // label1
@@ -147,7 +147,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // flowLayoutPanelMenu
             // 
-            flowLayoutPanelMenu.BackColor = Color.Black;
+            flowLayoutPanelMenu.BackColor = Color.FromArgb(13, 27, 42);
             flowLayoutPanelMenu.Controls.Add(panel4);
             flowLayoutPanelMenu.Controls.Add(panel3);
             flowLayoutPanelMenu.Controls.Add(panel1);
@@ -174,13 +174,13 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // 
             // btnDashboard
             // 
-            btnDashboard.BackColor = Color.Black;
+            btnDashboard.BackColor = Color.FromArgb(13, 27, 42);
             btnDashboard.CustomizableEdges = customizableEdges5;
             btnDashboard.DisabledState.BorderColor = Color.DarkGray;
             btnDashboard.DisabledState.CustomBorderColor = Color.DarkGray;
             btnDashboard.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnDashboard.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnDashboard.FillColor = Color.FromArgb(0, 102, 203);
+            btnDashboard.FillColor = Color.FromArgb(46, 80, 144);
             btnDashboard.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDashboard.ForeColor = Color.White;
             btnDashboard.Image = Properties.Resources.dashboard;
@@ -212,7 +212,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnQuanLyChuyenBay.DisabledState.CustomBorderColor = Color.DarkGray;
             btnQuanLyChuyenBay.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnQuanLyChuyenBay.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnQuanLyChuyenBay.FillColor = Color.Black;
+            btnQuanLyChuyenBay.FillColor = Color.FromArgb(13, 27, 42);
             btnQuanLyChuyenBay.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnQuanLyChuyenBay.ForeColor = Color.White;
             btnQuanLyChuyenBay.Image = Properties.Resources.take_off;
@@ -224,7 +224,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnQuanLyChuyenBay.ShadowDecoration.CustomizableEdges = customizableEdges8;
             btnQuanLyChuyenBay.Size = new Size(240, 80);
             btnQuanLyChuyenBay.TabIndex = 1;
-            btnQuanLyChuyenBay.Text = "   Quản lý chuyến bay ";
+            btnQuanLyChuyenBay.Text = "   Flight Management";
             btnQuanLyChuyenBay.TextAlign = HorizontalAlignment.Left;
             btnQuanLyChuyenBay.Click += Button_Click;
             // 
@@ -244,7 +244,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnDatVe_thanhToan.DisabledState.CustomBorderColor = Color.DarkGray;
             btnDatVe_thanhToan.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnDatVe_thanhToan.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnDatVe_thanhToan.FillColor = Color.Black;
+            btnDatVe_thanhToan.FillColor = Color.FromArgb(13, 27, 42);
             btnDatVe_thanhToan.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDatVe_thanhToan.ForeColor = Color.White;
             btnDatVe_thanhToan.Image = Properties.Resources.booking;
@@ -256,7 +256,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnDatVe_thanhToan.ShadowDecoration.CustomizableEdges = customizableEdges10;
             btnDatVe_thanhToan.Size = new Size(240, 80);
             btnDatVe_thanhToan.TabIndex = 2;
-            btnDatVe_thanhToan.Text = "   Đặt vé và thanh toán";
+            btnDatVe_thanhToan.Text = "   Booking & Payment";
             btnDatVe_thanhToan.TextAlign = HorizontalAlignment.Left;
             btnDatVe_thanhToan.Click += Button_Click;
             // 
@@ -276,7 +276,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnGiaVe_khuyenMai.DisabledState.CustomBorderColor = Color.DarkGray;
             btnGiaVe_khuyenMai.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnGiaVe_khuyenMai.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnGiaVe_khuyenMai.FillColor = Color.Black;
+            btnGiaVe_khuyenMai.FillColor = Color.FromArgb(13, 27, 42);
             btnGiaVe_khuyenMai.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGiaVe_khuyenMai.ForeColor = Color.White;
             btnGiaVe_khuyenMai.Image = Properties.Resources.selling;
@@ -288,7 +288,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnGiaVe_khuyenMai.ShadowDecoration.CustomizableEdges = customizableEdges12;
             btnGiaVe_khuyenMai.Size = new Size(240, 80);
             btnGiaVe_khuyenMai.TabIndex = 2;
-            btnGiaVe_khuyenMai.Text = "   Gía vé và khuyễn mãi";
+            btnGiaVe_khuyenMai.Text = "   Pricing & Promotions";
             btnGiaVe_khuyenMai.TextAlign = HorizontalAlignment.Left;
             btnGiaVe_khuyenMai.Click += Button_Click;
             // 
@@ -308,7 +308,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnBaoCao_thongKe.DisabledState.CustomBorderColor = Color.DarkGray;
             btnBaoCao_thongKe.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnBaoCao_thongKe.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnBaoCao_thongKe.FillColor = Color.Black;
+            btnBaoCao_thongKe.FillColor = Color.FromArgb(13, 27, 42);
             btnBaoCao_thongKe.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnBaoCao_thongKe.ForeColor = Color.White;
             btnBaoCao_thongKe.Image = Properties.Resources.chart;
@@ -320,7 +320,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnBaoCao_thongKe.ShadowDecoration.CustomizableEdges = customizableEdges14;
             btnBaoCao_thongKe.Size = new Size(240, 80);
             btnBaoCao_thongKe.TabIndex = 2;
-            btnBaoCao_thongKe.Text = "   Báo cáo và thống kê";
+            btnBaoCao_thongKe.Text = "   Reports & Analytics";
             btnBaoCao_thongKe.TextAlign = HorizontalAlignment.Left;
             btnBaoCao_thongKe.Click += Button_Click;
             // 
@@ -340,7 +340,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnKhachHang.DisabledState.CustomBorderColor = Color.DarkGray;
             btnKhachHang.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnKhachHang.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnKhachHang.FillColor = Color.Black;
+            btnKhachHang.FillColor = Color.FromArgb(13, 27, 42);
             btnKhachHang.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnKhachHang.ForeColor = Color.White;
             btnKhachHang.Image = Properties.Resources.team_management;
@@ -352,7 +352,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnKhachHang.ShadowDecoration.CustomizableEdges = customizableEdges16;
             btnKhachHang.Size = new Size(240, 80);
             btnKhachHang.TabIndex = 2;
-            btnKhachHang.Text = "   Khách hàng";
+            btnKhachHang.Text = "   User Management";
             btnKhachHang.TextAlign = HorizontalAlignment.Left;
             btnKhachHang.Click += Button_Click;
             // 
@@ -372,7 +372,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnCaiDat.DisabledState.CustomBorderColor = Color.DarkGray;
             btnCaiDat.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnCaiDat.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnCaiDat.FillColor = Color.Black;
+            btnCaiDat.FillColor = Color.FromArgb(13, 27, 42);
             btnCaiDat.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCaiDat.ForeColor = Color.White;
             btnCaiDat.Image = Properties.Resources.download;
@@ -384,13 +384,13 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             btnCaiDat.ShadowDecoration.CustomizableEdges = customizableEdges18;
             btnCaiDat.Size = new Size(240, 80);
             btnCaiDat.TabIndex = 2;
-            btnCaiDat.Text = "   Cài đặt hệ thống";
+            btnCaiDat.Text = "   System Settings";
             btnCaiDat.TextAlign = HorizontalAlignment.Left;
             btnCaiDat.Click += Button_Click;
             // 
             // panelMain
             // 
-            panelMain.BackColor = Color.FromArgb(255, 192, 192);
+            panelMain.BackColor = Color.FromArgb(248, 249, 250);
             panelMain.Controls.Add(adminDasboardControlSetting);
             panelMain.Controls.Add(adminDasboardControlUsers);
             panelMain.Controls.Add(adminDasboardControlBaoCao_ThongKe);
@@ -408,73 +408,73 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             // adminDasboardControlSetting
             // 
             adminDasboardControlSetting.dashboardImage = Properties.Resources.download;
-            adminDasboardControlSetting.description = "Cấu hình, thanh toán, email/SMS, database, bảo mật";
+            adminDasboardControlSetting.description = "Configuration, Payments, Notifications, Security";
             adminDasboardControlSetting.Location = new Point(750, 356);
             adminDasboardControlSetting.Margin = new Padding(0);
             adminDasboardControlSetting.Name = "adminDasboardControlSetting";
             adminDasboardControlSetting.Size = new Size(260, 200);
             adminDasboardControlSetting.TabIndex = 10;
-            adminDasboardControlSetting.title = "Cài đặt hệ thống";
+            adminDasboardControlSetting.title = "System Settings";
             adminDasboardControlSetting.Click += adminDasboardControlSmall_click;
             // 
             // adminDasboardControlUsers
             // 
             adminDasboardControlUsers.dashboardImage = Properties.Resources.team_management;
-            adminDasboardControlUsers.description = "Quản lý khách hàng, phân quyền, lịch sử hoạt động";
+            adminDasboardControlUsers.description = "Users, Roles & Permissions, Activity History";
             adminDasboardControlUsers.Location = new Point(390, 356);
             adminDasboardControlUsers.Margin = new Padding(0);
             adminDasboardControlUsers.Name = "adminDasboardControlUsers";
             adminDasboardControlUsers.Size = new Size(260, 200);
             adminDasboardControlUsers.TabIndex = 9;
-            adminDasboardControlUsers.title = "Khách hàng";
+            adminDasboardControlUsers.title = "User Management";
             adminDasboardControlUsers.Click += adminDasboardControlSmall_click;
             // 
             // adminDasboardControlBaoCao_ThongKe
             // 
             adminDasboardControlBaoCao_ThongKe.dashboardImage = Properties.Resources.chart;
-            adminDasboardControlBaoCao_ThongKe.description = "Dashboard KPI, doanh thu, chuyến bay, khách hàng";
+            adminDasboardControlBaoCao_ThongKe.description = "KPI Dashboard, Revenue, Flights, Customers";
             adminDasboardControlBaoCao_ThongKe.Location = new Point(30, 356);
             adminDasboardControlBaoCao_ThongKe.Margin = new Padding(0);
             adminDasboardControlBaoCao_ThongKe.Name = "adminDasboardControlBaoCao_ThongKe";
             adminDasboardControlBaoCao_ThongKe.Size = new Size(260, 200);
             adminDasboardControlBaoCao_ThongKe.TabIndex = 4;
-            adminDasboardControlBaoCao_ThongKe.title = "Báo cáo và Thống kê";
+            adminDasboardControlBaoCao_ThongKe.title = "Reports & Analytics";
             adminDasboardControlBaoCao_ThongKe.Click += adminDasboardControlSmall_click;
             // 
             // adminDasboardControlGiaVe_KhuyenMai
             // 
             adminDasboardControlGiaVe_KhuyenMai.dashboardImage = Properties.Resources.selling;
-            adminDasboardControlGiaVe_KhuyenMai.description = "Quản lý giá, mã giảm giá, chương trình khuyến mãi";
+            adminDasboardControlGiaVe_KhuyenMai.description = "Prices, Discount Codes, Promotion Campaigns";
             adminDasboardControlGiaVe_KhuyenMai.Location = new Point(750, 62);
             adminDasboardControlGiaVe_KhuyenMai.Margin = new Padding(0);
             adminDasboardControlGiaVe_KhuyenMai.Name = "adminDasboardControlGiaVe_KhuyenMai";
             adminDasboardControlGiaVe_KhuyenMai.Size = new Size(260, 200);
             adminDasboardControlGiaVe_KhuyenMai.TabIndex = 3;
-            adminDasboardControlGiaVe_KhuyenMai.title = "Giá vé & Khuyến mãi";
+            adminDasboardControlGiaVe_KhuyenMai.title = "Pricing & Promotions";
             adminDasboardControlGiaVe_KhuyenMai.Click += adminDasboardControlSmall_click;
             // 
             // adminDasboardControlDatVe_ThanhToan
             // 
             adminDasboardControlDatVe_ThanhToan.dashboardImage = Properties.Resources.booking;
-            adminDasboardControlDatVe_ThanhToan.description = "Booking, giao dịch, hoàn tiền, đặt vé thủ công";
+            adminDasboardControlDatVe_ThanhToan.description = "Bookings, Transactions, Refunds, Manual Booking";
             adminDasboardControlDatVe_ThanhToan.Location = new Point(390, 62);
             adminDasboardControlDatVe_ThanhToan.Margin = new Padding(0);
             adminDasboardControlDatVe_ThanhToan.Name = "adminDasboardControlDatVe_ThanhToan";
             adminDasboardControlDatVe_ThanhToan.Size = new Size(260, 200);
             adminDasboardControlDatVe_ThanhToan.TabIndex = 2;
-            adminDasboardControlDatVe_ThanhToan.title = "Đặt vé và thanh toán";
+            adminDasboardControlDatVe_ThanhToan.title = "Booking & Payment";
             adminDasboardControlDatVe_ThanhToan.Click += adminDasboardControlSmall_click;
             // 
             // adminDasboardControlQuanLyChuyenBay
             // 
             adminDasboardControlQuanLyChuyenBay.dashboardImage = Properties.Resources.take_off;
-            adminDasboardControlQuanLyChuyenBay.description = "Chuyến bay, tuyến bay, sân bay, máy bay (All-in-one)";
+            adminDasboardControlQuanLyChuyenBay.description = "Flights, Routes, Airports, Aircraft (All-in-one)";
             adminDasboardControlQuanLyChuyenBay.Location = new Point(30, 62);
             adminDasboardControlQuanLyChuyenBay.Margin = new Padding(0);
             adminDasboardControlQuanLyChuyenBay.Name = "adminDasboardControlQuanLyChuyenBay";
             adminDasboardControlQuanLyChuyenBay.Size = new Size(260, 200);
             adminDasboardControlQuanLyChuyenBay.TabIndex = 1;
-            adminDasboardControlQuanLyChuyenBay.title = "Quản lý chuyến bay";
+            adminDasboardControlQuanLyChuyenBay.title = "Flight Management";
             adminDasboardControlQuanLyChuyenBay.Click += adminDasboardControlSmall_click;
             adminDasboardControlQuanLyChuyenBay.DoubleClick += adminDasboardControlSmall_click;
             // 
@@ -497,7 +497,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             adminDashboardControlHight1.Name = "adminDashboardControlHight1";
             adminDashboardControlHight1.Size = new Size(1040, 80);
             adminDashboardControlHight1.TabIndex = 0;
-            adminDashboardControlHight1.title = "Dashboard Tổng quan";
+            adminDashboardControlHight1.title = "Admin Dashboard";
             // 
             // MenuTime
             // 

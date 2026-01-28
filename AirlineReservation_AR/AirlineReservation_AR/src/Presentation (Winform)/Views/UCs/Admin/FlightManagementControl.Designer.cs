@@ -42,10 +42,12 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panelFilters = new Panel();
             btnAddFlight = new Guna.UI2.WinForms.Guna2Button();
             cboDestination = new Guna.UI2.WinForms.Guna2ComboBox();
             btnSearch = new Guna.UI2.WinForms.Guna2Button();
+            btnRefresh = new Guna.UI2.WinForms.Guna2Button();
             cboStatus = new Guna.UI2.WinForms.Guna2ComboBox();
             guna2DateTimePicker1 = new Guna.UI2.WinForms.Guna2DateTimePicker();
             cboAirline = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -81,6 +83,7 @@
             panelFilters.Controls.Add(btnAddFlight);
             panelFilters.Controls.Add(cboDestination);
             panelFilters.Controls.Add(btnSearch);
+            panelFilters.Controls.Add(btnRefresh);
             panelFilters.Controls.Add(cboStatus);
             panelFilters.Controls.Add(guna2DateTimePicker1);
             panelFilters.Controls.Add(cboAirline);
@@ -94,7 +97,7 @@
             panelFilters.Location = new Point(15, 15);
             panelFilters.Margin = new Padding(0);
             panelFilters.Name = "panelFilters";
-            panelFilters.Size = new Size(1010, 175);
+            panelFilters.Size = new Size(1010, 161);
             panelFilters.TabIndex = 0;
             // 
             // btnAddFlight
@@ -107,13 +110,13 @@
             btnAddFlight.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             btnAddFlight.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAddFlight.ForeColor = Color.White;
-            btnAddFlight.Location = new Point(770, 110);
+            btnAddFlight.Location = new Point(805, 111);
             btnAddFlight.Margin = new Padding(0);
             btnAddFlight.Name = "btnAddFlight";
             btnAddFlight.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            btnAddFlight.Size = new Size(205, 40);
+            btnAddFlight.Size = new Size(125, 40);
             btnAddFlight.TabIndex = 11;
-            btnAddFlight.Text = "+ Thêm chuyến bay mới";
+            btnAddFlight.Text = "+ New Flight";
             btnAddFlight.Click += btnAddFlight_Click;
             // 
             // cboDestination
@@ -151,14 +154,30 @@
             btnSearch.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnSearch.Size = new Size(120, 35);
             btnSearch.TabIndex = 9;
-            btnSearch.Text = "🔍 Tìm kiếm";
+            btnSearch.Text = "🔍 Search";
             btnSearch.Click += BtnSearch_Click;
+            // 
+            // btnRefresh
+            // 
+            btnRefresh.BorderRadius = 8;
+            btnRefresh.CustomizableEdges = customizableEdges1;
+            btnRefresh.FillColor = Color.Gray;
+            btnRefresh.Font = new Font("Segoe UI", 9F);
+            btnRefresh.ForeColor = Color.White;
+            btnRefresh.Location = new Point(940, 40);
+            btnRefresh.Margin = new Padding(0);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.ShadowDecoration.CustomizableEdges = customizableEdges7;
+            btnRefresh.Size = new Size(80, 35);
+            btnRefresh.TabIndex = 12;
+            btnRefresh.Text = "Refresh";
+            btnRefresh.Click += BtnRefresh_Click;
             // 
             // cboStatus
             // 
             cboStatus.BackColor = Color.Transparent;
             cboStatus.BorderRadius = 8;
-            cboStatus.CustomizableEdges = customizableEdges7;
+            cboStatus.CustomizableEdges = customizableEdges8;
             cboStatus.DrawMode = DrawMode.OwnerDrawFixed;
             cboStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cboStatus.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -169,7 +188,7 @@
             cboStatus.Location = new Point(640, 40);
             cboStatus.Margin = new Padding(0);
             cboStatus.Name = "cboStatus";
-            cboStatus.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            cboStatus.ShadowDecoration.CustomizableEdges = customizableEdges9;
             cboStatus.Size = new Size(150, 36);
             cboStatus.TabIndex = 8;
             // 
@@ -177,7 +196,7 @@
             // 
             guna2DateTimePicker1.BorderRadius = 8;
             guna2DateTimePicker1.Checked = true;
-            guna2DateTimePicker1.CustomizableEdges = customizableEdges9;
+            guna2DateTimePicker1.CustomizableEdges = customizableEdges10;
             guna2DateTimePicker1.FillColor = Color.White;
             guna2DateTimePicker1.Font = new Font("Segoe UI", 9F);
             guna2DateTimePicker1.Format = DateTimePickerFormat.Short;
@@ -186,7 +205,7 @@
             guna2DateTimePicker1.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
             guna2DateTimePicker1.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             guna2DateTimePicker1.Name = "guna2DateTimePicker1";
-            guna2DateTimePicker1.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            guna2DateTimePicker1.ShadowDecoration.CustomizableEdges = customizableEdges11;
             guna2DateTimePicker1.Size = new Size(180, 30);
             guna2DateTimePicker1.TabIndex = 7;
             guna2DateTimePicker1.Value = new DateTime(2025, 11, 20, 13, 12, 27, 30);
@@ -195,7 +214,7 @@
             // 
             cboAirline.BackColor = Color.Transparent;
             cboAirline.BorderRadius = 8;
-            cboAirline.CustomizableEdges = customizableEdges11;
+            cboAirline.CustomizableEdges = customizableEdges12;
             cboAirline.DrawMode = DrawMode.OwnerDrawFixed;
             cboAirline.DropDownStyle = ComboBoxStyle.DropDownList;
             cboAirline.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -206,7 +225,7 @@
             cboAirline.Location = new Point(240, 42);
             cboAirline.Margin = new Padding(0);
             cboAirline.Name = "cboAirline";
-            cboAirline.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            cboAirline.ShadowDecoration.CustomizableEdges = customizableEdges13;
             cboAirline.Size = new Size(180, 36);
             cboAirline.TabIndex = 6;
             // 
@@ -216,9 +235,9 @@
             lblDestination.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblDestination.Location = new Point(20, 85);
             lblDestination.Name = "lblDestination";
-            lblDestination.Size = new Size(74, 15);
+            lblDestination.Size = new Size(87, 15);
             lblDestination.TabIndex = 5;
-            lblDestination.Text = "Sân bay đến";
+            lblDestination.Text = "Arrival Airport";
             // 
             // lblStatus
             // 
@@ -227,9 +246,9 @@
             lblStatus.Location = new Point(640, 15);
             lblStatus.Margin = new Padding(0);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(62, 15);
+            lblStatus.Size = new Size(42, 15);
             lblStatus.TabIndex = 4;
-            lblStatus.Text = "Trạng thái";
+            lblStatus.Text = "Status";
             // 
             // lblFlightDate
             // 
@@ -238,9 +257,9 @@
             lblFlightDate.Location = new Point(440, 15);
             lblFlightDate.Margin = new Padding(0);
             lblFlightDate.Name = "lblFlightDate";
-            lblFlightDate.Size = new Size(57, 15);
+            lblFlightDate.Size = new Size(34, 15);
             lblFlightDate.TabIndex = 3;
-            lblFlightDate.Text = "Ngày bay";
+            lblFlightDate.Text = "Date";
             // 
             // lblAirline
             // 
@@ -248,14 +267,14 @@
             lblAirline.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblAirline.Location = new Point(240, 15);
             lblAirline.Name = "lblAirline";
-            lblAirline.Size = new Size(104, 15);
+            lblAirline.Size = new Size(43, 15);
             lblAirline.TabIndex = 2;
-            lblAirline.Text = "Hãng hàng không";
+            lblAirline.Text = "Airline";
             // 
             // txtFlightNo
             // 
             txtFlightNo.BorderRadius = 8;
-            txtFlightNo.CustomizableEdges = customizableEdges13;
+            txtFlightNo.CustomizableEdges = customizableEdges14;
             txtFlightNo.DefaultText = "";
             txtFlightNo.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtFlightNo.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -267,9 +286,9 @@
             txtFlightNo.Location = new Point(20, 44);
             txtFlightNo.Margin = new Padding(0);
             txtFlightNo.Name = "txtFlightNo";
-            txtFlightNo.PlaceholderText = "VD: VN210";
+            txtFlightNo.PlaceholderText = "Eg: VN210";
             txtFlightNo.SelectedText = "";
-            txtFlightNo.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            txtFlightNo.ShadowDecoration.CustomizableEdges = customizableEdges15;
             txtFlightNo.Size = new Size(200, 30);
             txtFlightNo.TabIndex = 1;
             txtFlightNo.KeyDown += TxtFlightNo_KeyDown;
@@ -281,9 +300,9 @@
             lblFlightNo.Location = new Point(20, 15);
             lblFlightNo.Margin = new Padding(0);
             lblFlightNo.Name = "lblFlightNo";
-            lblFlightNo.Size = new Size(113, 15);
+            lblFlightNo.Size = new Size(57, 15);
             lblFlightNo.TabIndex = 0;
-            lblFlightNo.Text = "Số hiệu chuyến bay";
+            lblFlightNo.Text = "Flight No";
             // 
             // dgvFlights
             // 
@@ -299,100 +318,112 @@
             dgvFlights.Margin = new Padding(0);
             dgvFlights.MultiSelect = false;
             dgvFlights.Name = "dgvFlights";
+            dgvFlights.ReadOnly = true;
             dgvFlights.RowHeadersVisible = false;
             dgvFlights.RowHeadersWidth = 51;
             dgvFlights.RowTemplate.Height = 50;
             dgvFlights.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvFlights.Size = new Size(1010, 445);
+            dgvFlights.Size = new Size(1010, 459);
             dgvFlights.TabIndex = 1;
             dgvFlights.CellClick += DgvFlights_CellClick;
             // 
             // colFlightCode
             // 
             colFlightCode.FillWeight = 176.981171F;
-            colFlightCode.HeaderText = "MÃ CHUYẾN BAY";
+            colFlightCode.HeaderText = "FLIGHT CODE";
             colFlightCode.MinimumWidth = 6;
             colFlightCode.Name = "colFlightCode";
+            colFlightCode.ReadOnly = true;
             colFlightCode.Width = 120;
             // 
             // colAirline
             // 
             colAirline.FillWeight = 820.8122F;
-            colAirline.HeaderText = "HÃNG";
+            colAirline.HeaderText = "AIRLINE";
             colAirline.MinimumWidth = 6;
             colAirline.Name = "colAirline";
+            colAirline.ReadOnly = true;
             colAirline.Width = 150;
             // 
             // colRoute
             // 
             colRoute.FillWeight = 11.3562918F;
-            colRoute.HeaderText = "TUYẾN BAY";
+            colRoute.HeaderText = "ROUTE";
             colRoute.MinimumWidth = 6;
             colRoute.Name = "colRoute";
+            colRoute.ReadOnly = true;
             colRoute.Width = 120;
             // 
             // colDate
             // 
             colDate.FillWeight = 11.3562918F;
-            colDate.HeaderText = "NGÀY BAY";
+            colDate.HeaderText = "DATE";
             colDate.MinimumWidth = 6;
             colDate.Name = "colDate";
+            colDate.ReadOnly = true;
             colDate.Width = 120;
             // 
             // colDuration
             // 
             colDuration.FillWeight = 11.3562918F;
-            colDuration.HeaderText = "THỜI GIAN BAY";
+            colDuration.HeaderText = "DURATION";
             colDuration.MinimumWidth = 6;
             colDuration.Name = "colDuration";
+            colDuration.ReadOnly = true;
             colDuration.Width = 125;
             // 
             // colDeparture
             // 
             colDeparture.FillWeight = 11.3562918F;
-            colDeparture.HeaderText = "GIỜ KHỞI HÀNH";
+            colDeparture.HeaderText = "DEPARTURE";
             colDeparture.MinimumWidth = 6;
             colDeparture.Name = "colDeparture";
+            colDeparture.ReadOnly = true;
             colDeparture.Width = 125;
             // 
             // colAircraft
             // 
             colAircraft.FillWeight = 11.3562918F;
-            colAircraft.HeaderText = "MÁY BAY";
+            colAircraft.HeaderText = "AIRCRAFT";
             colAircraft.MinimumWidth = 6;
             colAircraft.Name = "colAircraft";
+            colAircraft.ReadOnly = true;
             colAircraft.Width = 125;
             // 
             // colPrice
             // 
             colPrice.FillWeight = 11.3562918F;
-            colPrice.HeaderText = "GIÁ CƠ BẢN";
+            colPrice.HeaderText = "BASE PRICE";
             colPrice.MinimumWidth = 6;
             colPrice.Name = "colPrice";
+            colPrice.ReadOnly = true;
             colPrice.Width = 120;
             // 
             // colSeats
             // 
             colSeats.FillWeight = 11.3562918F;
-            colSeats.HeaderText = "GHẾ TRỐNG";
+            colSeats.HeaderText = "AVAIL. SEATS";
             colSeats.MinimumWidth = 6;
             colSeats.Name = "colSeats";
+            colSeats.ReadOnly = true;
             colSeats.Width = 125;
             // 
             // colStatus
             // 
             colStatus.FillWeight = 11.3562918F;
-            colStatus.HeaderText = "TRẠNG THÁI";
+            colStatus.HeaderText = "STATUS";
             colStatus.MinimumWidth = 6;
             colStatus.Name = "colStatus";
+            colStatus.ReadOnly = true;
             colStatus.Width = 125;
             // 
             // colActions
             // 
             colActions.FillWeight = 11.3562918F;
-            colActions.HeaderText = "THAO TÁC";
+            colActions.HeaderText = "ACTIONS";
             colActions.MinimumWidth = 6;
             colActions.Name = "colActions";
+            colActions.ReadOnly = true;
             colActions.Width = 180;
             // 
             // panel1
@@ -426,10 +457,10 @@
             // 
             panel2.Controls.Add(dgvFlights);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(15, 190);
+            panel2.Location = new Point(15, 176);
             panel2.Margin = new Padding(0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1010, 445);
+            panel2.Size = new Size(1010, 459);
             panel2.TabIndex = 3;
             // 
             // FlightManagementControl
@@ -479,6 +510,7 @@
         private DataGridViewTextBoxColumn colStatus;
         private DataGridViewTextBoxColumn colActions;
         private Guna.UI2.WinForms.Guna2Button btnAddFlight;
+        private Guna.UI2.WinForms.Guna2Button btnRefresh;
         private Panel panel1;
         private PaginationControl paginationControl1;
         private Panel panel2;
