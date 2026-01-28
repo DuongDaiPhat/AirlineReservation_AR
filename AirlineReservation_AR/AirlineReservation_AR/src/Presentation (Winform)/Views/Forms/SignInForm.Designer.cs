@@ -175,7 +175,6 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             linkLabel1.TabIndex = 20;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "Forgot password?";
-            linkLabel1.Visible = false;
             linkLabel1.Click += ForgotPS_Click;
             // 
             // passwordTB

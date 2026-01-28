@@ -5,6 +5,7 @@ using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Staff;
+using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User;
 using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         private readonly PasswordHasher hasher = new PasswordHasher();
         private readonly AuthenticationController _controller;
 
-        public SignInForm( )//AirlineReservationDbContext db)
+        public SignInForm()//AirlineReservationDbContext db)
         {
 
             InitializeComponent();
@@ -40,7 +41,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         public void SignInForm_Load(object sender, EventArgs e)
         {
             passwordTB.UseSystemPasswordChar = true; // mặc định che
-            showPassword.Image = Resources.view; // mặc định eye open
+            showPassword.Image = Resources.hide; // mặc định eye open
         }
 
         private void SignUp_Click(object sender, EventArgs e)
@@ -138,9 +139,9 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
 
         private void ForgotPS_Click(object sender, EventArgs e)
         {
-            ForgotPassword forgotPassword = new ForgotPassword();
-            forgotPassword.Show();
-            this.Hide();
+            var ForgotPasswordForm = new ForgotPassword();
+            ForgotPasswordForm.ShowDialog();
+       
         }
 
         private void showPassword_Click(object sender, EventArgs e)
@@ -149,14 +150,18 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             {
                 // Hiện mật khẩu
                 passwordTB.UseSystemPasswordChar = false;
-                showPassword.Image = Resources.hide;
+                showPassword.Image = Resources.view;
+
             }
             else
             {
                 // Ẩn mật khẩu
                 passwordTB.UseSystemPasswordChar = true;
-                showPassword.Image = Resources.view;
+                showPassword.Image = Resources.hide;
+
             }
         }
+
+
     }
 }
