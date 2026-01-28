@@ -129,8 +129,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 {
                     if (!pf.ValidatePassenger())
                     {
-                        MessageBox.Show("Vui lòng điền đầy đủ thông tin hành khách!",
-                            "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        AnnouncementForm form = new AnnouncementForm();
+                        form.SetAnnouncement("Invalid Input", "Please fill in passengers information", false, null);
+                        form.Show();
+                        form.BringToFront();
                         return null;
                     }
 

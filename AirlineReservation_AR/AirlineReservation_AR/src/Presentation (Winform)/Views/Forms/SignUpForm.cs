@@ -57,6 +57,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
                 announcementForm1.SetAnnouncement("Registration failed", $"Please fill in all information", false, null);
                 announcementForm1.Show();
+                announcementForm1.BringToFront();
+
                 return;
             }
             if (!validation.IsValidGoogleEmail(emailTB.Text)) return;
@@ -67,6 +69,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
                 announcementForm1.SetAnnouncement("Registration failed", $"Passwords do not match", false, null);
                 announcementForm1.Show();
+                announcementForm1.BringToFront();
+
                 return;
             }
 
@@ -79,11 +83,10 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
 
             if (user == null)
             {
-                MessageBox.Show("Registration failed! Please try again.",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
                 announcementForm1.SetAnnouncement("Registration failed", $"Phone number, Email or username has already been used", false, null);
                 announcementForm1.Show();
+                announcementForm1.BringToFront();
                 return;
             }
 
@@ -94,11 +97,15 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
                 announcementForm1.SetAnnouncement("Registration failed", $"Reason: {addRole.Message}", false, null);
                 announcementForm1.Show();
+                announcementForm1.BringToFront();
+
             }
 
             AnnouncementForm announcementForm = new AnnouncementForm();
             announcementForm.SetAnnouncement("Registration successful", "Please login to continue", true, null);
             announcementForm.Show();
+            announcementForm.BringToFront();
+
 
             //Điều hướng sang SignIn
             SignInForm signin = new SignInForm();

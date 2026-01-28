@@ -33,10 +33,10 @@ namespace AirlineReservation_AR.src.Application.Services
             // Check email đã tồn tại chưa
             var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (existingUser != null)
-                throw new Exception("Email đã tồn tại.");
+                throw new Exception("Email used");
             if (await _db.Users.AnyAsync(u => u.Phone == phone))
             {
-                throw new Exception("Số điện thoại đã tồn tại");
+                throw new Exception("Phone number used");
             }
             var hashed = _passwordHasher.HashPassword(password);
 

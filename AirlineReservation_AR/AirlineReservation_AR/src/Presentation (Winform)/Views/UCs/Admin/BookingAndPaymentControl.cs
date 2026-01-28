@@ -9,7 +9,8 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Data.SqlClient; // Thay vì System.Data.SqlClient
+using Microsoft.Data.SqlClient;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common; // Thay vì System.Data.SqlClient
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 {
@@ -274,6 +275,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
                     MessageBox.Show($"✓ Đã tải {bookings.Count} booking thành công!",
                         "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    AnnouncementForm form = new AnnouncementForm();
+                    form.SetAnnouncement("Success", $"✓ {bookings.Count} booking loaded succesfully!", true, null);
+                    form.Show();
+                    form.BringToFront();
                 }
                 else
                 {
@@ -281,8 +286,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                     filteredBookings = new List<BookingDtoAdmin>();
                     RefreshDataGridView();
 
-                    MessageBox.Show("Không có dữ liệu booking nào!",
-                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    AnnouncementForm form = new AnnouncementForm();
+                    form.SetAnnouncement("Announcement", $"No booking data", false, null);
+                    form.Show();
+                    form.BringToFront();
                 }
             }
             catch (TimeoutException)
@@ -575,6 +582,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 if (booking == null)
                 {
                     MessageBox.Show("Không tìm thấy đặt chỗ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    AnnouncementForm form = new AnnouncementForm();
+                    form.SetAnnouncement("Error", "No booking data", false, null);
+                    form.Show();
+                    form.BringToFront();
                     return;
                 }
 

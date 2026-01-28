@@ -120,7 +120,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                 AnnouncementForm form = new AnnouncementForm();
                 form.SetAnnouncement("Lỗi lưu Database - Audit Log", errorMsg, false, null);
                 form.Show();
-                form.Focus();
+                form.BringToFront();
 
                 Console.WriteLine($"DbUpdateException: {errorMsg}");
             }
@@ -134,7 +134,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                 AnnouncementForm form = new AnnouncementForm();
                 form.SetAnnouncement("Lỗi hệ thống - Audit Log", errorMsg, false, null);
                 form.Show();
-                form.Focus();
+                form.BringToFront();
 
                 Console.WriteLine($"Exception: {errorMsg}");
             }
