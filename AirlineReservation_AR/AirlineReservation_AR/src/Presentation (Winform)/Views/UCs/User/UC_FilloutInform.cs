@@ -194,8 +194,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 if (contact == null || !contact.ValidateContact())
                 {
                         AnnouncementForm announcementForm = new AnnouncementForm();
-                        announcementForm.SetAnnouncement("Vui long kiểm tra lại thông tin liên hệ", "Thông tin liên hệ chưa hợp lệ" , false, null);
+                        announcementForm.SetAnnouncement("Please check contact information again", "Contact information is invalid" , false, null);
                         announcementForm.Show();
+                        announcementForm.BringToFront();
                     return;
                 }
 
@@ -225,15 +226,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             catch (BusinessException ex)
             {
                 AnnouncementForm announcementForm = new AnnouncementForm();
-                announcementForm.SetAnnouncement("Lỗi nghiệp vụ", ex.Message, false, null);
+                announcementForm.SetAnnouncement("Business Error", ex.Message, false, null);
                 announcementForm.Show();
+                announcementForm.BringToFront();
             }
             catch (Exception ex)
             {
                 // TODO: log ex (file / db / serilog)
                 AnnouncementForm announcementForm = new AnnouncementForm();
-                announcementForm.SetAnnouncement("Hệ thống gặp sự cố, vui lòng thử lại sau", "Lỗi hệ thống:" + ex.Message , false, null);
+                announcementForm.SetAnnouncement("System error, please try again later", "System Error: " + ex.Message , false, null);
                 announcementForm.Show();
+                announcementForm.BringToFront();
 
             }
             finally

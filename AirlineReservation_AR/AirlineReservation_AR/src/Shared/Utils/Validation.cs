@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,70 +10,85 @@ namespace AirlineReservation_AR.src.AirlineReservation.Shared.Utils
 {
     internal class Validation
     {
-        // Kiểm tra input chỉ chứa số nguyên không âm
+        // Check input contains only non-negative integers
         public bool IsNonNegativeInteger(string input)
         {
             if (!int.TryParse(input, out int result) || result < 0)
             {
-                MessageBox.Show("Vui lòng nhập số nguyên không âm.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                AnnouncementForm form = new AnnouncementForm();
+                form.SetAnnouncement("Input Error", "Please enter a non-negative integer", false, null);
+                form.Show();
+                form.BringToFront();
                 return false;
             }
             return true;
         }
 
-        // Kiểm tra mật khẩu theo quy tắc: 10-20 ký tự, ít nhất 1 chữ hoa, 1 số, 1 ký tự đặc biệt
+        // Check password according to rules: 10-20 characters, at least 1 uppercase, 1 number, 1 special character
         public bool IsValidPassword(string password)
         {
             if (string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Mật khẩu không được để trống.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm form = new AnnouncementForm();
+                form.SetAnnouncement("Input Error", "Password cannot be empty.", false, null);
+                form.Show();
+                form.BringToFront();
                 return false;
             }
 
             string pattern = @"^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{10,20}$";
             if (!Regex.IsMatch(password, pattern))
             {
-                MessageBox.Show("Mật khẩu phải 10–20 ký tự, có ít nhất 1 chữ hoa, 1 số, 1 ký tự đặc biệt.",
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm form = new AnnouncementForm();
+                form.SetAnnouncement("Invalid password format", "Requirements: 10-20 characters, 1 special character, 1 uppercase letter and 1 number", false, null);
+                form.Show();
+                form.BringToFront();
                 return false;
             }
 
             return true;
         }
 
-        // Kiểm tra số điện thoại Việt Nam: 10 số bắt đầu bằng 0 hoặc +84
+        // Check Vietnam phone number: 10 digits starting with 0 or +84
         public bool IsValidPhoneNumber(string phone)
         {
             string pattern = @"^(0\d{9}|\+84\d{9})$";
             if (!Regex.IsMatch(phone ?? "", pattern))
             {
-                MessageBox.Show("Số điện thoại phải 10 số bắt đầu bằng 0 hoặc dạng +84xxxxxxxxx.",
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm form = new AnnouncementForm();
+                form.SetAnnouncement("Input Error", "Invalid phone number", false, null);
+                form.Show();
+                form.BringToFront();
                 return false;
             }
             return true;
         }
 
-        // Kiểm tra ngày sinh phải trước ngày hiện tại
+        // Check date of birth must be before today
         public bool IsValidBirthDate(DateOnly dob)
         {
             DateOnly today = DateOnly.FromDateTime(DateTime.Now);
             if (dob >= today)
             {
-                MessageBox.Show("Ngày sinh phải trước ngày hiện tại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm form = new AnnouncementForm();
+                form.SetAnnouncement("Input Error", "Invalid date of birth", false, null);
+                form.Show();
+                form.BringToFront();
                 return false;
             }
             return true;
         }
 
-        // Kiểm tra email: phải đúng định dạng Gmail (đuôi @gmail.com).
+        // Check email: must be correct Gmail format (ending @gmail.com).
         public bool IsValidGoogleEmail(string email)
         {
             string pattern = @"^[a-zA-Z0-9._%+-]+@gmail\.com$";
             if (!Regex.IsMatch(email ?? "", pattern, RegexOptions.IgnoreCase))
             {
-                MessageBox.Show("Email phải đúng định dạng và dùng @gmail.com.",
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm form = new AnnouncementForm();
+                form.SetAnnouncement("Input Error", "Email must be in correct format", false, null);
+                form.Show();
+                form.BringToFront();
                 return false;
             }
             return true;

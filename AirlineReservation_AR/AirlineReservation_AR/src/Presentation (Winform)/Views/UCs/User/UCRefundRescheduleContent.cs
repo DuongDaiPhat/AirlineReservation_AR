@@ -53,7 +53,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             if (_ticket == null || _booking == null)
             { 
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đổi lịch không thành công", "Không có dữ liệu vé", false, null);
+                announcementForm1.SetAnnouncement("Reschedule failed", "No ticket data", false, null);
                 announcementForm1.Show();
                 return;
             }
@@ -64,12 +64,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             if (!eligibility.CanReschedule)
             {
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Hoàn vé không thành công", "Vé không hoàn được", false, null);
+                announcementForm1.SetAnnouncement("Refund failed", "Ticket cannot be refunded", false, null);
                 announcementForm1.Show();
                 return;
             }
 
-            // 2. Mở form reschedule
+            // 2. Open reschedule form
             using (var frm = new FrmRescheduleSelectDate(_ticket, _booking))
             {
                 frm.ShowDialog();
@@ -77,9 +77,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 if (frm.RescheduleSucceeded)
                 {
                     AnnouncementForm announcementForm1 = new AnnouncementForm();
-                    announcementForm1.SetAnnouncement("Đổi lịch thành công", "Vé của bạn đã được đổi lịch", true, null);
+                    announcementForm1.SetAnnouncement("Reschedule successful", "Your ticket has been rescheduled", true, null);
                     announcementForm1.Show();
-                    // Gọi method reload dữ liệu ngoài UCPaidTickets nếu bạn có
+                    // Call method to reload data outside UCPaidTickets if you have
                     OnRescheduleSuccess?.Invoke();
                 }
             }

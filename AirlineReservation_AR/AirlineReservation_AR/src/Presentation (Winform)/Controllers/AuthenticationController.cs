@@ -36,8 +36,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
             catch(Exception ex)
             {
                 AnnouncementForm form = new AnnouncementForm();
-                form.SetAnnouncement("Lỗi đăng ký", ex.Message, false, null);
+                form.SetAnnouncement("Register Error", ex.Message, false, null);
                 form.Show();
+                form.BringToFront();
                 return null;
             }
         }

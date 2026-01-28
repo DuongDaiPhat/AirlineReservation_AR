@@ -115,14 +115,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
                     ValidTo = dtpValidTo.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59)
                 };
 
-                // Gọi API
+                // Call API
                 var response = await DIContainer.PromotionControllerAdmin.CreatePromotion(createDto);
 
                 if (response.Success)
                 {
                     MessageBox.Show(
-                        $"✅ {response.Message}\n\nMã: {createDto.PromoCode}\nTên: {createDto.PromoName}",
-                        "Thành công",
+                        $"✅ {response.Message}\n\nCode: {createDto.PromoCode}\nName: {createDto.PromoName}",
+                        "Success",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
 
@@ -133,7 +133,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
                 {
                     MessageBox.Show(
                         $"❌ {response.Message}",
-                        "Lỗi",
+                        "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
@@ -141,8 +141,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    $"❌ Lỗi khi tạo khuyến mãi:\n{ex.Message}",
-                    "Lỗi",
+                    $"❌ Error creating promotion:\n{ex.Message}",
+                    "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -150,7 +150,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
             {
                 btnSave.Enabled = true;
                 btnCancel.Enabled = true;
-                btnSave.Text = "💾 Tạo Khuyến Mãi";
+                btnSave.Text = "💾 Create Promotion";
                 Cursor = Cursors.Default;
             }
         }
@@ -160,7 +160,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
             // Promo Code
             if (string.IsNullOrWhiteSpace(txtPromoCode.Text))
             {
-                MessageBox.Show("⚠️ Vui lòng nhập mã khuyến mãi!", "Lỗi",
+                MessageBox.Show("⚠️ Please enter promotional code!", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtPromoCode.Focus();
                 return false;
@@ -168,7 +168,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
 
             if (txtPromoCode.Text.Trim().Length < 4)
             {
-                MessageBox.Show("⚠️ Mã khuyến mãi phải có ít nhất 4 ký tự!", "Lỗi",
+                MessageBox.Show("⚠️ Promotional code must have at least 4 characters!", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtPromoCode.Focus();
                 return false;
@@ -177,7 +177,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
             // Promo Name
             if (string.IsNullOrWhiteSpace(txtPromoName.Text))
             {
-                MessageBox.Show("⚠️ Vui lòng nhập tên khuyến mãi!", "Lỗi",
+                MessageBox.Show("⚠️ Please enter promotion name!", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtPromoName.Focus();
                 return false;
@@ -186,7 +186,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
             // Discount Value
             if (numDiscountValue.Value <= 0)
             {
-                MessageBox.Show("⚠️ Giá trị giảm giá phải lớn hơn 0!", "Lỗi",
+                MessageBox.Show("⚠️ Discount value must be greater than 0!", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 numDiscountValue.Focus();
                 return false;
@@ -196,7 +196,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
             if (cboDiscountType.SelectedItem?.ToString() == "Percent" &&
                 (numDiscountValue.Value < 1 || numDiscountValue.Value > 100))
             {
-                MessageBox.Show("⚠️ Giá trị giảm giá phần trăm phải từ 1-100%!", "Lỗi",
+                MessageBox.Show("⚠️ Percent discount value must be from 1-100%!", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 numDiscountValue.Focus();
                 return false;
@@ -205,7 +205,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
             // Date validation
             if (dtpValidTo.Value <= dtpValidFrom.Value)
             {
-                MessageBox.Show("⚠️ Ngày kết thúc phải sau ngày bắt đầu!", "Lỗi",
+                MessageBox.Show("⚠️ End date must be after start date!", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 dtpValidTo.Focus();
                 return false;
@@ -216,8 +216,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
                 numMaxDiscount.Value <= 0 && numMinAmount.Value > 0)
             {
                 var result = MessageBox.Show(
-                    "⚠️ Bạn chưa đặt giới hạn giảm tối đa cho khuyến mãi phần trăm.\n\nCó thể gây lỗ nếu đơn hàng giá trị cao.\n\nBạn có muốn tiếp tục?",
-                    "Cảnh báo",
+                    "⚠️ You have not set a maximum discount limit for percent promotion.\n\nThis may cause a loss if the order value is high.\n\nDo you want to continue?",
+                    "Warning",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
 

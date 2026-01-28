@@ -101,243 +101,222 @@ PRINT '  ✓ Permissions: ' + CAST(@PermissionCount AS NVARCHAR(10));
 -- STEP 3: INSERT COUNTRIES & CITIES
 -- =============================================
 
-PRINT '';
-PRINT 'STEP 3: Inserting Countries & Cities...';
+/*
+ * SCRIPT SEED DATA - HANOI <-> HO CHI MINH ROUTE ONLY
+ * Target: Dev Environment
+ * Date Range: 22/01/2026 -> 22/02/2026
+ * Routes: HAN -> SGN & SGN -> HAN
+ */
 
-DELETE FROM Cities WHERE CountryCode IN ('VNM', 'THA', 'SGP', 'MYS', 'IDN', 'PHL', 'JPN', 'KHM', 'LAO', 'MMR', 'USA', 'GBR', 'FRA', 'DEU', 'AUS', 'CHN', 'KOR', 'IND');
-DELETE FROM Countries WHERE CountryCode IN ('VNM', 'THA', 'SGP', 'MYS', 'IDN', 'PHL', 'JPN', 'KHM', 'LAO', 'MMR', 'USA', 'GBR', 'FRA', 'DEU', 'AUS', 'CHN', 'KOR', 'IND');
+SET NOCOUNT ON;
+BEGIN TRANSACTION;
 
-INSERT INTO Countries (CountryCode, CountryName, Currency, IsActive) VALUES
-('VNM', 'Vietnam', 'VND', 1), ('THA', 'Thailand', 'THB', 1), ('SGP', 'Singapore', 'SGD', 1),
-('MYS', 'Malaysia', 'MYR', 1), ('IDN', 'Indonesia', 'IDR', 1), ('PHL', 'Philippines', 'PHP', 1),
-('JPN', 'Japan', 'JPY', 1), ('KHM', 'Cambodia', 'KHR', 1), ('LAO', 'Laos', 'LAK', 1),
-('MMR', 'Myanmar', 'MMK', 1), ('USA', 'United States', 'USD', 1), ('GBR', 'United Kingdom', 'GBP', 1),
-('FRA', 'France', 'EUR', 1), ('DEU', 'Germany', 'EUR', 1), ('AUS', 'Australia', 'AUD', 1),
-('CHN', 'China', 'CNY', 1), ('KOR', 'South Korea', 'KRW', 1), ('IND', 'India', 'INR', 1);
+BEGIN TRY
+    -----------------------------------------------------------
+    -- 1. SEED MASTER DATA (Hạ tầng cơ bản)
+    -----------------------------------------------------------
+    PRINT '>>> 1. Seeding Master Data...';
 
-INSERT INTO Cities (CityCode, CityName, CountryCode, IsActive) VALUES
-('SGN', 'Ho Chi Minh City', 'VNM', 1), ('HAN', 'Hanoi', 'VNM', 1), ('DAD', 'Da Nang', 'VNM', 1),
-('CXR', 'Can Tho', 'VNM', 1), ('HUI', 'Hue', 'VNM', 1), ('NHA', 'Nha Trang', 'VNM', 1),
-('HPH', 'Hai Phong', 'VNM', 1), ('VCA', 'Vinh', 'VNM', 1), ('PQC', 'Phu Quoc', 'VNM', 1),
-('DLI', 'Da Lat', 'VNM', 1), ('BKK', 'Bangkok', 'THA', 1), ('SIN', 'Singapore', 'SGP', 1),
-('KUL', 'Kuala Lumpur', 'MYS', 1), ('CGK', 'Jakarta', 'IDN', 1), ('MNL', 'Manila', 'PHL', 1),
-('NRT', 'Tokyo', 'JPN', 1), ('PNH', 'Phnom Penh', 'KHM', 1), ('VTE', 'Vientiane', 'LAO', 1),
-('RGN', 'Yangon', 'MMR', 1), ('LAX', 'Los Angeles', 'USA', 1), ('JFK', 'New York', 'USA', 1),
-('LHR', 'London', 'GBR', 1), ('CDG', 'Paris', 'FRA', 1), ('SYD', 'Sydney', 'AUS', 1), ('PEK', 'Beijing', 'CHN', 1);
+    -- 1.1 Countries
+    IF NOT EXISTS (SELECT 1 FROM Countries WHERE CountryCode = 'VNM')
+        INSERT INTO Countries (CountryCode, CountryName, Currency, IsActive) VALUES ('VNM', N'Vietnam', 'VND', 1);
 
--- =============================================
--- STEP 4: INSERT AIRLINES & AIRPORTS
--- =============================================
+    -- 1.2 Cities (Chỉ cần HAN và SGN là chính, thêm DAD cho đủ bộ)
+    IF NOT EXISTS (SELECT 1 FROM Cities WHERE CityCode = 'HAN')
+        INSERT INTO Cities (CityCode, CityName, CountryCode) VALUES ('HAN', N'Hanoi', 'VNM');
+    IF NOT EXISTS (SELECT 1 FROM Cities WHERE CityCode = 'SGN')
+        INSERT INTO Cities (CityCode, CityName, CountryCode) VALUES ('SGN', N'Ho Chi Minh City', 'VNM');
+    IF NOT EXISTS (SELECT 1 FROM Cities WHERE CityCode = 'DAD')
+        INSERT INTO Cities (CityCode, CityName, CountryCode) VALUES ('DAD', N'Da Nang', 'VNM');
 
-PRINT '';
-PRINT 'STEP 4: Inserting Airlines & Airports...';
+    -- 1.3 Airports (Link to CityCode)
+    IF NOT EXISTS (SELECT 1 FROM Airports WHERE IATACode = 'HAN')
+        INSERT INTO Airports (AirportName, IATACode, CityCode, IsActive) VALUES (N'Noi Bai International Airport', 'HAN', 'HAN', 1);
+    IF NOT EXISTS (SELECT 1 FROM Airports WHERE IATACode = 'SGN')
+        INSERT INTO Airports (AirportName, IATACode, CityCode, IsActive) VALUES (N'Tan Son Nhat International Airport', 'SGN', 'SGN', 1);
+    IF NOT EXISTS (SELECT 1 FROM Airports WHERE IATACode = 'DAD')
+        INSERT INTO Airports (AirportName, IATACode, CityCode, IsActive) VALUES (N'Da Nang International Airport', 'DAD', 'DAD', 1);
 
-DELETE FROM Airports WHERE IATACode IN ('SGN', 'HAN', 'DAD', 'CXR', 'HUI', 'NHA', 'HPH', 'VCA', 'PQC', 'DLI',
-                                         'BKK', 'SIN', 'KUL', 'CGK', 'MNL', 'NRT', 'PNH', 'VTE', 'RGN',
-                                         'LAX', 'JFK', 'LHR', 'CDG', 'SYD', 'PEK');
+    -- 1.4 Airlines
+    IF NOT EXISTS (SELECT 1 FROM Airlines WHERE IATACode = 'VN')
+        INSERT INTO Airlines (AirlineName, IATACode, CountryCode, IsActive) VALUES (N'Vietnam Airlines', 'VN', 'VNM', 1);
+    IF NOT EXISTS (SELECT 1 FROM Airlines WHERE IATACode = 'VJ')
+        INSERT INTO Airlines (AirlineName, IATACode, CountryCode, IsActive) VALUES (N'VietJet Air', 'VJ', 'VNM', 1);
+    IF NOT EXISTS (SELECT 1 FROM Airlines WHERE IATACode = 'QH')
+        INSERT INTO Airlines (AirlineName, IATACode, CountryCode, IsActive) VALUES (N'Bamboo Airways', 'QH', 'VNM', 1);
 
-DELETE FROM Airlines WHERE IATACode IN ('VN', 'VJ', 'QH', 'TG', 'SQ', 'MH', 'GA', 'JL', 'AA', 'UA', 'BA', 'AF');
+    -- 1.5 Aircraft Types
+    IF NOT EXISTS (SELECT 1 FROM AircraftTypes WHERE TypeName = 'A321')
+        INSERT INTO AircraftTypes (TypeName, DisplayName) VALUES ('A321', 'Airbus A321');
+    IF NOT EXISTS (SELECT 1 FROM AircraftTypes WHERE TypeName = 'B787')
+        INSERT INTO AircraftTypes (TypeName, DisplayName) VALUES ('B787', 'Boeing 787 Dreamliner');
 
-INSERT INTO Airports (AirportName, IATACode, CityCode, IsActive) VALUES
-('Tan Son Nhat', 'SGN', 'SGN', 1), ('Noi Bai', 'HAN', 'HAN', 1), ('Da Nang International', 'DAD', 'DAD', 1),
-('Can Tho International', 'CXR', 'CXR', 1), ('Phu Bai', 'HUI', 'HUI', 1), ('Cam Ranh', 'NHA', 'NHA', 1),
-('Cat Bi', 'HPH', 'HPH', 1), ('Vinh Airport', 'VCA', 'VCA', 1), ('Phu Quoc', 'PQC', 'PQC', 1),
-('Lien Khuong', 'DLI', 'DLI', 1), ('Suvarnabhumi', 'BKK', 'BKK', 1), ('Changi', 'SIN', 'SIN', 1),
-('Kuala Lumpur International', 'KUL', 'KUL', 1), ('Soekarno-Hatta', 'CGK', 'CGK', 1), ('Ninoy Aquino', 'MNL', 'MNL', 1),
-('Narita', 'NRT', 'NRT', 1), ('Pochentong', 'PNH', 'PNH', 1), ('Wattay', 'VTE', 'VTE', 1),
-('Yangon International', 'RGN', 'RGN', 1), ('Los Angeles International', 'LAX', 'LAX', 1),
-('John F Kennedy', 'JFK', 'JFK', 1), ('Heathrow', 'LHR', 'LHR', 1), ('Charles de Gaulle', 'CDG', 'CDG', 1),
-('Sydney International', 'SYD', 'SYD', 1), ('Capital Airport', 'PEK', 'PEK', 1);
+    -- 1.6 Seat Classes (Dựa trên migration InsertData, đảm bảo tồn tại)
+-- Migration đã có insert nhưng ta check lại cho chắc chắn
+    IF NOT EXISTS (SELECT 1 FROM SeatClasses WHERE ClassName = 'Economy')
+        INSERT INTO SeatClasses (ClassName, DisplayName, PriceMultiplier) VALUES ('Economy', 'Economy', 1.0);
+    IF NOT EXISTS (SELECT 1 FROM SeatClasses WHERE ClassName = 'Business')
+        INSERT INTO SeatClasses (ClassName, DisplayName, PriceMultiplier) VALUES ('Business', 'Business', 1.75);
 
-INSERT INTO Airlines (AirlineName, IATACode, CountryCode, ContactEmail, ContactPhone, Website, IsActive) VALUES
-('Vietnam Airlines', 'VN', 'VNM', 'info@vietnamairlines.com', '+84-8-3842-2222', 'vietnamairlines.com', 1),
-('Vietjet Air', 'VJ', 'VNM', 'care@vietjet.com', '+84-1900-1886', 'vietjet.com', 1),
-('Bamboo Airways', 'QH', 'VNM', 'contact@bambooairways.com', '+84-1900-1000', 'bambooairways.com', 1),
-('Thai Airways', 'TG', 'THA', 'contact@thaiairways.com', '+66-2-545-1888', 'thaiairways.com', 1),
-('Singapore Airlines', 'SQ', 'SGP', 'info@singaporeair.com', '+65-6223-8888', 'singaporeair.com', 1),
-('Malaysia Airlines', 'MH', 'MYS', 'contact@malaysiaairlines.com', '+60-7-303-7722', 'malaysiaairlines.com', 1),
-('Garuda Indonesia', 'GA', 'IDN', 'info@garuda-indonesia.com', '+62-21-2351-9999', 'garuda-indonesia.com', 1),
-('Japan Airlines', 'JL', 'JPN', 'contact@jal.co.jp', '+81-50-7533-1212', 'jal.co.jp', 1),
-('American Airlines', 'AA', 'USA', 'info@aa.com', '+1-800-433-7300', 'aa.com', 1),
-('United Airlines', 'UA', 'USA', 'support@united.com', '+1-800-864-8331', 'united.com', 1),
-('British Airways', 'BA', 'GBR', 'contact@britishairways.com', '+44-344-222-1111', 'britishairways.com', 1),
-('Air France', 'AF', 'FRA', 'info@airfrance.com', '+33-1-4262-2222', 'airfrance.com', 1);
+    -- Lấy ID để dùng sau này
+    DECLARE @ClassEcoID INT = (SELECT TOP 1 SeatClassID FROM SeatClasses WHERE ClassName = 'Economy');
+    DECLARE @ClassBizID INT = (SELECT TOP 1 SeatClassID FROM SeatClasses WHERE ClassName = 'Business');
 
--- =============================================
--- STEP 5: INSERT AIRCRAFT TYPES & AIRCRAFT
--- =============================================
+    -- 1.7 Fare Rules (Quy tắc hoàn hủy)
+    IF NOT EXISTS (SELECT 1 FROM FareRules WHERE FareCode = 'ECO-SAVER')
+        INSERT INTO FareRules (FareCode, AllowChange, ChangeFee, AllowRefund, RefundFee) VALUES ('ECO-SAVER', 0, 600000, 0, 0);
+    IF NOT EXISTS (SELECT 1 FROM FareRules WHERE FareCode = 'BIZ-FLEX')
+        INSERT INTO FareRules (FareCode, AllowChange, ChangeFee, AllowRefund, RefundFee) VALUES ('BIZ-FLEX', 1, 0, 1, 300000);
 
-PRINT '';
-PRINT 'STEP 5: Inserting Aircraft Types & Aircraft...';
+    -----------------------------------------------------------
+    -- 2. SEED AIRCRAFT & CONFIG (Máy bay & Ghế)
+    -----------------------------------------------------------
+    PRINT '>>> 2. Seeding Aircraft...';
 
-DELETE FROM Seats;
-DELETE FROM AircraftSeatConfig;
-DELETE FROM Aircraft;
-DELETE FROM AircraftTypes;
+    DECLARE @AirlineVN INT = (SELECT AirlineID FROM Airlines WHERE IATACode = 'VN');
+    DECLARE @AirlineVJ INT = (SELECT AirlineID FROM Airlines WHERE IATACode = 'VJ');
+    DECLARE @AirlineQH INT = (SELECT AirlineID FROM Airlines WHERE IATACode = 'QH');
+    DECLARE @TypeA321 INT = (SELECT AircraftTypeID FROM AircraftTypes WHERE TypeName = 'A321');
+    DECLARE @TypeB787 INT = (SELECT AircraftTypeID FROM AircraftTypes WHERE TypeName = 'B787');
 
-INSERT INTO AircraftTypes (TypeName, DisplayName) VALUES
-('B737', 'Boeing 737-800'), ('B777', 'Boeing 777-300ER'), ('A320', 'Airbus A320-200'),
-('A330', 'Airbus A330-300'), ('B787', 'Boeing 787-9 Dreamliner'), ('A380', 'Airbus A380-800');
-
-DECLARE @i INT = 0;
-WHILE @i < 30
-BEGIN
-    INSERT INTO Aircraft (AirlineID, AircraftTypeID, AircraftName) 
-    SELECT 1, ((@i % 3) + 1), 'VN-' + FORMAT(@i + 1, '000');
-    SET @i = @i + 1;
-END;
-
-DECLARE @AirlineLoop INT = 2;
-WHILE @AirlineLoop <= 12
-BEGIN
-    SET @i = 0;
-    WHILE @i < (3 + (@AirlineLoop % 3))
+    IF NOT EXISTS (SELECT 1 FROM Aircraft)
     BEGIN
-        INSERT INTO Aircraft (AirlineID, AircraftTypeID, AircraftName) 
-        SELECT @AirlineLoop, ((@i % 6) + 1), CHAR(65 + @AirlineLoop - 2) + '-' + FORMAT(@i + 1, '00');
-        SET @i = @i + 1;
-    END;
-    SET @AirlineLoop = @AirlineLoop + 1;
-END;
+        INSERT INTO Aircraft (AirlineID, AircraftTypeID, AircraftName) VALUES 
+        (@AirlineVN, @TypeA321, 'VN-A321-101'), -- Máy bay nhỏ
+        (@AirlineVN, @TypeB787, 'VN-B787-202'), -- Máy bay to
+        (@AirlineVJ, @TypeA321, 'VJ-A321-303'),
+        (@AirlineVJ, @TypeA321, 'VJ-A321-404'),
+        (@AirlineQH, @TypeB787, 'QH-B787-505');
+    END
 
--- =============================================
--- STEP 6: INSERT AIRCRAFT SEAT CONFIG & SEATS
--- =============================================
+    -- Config ghế (Tự động thêm ghế cho các máy bay chưa có config)
+    -- 1. Config Economy cho tất cả máy bay
+    INSERT INTO AircraftSeatConfig (AircraftID, SeatClassID, SeatCount, RowStart, RowEnd)
+    SELECT a.AircraftID, @ClassEcoID, 180, 1, 30
+    FROM Aircraft a
+    WHERE NOT EXISTS (SELECT 1 FROM AircraftSeatConfig asc2 WHERE asc2.AircraftID = a.AircraftID AND asc2.SeatClassID = @ClassEcoID);
 
-PRINT '';
-PRINT 'STEP 6: Inserting Aircraft Seat Config & Seats...';
+    -- 2. Config Business (Chỉ cho B787)
+    INSERT INTO AircraftSeatConfig (AircraftID, SeatClassID, SeatCount, RowStart, RowEnd)
+    SELECT a.AircraftID, @ClassBizID, 20, 31, 35
+    FROM Aircraft a
+    WHERE a.AircraftTypeID = @TypeB787
+AND NOT EXISTS (SELECT 1 FROM AircraftSeatConfig asc2 WHERE asc2.AircraftID = a.AircraftID AND asc2.SeatClassID = @ClassBizID);
 
-INSERT INTO AircraftSeatConfig (AircraftID, SeatClassID, SeatCount, RowStart, RowEnd)
-SELECT AircraftID, 1, 150, 1, 30 FROM Aircraft
-UNION ALL
-SELECT AircraftID, 2, 50, 31, 40 FROM Aircraft
-UNION ALL
-SELECT AircraftID, 3, 30, 41, 46 FROM Aircraft
-UNION ALL
-SELECT AircraftID, 4, 20, 47, 50 FROM Aircraft;
+    -----------------------------------------------------------
+    -- 3. GENERATE FLIGHTS (HAN <-> SGN)
+    -----------------------------------------------------------
+    PRINT '>>> 3. Generating Flights (HAN <-> SGN)...';
 
-DECLARE @AircraftID INT;
-DECLARE @SeatClassID INT;
-DECLARE @RowStart INT;
-DECLARE @RowEnd INT;
-DECLARE @Row INT;
-DECLARE @Col INT;
-DECLARE @SeatNumber NVARCHAR(5);
+    DECLARE @StartDate DATE = '2026-01-22';
+    DECLARE @EndDate DATE = '2026-02-22';
+    DECLARE @CurrentDate DATE = @StartDate;
 
-DECLARE aircraft_cursor CURSOR FOR
-SELECT AircraftID, SeatClassID, RowStart, RowEnd FROM AircraftSeatConfig;
+    -- Lấy ID Sân bay Hà Nội và HCM
+    DECLARE @AirportHAN_ID INT = (SELECT AirportID FROM Airports WHERE IATACode = 'HAN');
+    DECLARE @AirportSGN_ID INT = (SELECT AirportID FROM Airports WHERE IATACode = 'SGN');
 
-OPEN aircraft_cursor;
-FETCH NEXT FROM aircraft_cursor INTO @AircraftID, @SeatClassID, @RowStart, @RowEnd;
+    -- Lấy Rule ID
+    DECLARE @FareEcoRuleID INT = (SELECT FareRuleID FROM FareRules WHERE FareCode = 'ECO-SAVER');
+    DECLARE @FareBizRuleID INT = (SELECT FareRuleID FROM FareRules WHERE FareCode = 'BIZ-FLEX');
 
-WHILE @@FETCH_STATUS = 0
-BEGIN
-    SET @Row = @RowStart;
-    WHILE @Row <= @RowEnd
-    BEGIN
-        SET @Col = 0;
-        WHILE @Col < 6
-        BEGIN
-            INSERT INTO Seats (AircraftID, SeatClassID, SeatNumber, IsAvailable)
-            VALUES (@AircraftID, @SeatClassID, CHAR(65 + @Col) + FORMAT(@Row, '00'), 1);
-            SET @Col = @Col + 1;
-        END;
-        SET @Row = @Row + 1;
-    END;
-    FETCH NEXT FROM aircraft_cursor INTO @AircraftID, @SeatClassID, @RowStart, @RowEnd;
-END;
-
-CLOSE aircraft_cursor;
-DEALLOCATE aircraft_cursor;
-
--- =============================================
--- STEP 7: INSERT FLIGHTS & FLIGHT PRICING
--- =============================================
-
-PRINT '';
-PRINT 'STEP 7: Inserting Flights & FlightPricing...';
-
-DELETE FROM FlightPricing;
-DELETE FROM Flights;
-
-DECLARE @DomesticCount INT = 0;
-DECLARE @InternationalCount INT = 0;
-DECLARE @DomesticTarget INT = 2100;
-DECLARE @InternationalTarget INT = 1400;
-
-DECLARE @DomesticAirports TABLE (AirportID INT);
-INSERT INTO @DomesticAirports VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10);
-
-DECLARE @InternationalAirports TABLE (AirportID INT);
-INSERT INTO @InternationalAirports VALUES (1), (11), (12), (13), (14), (15), (16), (17), (18), (19), (20), (21), (22), (23), (24), (25);
-
-WHILE @DomesticCount < @DomesticTarget
-BEGIN
-    DECLARE @FlightDate DATE = CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 31, '2026-1-20') AS DATE);
-    DECLARE @Departure INT = (SELECT TOP 1 AirportID FROM @DomesticAirports ORDER BY NEWID());
-    DECLARE @Arrival INT = (SELECT TOP 1 AirportID FROM @DomesticAirports WHERE AirportID != @Departure ORDER BY NEWID());
-    DECLARE @AirlineID INT = (SELECT TOP 1 AirlineID FROM Airlines WHERE IATACode IN ('VN', 'VJ', 'QH') ORDER BY NEWID());
-    DECLARE @AircraftID_f1 INT = (SELECT TOP 1 AircraftID FROM Aircraft WHERE AirlineID = @AirlineID ORDER BY NEWID());
-    DECLARE @DepartureTime TIME = CAST(DATEADD(MINUTE, (ABS(CHECKSUM(NEWID())) % 1440 / 5) * 5, '00:00') AS TIME);
-    DECLARE @Duration INT = 60 + (ABS(CHECKSUM(NEWID())) % 151);
-    DECLARE @ArrivalTime TIME = DATEADD(MINUTE, @Duration, @DepartureTime);
-    DECLARE @BasePrice DECIMAL(12,2) = 1000000 + (ABS(CHECKSUM(NEWID())) % 2000000);
-    DECLARE @StatusRand INT = ABS(CHECKSUM(NEWID())) % 100;
-    DECLARE @Status NVARCHAR(20) = CASE WHEN @StatusRand < 70 THEN 'Available' WHEN @StatusRand < 85 THEN 'Full' ELSE 'Cancelled' END;
-    DECLARE @FlightNumber NVARCHAR(10) = (SELECT IATACode FROM Airlines WHERE AirlineID = @AirlineID) + FORMAT(@DomesticCount % 999 + 100, '000');
+    -- Biến vòng lặp
+    DECLARE @DailyFlightCount INT = 20;
+    DECLARE @i INT = 0;
+    
+    DECLARE @RandomDepTime TIME;
+    DECLARE @RandomDuration INT;
+    DECLARE @RandomPrice DECIMAL(18,2);
+    DECLARE @SelectedAircraftID INT;
+    DECLARE @SelectedAirlineID INT;
+    DECLARE @DepID INT;
+    DECLARE @ArrID INT;
     DECLARE @NewFlightID INT;
+    DECLARE @FlightNumSuffix INT = 1000;
 
-    INSERT INTO Flights (AirlineID, FlightNumber, AircraftID, DepartureAirportID, ArrivalAirportID, FlightDate, DepartureTime, ArrivalTime, DurationMinutes, Status, BasePrice)
-    VALUES (@AirlineID, @FlightNumber, @AircraftID_f1, @Departure, @Arrival, @FlightDate, @DepartureTime, @ArrivalTime, @Duration, @Status, @BasePrice);
-    
-    SET @NewFlightID = SCOPE_IDENTITY();
-    
-    -- Insert FlightPricing cho các seat classes
-    INSERT INTO FlightPricing (FlightID, SeatClassID, Price, BookedSeats)
-    SELECT 
-        @NewFlightID,
-        sc.SeatClassID,
-        @BasePrice * sc.PriceMultiplier,
-        0
-    FROM SeatClasses sc;
+    WHILE @CurrentDate <= @EndDate
+    BEGIN
+        SET @i = 1;
+        WHILE @i <= @DailyFlightCount
+        BEGIN
+            -- A. XÁC ĐỊNH TUYẾN BAY (HAN->SGN hoặc SGN->HAN)
+            -- Nếu số chẵn thì đi HAN->SGN, lẻ thì ngược lại để cân bằng
+            IF (@i % 2 = 0)
+            BEGIN
+                SET @DepID = @AirportHAN_ID;
+                SET @ArrID = @AirportSGN_ID;
+            END
+            ELSE
+            BEGIN
+                SET @DepID = @AirportSGN_ID;
+                SET @ArrID = @AirportHAN_ID;
+            END
 
-    SET @DomesticCount = @DomesticCount + 1;
-    IF @DomesticCount % 500 = 0 PRINT '    Domestic: ' + CAST(@DomesticCount AS NVARCHAR(10));
-END;
+            -- B. Random Máy bay & Hãng
+            SELECT TOP 1 @SelectedAircraftID = AircraftID, @SelectedAirlineID = AirlineID 
+            FROM Aircraft ORDER BY NEWID();
 
-WHILE @InternationalCount < @InternationalTarget
-BEGIN
-    SET @FlightDate = CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 31, '2026-1-20') AS DATE);
-    SET @Departure = (SELECT TOP 1 AirportID FROM @InternationalAirports ORDER BY NEWID());
-    SET @Arrival = (SELECT TOP 1 AirportID FROM @InternationalAirports WHERE AirportID != @Departure ORDER BY NEWID());
-    SET @AirlineID = (SELECT TOP 1 AirlineID FROM Airlines ORDER BY NEWID());
-    SET @AircraftID_f1 = (SELECT TOP 1 AircraftID FROM Aircraft WHERE AirlineID = @AirlineID ORDER BY NEWID());
-    SET @DepartureTime = CAST(DATEADD(MINUTE, (ABS(CHECKSUM(NEWID())) % 1440 / 5) * 5, '00:00') AS TIME);
-    SET @Duration = 180 + (ABS(CHECKSUM(NEWID())) % 721);
-    SET @ArrivalTime = DATEADD(MINUTE, @Duration, @DepartureTime);
-    SET @BasePrice = 3000000 + (ABS(CHECKSUM(NEWID())) % 5000000);
-    SET @StatusRand = ABS(CHECKSUM(NEWID())) % 100;
-    SET @Status = CASE WHEN @StatusRand < 70 THEN 'Available' WHEN @StatusRand < 85 THEN 'Full' ELSE 'Cancelled' END;
-    SET @FlightNumber = (SELECT IATACode FROM Airlines WHERE AirlineID = @AirlineID) + FORMAT(@InternationalCount % 999 + 100, '000');
-    SET @NewFlightID = 0;
+            -- C. Random Giờ & Giá
+            -- Giờ bay: Từ 05:00 sáng đến 23:00 đêm
+            SET @RandomDepTime = DATEADD(MINUTE, 300 + ABS(CHECKSUM(NEWID()) % 1080), CAST('00:00' AS TIME)); 
+            
+            -- Thời gian bay HAN-SGN: 120 - 135 phút
+            SET @RandomDuration = 120 + ABS(CHECKSUM(NEWID()) % 15);
+            
+            -- Giá vé cơ bản: 1.500.000 - 4.500.000
+            SET @RandomPrice = (ABS(CHECKSUM(NEWID()) % 30) + 15) * 100000;
 
-    INSERT INTO Flights (AirlineID, FlightNumber, AircraftID, DepartureAirportID, ArrivalAirportID, FlightDate, DepartureTime, ArrivalTime, DurationMinutes, Status, BasePrice)
-    VALUES (@AirlineID, @FlightNumber, @AircraftID_f1, @Departure, @Arrival, @FlightDate, @DepartureTime, @ArrivalTime, @Duration, @Status, @BasePrice);
-    
-    SET @NewFlightID = SCOPE_IDENTITY();
-    
-    -- Insert FlightPricing
-    INSERT INTO FlightPricing (FlightID, SeatClassID, Price, BookedSeats)
-    SELECT 
-        @NewFlightID,
-        sc.SeatClassID,
-        @BasePrice * sc.PriceMultiplier,
-        0
-    FROM SeatClasses sc;
+            -- D. Insert Flight
+            INSERT INTO Flights (
+                AirlineID, FlightNumber, AircraftID, DepartureAirportID, ArrivalAirportID, 
+                FlightDate, DepartureTime, ArrivalTime, DurationMinutes, Status, BasePrice
+            )
+            VALUES (
+                @SelectedAirlineID,
+CONCAT((SELECT IATACode FROM Airlines WHERE AirlineID = @SelectedAirlineID), CAST(@FlightNumSuffix + @i AS VARCHAR)),
+                @SelectedAircraftID,
+                @DepID,
+                @ArrID,
+                @CurrentDate,
+                @RandomDepTime,
+                DATEADD(MINUTE, @RandomDuration, @RandomDepTime),
+                @RandomDuration,
+                'Available',
+                @RandomPrice
+            );
 
-    SET @InternationalCount = @InternationalCount + 1;
-    IF @InternationalCount % 500 = 0 PRINT '    International: ' + CAST(@InternationalCount AS NVARCHAR(10));
-END;
+            SET @NewFlightID = SCOPE_IDENTITY();
+
+            -- E. Insert Pricing (Giá vé)
+            -- 1. Economy
+            INSERT INTO FlightPricing (FlightID, SeatClassID, Price, BookedSeats, FareRuleID)
+            VALUES (@NewFlightID, @ClassEcoID, @RandomPrice, 0, @FareEcoRuleID);
+
+            -- 2. Business (Nếu máy bay có hạng thương gia)
+            -- Kiểm tra xem máy bay này có config ghế thương gia không
+            IF EXISTS (SELECT 1 FROM AircraftSeatConfig WHERE AircraftID = @SelectedAircraftID AND SeatClassID = @ClassBizID)
+            BEGIN
+                INSERT INTO FlightPricing (FlightID, SeatClassID, Price, BookedSeats, FareRuleID)
+                VALUES (@NewFlightID, @ClassBizID, @RandomPrice * 2.2, 0, @FareBizRuleID);
+            END
+
+            SET @i = @i + 1;
+        END
+
+        -- Reset biến cho ngày hôm sau
+        SET @FlightNumSuffix = @FlightNumSuffix + 50; -- Nhảy số hiệu để trông thực tế hơn
+        SET @CurrentDate = DATEADD(DAY, 1, @CurrentDate);
+    END
+
+    COMMIT TRANSACTION;
+    PRINT '>>> DONE! Successfully generated HAN <-> SGN flights.';
+
+END TRY
+BEGIN CATCH
+    ROLLBACK TRANSACTION;
+    PRINT '>>> ERROR: ' + ERROR_MESSAGE();
+END CATCH
+GO
 
 -- =============================================
 -- STEP 8: INSERT SERVICES

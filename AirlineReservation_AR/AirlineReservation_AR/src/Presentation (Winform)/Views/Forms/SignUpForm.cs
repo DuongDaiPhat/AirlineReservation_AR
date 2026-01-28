@@ -55,7 +55,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             if (emailTB.Text == "" && userNameTB.Text == "" && numberTB.Text == "" && passwordTB.Text == "" && confirmPasswordTB.Text == "")
             {
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Vui lòng điền đầy đủ thông tin", false, null);
+                announcementForm1.SetAnnouncement("Registration failed", $"Please fill in all information", false, null);
                 announcementForm1.Show();
                 return;
             }
@@ -65,12 +65,12 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             if (!Equals(passwordTB.Text, confirmPasswordTB.Text))
             {
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Mật khẩu không đồng bộ", false, null);
+                announcementForm1.SetAnnouncement("Registration failed", $"Passwords do not match", false, null);
                 announcementForm1.Show();
                 return;
             }
 
-            // 1. Tạo User mới
+            // 1. Create new User
             var user = await _controller.RegisterAsync(
                 userNameTB.Text,
                 emailTB.Text,
@@ -79,10 +79,10 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
 
             if (user == null)
             {
-                MessageBox.Show("Đăng ký thất bại! Vui lòng thử lại.",
-                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Registration failed! Please try again.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Sđt, Email hoặc tên tài khoản đã được sử dụng", false, null);
+                announcementForm1.SetAnnouncement("Registration failed", $"Phone number, Email or username has already been used", false, null);
                 announcementForm1.Show();
                 return;
             }
@@ -92,12 +92,12 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             {
 
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Lý do: {addRole.Message}", false, null);
+                announcementForm1.SetAnnouncement("Registration failed", $"Reason: {addRole.Message}", false, null);
                 announcementForm1.Show();
             }
 
             AnnouncementForm announcementForm = new AnnouncementForm();
-            announcementForm.SetAnnouncement("Đăng ký thành công", "Hãy đăng nhập để tiếp tục", true, null);
+            announcementForm.SetAnnouncement("Registration successful", "Please login to continue", true, null);
             announcementForm.Show();
 
             //Điều hướng sang SignIn
