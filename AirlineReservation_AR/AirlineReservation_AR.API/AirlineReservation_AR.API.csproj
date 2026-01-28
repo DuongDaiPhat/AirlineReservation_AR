@@ -18,8 +18,4 @@
 		<ProjectReference Include="..\AirlineReservation_AR\AirlineReservation_AR.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Services\Email\" />
-	</ItemGroup>
-
 </Project>
