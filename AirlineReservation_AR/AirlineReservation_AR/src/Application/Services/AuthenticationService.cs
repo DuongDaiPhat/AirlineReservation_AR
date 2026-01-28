@@ -1,13 +1,18 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
 using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
+using Azure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,7 +27,7 @@ namespace AirlineReservation_AR.src.Application.Services
         {
             _passwordHasher = passwordHasher;
         }
-        public async Task<User> RegisterAsync(string fullName, string email, string password, string? phone = null)
+        public async Task<AirlineReservation.Domain.Entities.User> RegisterAsync(string fullName, string email, string password, string? phone = null)
         {
             using var _db = DIContainer.CreateDb();
             // Check email đã tồn tại chưa
@@ -35,7 +40,7 @@ namespace AirlineReservation_AR.src.Application.Services
             }
             var hashed = _passwordHasher.HashPassword(password);
 
-            var user = new User
+            var user = new AirlineReservation.Domain.Entities.User
             {
                 UserId = Guid.NewGuid(),
                 FullName = fullName,
@@ -48,7 +53,17 @@ namespace AirlineReservation_AR.src.Application.Services
             };
 
             _db.Users.Add(user);
-            await _db.SaveChangesAsync();
+            int result = await _db.SaveChangesAsync();
+
+            if(result > 0)
+            {
+                await AuditLogService
+                    .LogSimpleActionAsync(
+                    user.UserId,
+                    TableNameAuditLog.Users,
+                    OperationAuditLog.register,
+                    user.UserId.ToString());
+            }
 
             return user;
         }

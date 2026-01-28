@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
+using AirlineReservation_AR.src.Application.Services;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using Microsoft.EntityFrameworkCore;
 
@@ -52,6 +54,13 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             _db.Tickets.Add(ticket);
             await _db.SaveChangesAsync();
 
+            await AuditLogService
+                .LogSimpleActionAsync(
+                DIContainer.CurrentUser?.UserId,
+                TableNameAuditLog.Tickets,
+                OperationAuditLog.create,
+                ticket.TicketId.ToString());
+
             return ticket;
         }
 
@@ -89,11 +98,24 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             var ticket = await _db.Tickets.FindAsync(ticketId);
             if (ticket == null) return false;
 
+            var oldStatus = ticket.Status;
             ticket.SeatNumber = seatNumber;
             ticket.CheckedInAt = DateTime.UtcNow;
             ticket.Status = "CheckedIn";
 
-            await _db.SaveChangesAsync();
+            int result = await _db.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Tickets,
+                    OperationAuditLog.update,
+                    ticketId.ToString(),
+                    oldStatus,
+                    "CheckedIn");
+            }
             return true;
         }
 
@@ -103,9 +125,21 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             var ticket = await _db.Tickets.FindAsync(ticketId);
             if (ticket == null) return false;
 
+            var oldStatus = ticket.Status;
             ticket.Status = status;
-            await _db.SaveChangesAsync();
+            int result = await _db.SaveChangesAsync();
 
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Tickets,
+                    OperationAuditLog.update,
+                    ticketId.ToString(),
+                    oldStatus,
+                    status);
+            }
             return true;
         }
 
@@ -115,9 +149,22 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             var ticket = await _db.Tickets.FindAsync(ticketId);
             if (ticket == null) return false;
 
+            var oldSeatNumber = ticket.SeatNumber;
             ticket.SeatNumber = newSeatNumber;
 
-            await _db.SaveChangesAsync();
+            int result = await _db.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Tickets,
+                    OperationAuditLog.update,
+                    ticketId.ToString(),
+                    oldSeatNumber,
+                    newSeatNumber);
+            }
             return true;
         }
 
@@ -138,7 +185,17 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
                 });
             }
 
-            await _db.SaveChangesAsync();
+            int result = await _db.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogSimpleActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Tickets,
+                    OperationAuditLog.create,
+                    $"Booking-{bookingId}");
+            }
         }
     }
 }

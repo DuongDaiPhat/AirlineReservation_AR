@@ -1,4 +1,5 @@
 using AirlineReservation_AR.src;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
 using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
 using AirlineReservation_AR.src.Infrastructure.DI;
@@ -20,6 +21,7 @@ namespace AirlineReservation_AR
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             DIContainer.Init();
+            AuditLogService.Initialize(DIContainer.CreateDb());
             Application.Run(new SignInForm());
         }
     }

@@ -1,6 +1,7 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Services;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.Application.Services;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using Microsoft.EntityFrameworkCore;
@@ -84,15 +85,39 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
         {
             using var _context = DIContainer.CreateDb();
             await _context.Flights.AddAsync(flight);
-            await _context.SaveChangesAsync();
+            int result = await _context.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogSimpleActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Flights,
+                    OperationAuditLog.create,
+                    flight.FlightId.ToString());
+            }
             return flight;
         }
 
         public async Task<bool> UpdateAsync(Flight flight)
         {
             using var _context = DIContainer.CreateDb();
+            var oldFlight = await _context.Flights.AsNoTracking().FirstOrDefaultAsync(f => f.FlightId == flight.FlightId);
             _context.Flights.Update(flight);
-            return await _context.SaveChangesAsync() > 0;
+            int result = await _context.SaveChangesAsync();
+            
+            if (result > 0 && oldFlight != null)
+            {
+                await AuditLogService
+                    .LogActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Flights,
+                    OperationAuditLog.update,
+                    flight.FlightId.ToString(),
+                    $"{oldFlight.DepartureTime:HH:mm}",
+                    $"{flight.DepartureTime:HH:mm}");
+            }
+            return result > 0;
         }
 
         public async Task<bool> DeleteAsync(int flightId)
@@ -102,7 +127,18 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
             if (flight == null) return false;
 
             _context.Flights.Remove(flight);
-            return await _context.SaveChangesAsync() > 0;
+            int result = await _context.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogSimpleActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Flights,
+                    OperationAuditLog.delete,
+                    flightId.ToString());
+            }
+            return result > 0;
         }
 
         public async Task<FlightSearchResultDTO> SearchAsync(FlightSearchParams p)

@@ -212,14 +212,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                     returnDto = BuildBookingDTO(_returnSegment);
 
                 // 4. Save booking
-                int bookingId = DIContainer.BookingController.CreateBooking(
+                Task<int> bookingId = DIContainer.BookingController.CreateBooking(
                     outboundDto,
                     returnDto
                 );
 
                 // 5. Payment
                 var form = new MomoQR.MomoQR();
-                form.SetPayment(bookingId, outboundDto.TotalAmount);
+                form.SetPayment(bookingId.Result, outboundDto.TotalAmount);
                 form.ShowDialog();
         }
             catch (BusinessException ex)

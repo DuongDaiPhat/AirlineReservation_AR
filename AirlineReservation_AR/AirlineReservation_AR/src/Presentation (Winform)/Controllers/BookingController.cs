@@ -23,7 +23,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
         public async Task<IEnumerable<Booking>> GetAllAsync() => await _bookingService.GetAllWithDetailsAsync();
         public async Task<Booking?> GetByReferenceAsync(string reference) => await _bookingService.GetByReferenceAsync(reference);
 
-        public int CreateBooking(BookingCreateDTO dto, BookingCreateDTO reDto)
-            => _bookingService.CreateBooking(dto, reDto);
+        public async Task<int> CreateBooking(BookingCreateDTO dto, BookingCreateDTO reDto)
+        {
+            return await _bookingService.CreateBooking(dto, reDto);
+        }
     }
 }

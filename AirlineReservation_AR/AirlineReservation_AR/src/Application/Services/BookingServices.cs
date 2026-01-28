@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
 using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Domain.Exceptions;
@@ -17,12 +18,12 @@ namespace AirlineReservation_AR.src.Application.Services
     public class BookingServices : IBookingService
     {
 
-        public int CreateBooking(BookingCreateDTO dto, BookingCreateDTO? reDto)
+        public async Task<int> CreateBooking(BookingCreateDTO dto, BookingCreateDTO? reDto)
         {
             using var db = DIContainer.CreateDb();
 
             var strategy = db.Database.CreateExecutionStrategy();
-            return strategy.Execute(() =>
+            return await strategy.Execute(async () =>
             {
                 using var transaction = db.Database.BeginTransaction();
 
@@ -109,6 +110,14 @@ namespace AirlineReservation_AR.src.Application.Services
 
                     db.SaveChanges();
                     transaction.Commit();
+
+                    // Log booking creation
+                    await AuditLogService
+                        .LogSimpleActionAsync(
+                        dto.UserId,
+                        TableNameAuditLog.BookingFlights,
+                        OperationAuditLog.create,
+                        booking.BookingId.ToString());
 
                     return booking.BookingId;
                 }
@@ -235,13 +244,26 @@ namespace AirlineReservation_AR.src.Application.Services
             using var _context = DIContainer.CreateDb();
             try
             {
+                var oldBooking = await _context.Bookings.AsNoTracking().FirstOrDefaultAsync(b => b.BookingId == booking.BookingId);
                 _context.Bookings.Update(booking);
 
                 if (booking.Payments != null)
                     foreach (var p in booking.Payments)
                         _context.Payments.Update(p);
 
-                await _context.SaveChangesAsync();
+                int result = await _context.SaveChangesAsync();
+                
+                if (result > 0 && oldBooking != null)
+                {
+                    await AuditLogService
+                        .LogActionAsync(
+                        DIContainer.CurrentUser?.UserId,
+                        TableNameAuditLog.BookingFlights,
+                        OperationAuditLog.update,
+                        booking.BookingId.ToString(),
+                        oldBooking.Status,
+                        booking.Status);
+                }
                 return true;
             }
             catch (Exception ex)
