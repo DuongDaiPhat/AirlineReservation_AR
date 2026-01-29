@@ -69,12 +69,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             dgvBooking.RowHeadersVisible = false;
             dgvBooking.BackgroundColor = Color.White;
             dgvBooking.BorderStyle = BorderStyle.None;
+            
+            // Enable text wrapping
+            dgvBooking.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgvBooking.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
             // Columns
             AddColumn("colBookingID", "BOOKING REF", 150, true);
-            AddColumn("colCustomer", "CUSTOMER", 220);
-            AddColumn("colFlight", "FLIGHT", 250);
-            AddColumn("colPassengers", "PASSENGERS", 120, true);
+            AddColumn("colCustomer", "CUSTOMER", 250); // Increased width
+            AddColumn("colFlight", "FLIGHT", 300);    // Increased width
+            AddColumn("colPassengers", "PAX", 80, true);
             AddColumn("colDate", "DATE", 150, true);
             AddColumn("colTotal", "TOTAL", 140, false, true);
             AddColumn("colMethod", "METHOD", 120, true);
@@ -126,13 +130,20 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             dgvBooking.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             dgvBooking.ColumnHeadersHeight = 50;
             dgvBooking.RowTemplate.Height = 60;
+            
+            // DateTime Picker Style - Include Time
+            dtpTuNgay.Format = DateTimePickerFormat.Custom;
+            dtpTuNgay.CustomFormat = "dd/MM/yyyy HH:mm";
+
+            dtpDenNgay.Format = DateTimePickerFormat.Custom;
+            dtpDenNgay.CustomFormat = "dd/MM/yyyy HH:mm";
         }
 
         private void InitializeEvents()
         {
             btnGetAll.Click += (s, e) => ResetFilters();
             btnGetChoThanhToan.Click += (s, e) => { cboStatusPayment.SelectedIndex = 2; ApplyFilters(); }; // Assuming Pending is index 2
-            btnGetToday.Click += (s, e) => { dtpTuNgay.Value = dtpDenNgay.Value = DateTime.Today; ApplyFilters(); };
+            btnGetToday.Click += (s, e) => { dtpTuNgay.Value = DateTime.Today; dtpDenNgay.Value = DateTime.Today.AddDays(1).AddSeconds(-1); ApplyFilters(); };
             btnGetDaHuy.Click += (s, e) => { cboStatusBooking.SelectedIndex = 3; ApplyFilters(); }; // Assuming Cancelled index 3
 
             txtBookingID.TextChanged += (s, e) => ApplyFilters();
@@ -144,7 +155,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             dgvBooking.CellContentClick += DgvBooking_CellContentClick;
             dgvBooking.CellFormatting += DgvBooking_CellFormatting;
-            dgvBooking.CellPainting += DgvBooking_CellPainting; // Keep painting if needed for button style
+            dgvBooking.CellPainting += DgvBooking_CellPainting; 
         }
 
         private async Task InitializeFiltersAsync()
@@ -166,6 +177,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 foreach (var status in paymentStatuses) cboStatusPayment.Items.Add(status);
                 cboStatusPayment.DisplayMember = "DisplayName";
                 cboStatusPayment.SelectedIndex = 0;
+
+                // Date Filter Defaults
+                dtpTuNgay.Value = DateTime.Now.AddMonths(-6);
+                dtpDenNgay.Value = DateTime.Now;
             }
             catch (Exception ex)
             {
@@ -216,16 +231,25 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         {
             var data = bookings.AsEnumerable();
 
+            bool isSpecificSearch = !string.IsNullOrWhiteSpace(txtBookingID.Text) || !string.IsNullOrWhiteSpace(textEmailSDT.Text);
+
             if (!string.IsNullOrWhiteSpace(txtBookingID.Text))
-                data = data.Where(b => b.BookingReference.Contains(txtBookingID.Text, StringComparison.OrdinalIgnoreCase));
+                data = data.Where(b => b.BookingReference.Contains(txtBookingID.Text.Trim(), StringComparison.OrdinalIgnoreCase));
 
             if (!string.IsNullOrWhiteSpace(textEmailSDT.Text))
+            {
+                string kw = textEmailSDT.Text.Trim();
                 data = data.Where(b =>
-                    (b.ContactEmail?.Contains(textEmailSDT.Text, StringComparison.OrdinalIgnoreCase) ?? false) ||
-                    (b.ContactPhone?.Contains(textEmailSDT.Text) ?? false) ||
-                    (b.CustomerName?.Contains(textEmailSDT.Text, StringComparison.OrdinalIgnoreCase) ?? false));
+                    (b.ContactEmail?.Contains(kw, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (b.ContactPhone?.Contains(kw, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (b.CustomerName?.Contains(kw, StringComparison.OrdinalIgnoreCase) ?? false));
+            }
 
-            data = data.Where(b => b.BookingDate.Date >= dtpTuNgay.Value.Date && b.BookingDate.Date <= dtpDenNgay.Value.Date);
+            // Only apply Date Filter if NOT searching specifically (Smart Search UX)
+            if (!isSpecificSearch)
+            {
+                data = data.Where(b => b.BookingDate >= dtpTuNgay.Value && b.BookingDate <= dtpDenNgay.Value);
+            }
 
             if (cboStatusBooking.SelectedIndex > 0 && cboStatusBooking.SelectedItem is StatusSelectDto bs)
                 data = data.Where(b => b.Status?.Equals(bs.Code, StringComparison.OrdinalIgnoreCase) ?? false);
@@ -259,21 +283,24 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             foreach (var b in pagedData)
             {
                 var flightInfo = b.FlightInfo != null
-                    ? $"{b.FlightInfo.FlightNumber}\n{b.FlightInfo.DepartureAirport} -> {b.FlightInfo.ArrivalAirport}"
+                    ? $"{b.FlightInfo.FlightNumber}\n{b.FlightInfo.DepartureAirport} -> {b.FlightInfo.ArrivalAirport}\n{b.FlightInfo.FlightDate:dd/MM/yyyy} {b.FlightInfo.DepartureTime:hh\\:mm}"
                     : "N/A";
+
+                var customerInfo = $"Name: {b.CustomerName}\nPhone: {b.ContactPhone}\nEmail: {b.ContactEmail}";
 
                 int rowIndex = dgvBooking.Rows.Add(
                     b.BookingReference,
-                    $"{b.CustomerName}\n{b.ContactEmail}",
+                    customerInfo,
                     flightInfo,
-                    $"{b.PassengerCount}",
+                    b.PassengerCount,
                     b.BookingDate.ToString("dd/MM/yy HH:mm"),
                     $"{b.TotalAmount:N0} VND",
                     b.PaymentMethod ?? "-",
-                    b.Status, // English status
+                    b.Status, 
                     "•••"
                 );
                 dgvBooking.Rows[rowIndex].Tag = b;
+                dgvBooking.Rows[rowIndex].Height = 90; // Increased height for 3 lines with labels
             }
         }
 
@@ -337,7 +364,18 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             };
             menu.Items.Add(viewItem);
 
-            if (booking.PaymentStatus != "Completed")
+            // Edit Option (Allow editing unless Cancelled)
+            if (!string.Equals(booking.Status, "Cancelled", StringComparison.OrdinalIgnoreCase))
+            {
+                var editItem = new ToolStripMenuItem("Edit Customer Info");
+                editItem.Click += (s, args) => EditCustomerInfo(booking);
+                menu.Items.Add(editItem);
+            }
+
+            // Confirm Payment only if Booking is Pending (not Confirmed or Cancelled)
+            // Assuming "Pending" is the initial status. If DB uses different code, adjust.
+            // Based on DgvBooking_CellFormatting, status is "Pending" or "Confirmed".
+            if (string.Equals(booking.Status, "Pending", StringComparison.OrdinalIgnoreCase))
             {
                 var confirmItem = new ToolStripMenuItem("Confirm Payment");
                 confirmItem.Click += async (s, args) => await ConfirmBookingAsync(booking.BookingReference);
@@ -358,8 +396,43 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 menu.Items.Add(cancelItem);
             }
 
-            var cellRect = dgvBooking.GetCellDisplayRectangle(dgvBooking.Columns["colAction"].Index, rowIndex, true);
-            menu.Show(dgvBooking, new Point(cellRect.Left, cellRect.Bottom));
+            // Show menu
+            if (dgvBooking.Rows.Count > rowIndex)
+            {
+                var cellRect = dgvBooking.GetCellDisplayRectangle(dgvBooking.Columns["colAction"].Index, rowIndex, true);
+                menu.Show(dgvBooking, new Point(cellRect.Left, cellRect.Bottom));
+            }
+        }
+
+        private async void EditCustomerInfo(BookingDtoAdmin booking)
+        {
+            var form = new AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin.EditBookingCustomerForm(
+                booking.CustomerName, 
+                booking.ContactPhone, 
+                booking.ContactEmail
+            );
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                var success = await _bookingController.UpdateCustomerAsync(
+                    booking.BookingReference, 
+                    form.FullName, 
+                    form.Phone, 
+                    form.Email
+                );
+
+                if (success)
+                {
+                    MessageBox.Show("Customer info updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Refresh
+                    bookings = (await _bookingController.GetAllAsync()).ToList();
+                    ApplyFilters();
+                }
+                else
+                {
+                     MessageBox.Show("Failed to update customer info.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private async Task ConfirmBookingAsync(string refCode)

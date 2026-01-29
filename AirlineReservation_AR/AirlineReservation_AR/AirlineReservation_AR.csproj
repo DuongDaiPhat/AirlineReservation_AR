@@ -54,4 +54,14 @@
     </None>
   </ItemGroup>
 
+  <!-- Database files - Copy to output directory -->
+  <ItemGroup>
+    <None Update="AirlineReservationSystem.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="AirlineReservationSystem_log.ldf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -5,7 +5,6 @@ using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin;
 using System;
 using System.Collections.Generic;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -22,16 +21,21 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         //private List<PromotionDtoAdmin> _promotions = new List<PromotionDtoAdmin>();
         private List<FlightPricingDtoAdmin> _flightPricings = new List<FlightPricingDtoAdmin>();
         private List<FlightPricingDtoAdmin> _filteredPricings = new List<FlightPricingDtoAdmin>();
+        
+        // Lazy Loading Pagination Fields
+        private int _serverChunkSize = 50;
+        private int _totalRecordCount = 0;
+        private FlightPricingFilterDtoAdmin _currentPricingFilter = new FlightPricingFilterDtoAdmin();
 
         private List<PromotionDtoAdmin> _promotions = new List<PromotionDtoAdmin>();
         private List<PromotionDtoAdmin> _filteredPromotions = new List<PromotionDtoAdmin>();
 
         private int _currentPricingPage = 1;
-        private int _pricingPageSize = 4;
+        private int _pricingPageSize = 8;
         private int _totalPricingPages = 1;
 
         private int _currentPromoPage = 1;
-        private int _promoPageSize = 3;
+        private int _promoPageSize = 8;
         private int _totalPromoPages = 1;
         
         private readonly ILookupService _lookupService = DIContainer.LookupService;
@@ -57,10 +61,25 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             paginationPromo.CurrentPage = 1;
             paginationPromo.TotalPages = 1;
         }
-        private void PaginationPricing_PageChanged(object sender, int pageNumber)
+        private async void PaginationPricing_PageChanged(object sender, int pageNumber)
         {
             _currentPricingPage = pageNumber;
-            LoadPricingCards();
+
+            // Lazy Loading Logic
+            int maxItemIndexNeeded = _currentPricingPage * _pricingPageSize;
+
+            if (maxItemIndexNeeded > _filteredPricings.Count && _filteredPricings.Count < _totalRecordCount)
+            {
+                // Load Next Chunk
+                Cursor = Cursors.WaitCursor;
+                await LoadPricingChunkAsync(reset: false);
+                Cursor = Cursors.Default;
+            }
+            else
+            {
+                // Have enough data, just render
+                LoadPricingCards();
+            }
         }
 
         private void PaginationPromo_PageChanged(object sender, int pageNumber)
@@ -122,18 +141,57 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         }
         private async Task LoadPricingDataAsync()
         {
-            var response = await DIContainer.PricingControllerAdmin.GetAllPricings();
-            if (response.Success && response.Data != null)
+            _currentPricingFilter = new FlightPricingFilterDtoAdmin();
+            await LoadPricingChunkAsync(reset: true);
+        }
+
+        private async Task LoadPricingChunkAsync(bool reset)
+        {
+            try 
             {
-                _flightPricings = response.Data.ToList();
-                _filteredPricings = _flightPricings.ToList();
-                _currentPricingPage = 1; // Reset về trang 1
-                UpdatePricingPagination();
+                if (reset)
+                {
+                    _currentPricingPage = 1;
+                    _filteredPricings.Clear();
+                }
+
+                int currentCount = _filteredPricings.Count;
+                // Calculate next chunk page index (1-based)
+                int pageIndex = (currentCount / _serverChunkSize) + 1;
+
+                var response = await DIContainer.PricingControllerAdmin.GetPricingsPage(
+                    pageIndex, 
+                    _serverChunkSize, 
+                    _currentPricingFilter);
+
+                if (response.Success)
+                {
+                    // Access named tuple elements
+                    var items = response.Data.Items;
+                    var total = response.Data.TotalCount;
+
+                    if (items != null)
+                    {
+                        _filteredPricings.AddRange(items);
+                        _totalRecordCount = total;
+                    }
+                    
+                    UpdatePricingPagination();
+                    
+                    // Only reload cards if resetting or if current view is affected
+                    if (reset || _currentPricingPage * _pricingPageSize > currentCount)
+                    {
+                        LoadPricingCards();
+                    }
+                }
+                else
+                {
+                   if (reset) MessageBox.Show(response.Message, "Notification", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(response.Message, "Notification",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"Error loading data chunk: {ex.Message}");
             }
         }
 
@@ -155,7 +213,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         }
         private void UpdatePricingPagination()
         {
-            int totalRecords = _filteredPricings.Count;
+            int totalRecords = _totalRecordCount; // Use Total Server Count
             _totalPricingPages = totalRecords > 0
                 ? (int)Math.Ceiling((double)totalRecords / _pricingPageSize)
                 : 1;
@@ -231,6 +289,37 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             tabMain.Font = new Font("Segoe UI", 11, FontStyle.Bold);
             tabMain.ItemSize = new Size(200, 45);
             tabMain.SizeMode = TabSizeMode.Fixed;
+
+            // FIX: Set BackColor explicitly to prevent transparency overlap issues
+            tabFlightPricing.BackColor = Color.White;
+            tabPromotions.BackColor = Color.White;
+            tabHistory.BackColor = Color.White;
+
+            // FIX: Configure Layout for Grid View (Vertical Scroll)
+            flpPricingCards.WrapContents = true;
+            flpPricingCards.AutoScroll = true;
+            flpPricingCards.FlowDirection = FlowDirection.LeftToRight;
+
+            flpPromoCards.WrapContents = true;
+            flpPromoCards.AutoScroll = true;
+            flpPromoCards.FlowDirection = FlowDirection.LeftToRight;
+
+            // FIX: Force Refresh on Tab Switch to prevent visual glitches
+            tabMain.SelectedIndexChanged += (s, e) =>
+            {
+                tabMain.SelectedTab?.Refresh();
+                
+                if (tabMain.SelectedTab == tabFlightPricing) 
+                {
+                    flpPricingCards.Visible = false; // Toggle visibility to force redraw
+                    flpPricingCards.Visible = true;
+                }
+                else if (tabMain.SelectedTab == tabPromotions)
+                {
+                    flpPromoCards.Visible = false;
+                    flpPromoCards.Visible = true;
+                }
+            };
 
             // Style cho Panels
             StylePanel(pnlFlightFilters, Color.White);
@@ -493,26 +582,35 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             {
                 Cursor = Cursors.WaitCursor;
 
-                var filter = new FlightPricingFilterDtoAdmin
+                // Extract actual filter values from DTO objects
+                string? routeFilter = null;
+                if (cboRoute.SelectedItem is RouteSelectDto routeDto)
                 {
-                    Route = cboRoute.SelectedItem?.ToString(),
-                    SeatClass = cboSeatClass.SelectedItem?.ToString(),
+                    routeFilter = routeDto.Code; // "HAN-SGN" format
+                }
+                else if (cboRoute.SelectedItem is string routeStr && routeStr != "All")
+                {
+                    routeFilter = routeStr;
+                }
+
+                string? seatClassFilter = null;
+                if (cboSeatClass.SelectedItem is SeatClassSelectDto seatDto)
+                {
+                    seatClassFilter = seatDto.Code; // ClassName
+                }
+                else if (cboSeatClass.SelectedItem is string scStr && scStr != "All")
+                {
+                    seatClassFilter = scStr;
+                }
+
+                _currentPricingFilter = new FlightPricingFilterDtoAdmin
+                {
+                    Route = routeFilter,
+                    SeatClass = seatClassFilter,
                     MinDiscountPercent = GetMinDiscountPercent()
                 };
 
-                var response = await DIContainer.PricingControllerAdmin.SearchPricings(filter);
-                if (response.Success && response.Data != null)
-                {
-                    _filteredPricings = response.Data.ToList();
-                    _currentPricingPage = 1; // Reset về trang 1 khi filter
-                    UpdatePricingPagination();
-                    LoadPricingCards();
-                }
-                else
-                {
-                    MessageBox.Show(response.Message, "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                await LoadPricingChunkAsync(reset: true);
             }
             catch (Exception ex)
             {
@@ -604,7 +702,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
 
             _isLoadingPricing = true;
-            flpPricingCards.Controls.Clear();
             try
             {
                 flpPricingCards.SuspendLayout();
@@ -648,7 +745,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         {
             var card = new Panel
             {
-                Size = new Size(350, 280),
+                Size = new Size(230, 280),
                 BackColor = GetGradientColor(pricing.DiscountPercent),
                 Margin = new Padding(10)
             };
@@ -656,7 +753,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             card.Paint += (s, e) =>
             {
                 e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                using (var path = GetRoundedRectPath(card.ClientRectangle, 15))
+                using (var path = GetRoundedRectPath(card.ClientRectangle, 10))
                 {
                     card.Region = new Region(path);
                 }
@@ -664,20 +761,30 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             var lblFlight = new Label
             {
-                Text = $"{pricing.FlightNumber} - {pricing.AirlineName}",
+                Text = $"{pricing.FlightNumber}",
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                Location = new Point(20, 20),
+                Location = new Point(10, 15),
                 AutoSize = true,
                 BackColor = Color.Transparent
+            };
+
+            var lblAirline = new Label 
+            {
+                 Text = pricing.AirlineName,
+                 ForeColor = Color.White,
+                 Font = new Font("Segoe UI", 8),
+                 Location = new Point(10, 40),
+                 AutoSize = true,
+                 BackColor = Color.Transparent
             };
 
             var lblRoute = new Label
             {
                 Text = pricing.Route,
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(20, 50),
+                Font = new Font("Segoe UI", 9),
+                Location = new Point(10, 60),
                 AutoSize = true,
                 BackColor = Color.Transparent
             };
@@ -685,21 +792,21 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             var lblDiscount = new Label
             {
 
-                Text = $"🔥 {pricing.DiscountPercent}% OFF",
+                Text = $"{pricing.DiscountPercent}% OFF",
                 BackColor = Color.FromArgb(100, 255, 255, 255),
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                Location = new Point(20, 85),
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                Location = new Point(130, 15),
                 AutoSize = true,
-                Padding = new Padding(10, 5, 10, 5)
+                Padding = new Padding(5, 2, 5, 2)
             };
 
             var lblOldPrice = new Label
             {
                 Text = $"{pricing.OriginalPrice:N0} ₫",
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 11, FontStyle.Strikeout),
-                Location = new Point(20, 130),
+                Font = new Font("Segoe UI", 9, FontStyle.Strikeout),
+                Location = new Point(10, 110),
                 AutoSize = true,
                 BackColor = Color.Transparent
             };
@@ -708,17 +815,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             {
                 Text = $"{pricing.DiscountedPrice:N0} ₫",
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 20, FontStyle.Bold),
-                Location = new Point(20, 155),
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                Location = new Point(10, 130),
                 AutoSize = true,
                 BackColor = Color.Transparent
             };
 
             var pnlInfo = new Panel
             {
-                Location = new Point(20, 205),
-                Size = new Size(310, 60),
-                BackColor = Color.FromArgb(100, 255, 255, 255)
+                Location = new Point(10, 180),
+                Size = new Size(210, 90),
+                BackColor = Color.FromArgb(50, 255, 255, 255)
             };
 
             var lblClass = new Label
@@ -726,8 +833,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
                 Text = $"Class: {pricing.SeatClass}",
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 9),
-                Location = new Point(10, 10),
+                Font = new Font("Segoe UI", 8),
+                Location = new Point(5, 5),
                 AutoSize = true,
                 BackColor = Color.Transparent
             };
@@ -737,8 +844,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
                 Text = $"Sold: {pricing.BookedSeats} | Avail: {pricing.AvailableSeats}",
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 9),
-                Location = new Point(10, 35),
+                Font = new Font("Segoe UI", 8),
+                Location = new Point(5, 25),
                 AutoSize = true,
                 BackColor = Color.Transparent
             };
@@ -747,7 +854,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             card.Controls.AddRange(new Control[]
             {
-                lblFlight, lblRoute, lblDiscount, lblOldPrice, lblNewPrice, pnlInfo
+                lblFlight, lblAirline, lblRoute, lblDiscount, lblOldPrice, lblNewPrice, pnlInfo
             });
 
             card.Cursor = Cursors.Hand;
@@ -757,32 +864,40 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         }
         private void LoadPromoCards()
         {
-            flpPromoCards.Controls.Clear();
-            var paged = GetPagedPromotions();
-            foreach (var promo in paged)
+            flpPromoCards.SuspendLayout();
+            try
             {
-                var card = CreatePromoCard(promo);
-                flpPromoCards.Controls.Add(card);
-            }
-
-            if (paged.Count == 0)
-            {
-                var lblEmpty = new Label
+                flpPromoCards.Controls.Clear();
+                var paged = GetPagedPromotions();
+                foreach (var promo in paged)
                 {
-                    Text = "No promotion data available",
-                    Font = new Font("Segoe UI", 12, FontStyle.Italic),
-                    ForeColor = Color.Gray,
-                    AutoSize = true,
-                    Margin = new Padding(20)
-                };
-                flpPromoCards.Controls.Add(lblEmpty);
+                    var card = CreatePromoCard(promo);
+                    flpPromoCards.Controls.Add(card);
+                }
+
+                if (paged.Count == 0)
+                {
+                    var lblEmpty = new Label
+                    {
+                        Text = "No promotion data available",
+                        Font = new Font("Segoe UI", 12, FontStyle.Italic),
+                        ForeColor = Color.Gray,
+                        AutoSize = true,
+                        Margin = new Padding(20)
+                    };
+                    flpPromoCards.Controls.Add(lblEmpty);
+                }
+            }
+            finally
+            {
+                flpPromoCards.ResumeLayout();
             }
         }
         private Panel CreatePromoCard(PromotionDtoAdmin promo)
         {
             var card = new Panel
             {
-                Size = new Size(400, 380),
+                Size = new Size(230, 280),
                 BackColor = Color.White,
                 Margin = new Padding(10),
                 BorderStyle = BorderStyle.FixedSingle
@@ -791,26 +906,26 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             card.Paint += (s, e) =>
             {
                 e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                using (var path = GetRoundedRectPath(card.ClientRectangle, 15))
+                using (var path = GetRoundedRectPath(card.ClientRectangle, 10))
                 {
                     card.Region = new Region(path);
                 }
             };
 
-            // Header
+            // Header - Color based on discount type and status
             var pnlHeader = new Panel
             {
                 Location = new Point(0, 0),
-                Size = new Size(400, 100),
-                BackColor = Color.FromArgb(67, 233, 123)
+                Size = new Size(230, 60),
+                BackColor = GetPromoHeaderColor(promo.DiscountType, promo.IsActive)
             };
 
             var lblCode = new Label
             {
                 Text = promo.PromoCode,
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                Location = new Point(20, 20),
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                Location = new Point(10, 10),
                 AutoSize = true,
                 BackColor = Color.Transparent
             };
@@ -819,20 +934,21 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             {
                 Text = promo.PromoName,
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 11),
-                Location = new Point(20, 55),
-                Size = new Size(360, 30),
-                BackColor = Color.Transparent
+                Font = new Font("Segoe UI", 8),
+                Location = new Point(10, 35),
+                Size = new Size(210, 20),
+                BackColor = Color.Transparent,
+                AutoEllipsis = true
             };
 
             pnlHeader.Controls.AddRange(new Control[] { lblCode, lblName });
 
-            // Discount Box
+            // Discount Box - Color based on discount type
             var pnlDiscount = new Panel
             {
-                Location = new Point(20, 120),
-                Size = new Size(360, 60),
-                BackColor = Color.FromArgb(240, 147, 251)
+                Location = new Point(10, 70),
+                Size = new Size(210, 40),
+                BackColor = GetPromoDiscountBoxColor(promo.DiscountType)
             };
 
             var lblDiscountValue = new Label
@@ -841,57 +957,55 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                     ? $"{promo.DiscountValue}%"
                     : $"{promo.DiscountValue:N0} ₫",
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 24, FontStyle.Bold),
-                Location = new Point(10, 15),
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                Location = new Point(5, 5),
                 AutoSize = true,
                 BackColor = Color.Transparent
             };
-
             pnlDiscount.Controls.Add(lblDiscountValue);
 
             // Info rows
-            int yPos = 200;
-            AddInfoRow(card, "Min Amount:", $"{promo.MinimumAmount:N0} ₫", yPos);
-            yPos += 30;
-            AddInfoRow(card, "Max Discount:", $"{promo.MaximumDiscount:N0} ₫", yPos);
-            yPos += 30;
-            AddInfoRow(card, "Usage:", $"{promo.UsageCount} / {promo.UsageLimit}", yPos);
-            yPos += 30;
-
-            // Progress bar
+            int yPos = 120;
+            AddInfoRow(card, "Min:", $"{promo.MinimumAmount:N0} ₫", yPos); // Shortened label
+            yPos += 20;
+            AddInfoRow(card, "Max Disc:", $"{promo.MaximumDiscount:N0} ₫", yPos);
+            yPos += 20;
+            
+            // Usage with progress
+            AddInfoRow(card, "Usage:", $"{promo.UsageCount}/{promo.UsageLimit}", yPos);
+            yPos += 20;
+            
             var pnlProgress = new Panel
             {
-                Location = new Point(120, yPos),
-                Size = new Size(260, 8),
+                Location = new Point(80, yPos - 5), // Adjusted below usage text
+                Size = new Size(140, 4),
                 BackColor = Color.FromArgb(233, 236, 239)
             };
-
-            int progressWidth = (int)(260 * promo.UsagePercentage / 100);
+            int progressWidth = (int)(140 * promo.UsagePercentage / 100);
             var pnlProgressFill = new Panel
             {
-                Location = new Point(0, 0),
-                Size = new Size(progressWidth, 8),
-                BackColor = Color.FromArgb(67, 233, 123)
+                 Location = new Point(0, 0),
+                 Size = new Size(progressWidth, 4),
+                 BackColor = Color.FromArgb(67, 233, 123)
             };
-
             pnlProgress.Controls.Add(pnlProgressFill);
             card.Controls.Add(pnlProgress);
 
-            yPos += 20;
-            AddInfoRow(card, "Validity:", $"{promo.ValidFrom:dd/MM} - {promo.ValidTo:dd/MM}", yPos);
+            yPos += 15;
+            AddInfoRow(card, "Valid:", $"{promo.ValidFrom:dd/MM}-{promo.ValidTo:dd/MM}", yPos);
 
             // Action buttons
             var pnlActions = new Panel
             {
-                Location = new Point(20, 330),
-                Size = new Size(360, 40)
+                Location = new Point(10, 240),
+                Size = new Size(210, 30) // 3 buttons of 70 width
             };
 
             var btnEdit = new Button
             {
-                Text = "✏️ Edit",
+                Text = "✏️",
                 Location = new Point(0, 0),
-                Size = new Size(115, 40),
+                Size = new Size(65, 30),
                 BackColor = Color.FromArgb(0, 123, 255),
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
@@ -902,9 +1016,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             var btnToggle = new Button
             {
-                Text = promo.IsActive ? "⏸ Pause" : "▶ Activate",
-                Location = new Point(122, 0),
-                Size = new Size(115, 40),
+                Text = promo.IsActive ? "⏸" : "▶", // Compact icons
+                Location = new Point(72, 0),
+                Size = new Size(65, 30),
                 BackColor = promo.IsActive ? Color.FromArgb(40, 167, 69) : Color.FromArgb(108, 117, 125),
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
@@ -916,12 +1030,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             var btnDelete = new Button
             {
                 Text = "🗑️",
-                Location = new Point(244, 0),
-                Size = new Size(115, 40),
+                Location = new Point(144, 0),
+                Size = new Size(65, 30),
                 BackColor = Color.FromArgb(220, 53, 69),
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 12, FontStyle.Bold)
+                Font = new Font("Segoe UI", 9, FontStyle.Bold)
             };
             btnDelete.FlatAppearance.BorderSize = 0;
             btnDelete.Click += async (s, e) => await DeletePromoAsync(promo);
@@ -932,35 +1046,53 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             return card;
         }
+
         private void AddInfoRow(Panel card, string label, string value, int yPos)
         {
-            var lblLabel = new Label
-            {
-                Text = label,
-                ForeColor = Color.Gray,
-                Font = new Font("Segoe UI", 9),
-                Location = new Point(20, yPos),
-                AutoSize = true
-            };
+             var lblLabel = new Label
+             {
+                 Text = label,
+                 ForeColor = Color.Gray,
+                 Font = new Font("Segoe UI", 8),
+                 Location = new Point(10, yPos),
+                 AutoSize = true
+             };
 
-            var lblValue = new Label
-            {
-                Text = value,
-                ForeColor = Color.Black,
-                Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                Location = new Point(160, yPos),
-                AutoSize = true
-            };
+             var lblValue = new Label
+             {
+                 Text = value,
+                 ForeColor = Color.Black,
+                 Font = new Font("Segoe UI", 8, FontStyle.Bold),
+                 Location = new Point(80, yPos), // Reduced X for smaller card
+                 AutoSize = true
+             };
 
-            card.Controls.AddRange(new Control[] { lblLabel, lblValue });
+             card.Controls.AddRange(new Control[] { lblLabel, lblValue });
         }
 
         private Color GetGradientColor(int discountPercent)
         {
-            if (discountPercent >= 30) return Color.FromArgb(240, 147, 251);
-            if (discountPercent >= 20) return Color.FromArgb(79, 172, 254);
-            if (discountPercent >= 10) return Color.FromArgb(102, 126, 234);
-            return Color.FromArgb(108, 117, 125);
+            // Modern color palette for pricing cards
+            if (discountPercent >= 30) return Color.FromArgb(102, 126, 234);  // Deep Purple-Blue
+            if (discountPercent >= 20) return Color.FromArgb(79, 172, 254);   // Sky Blue
+            if (discountPercent >= 10) return Color.FromArgb(67, 203, 212);   // Teal
+            if (discountPercent > 0)   return Color.FromArgb(52, 152, 219);   // Blue
+            return Color.FromArgb(108, 117, 125);  // Neutral Gray for 0%
+        }
+
+        private Color GetPromoHeaderColor(string discountType, bool isActive)
+        {
+            if (!isActive) return Color.FromArgb(149, 165, 166); // Gray for inactive
+            return discountType == "Percent" 
+                ? Color.FromArgb(52, 152, 219)    // Blue for Percent
+                : Color.FromArgb(39, 174, 96);    // Green for Fixed
+        }
+
+        private Color GetPromoDiscountBoxColor(string discountType)
+        {
+            return discountType == "Percent"
+                ? Color.FromArgb(155, 89, 182)    // Purple for Percent  
+                : Color.FromArgb(230, 126, 34);   // Orange for Fixed
         }
 
         private System.Drawing.Drawing2D.GraphicsPath GetRoundedRectPath(Rectangle rect, int radius)
