@@ -37,6 +37,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             ToDate.Text = flight.FlightDate.AddMinutes(flight.DurationMinutes).ToString("dd/MM/yyyy");
             ToCode.RightToLeft = RightToLeft.No;
             Prices.Text = string.Format("{0:N0} VND", flight.Price);
+            Airline.Text = flight.AirlineName;
         }
     }
 

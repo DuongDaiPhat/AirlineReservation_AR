@@ -38,7 +38,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             passwordTB.UseSystemPasswordChar = true; // mặc định che
             confirmPasswordTB.UseSystemPasswordChar = true;
             showPassword.Image = Resources.view; // mặc định eye open
-            showConfirmedPassword.Image = Resources.view;
+            showConfirmedPassword.Image = Resources.hide;
         }
 
         private void SignIn_Click(object sender, EventArgs e)
@@ -103,13 +103,14 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             {
                 // Hiện mật khẩu
                 passwordTB.UseSystemPasswordChar = false;
-                showPassword.Image = Resources.hide;
+                showPassword.Image = Resources.view;
             }
             else
             {
                 // Ẩn mật khẩu
                 passwordTB.UseSystemPasswordChar = true;
-                showPassword.Image = Resources.view;
+                showPassword.Image = Resources.hide;
+                
             }
         }
 
@@ -119,13 +120,14 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             {
                 // Hiện mật khẩu
                 confirmPasswordTB.UseSystemPasswordChar = false;
-                showConfirmedPassword.Image = Resources.hide;
+                showConfirmedPassword.Image = Resources.view;
             }
             else
             {
                 // Ẩn mật khẩu
                 confirmPasswordTB.UseSystemPasswordChar = true;
-                showConfirmedPassword.Image = Resources.view;
+                showConfirmedPassword.Image = Resources.hide;
+               
             }
         }
     }

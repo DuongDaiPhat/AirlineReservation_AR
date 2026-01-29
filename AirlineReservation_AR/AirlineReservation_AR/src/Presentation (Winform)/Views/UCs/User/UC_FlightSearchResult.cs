@@ -413,7 +413,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             selected.SeatsLeftByClass.TryGetValue(selected.SelectedSeatClassName, out int seatsLeft);
 
-            if (seatsLeft < totalPeople)
+            if ((seatsLeft < totalPeople))
             {
                 var popup = new AdjustSearchParamsForm(_params);
                 if (popup.ShowDialog() != DialogResult.OK) return;
@@ -467,7 +467,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             if (form == null) return;
 
             var screen = new UC_FilloutInform();
-            screen.SetFlightData(flight, retrunFlight, _params);
+            screen.SetFlightData(flight, retrunFlight, _params, isReturnPage);
             form.SwitchScreen(screen);
         }
 
@@ -695,71 +695,29 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             }
         }
 
-        private void AddBubbleToFlow(Control bubble, bool isUser)
-        {
-            // wrapper = 1 dòng chat
-            var wrapper = new Panel
-            {
-                Width = flowChat.ClientSize.Width - 20, // full width
-                AutoSize = true,
-                Margin = new Padding(0, 8, 0, 8)
-            };
-
-            // bubble tự resize theo text
-            bubble.AutoSize = true;
-
-            wrapper.Controls.Add(bubble);
-
-            // căn trái / phải
-            if (isUser)
-            {
-                bubble.Left = wrapper.Width - bubble.Width;
-                bubble.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            }
-            else
-            {
-                bubble.Left = 0;
-                bubble.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-            }
-
-            flowChat.Controls.Add(wrapper);
-
-            // auto scroll xuống cuối
-            flowChat.ScrollControlIntoView(wrapper);
-        }
-
 
         private async void CallAI_Click(object sender, EventArgs e)
         {
             try
             {
                 ShowLoading();
-
                 if (string.IsNullOrWhiteSpace(txtAI.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập preference", "Thông báo");
+                    MessageBox.Show("Please enter preference", "Notification");
                     return;
                 }
-                
-                var txtUserBubble = new TextBox();
-                txtUserBubble.Text = txtAI.Text;
-                txtUserBubble.Font = new Font(
-                    "Segoe UI Semibold",
-                    10F,
-                    FontStyle.Regular
-                );
-                AddBubbleToFlow(txtUserBubble, true);
 
-                txtUserBubble.Text = "Đang phân tích...";
-                AddBubbleToFlow(txtUserBubble, false);
+
+                // Clear input
+                string userInput = txtAI.Text;
+                txtAI.Clear();
+
                 var request = new
                 {
-                    userText = txtAI.Text
+                    userText = userInput
                 };
-
                 var json = JsonSerializer.Serialize(request);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-
                 var response = await _httpClient.PostAsync(
                     $"{API_BASE_URL}/v1/api/AI/analyze-preference",
                     content
@@ -780,7 +738,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                      }
                  );
 
-
                 if (!result.success)
                 {
                     throw new Exception(result.error ?? "Unknown error");
@@ -788,23 +745,23 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
                 var userPreference = result.data;
 
-                // Chọn source flights
                 List<FlightResultDTO> sourceFlights = isReturnPage
                     ? _returnOriginal
                     : _outboundOriginal;
 
-                // 3️⃣ Khởi tạo service
                 var bestFlightService = new BestFlightService(sourceFlights);
-
-                // 4️⃣ Rank flights
                 var rankedFlights = bestFlightService.RankFlights(
                     sourceFlights,
                     userPreference,
                     f => 0
                 );
-                txtUserBubble.Text = "Kết quả tìm kím đã có!";
-                AddBubbleToFlow(txtUserBubble, false);
-                //  Render lại UI
+
+                if (isReturnPage)
+                {
+                    ShowReturnFlightUI(rankedFlights);
+                    CloseLoading();
+                    return;
+                }
                 RenderAllFlights(rankedFlights);
                 CloseLoading();
             }
@@ -813,8 +770,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 CloseLoading();
                 AnnouncementForm announcementForm = new AnnouncementForm();
                 announcementForm.SetAnnouncement(
-                    "Lỗi hệ thống",
-                    $"Không thể kết nối AI: {ex.Message}",
+                    "System Error",
+                    $"Cannot connect to AI: {ex.Message}",
                     false,
                     null
                 );

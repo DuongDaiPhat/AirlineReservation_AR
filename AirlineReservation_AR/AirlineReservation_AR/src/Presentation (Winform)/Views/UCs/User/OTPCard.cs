@@ -27,8 +27,8 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             {
                 this.SelectNextControl(current, true, true, true, true);
             }
-        }
 
+        }
 
         private void txtOtp_KeyPress(object sender, KeyPressEventArgs e)
         {

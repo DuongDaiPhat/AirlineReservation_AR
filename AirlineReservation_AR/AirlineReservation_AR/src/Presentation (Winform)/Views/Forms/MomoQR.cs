@@ -64,13 +64,18 @@ namespace MomoQR
             var client = new HttpClient();
             try
             {
+
+                if (!string.IsNullOrEmpty(_promoCode))
+                {
+                    var result = _promotionController.ApplyPromotion(_promoCode, _bookingId, _dicount);
+
+                }
                 var dto = new
                 {
                     BookingId = _bookingId,
                     Amount = (long)_amount - _dicount,
                     Method = "MoMo",
                 };
-                var result = _promotionController.ApplyPromotion(_promoCode, _bookingId, _dicount);
                 
                 var response = await client.PostAsync(
                     "http://localhost:5080/v1/api/PaymentAPI/create",
@@ -191,7 +196,7 @@ namespace MomoQR
         {
             using var client = new HttpClient();
 
-            client.BaseAddress = new Uri("https://localhost:5001/");
+            client.BaseAddress = new Uri("http://localhost:5080/");
 
             var response = await client.PostAsync(
                 $"v1/api/EmailAPI/booking-confirmation/{bookingId}",
@@ -224,8 +229,9 @@ namespace MomoQR
                 announcementForm.Show();
                 return;
             }
+            
             _promoCode = txtPromoCode.Text.Trim();
-            try
+                try
             {
                 decimal discount = _promotionController.getDiscountPercentage(_promoCode, _bookingId, _amount);
                 if (discount > 0)

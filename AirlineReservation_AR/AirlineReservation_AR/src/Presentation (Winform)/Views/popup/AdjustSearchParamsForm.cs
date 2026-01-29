@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
@@ -157,31 +158,42 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
         {
             try
             {
-                // Validate dữ liệu
                 if (cboSeatClass.SelectedValue == null)
                 {
-                    MessageBox.Show("Vui lòng chọn hạng ghế!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    AnnouncementForm announcementForm = new AnnouncementForm();
+                    announcementForm.SetAnnouncement("Thông báo!", "Vui lòng chọn hạng ghế!", false, null);
+                    announcementForm.Show();
                     return;
                 }
 
                 if (adult < 1)
                 {
-                    MessageBox.Show("Phải có ít nhất 1 người lớn!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    AnnouncementForm announcementForm = new AnnouncementForm();
+                    announcementForm.SetAnnouncement("Thông báo", "Phải có ít nhất 1 người lớn!", false, null);
+                    announcementForm.Show();
                     return;
                 }
 
-                // Kiểm tra tổng số hành khách
-                int totalPassengers = adult + child + infant;
-                if (totalPassengers > 9)
+                //  Tổng người (chỉ tính người lớn + trẻ em)
+                int totalPeople = adult + child;
+                if (totalPeople > 7)
                 {
-                    MessageBox.Show("Tổng số hành khách không được vượt quá 9 người!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    AnnouncementForm announcementForm = new AnnouncementForm();
+                    announcementForm.SetAnnouncement("Thông báo", "Tổng số người lớn và trẻ em không được vượt quá 7!", false, null);
+                    announcementForm.Show();
                     return;
                 }
 
-                // Tạo object mới với dữ liệu đã cập nhật
+                //  Mỗi người lớn chỉ được kèm 1 em bé
+                if (infant > adult)
+                {
+                    AnnouncementForm announcementForm = new AnnouncementForm();
+                    announcementForm.SetAnnouncement("Thông báo", "Số em bé không được vượt quá số người lớn!", false, null);
+                    announcementForm.Show();
+                    return;
+                }
+
+                // Tạo object mới
                 UpdatedParams = new FlightSearchParams
                 {
                     FromCode = _original.FromCode,
@@ -198,9 +210,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi lưu dữ liệu: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm = new AnnouncementForm();
+                announcementForm.SetAnnouncement("Lỗi", "Lỗi khi lưu dữ liệu: {ex.Message}", false, null);
+                announcementForm.Show();
             }
         }
+
     }
 }

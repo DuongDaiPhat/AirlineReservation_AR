@@ -340,6 +340,7 @@
             linkLabel1.TabIndex = 36;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "Return Login Pgae";
+            linkLabel1.Click += guna2HtmlLabel10_Click;
             // 
             // ForgotPassword
             // 

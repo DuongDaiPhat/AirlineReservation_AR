@@ -565,7 +565,7 @@ BEGIN
     
     SET @PassengerID = SCOPE_IDENTITY();
     
-    INSERT INTO BookingFlights (BookingID, FlightID, TripType) VALUES (@BookingID, @FlightIDTicket, 'OneWay');
+    INSERT INTO BookingFlights (BookingID, FlightID, Status) VALUES (@BookingID, @FlightIDTicket, 'Booked');
     SET @BookingFlightID = SCOPE_IDENTITY();
     
     -- Ticket status

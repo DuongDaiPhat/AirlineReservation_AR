@@ -17,11 +17,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
         public event Action<Dictionary<string, ServiceOption>> OnServicesReturnChanged;
 
         private bool isRoundTrip = false;
-        public PopupAddBaggage(Dictionary<string, ServiceOption> _servicePassengers, Dictionary<string, ServiceOption> _servicePassengersReturn)
+        public PopupAddBaggage(Dictionary<string, ServiceOption> _servicePassengers, Dictionary<string, ServiceOption> _servicePassengersReturn, bool isRoundTrip)
         {
             servicePassengers = _servicePassengers;
             servicePassengersReturn = _servicePassengersReturn;
             InitializeComponent();
+            if (isRoundTrip == false) {
+                guna2Panel2.Enabled = false;
+            }
             generatePassengerPanels();
             updateSummary();
         }

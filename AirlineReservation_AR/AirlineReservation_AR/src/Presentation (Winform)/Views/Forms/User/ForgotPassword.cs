@@ -41,6 +41,15 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
             int nHeightEllipse
         );
 
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+
+            IntPtr region = CreateRoundRectRgn(
+                0, 0, this.Width, this.Height, 20, 20);
+
+            this.Region = Region.FromHrgn(region);
+        }
 
         private async void guna2GradientButton1_Click(object sender, EventArgs e)
         {
@@ -63,6 +72,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                     But1.ForeColor = Color.Gray;
                     But2.FillColor = Color.FromArgb(255, 128, 0);
                     But2.ForeColor = Color.White;
+                    guna2GradientButton1.Text = "Verify OTP";
                 }
                 // Verify OTP
                 else if (!_isEmailSent && !_isOtp && !_newPassword)
@@ -86,6 +96,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                     await VerifyOtpAsync(_email, otp);
                     otpCard1.Visible = false;
                     guna2HtmlLabel6.Visible = true;
+                    Email.Clear();
                     Email.Visible = true;
                     EmailLb.Text = "New Password";
                     Password.Text = "New Password";
@@ -97,6 +108,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                     But2.ForeColor = Color.Gray;
                     But3.FillColor = Color.FromArgb(255, 128, 0);
                     But3.ForeColor = Color.White;
+                    guna2GradientButton1.Text = "Reset Password";
                     _isOtp = true;
                 }
                 // Reset password

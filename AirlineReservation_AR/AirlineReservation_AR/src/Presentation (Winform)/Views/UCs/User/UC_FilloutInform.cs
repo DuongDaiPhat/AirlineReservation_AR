@@ -43,9 +43,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         //    RenderDefaultSummary();
         //}
 
-        public void SetFlightData(FlightResultDTO flight, FlightResultDTO returnFlight, FlightSearchParams p)
+        public void SetFlightData(FlightResultDTO flight, FlightResultDTO returnFlight, FlightSearchParams p, bool isRoudTrip)
                 {
                     _searchParams = p;
+                    isRoundTripCheck = isRoudTrip;
 
                     _outboundSegment = new FlightSegmentContext
                     {
@@ -141,7 +142,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         }
         private void btnAddBaggage_Click(object sender, EventArgs e)
         {
-            var popup = new PopupAddBaggage(_outboundSegment.PassengerServices, _returnSegment.PassengerServices);
+            var popup = new PopupAddBaggage(_outboundSegment.PassengerServices, _returnSegment.PassengerServices, isRoundTripCheck);
 
             popup.OnServicesChanged += service =>
             {
