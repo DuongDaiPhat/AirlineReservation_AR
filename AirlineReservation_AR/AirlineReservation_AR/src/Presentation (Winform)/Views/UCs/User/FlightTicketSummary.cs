@@ -1,5 +1,6 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -21,7 +23,29 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
         public FlightTicketSummary()
         {
             InitializeComponent();
+        }
 
+        /// <summary>
+        /// Gán ảnh QR vào pictureBox QR
+        /// </summary>
+        private Bitmap GenerateQr(string bookingCode)
+        {
+            var payload = new { bookingCode };
+            string json = JsonSerializer.Serialize(payload);
+
+            var generator = new QRCodeGenerator();
+            var data = generator.CreateQrCode(json, QRCodeGenerator.ECCLevel.Q);
+            var qr = new QRCode(data);
+
+            return qr.GetGraphic(20);
+        }
+        public void SetQrImage()
+        {
+            if (_booking == null || QR == null)
+                return;
+
+            // EmailService.GenerateQr expects a string booking code (booking reference)
+            QR.Image = GenerateQr(_booking.BookingReference);
         }
 
         private void guna2HtmlLabel2_Click(object sender, EventArgs e)

@@ -129,7 +129,7 @@
             btnGetDaHuy.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnGetDaHuy.Size = new Size(120, 25);
             btnGetDaHuy.TabIndex = 18;
-            btnGetDaHuy.Text = "Đã hủy";
+            btnGetDaHuy.Text = "Cancelled";
             // 
             // btnGetToday
             // 
@@ -150,7 +150,7 @@
             btnGetToday.ShadowDecoration.CustomizableEdges = customizableEdges4;
             btnGetToday.Size = new Size(120, 25);
             btnGetToday.TabIndex = 17;
-            btnGetToday.Text = "Hôm nay";
+            btnGetToday.Text = "Today";
             // 
             // btnGetChoThanhToan
             // 
@@ -171,7 +171,7 @@
             btnGetChoThanhToan.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnGetChoThanhToan.Size = new Size(120, 25);
             btnGetChoThanhToan.TabIndex = 16;
-            btnGetChoThanhToan.Text = "Chờ thanh toán";
+            btnGetChoThanhToan.Text = "Pending Payment";
             // 
             // btnGetAll
             // 
@@ -192,7 +192,7 @@
             btnGetAll.ShadowDecoration.CustomizableEdges = customizableEdges8;
             btnGetAll.Size = new Size(120, 25);
             btnGetAll.TabIndex = 15;
-            btnGetAll.Text = "Tất cả";
+            btnGetAll.Text = "All";
             // 
             // label4
             // 
@@ -203,7 +203,7 @@
             label4.Name = "label4";
             label4.Size = new Size(125, 15);
             label4.TabIndex = 14;
-            label4.Text = "Trạng thái thanh toán";
+            label4.Text = "Payment Status";
             // 
             // label3
             // 
@@ -214,7 +214,7 @@
             label3.Name = "label3";
             label3.Size = new Size(110, 15);
             label3.TabIndex = 13;
-            label3.Text = "Trạng thái booking";
+            label3.Text = "Booking Status";
             // 
             // cboStatusPayment
             // 
@@ -263,7 +263,7 @@
             label2.Name = "label2";
             label2.Size = new Size(59, 15);
             label2.TabIndex = 10;
-            label2.Text = "Đến ngày";
+            label2.Text = "To Date";
             // 
             // dtpDenNgay
             // 
@@ -310,7 +310,7 @@
             lblFlightDate.Name = "lblFlightDate";
             lblFlightDate.Size = new Size(51, 15);
             lblFlightDate.TabIndex = 5;
-            lblFlightDate.Text = "Từ ngày";
+            lblFlightDate.Text = "From Date";
             // 
             // textEmailSDT
             // 
@@ -327,7 +327,7 @@
             textEmailSDT.Location = new Point(269, 46);
             textEmailSDT.Margin = new Padding(0);
             textEmailSDT.Name = "textEmailSDT";
-            textEmailSDT.PlaceholderText = "Tìm theo email hoặc SĐT";
+            textEmailSDT.PlaceholderText = "Search by email or phone";
             textEmailSDT.SelectedText = "";
             textEmailSDT.ShadowDecoration.CustomizableEdges = customizableEdges18;
             textEmailSDT.Size = new Size(200, 40);
@@ -342,7 +342,7 @@
             label1.Name = "label1";
             label1.Size = new Size(114, 15);
             label1.TabIndex = 3;
-            label1.Text = "Email/Số điện thoại";
+            label1.Text = "Email / Phone";
             // 
             // txtBookingID
             // 
@@ -359,7 +359,7 @@
             txtBookingID.Location = new Point(20, 46);
             txtBookingID.Margin = new Padding(0);
             txtBookingID.Name = "txtBookingID";
-            txtBookingID.PlaceholderText = "VD: ABC123";
+            txtBookingID.PlaceholderText = "Ex: ABC123";
             txtBookingID.SelectedText = "";
             txtBookingID.ShadowDecoration.CustomizableEdges = customizableEdges20;
             txtBookingID.Size = new Size(200, 40);
@@ -374,7 +374,7 @@
             lblFlightNo.Name = "lblFlightNo";
             lblFlightNo.Size = new Size(72, 15);
             lblFlightNo.TabIndex = 1;
-            lblFlightNo.Text = "Mã booking";
+            lblFlightNo.Text = "Booking Ref";
             // 
             // dgvBooking
             // 
@@ -399,7 +399,7 @@
             // 
             // colBookingID
             // 
-            colBookingID.HeaderText = "Mã booking";
+            colBookingID.HeaderText = "Booking Ref";
             colBookingID.MinimumWidth = 6;
             colBookingID.Name = "colBookingID";
             colBookingID.ReadOnly = true;
@@ -407,7 +407,7 @@
             // 
             // colKH
             // 
-            colKH.HeaderText = "Khách hàng";
+            colKH.HeaderText = "Customer";
             colKH.MinimumWidth = 6;
             colKH.Name = "colKH";
             colKH.ReadOnly = true;
@@ -415,7 +415,7 @@
             // 
             // colChuyenBay
             // 
-            colChuyenBay.HeaderText = "Chuyến bay";
+            colChuyenBay.HeaderText = "Flight Info";
             colChuyenBay.MinimumWidth = 6;
             colChuyenBay.Name = "colChuyenBay";
             colChuyenBay.ReadOnly = true;
@@ -423,7 +423,7 @@
             // 
             // colMember
             // 
-            colMember.HeaderText = "Số hành khách";
+            colMember.HeaderText = "Passengers";
             colMember.MinimumWidth = 6;
             colMember.Name = "colMember";
             colMember.ReadOnly = true;
@@ -431,7 +431,7 @@
             // 
             // colNgayDat
             // 
-            colNgayDat.HeaderText = "Ngày đặt";
+            colNgayDat.HeaderText = "Booking Date";
             colNgayDat.MinimumWidth = 6;
             colNgayDat.Name = "colNgayDat";
             colNgayDat.ReadOnly = true;
@@ -439,7 +439,7 @@
             // 
             // colTotalPice
             // 
-            colTotalPice.HeaderText = "Tổng tiền";
+            colTotalPice.HeaderText = "Total Price";
             colTotalPice.MinimumWidth = 6;
             colTotalPice.Name = "colTotalPice";
             colTotalPice.ReadOnly = true;
@@ -447,7 +447,7 @@
             // 
             // colPayment
             // 
-            colPayment.HeaderText = "Thanh toán";
+            colPayment.HeaderText = "Payment";
             colPayment.MinimumWidth = 6;
             colPayment.Name = "colPayment";
             colPayment.ReadOnly = true;
@@ -455,7 +455,7 @@
             // 
             // colStatus
             // 
-            colStatus.HeaderText = "Trạng thái";
+            colStatus.HeaderText = "Status";
             colStatus.MinimumWidth = 6;
             colStatus.Name = "colStatus";
             colStatus.ReadOnly = true;
@@ -463,7 +463,7 @@
             // 
             // colThaoTac
             // 
-            colThaoTac.HeaderText = "Thao tác";
+            colThaoTac.HeaderText = "Action";
             colThaoTac.MinimumWidth = 6;
             colThaoTac.Name = "colThaoTac";
             colThaoTac.Width = 120;

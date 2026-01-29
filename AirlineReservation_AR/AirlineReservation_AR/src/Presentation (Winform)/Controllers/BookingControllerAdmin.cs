@@ -37,5 +37,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
         {
             return await _bookingService.CancelBookingAsync(bookingReference);
         }
+
+        public async Task<bool> UpdateCustomerAsync(string bookingRef, string name, string phone, string email)
+        {
+            return await _bookingService.UpdateBookingCustomerAsync(bookingRef, name, phone, email);
+        }
     }
 }

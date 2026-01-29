@@ -17,8 +17,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
             _service = service;
         }
 
-        public int CreatePayment(PaymentCreateDTO dto)
-            => _service.CreatePayment(dto);
+        public async Task<int> CreatePayment(PaymentCreateDTO dto)
+        {
+            return await _service.CreatePaymentAsync(dto);
+        }
 
 
         public void MarkSuccess(int bookingId, string momoTransId)

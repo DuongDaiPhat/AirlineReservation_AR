@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Application.Services;
 using AirlineReservation_AR.src.Domain.DTOs;
@@ -72,25 +73,29 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User
                     return;
                 }
 
-                // Cập nhật UI của chính card này (option: có thể remove luôn khỏi pending list)
+                // Update UI of this card (option: can be removed from pending list)
                 var parentFlow = this.Parent as FlowLayoutPanel;
                 if (parentFlow != null)
                 {
                     parentFlow.Controls.Remove(this);
-                    this.Dispose(); // giải phóng luôn
+                    this.Dispose(); // release immediately
                 }
 
 
-                // Báo cho parent biết để reload Pending + Transaction nếu muốn
+                // Notify parent to reload Pending + Transaction if needed
                 BookingCancelled?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Đã xảy ra lỗi khi hủy booking:\n" + ex.Message,
+                    "An error occurred when canceling booking:\n" + ex.Message,
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Refund failed", "Error when canceling booking", false, null);
+                announcementForm1.Show();
             }
         }
         private async void ExpirationTimer_Tick(object? sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.User;
@@ -50,8 +51,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         private async void btnReschedule_Click(object sender, EventArgs e)
         {
             if (_ticket == null || _booking == null)
-            {
-                MessageBox.Show("Không có dữ liệu vé.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            { 
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Reschedule failed", "No ticket data", false, null);
+                announcementForm1.Show();
                 return;
             }
 
@@ -60,24 +63,23 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             if (!eligibility.CanReschedule)
             {
-                MessageBox.Show(
-                    eligibility.Reason ?? "This ticket is non-refundable.",
-                    "Can't reschedule",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Refund failed", "Ticket cannot be refunded", false, null);
+                announcementForm1.Show();
                 return;
             }
 
-            // 2. Mở form reschedule
+            // 2. Open reschedule form
             using (var frm = new FrmRescheduleSelectDate(_ticket, _booking))
             {
                 frm.ShowDialog();
 
                 if (frm.RescheduleSucceeded)
                 {
-                    MessageBox.Show("Đổi lịch thành công!");
-                    // Gọi method reload dữ liệu ngoài UCPaidTickets nếu bạn có
+                    AnnouncementForm announcementForm1 = new AnnouncementForm();
+                    announcementForm1.SetAnnouncement("Reschedule successful", "Your ticket has been rescheduled", true, null);
+                    announcementForm1.Show();
+                    // Call method to reload data outside UCPaidTickets if you have
                     OnRescheduleSuccess?.Invoke();
                 }
             }

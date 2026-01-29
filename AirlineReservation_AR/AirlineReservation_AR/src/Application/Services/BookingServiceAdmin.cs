@@ -187,6 +187,53 @@ namespace AirlineReservation_AR.src.Application.Services
             return true;
         }
 
+        public async Task<bool> UpdateBookingCustomerAsync(string bookingReference, string fullName, string phone, string email)
+        {
+             using var db = DIContainer.CreateDb();
+             var booking = await db.Bookings.Include(b => b.User).FirstOrDefaultAsync(b => b.BookingReference == bookingReference);
+             
+             if (booking == null) return false;
+
+             // If booking has linked user, updates might need to be on User entity or just Booking contact info?
+             // Assuming Booking entity has contact fields. Logic: Update Booking Contact Info.
+             // If User is linked, we generally Update the User info OR just the booking specific contact info.
+             // Based on DTO, we have "CustomerName, ContactEmail, ContactPhone".
+             // CustomerName comes from User.FullName. So we might need to update User if exists.
+
+             if (booking.User != null)
+             {
+                 booking.User.FullName = fullName;
+                 // Note: Updating User phone/email might affect login or other bookings. 
+                 // Safest is to update Booking's snapshots if they exist, or Users if that's the requirement.
+                 // Given the request "Edit Customer Info", typically means fixing typos for THIS booking or updating contact.
+                 // Let's update User properties if linked, AND Booking properties if they act as snapshots.
+                 
+                 // However, Booking entity definition in Step 1852 shows:
+                 // ContactEmail = booking.ContactEmail
+                 // ContactPhone = booking.ContactPhone
+                 // CustomerName = booking.User?.FullName
+                 
+                 // So we update:
+                 booking.ContactEmail = email;
+                 booking.ContactPhone = phone;
+                 booking.User.FullName = fullName;
+             }
+             else
+             {
+                 // No user linked? (Guest booking logic if applicable, but code shows User inclusion).
+                 // If User is null, we can't update name unless Booking has guest name field.
+                 // DTO says: CustomerName = booking.User?.FullName ?? "N/A"
+                 // So if User is null, we can't update Name.
+                 // Let's assume User is always present for now based on 'Include(b=>b.User)'.
+                 
+                 booking.ContactEmail = email;
+                 booking.ContactPhone = phone;
+             }
+
+             await db.SaveChangesAsync();
+             return true;
+        }
+
         private BookingDtoAdmin MapToDto(Booking booking)
         {
             var bookingFlight = booking.BookingFlights?.FirstOrDefault();

@@ -1,4 +1,8 @@
-﻿using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
+﻿using AirlineReservation_AR.Properties;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
+using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
+using AirlineReservation_AR.src.Infrastructure.DI;
+using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
@@ -9,9 +13,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AirlineReservation_AR.Properties;
-using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
-using AirlineReservation_AR.src.Infrastructure.DI;
 //using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 //using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 
@@ -37,7 +38,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         {
             passwordTB.UseSystemPasswordChar = true; // mặc định che
             confirmPasswordTB.UseSystemPasswordChar = true;
-            showPassword.Image = Resources.view; // mặc định eye open
+            showPassword.Image = Resources.hide; // mặc định eye open
             showConfirmedPassword.Image = Resources.hide;
         }
 
@@ -53,7 +54,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         {
             if (emailTB.Text == "" && userNameTB.Text == "" && numberTB.Text == "" && passwordTB.Text == "" && confirmPasswordTB.Text == "")
             {
-                MessageBox.Show("Vui lòng điền thông tin yêu câu.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Registration failed", $"Please fill in all information", false, null);
+                announcementForm1.Show();
+                announcementForm1.BringToFront();
+
                 return;
             }
             if (!validation.IsValidGoogleEmail(emailTB.Text)) return;
@@ -61,11 +66,15 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             if (!validation.IsValidPassword(passwordTB.Text)) return;
             if (!Equals(passwordTB.Text, confirmPasswordTB.Text))
             {
-                MessageBox.Show("Mật khẩu không đồng bộ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Registration failed", $"Passwords do not match", false, null);
+                announcementForm1.Show();
+                announcementForm1.BringToFront();
+
                 return;
             }
 
-            // 1. Tạo User mới
+            // 1. Create new User
             var user = await _controller.RegisterAsync(
                 userNameTB.Text,
                 emailTB.Text,
@@ -74,21 +83,28 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
 
             if (user == null)
             {
-                MessageBox.Show("Đăng ký thất bại! Vui lòng thử lại.",
-                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Registration failed", $"Phone number, Email or username has already been used", false, null);
+                announcementForm1.Show();
+                announcementForm1.BringToFront();
                 return;
             }
 
             var addRole = await _userContrller.AddUserRoleAsync(emailTB.Text, 3);
             if (!addRole.Success)
             {
-                MessageBox.Show("Đăng ký thành công nhưng không thể gán role người dùng.\n" +
-                                $"Lý do: {addRole.Message}",
-                                "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                AnnouncementForm announcementForm1 = new AnnouncementForm();
+                announcementForm1.SetAnnouncement("Registration failed", $"Reason: {addRole.Message}", false, null);
+                announcementForm1.Show();
+                announcementForm1.BringToFront();
+
             }
 
-            MessageBox.Show("Đăng ký thành công!", "Thành công",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+            AnnouncementForm announcementForm = new AnnouncementForm();
+            announcementForm.SetAnnouncement("Registration successful", "Please login to continue", true, null);
+            announcementForm.Show();
+            announcementForm.BringToFront();
 
 
             //Điều hướng sang SignIn
@@ -129,6 +145,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
                 showConfirmedPassword.Image = Resources.hide;
                
             }
+        }
+
+        private void passwordTB_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

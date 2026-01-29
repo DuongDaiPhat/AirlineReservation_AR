@@ -213,7 +213,7 @@
             picLogo.FillColor = Color.Transparent;
             picLogo.Image = Properties.Resources.logo_blacktext;
             picLogo.ImageRotate = 0F;
-            picLogo.Location = new Point(30, 14);
+            picLogo.Location = new Point(3, 9);
             picLogo.Margin = new Padding(0);
             picLogo.Name = "picLogo";
             picLogo.ShadowDecoration.CustomizableEdges = customizableEdges11;

@@ -132,15 +132,16 @@
             // txtPassengerInfo
             // 
             txtPassengerInfo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            txtPassengerInfo.AutoSize = false;
             txtPassengerInfo.BackColor = Color.Transparent;
             txtPassengerInfo.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPassengerInfo.Location = new Point(448, 32);
+            txtPassengerInfo.Location = new Point(400, 32);
             txtPassengerInfo.Margin = new Padding(3, 2, 3, 2);
             txtPassengerInfo.Name = "txtPassengerInfo";
-            txtPassengerInfo.Size = new Size(74, 20);
+            txtPassengerInfo.Size = new Size(122, 20);
             txtPassengerInfo.TabIndex = 13;
             txtPassengerInfo.Text = "Client: Kha";
-            txtPassengerInfo.TextAlignment = ContentAlignment.MiddleRight;
+            txtPassengerInfo.TextAlignment = ContentAlignment.TopRight;
             // 
             // guna2HtmlLabel5
             // 

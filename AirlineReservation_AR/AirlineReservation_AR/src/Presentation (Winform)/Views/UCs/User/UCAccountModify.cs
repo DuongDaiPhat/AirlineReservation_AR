@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Application.Services;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Helpers;
@@ -57,7 +58,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
                 return;
             }
 
-            _isLoading = true;
+            _isLoading = true;  
             try
             {
                 await LoadCountriesAsync();
@@ -206,8 +207,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             if (!ok)
             {
-                MessageBox.Show("Failed to update account.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm announcementForm = new AnnouncementForm();
+                announcementForm.SetAnnouncement("Update failed", "Information is invalid", false, null);
+                announcementForm.Show();
                 return;
             }
 
@@ -220,8 +222,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             DIContainer.CurrentUser.CityCode = cityCode;
 
             AccountUpdated?.Invoke(this, EventArgs.Empty);
-            MessageBox.Show("Account updated.",
-                "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            AnnouncementForm announcementForm1 = new AnnouncementForm();
+            announcementForm1.SetAnnouncement("Update successful", "Account information has been updated", true, null);
+            announcementForm1.Show();
         }
 
         // ================== VALIDATION ==================

@@ -18,5 +18,13 @@ namespace AirlineReservation_AR.src.Application.Interfaces
         Task DeleteAsync(int pricingId);
         Task<int> GetAvailableSeatsAsync(int flightId, int seatClassId);
         Task<FlightPricing?> GetByFlightAndClassAsync(int flightId, int seatClassId);
+        
+        // Pagination Support
+        Task<(IEnumerable<FlightPricing> Items, int TotalCount)> GetPricingsByPageAsync(
+            int skip, 
+            int take, 
+            string? route, 
+            string? seatClass, 
+            int? minDiscount);
     }
 }

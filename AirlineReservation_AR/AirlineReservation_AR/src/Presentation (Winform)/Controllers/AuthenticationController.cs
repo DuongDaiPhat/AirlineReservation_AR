@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Domain.DTOs;
 
@@ -32,10 +33,13 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
             {
                 return await _authentication.RegisterAsync(fullName, email, password, phone);
             }
-            catch
+            catch(Exception ex)
             {
-                // Quăng exception ra Form xử lý UI
-                throw;
+                AnnouncementForm form = new AnnouncementForm();
+                form.SetAnnouncement("Register Error", ex.Message, false, null);
+                form.Show();
+                form.BringToFront();
+                return null;
             }
         }
     }

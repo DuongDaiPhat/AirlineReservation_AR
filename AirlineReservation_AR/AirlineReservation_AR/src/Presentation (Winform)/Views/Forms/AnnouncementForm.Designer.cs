@@ -29,8 +29,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnnouncementForm));
             pictureBox1 = new PictureBox();
             titleLabel = new Label();
@@ -43,18 +43,20 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // 
             // pictureBox1
             // 
+            pictureBox1.Dock = DockStyle.Top;
             pictureBox1.Image = Resources.check;
-            pictureBox1.Location = new Point(96, 12);
+            pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(124, 72);
+            pictureBox1.Size = new Size(300, 84);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
             // titleLabel
             // 
-            titleLabel.Font = new Font("Fz Poppins SemBd", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            titleLabel.Location = new Point(0, 94);
+            titleLabel.Dock = DockStyle.Top;
+            titleLabel.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            titleLabel.Location = new Point(0, 84);
             titleLabel.Name = "titleLabel";
             titleLabel.Size = new Size(300, 30);
             titleLabel.TabIndex = 1;
@@ -63,10 +65,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // 
             // subtitleLabel
             // 
-            subtitleLabel.Font = new Font("Fz Poppins", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            subtitleLabel.Location = new Point(0, 121);
+            subtitleLabel.Dock = DockStyle.Top;
+            subtitleLabel.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            subtitleLabel.Location = new Point(0, 114);
             subtitleLabel.Name = "subtitleLabel";
-            subtitleLabel.Size = new Size(300, 30);
+            subtitleLabel.Size = new Size(300, 38);
             subtitleLabel.TabIndex = 2;
             subtitleLabel.Text = "Sign In Successful!";
             subtitleLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -74,16 +77,16 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             // completeBtn
             // 
             completeBtn.BorderRadius = 5;
-            completeBtn.CustomizableEdges = customizableEdges3;
+            completeBtn.CustomizableEdges = customizableEdges1;
             completeBtn.DisabledState.BorderColor = Color.DarkGray;
             completeBtn.DisabledState.CustomBorderColor = Color.DarkGray;
             completeBtn.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             completeBtn.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            completeBtn.Font = new Font("Fz Poppins Med", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            completeBtn.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             completeBtn.ForeColor = Color.White;
-            completeBtn.Location = new Point(108, 154);
+            completeBtn.Location = new Point(104, 155);
             completeBtn.Name = "completeBtn";
-            completeBtn.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            completeBtn.ShadowDecoration.CustomizableEdges = customizableEdges2;
             completeBtn.Size = new Size(85, 33);
             completeBtn.TabIndex = 7;
             completeBtn.Text = "OK";
@@ -106,11 +109,11 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(300, 200);
+            Controls.Add(subtitleLabel);
             Controls.Add(Closes);
             Controls.Add(completeBtn);
             Controls.Add(titleLabel);
             Controls.Add(pictureBox1);
-            Controls.Add(subtitleLabel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "AnnouncementForm";
             StartPosition = FormStartPosition.CenterScreen;

@@ -17,8 +17,10 @@ namespace AirlineReservation_AR.src.Application.Interfaces
         bool IsCacheLoaded();
         CacheInfo GetCacheInfo();
 
+        Task<bool> CreateFlightAsync(CreateFlightDtoAdmin flight);
         Task<bool> UpdateFlightAsync(FlightListDtoAdmin flight);
         Task<bool> CancelFlightAsync(int flightId);
+        Task<bool> DeleteFlightAsync(int flightId);
         Task<FlightListDtoAdmin> GetFlightByIdAsync(int flightId);
     }
 }
