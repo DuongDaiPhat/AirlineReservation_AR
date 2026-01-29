@@ -16,5 +16,6 @@ namespace AirlineReservation_AR.src.Application.Interfaces
         Task<IEnumerable<BookingDtoAdmin>> FilterBookingsAsync(BookingFilterDto filter);
         Task<bool> ConfirmPaymentAsync(string bookingReference);
         Task<bool> CancelBookingAsync(string bookingReference);
+        Task<bool> UpdateBookingCustomerAsync(string bookingReference, string fullName, string phone, string email);
     }
 }

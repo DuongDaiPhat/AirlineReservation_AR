@@ -116,7 +116,7 @@
             tabFlightPricing.Padding = new Padding(3);
             tabFlightPricing.Size = new Size(1032, 652);
             tabFlightPricing.TabIndex = 0;
-            tabFlightPricing.Text = "Giảm giá vé";
+            tabFlightPricing.Text = "Ticket Pricing";
             tabFlightPricing.UseVisualStyleBackColor = true;
             // 
             // panel1
@@ -176,7 +176,7 @@
             btnSearchFlights.ShadowDecoration.CustomizableEdges = customizableEdges20;
             btnSearchFlights.Size = new Size(180, 45);
             btnSearchFlights.TabIndex = 6;
-            btnSearchFlights.Text = "🔍 Tìm kiếm";
+            btnSearchFlights.Text = "🔍 Search";
             // 
             // cboDiscount
             // 
@@ -242,7 +242,7 @@
             label3.Name = "label3";
             label3.Size = new Size(76, 19);
             label3.TabIndex = 2;
-            label3.Text = "Mức giảm";
+            label3.Text = "Discount Level";
             // 
             // label2
             // 
@@ -251,7 +251,7 @@
             label2.Name = "label2";
             label2.Size = new Size(65, 19);
             label2.TabIndex = 1;
-            label2.Text = "Hạng vé";
+            label2.Text = "Seat Class";
             // 
             // label1
             // 
@@ -260,7 +260,7 @@
             label1.Name = "label1";
             label1.Size = new Size(77, 19);
             label1.TabIndex = 0;
-            label1.Text = "Tuyến bay";
+            label1.Text = "Route";
             // 
             // tabPromotions
             // 
@@ -273,7 +273,7 @@
             tabPromotions.Padding = new Padding(3);
             tabPromotions.Size = new Size(1032, 652);
             tabPromotions.TabIndex = 1;
-            tabPromotions.Text = "Mã khuyến mãi";
+            tabPromotions.Text = "Promo Codes";
             tabPromotions.UseVisualStyleBackColor = true;
             // 
             // panel2
@@ -397,7 +397,7 @@
             label7.Name = "label7";
             label7.Size = new Size(63, 19);
             label7.TabIndex = 3;
-            label7.Text = "Sắp xếp";
+            label7.Text = "Sort By";
             // 
             // label6
             // 
@@ -407,7 +407,7 @@
             label6.Name = "label6";
             label6.Size = new Size(76, 19);
             label6.TabIndex = 2;
-            label6.Text = "Trạng thái";
+            label6.Text = "Status";
             // 
             // label5
             // 
@@ -416,7 +416,7 @@
             label5.Name = "label5";
             label5.Size = new Size(100, 19);
             label5.TabIndex = 1;
-            label5.Text = "Loại giảm giá";
+            label5.Text = "Discount Type";
             // 
             // label4
             // 
@@ -425,7 +425,7 @@
             label4.Name = "label4";
             label4.Size = new Size(140, 19);
             label4.TabIndex = 0;
-            label4.Text = "Tìm mã khuyến mãi";
+            label4.Text = "Search Promo Code";
             // 
             // pnlPromoTop
             // 
@@ -453,7 +453,7 @@
             btnAddPromo.ShadowDecoration.CustomizableEdges = customizableEdges36;
             btnAddPromo.Size = new Size(180, 45);
             btnAddPromo.TabIndex = 1;
-            btnAddPromo.Text = "➕ Tạo KM mới";
+            btnAddPromo.Text = "➕ New Promo";
             btnAddPromo.Click += btnAddPromo_Click;
             // 
             // label8
@@ -463,7 +463,7 @@
             label8.Name = "label8";
             label8.Size = new Size(196, 19);
             label8.TabIndex = 0;
-            label8.Text = "📊 THỐNG KÊ KHUYẾN MÃI";
+            label8.Text = "📊 PROMOTION STATISTICS";
             // 
             // tabHistory
             // 
@@ -474,7 +474,7 @@
             tabHistory.Padding = new Padding(3);
             tabHistory.Size = new Size(1032, 652);
             tabHistory.TabIndex = 2;
-            tabHistory.Text = "Lịch sử";
+            tabHistory.Text = "History";
             tabHistory.UseVisualStyleBackColor = true;
             // 
             // dgvHistory

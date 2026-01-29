@@ -1,4 +1,5 @@
 ﻿using AirlineReservation_AR.src.Domain.DTOs;
+using AirlineReservation_AR.src.Application.Interfaces;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
 using AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin;
@@ -17,6 +18,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
     public partial class FlightManagementControl : UserControl
     {
         private int currentPage = 1;
+        private bool _isUpdatingPagination = false;
         private const int pageSize = 20;
         private int totalRecords = 0;
         private int totalPages = 0;
@@ -24,11 +26,13 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         private List<FlightListDtoAdmin> filteredFlights = new List<FlightListDtoAdmin>();
 
         private readonly FlightControllerAdmin _flightController = DIContainer.FlightControllerAdmin;
+        private readonly ILookupService _lookupService = DIContainer.LookupService;
+        
         public FlightManagementControl()
         {
             InitializeComponent();
             InitializeStyles();
-            InitializeData();
+            _ = InitializeFiltersAsync();  // Load dropdowns from DB
             InitializeEvents();
 
             LoadFlightDataAsync();
@@ -69,49 +73,57 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             dgvFlights.Cursor = Cursors.Hand;
         }
 
-        private void InitializeData()
+        private async Task InitializeFiltersAsync()
         {
-            // ComboBox - Hãng hàng không
-            cboAirline.Items.Clear();
-            cboAirline.Items.AddRange(new object[]
+            try
             {
-                "All",
-                "Vietnam Airlines",
-                "VietJet Air",
-                "Bamboo Airways",
-                "Vietravel Airlines",
-                "Pacific Airlines"
-            });
-            cboAirline.SelectedIndex = 0;
+                // Airlines dropdown - Load from DB
+                var airlines = await _lookupService.GetAirlinesAsync();
+                var airlineList = new List<AirlineSelectDto> 
+                { 
+                    new AirlineSelectDto { AirlineId = 0, DisplayName = "All" } 
+                };
+                airlineList.AddRange(airlines);
+                
+                cboAirline.DataSource = airlineList;
+                cboAirline.DisplayMember = "DisplayName";
+                cboAirline.ValueMember = "AirlineId";
+                // cboAirline.SelectedIndex = 0; // DataSource assignment usually sets it to first item
 
-            // ComboBox - Trạng thái
-            cboStatus.Items.Clear();
-            cboStatus.Items.AddRange(new object[]
+                // Airports dropdown - Load from DB
+                var airports = await _lookupService.GetAirportsAsync();
+                var airportList = new List<AirportSelectDto>
+                {
+                    new AirportSelectDto { AirportId = 0, DisplayName = "All" }
+                };
+                airportList.AddRange(airports);
+
+                cboDestination.DataSource = airportList;
+                cboDestination.DisplayMember = "DisplayName";
+                cboDestination.ValueMember = "AirportId";
+                // cboDestination.SelectedIndex = 0;
+
+                // Flight statuses dropdown - Load from service
+                var statuses = await _lookupService.GetFlightStatusesAsync();
+                var statusList = new List<StatusSelectDto>
+                {
+                    new StatusSelectDto { Code = "All", DisplayName = "All" }
+                };
+                statusList.AddRange(statuses);
+
+                cboStatus.DataSource = statusList;
+                cboStatus.DisplayMember = "DisplayName";
+                cboStatus.ValueMember = "Code";
+                // cboStatus.SelectedIndex = 0;
+
+                // DateTimePicker
+                guna2DateTimePicker1.Value = DateTime.Now;
+            }
+            catch (Exception ex)
             {
-                "All",
-                "Available",
-                "Full",
-                "Cancelled"
-            });
-            cboStatus.SelectedIndex = 0;
-
-            // ComboBox - Sân bay đến
-            cboDestination.Items.Clear();
-            cboDestination.Items.AddRange(new object[]
-            {
-                "All",
-                "Hanoi (HAN)",
-                "Da Nang (DAD)",
-                "Phu Quoc (PQC)",
-                "Nha Trang (CXR)",
-                "Can Tho (VCA)",
-                "Hue (HUI)",
-                "Vinh (VII)"
-            });
-            cboDestination.SelectedIndex = 0;
-
-            // DateTimePicker
-            guna2DateTimePicker1.Value = DateTime.Now;
+                MessageBox.Show($"Error loading filters: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void InitializeEvents()
@@ -122,7 +134,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             // DataGridView events
             dgvFlights.CellPainting += DgvFlights_CellPainting;
-            dgvFlights.CellClick += DgvFlights_CellClick;
+            // dgvFlights.CellClick += DgvFlights_CellClick; // Handled in Designer
             dgvFlights.CellFormatting += DgvFlights_CellFormatting;
 
             // Enter key in textbox
@@ -138,24 +150,26 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         {
             try
             {
-                // Hiển thị loading (optional)
+                // Show loading indicator
                 dgvFlights.Enabled = false;
                 Cursor = Cursors.WaitCursor;
 
                 if (paginationControl1 != null)
                     paginationControl1.Enabled = false;
-                // GỌI API LẤY DỮ LIỆU
+                    
+                // Fetch data from API
                 var flights = await _flightController.GetAllFlightsAsync();
 
-                // Gán vào list
+                // Assign to lists
                 allFlights = flights.ToList();
                 filteredFlights = new List<FlightListDtoAdmin>(allFlights);
                 totalRecords = filteredFlights.Count;
                 currentPage = 1;
-                // Hiển thị lên DataGridView
+                
+                // Display in DataGridView
                 LoadFlightData();
 
-                // Tắt loading
+                // Hide loading indicator
                 dgvFlights.Enabled = true;
                 if (paginationControl1 != null)
                     paginationControl1.Enabled = true;
@@ -163,12 +177,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}", "Lỗi",
+                MessageBox.Show($"Error loading flight data: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 dgvFlights.Enabled = true;
-                //if (paginationControl1 != null)
-                //    paginationControl1.Enabled = true;
                 Cursor = Cursors.Default;
             }
         }
@@ -183,8 +195,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
             if (paginationControl1 != null)
             {
+                _isUpdatingPagination = true;
                 paginationControl1.TotalPages = totalPages;
                 paginationControl1.CurrentPage = currentPage;
+                _isUpdatingPagination = false;
             }
 
             // Get data for current page
@@ -233,7 +247,28 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             {
                 ApplyFilters();
                 e.SuppressKeyPress = true;
+                e.SuppressKeyPress = true;
             }
+        }
+
+        private void BtnRefresh_Click(object sender, EventArgs e)
+        {
+            // Reset UI
+            txtFlightNo.Text = "";
+            cboAirline.SelectedIndex = 0; // Assuming 0 is "All" or "Select"
+            if (cboStatus.Items.Count > 0) cboStatus.SelectedIndex = 0;
+            if (cboDestination.Items.Count > 0) cboDestination.SelectedIndex = 0;
+            guna2DateTimePicker1.Value = DateTime.Today; // Or Keep Date? Reset to Today seems safe.
+
+            // Reset Data
+            filteredFlights = allFlights.ToList();
+            
+            // Paging Reset
+            currentPage = 1;
+            totalRecords = filteredFlights.Count;
+            
+            // Reload
+            LoadFlightData();
         }
 
         private void ApplyFilters()
@@ -242,38 +277,56 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             {
                 // Get filter values
                 string flightNo = txtFlightNo.Text.Trim().ToUpper();
-                string airline = cboAirline.SelectedItem?.ToString() ?? "All";
-                string status = cboStatus.SelectedItem?.ToString() ?? "All";
-                string destination = cboDestination.SelectedItem?.ToString() ?? "All";
+                
+                int airlineId = 0;
+                if (cboAirline.SelectedValue is int aid) airlineId = aid;
+                
+                int destId = 0; 
+                if (cboDestination.SelectedValue is int did) destId = did;
+                
+                string status = "All";
+                if (cboStatus.SelectedValue != null) status = cboStatus.SelectedValue.ToString();
+                
                 DateTime filterDate = guna2DateTimePicker1.Value.Date;
 
                 // Apply filters
                 filteredFlights = allFlights.Where(f =>
                 {
                     bool match = true;
+                    bool specificSearch = false; // Flag to indicate if user is searching for something specific
 
                     // Filter by flight code
                     if (!string.IsNullOrEmpty(flightNo))
-                        match = match && f.FlightCode.Contains(flightNo);
-
-                    // Filter by airline
-                    if (airline != "All" && airline != "Tất cả")
-                        match = match && f.Airline == airline;
-
-                    // Filter by status
-                    if (status != "All" && status != "Tất cả")
-                        match = match && f.Status == status;
-
-                    // Filter by destination
-                    if (destination != "All" && destination != "Tất cả")
                     {
-                        string destCode = destination.Split('(', ')')[1].Trim();
-                        match &= f.Route.EndsWith(destCode)
-                        || f.Route.Contains(destCode);
+                        match &= f.FlightCode.ToUpper().Contains(flightNo);
+                        specificSearch = true; 
                     }
 
-                    // Filter by date (optional - uncomment if needed)
-                    // match = match && DateTime.Parse(f.Date).Date == filterDate;
+                    // Filter by Airline (ID Check)
+                    if (airlineId > 0)
+                    {
+                        match &= (f.AirlineId == airlineId);
+                        specificSearch = true;
+                    }
+
+                    // Filter by status (String Check)
+                    if (status != "All")
+                        match &= string.Equals(f.Status, status, StringComparison.OrdinalIgnoreCase);
+
+                    // Filter by Destination (ID Check - using ArrivalAirportId)
+                    if (destId > 0)
+                    {
+                        match &= (f.ArrivalAirportId == destId);
+                        // If user selects destination, they usually care about date too.
+                    }
+
+                    // Filter by Date
+                    // Logic: If user searches by FlightNo, we IGNORE date (to help find it).
+                    // If user only selects filters (Airline, Dest, etc.), we RESPECT date.
+                    if (!specificSearch || string.IsNullOrEmpty(flightNo)) 
+                    {
+                         match &= f.FlightDate.Date == filterDate;
+                    }
 
                     return match;
                 }).ToList();
@@ -285,17 +338,19 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 // Reload data
                 LoadFlightData();
 
-                // Show result
+                // Show result feedback (Optional: Remove MessageBox to fix 'double notification')
+                // Instead of MessageBox, we rely on the Grid being empty.
+                // If you really want a notification, ensure it's not double triggered.
+                // But removing it is the best UX for Admin Dashboards.
                 if (filteredFlights.Count == 0)
                 {
-                    MessageBox.Show("Không tìm thấy chuyến bay nào phù hợp!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Optional: Show a subtle label or nothing.
+                    // MessageBox.Show("No matching flights found!", "Search Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tìm kiếm: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Search error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -332,9 +387,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 int startX = rect.X + (rect.Width - (buttonWidth * 3 + spacing * 2)) / 2;
                 int startY = rect.Y + (rect.Height - buttonHeight) / 2;
 
-                // Button 1: View (Cyan)
+                // Button 1: View (Custom Text)
                 var btnView = new Rectangle(startX, startY, buttonWidth, buttonHeight);
-                DrawActionButton(e.Graphics, btnView, "👁", Color.FromArgb(0, 188, 212), "view");
+                DrawActionButton(e.Graphics, btnView, "View", Color.FromArgb(0, 188, 212), "view");
+
+                // Button 2: Edit (Custom Text)
+                var btnEdit = new Rectangle(startX + buttonWidth + spacing, startY, buttonWidth, buttonHeight);
+                DrawActionButton(e.Graphics, btnEdit, "Edit", Color.FromArgb(0, 123, 255), "edit");
+
+                // Button 3: Disable/Delete (Custom Text)
+                var btnDelete = new Rectangle(startX + (buttonWidth + spacing) * 2, startY, buttonWidth, buttonHeight);
+                DrawActionButton(e.Graphics, btnDelete, "Del", Color.FromArgb(220, 53, 69), "delete");
 
                 e.Handled = true;
             }
@@ -383,12 +446,21 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 switch (status)
                 {
                     case "Available":
+                    case "Scheduled":
+                    case "Active":
                         e.CellStyle.BackColor = Color.FromArgb(200, 230, 201); // Light Green
                         e.CellStyle.ForeColor = Color.FromArgb(46, 125, 50); // Dark Green
                         e.CellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
                         break;
 
                     case "Full":
+                    case "Completed":
+                        e.CellStyle.BackColor = Color.FromArgb(224, 224, 224); // Light Gray
+                        e.CellStyle.ForeColor = Color.FromArgb(97, 97, 97); // Dark Gray
+                        e.CellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+                        break;
+
+                    case "Delayed":
                         e.CellStyle.BackColor = Color.FromArgb(255, 249, 196); // Light Yellow
                         e.CellStyle.ForeColor = Color.FromArgb(245, 127, 23); // Dark Yellow
                         e.CellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
@@ -439,7 +511,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 else if (localX >= buttonWidth + spacing && localX < buttonWidth * 2 + spacing)
                 {
                     // Disable button
-                    HandleEditFlight(flight);
+                    HandleEditFlightAsync(flight);
                 }
                 else if (localX >= (buttonWidth + spacing) * 2 && localX < buttonWidth * 3 + spacing * 2)
                 {
@@ -461,7 +533,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
                 if (fullFlightData == null)
                 {
-                    MessageBox.Show("Không tìm thấy thông tin chuyến bay!", "Lỗi",
+                    MessageBox.Show("Flight details not found!", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -472,39 +544,37 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 // Nếu có thay đổi, refresh lại danh sách
                 if (detailForm.DialogResult == DialogResult.OK)
                 {
-                    // Refresh lại DataGridView
-                    LoadFlightData();
+                    // Refresh lại DataGridView từ Database
+                    await LoadFlightDataAsync();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void HandleDisableFlight(FlightListDtoAdmin flight)
+        private async void HandleDisableFlight(FlightListDtoAdmin flight)
         {
             try
             {
                 var result = MessageBox.Show(
-                    $"Bạn có chắc muốn VÔ HIỆU HÓA chuyến bay {flight.FlightCode}?\n\n" +
-                    $"Chuyến bay sẽ không thể đặt vé nữa.",
-                    "Xác nhận vô hiệu hóa",
+                    $"Are you sure to DISABLE flight {flight.FlightCode}?\n\n" +
+                    $"Ticket booking will be stopped for this flight.",
+                    "Confirm Disable",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning
                 );
 
                 if (result == DialogResult.Yes)
                 {
-                    // TODO: Call API/Service để vô hiệu hóa chuyến bay
-                    // await _flightService.DisableFlightAsync(flight.FlightCode);
+                    await _flightController.CancelFlightAsync(flight.FlightId);
 
-                    flight.Status = "Đã hủy";
-                    LoadFlightData();
+                    RefreshData();
 
                     MessageBox.Show(
-                        $"Đã vô hiệu hóa chuyến bay {flight.FlightCode}",
-                        "Thành công",
+                        $"Flight {flight.FlightCode} disabled successfully.",
+                        "Success",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information
                     );
@@ -512,70 +582,60 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void HandleEditFlight(FlightListDtoAdmin flight)
+        private async Task HandleEditFlightAsync(FlightListDtoAdmin flight)
         {
             try
             {
-                // TODO: Mở form AddEditFlightForm ở chế độ EDIT
-                // var editForm = new AddEditFlightForm(FormMode.Edit, flight);
-                // if (editForm.ShowDialog() == DialogResult.OK)
-                // {
-                //     RefreshData();
-                // }
+                // Load detailed flight data for editing
+                // Use the Controller to fetch pure DB data
+                var fullFlightData = await _flightController.GetFlightByIdAsync(flight.FlightId);
 
-                MessageBox.Show(
-                    $"Form chỉnh sửa chuyến bay:\n\n" +
-                    $"Mã: {flight.FlightCode}\n" +
-                    $"Hãng: {flight.Airline}\n" +
-                    $"Tuyến: {flight.Route}\n\n" +
-                    $"Cho phép chỉnh sửa:\n" +
-                    $"- Ngày giờ khởi hành\n" +
-                    $"- Máy bay\n" +
-                    $"- Giá vé\n" +
-                    $"- Trạng thái\n\n" +
-                    $"KHÔNG cho sửa:\n" +
-                    $"- Mã chuyến bay\n" +
-                    $"- Hãng hàng không\n" +
-                    $"- Tuyến bay",
-                    "Chỉnh sửa chuyến bay",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                if (fullFlightData == null)
+                {
+                    MessageBox.Show("Flight details not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Open AddEditFlightForm in Edit Mode
+                using (var editForm = new AddEditFlightForm(fullFlightData))
+                {
+                    if (editForm.ShowDialog() == DialogResult.OK)
+                    {
+                        // Refresh data from DB to reflect changes
+                        await LoadFlightDataAsync(); 
+                    }
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error opening edit form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void HandleDeleteFlight(FlightListDtoAdmin flight)
+        private async void HandleDeleteFlight(FlightListDtoAdmin flight)
         {
             try
             {
                 var result = MessageBox.Show(
-                    $"Bạn có chắc muốn XÓA chuyến bay {flight.FlightCode}?\n\n" +
-                    $"⚠️ Hành động này không thể hoàn tác!",
-                    "Xác nhận xóa",
+                    $"Are you sure you want to DELETE flight {flight.FlightCode}?\n\n" +
+                    $"⚠️ This action cannot be undone!",
+                    "Confirm Delete",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning
                 );
 
                 if (result == DialogResult.Yes)
                 {
-                    // TODO: Call API/Service để xóa chuyến bay
-                    // await _flightService.DeleteFlightAsync(flight.FlightCode);
+                    await _flightController.DeleteFlightAsync(flight.FlightId);
 
-                    allFlights.Remove(flight);
-                    filteredFlights.Remove(flight);
-                    totalRecords = filteredFlights.Count;
-                    LoadFlightData();
+                    RefreshData();
 
                     MessageBox.Show(
-                        $"Đã xóa chuyến bay {flight.FlightCode}",
-                        "Thành công",
+                        $"Flight {flight.FlightCode} deleted successfully.",
+                        "Success",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information
                     );
@@ -583,7 +643,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -611,7 +671,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             try
             {
                 // TODO: Tạo và mở form AddEditFlightForm ở chế độ ADD
-                var addForm = new AddEditFlightForm(FormMode.Add);
+                var addForm = new AddEditFlightForm();
                 if (addForm.ShowDialog() == DialogResult.OK)
                 {
                     RefreshData();
@@ -634,12 +694,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void paginationControl1_PageChanged(object sender, int e)
         {
+            if (_isUpdatingPagination) return;
+            if (currentPage == e) return;
             currentPage = e;
             LoadFlightData();
         }

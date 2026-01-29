@@ -6,6 +6,21 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private Label lblTitle;
+        private TextBox txtPromoCode;
+        private TextBox txtPromoName;
+        private TextBox txtDescription;
+        private ComboBox cboDiscountType;
+        private NumericUpDown numDiscountValue;
+        private Label lblDiscountUnit;
+        private NumericUpDown numMinAmount;
+        private NumericUpDown numMaxDiscount;
+        private NumericUpDown numUsageLimit;
+        private NumericUpDown numUserUsageLimit;
+        private DateTimePicker dtpValidFrom;
+        private DateTimePicker dtpValidTo;
+        private Button btnSave;
+        private Button btnCancel;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -31,7 +46,7 @@
             this.SuspendLayout();
 
             // Form settings
-            this.Text = "Thêm Mã Khuyến Mãi";
+            this.Text = "Add Promotion Code";
             this.Size = new Size(600, 830);
             this.StartPosition = FormStartPosition.CenterParent;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -55,9 +70,9 @@
                 BackColor = Color.FromArgb(67, 233, 123)
             };
 
-            var lblTitle = new Label
+            lblTitle = new Label
             {
-                Text = "🎉 Tạo Mã Khuyến Mãi Mới",
+                Text = "Create New Promotion",
                 Font = new Font("Segoe UI", 18, FontStyle.Bold),
                 ForeColor = Color.White,
                 Location = new Point(30, 25),
@@ -70,7 +85,7 @@
             yPos = 100;
 
             // Promo Code
-            AddLabel("Mã khuyến mãi: *", labelX, yPos);
+            AddLabel("Promotion Code: *", labelX, yPos);
             txtPromoCode = new TextBox
             {
                 Location = new Point(controlX, yPos),
@@ -83,7 +98,7 @@
             yPos += spacing;
 
             // Promo Name
-            AddLabel("Tên khuyến mãi: *", labelX, yPos);
+            AddLabel("Promotion Name: *", labelX, yPos);
             txtPromoName = new TextBox
             {
                 Location = new Point(controlX, yPos),
@@ -95,7 +110,7 @@
             yPos += spacing;
 
             // Description
-            AddLabel("Mô tả:", labelX, yPos);
+            AddLabel("Description:", labelX, yPos);
             txtDescription = new TextBox
             {
                 Location = new Point(controlX, yPos),
@@ -109,7 +124,7 @@
             yPos += 75;
 
             // Discount Type
-            AddLabel("Loại giảm giá: *", labelX, yPos);
+            AddLabel("Discount Type: *", labelX, yPos);
             cboDiscountType = new ComboBox
             {
                 Location = new Point(controlX, yPos),
@@ -124,7 +139,7 @@
             yPos += spacing;
 
             // Discount Value
-            AddLabel("Giá trị giảm: *", labelX, yPos);
+            AddLabel("Discount Value: *", labelX, yPos);
             numDiscountValue = new NumericUpDown
             {
                 Location = new Point(controlX, yPos),
@@ -147,7 +162,7 @@
             yPos += spacing;
 
             // Minimum Amount
-            AddLabel("Giá trị tối thiểu:", labelX, yPos);
+            AddLabel("Minimum Amount:", labelX, yPos);
             numMinAmount = new NumericUpDown
             {
                 Location = new Point(controlX, yPos),
@@ -172,7 +187,7 @@
             yPos += spacing;
 
             // Maximum Discount
-            AddLabel("Giảm tối đa:", labelX, yPos);
+            AddLabel("Maximum Discount:", labelX, yPos);
             numMaxDiscount = new NumericUpDown
             {
                 Location = new Point(controlX, yPos),
@@ -197,7 +212,7 @@
             yPos += spacing;
 
             // Usage Limit
-            AddLabel("Giới hạn sử dụng:", labelX, yPos);
+            AddLabel("Usage Limit:", labelX, yPos);
             numUsageLimit = new NumericUpDown
             {
                 Location = new Point(controlX, yPos),
@@ -210,7 +225,7 @@
             };
             var lblUsageUnit = new Label
             {
-                Text = "(0 = không giới hạn)",
+                Text = "(0 = unlimited)",
                 Location = new Point(controlX + 180, yPos + 5),
                 Font = new Font("Segoe UI", 9, FontStyle.Italic),
                 ForeColor = Color.Gray,
@@ -221,7 +236,7 @@
             yPos += spacing;
 
             // User Usage Limit
-            AddLabel("Giới hạn/người:", labelX, yPos);
+            AddLabel("Limit Per User:", labelX, yPos);
             numUserUsageLimit = new NumericUpDown
             {
                 Location = new Point(controlX, yPos),
@@ -234,7 +249,7 @@
             };
             var lblUserUsageUnit = new Label
             {
-                Text = "(0 = không giới hạn)",
+                Text = "(0 = unlimited)",
                 Location = new Point(controlX + 180, yPos + 5),
                 Font = new Font("Segoe UI", 9, FontStyle.Italic),
                 ForeColor = Color.Gray,
@@ -245,7 +260,7 @@
             yPos += spacing;
 
             // Valid From
-            AddLabel("Ngày bắt đầu: *", labelX, yPos);
+            AddLabel("Valid From: *", labelX, yPos);
             dtpValidFrom = new DateTimePicker
             {
                 Location = new Point(controlX, yPos),
@@ -258,7 +273,7 @@
             yPos += spacing;
 
             // Valid To
-            AddLabel("Ngày kết thúc: *", labelX, yPos);
+            AddLabel("Valid To: *", labelX, yPos);
             dtpValidTo = new DateTimePicker
             {
                 Location = new Point(controlX, yPos),
@@ -280,7 +295,7 @@
 
             btnSave = new Button
             {
-                Text = "💾 Tạo Khuyến Mãi",
+                Text = "Create Promotion",
                 Location = new Point(200, 15),
                 Size = new Size(180, 45),
                 BackColor = Color.FromArgb(40, 167, 69),
@@ -294,7 +309,7 @@
 
             btnCancel = new Button
             {
-                Text = "❌ Hủy",
+                Text = "Cancel",
                 Location = new Point(390, 15),
                 Size = new Size(180, 45),
                 BackColor = Color.FromArgb(108, 117, 125),
@@ -311,20 +326,7 @@
 
             this.ResumeLayout();
         }
-        private TextBox txtPromoCode;
-        private TextBox txtPromoName;
-        private TextBox txtDescription;
-        private ComboBox cboDiscountType;
-        private NumericUpDown numDiscountValue;
-        private Label lblDiscountUnit;
-        private NumericUpDown numMinAmount;
-        private NumericUpDown numMaxDiscount;
-        private NumericUpDown numUsageLimit;
-        private NumericUpDown numUserUsageLimit;
-        private DateTimePicker dtpValidFrom;
-        private DateTimePicker dtpValidTo;
-        private Button btnSave;
-        private Button btnCancel;
+
         #endregion
     }
 }

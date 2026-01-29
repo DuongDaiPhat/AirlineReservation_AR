@@ -156,7 +156,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
                 }
                 else if (button == btnGiaVe_khuyenMai)
                 {
-                    ShowBigControl(adminDasboardControlUsers.title, adminDasboardControlUsers.dashboardImage);
+                    ShowBigControl(adminDasboardControlGiaVe_KhuyenMai.title, adminDasboardControlGiaVe_KhuyenMai.dashboardImage);
                     ShowUserControl(ref _pricingPromotionControl, () => new PricingPromotionControl());
                 }
                 else if (button == btnBaoCao_thongKe)

@@ -544,7 +544,7 @@ BEGIN
     
     SET @PassengerID = SCOPE_IDENTITY();
     
-    INSERT INTO BookingFlights (BookingID, FlightID, TripType) VALUES (@BookingID, @FlightIDTicket, 'OneWay');
+    INSERT INTO BookingFlights (BookingID, FlightID, Status) VALUES (@BookingID, @FlightIDTicket, 'Booked');
     SET @BookingFlightID = SCOPE_IDENTITY();
     
     -- Ticket status
@@ -571,11 +571,32 @@ PRINT '  ✓ Bookings: ' + CAST(@BookingCountFinal AS NVARCHAR(10));
 PRINT '';
 PRINT 'STEP 11: Inserting BookingServices...';
 
-INSERT INTO BookingServices (BookingID, ServiceID, PassengerID, Quantity, UnitPrice)
-SELECT TOP 300 b.BookingID, (SELECT TOP 1 ServiceID FROM Services ORDER BY NEWID()), p.PassengerID,
-       CASE WHEN ABS(CHECKSUM(NEWID())) % 3 = 0 THEN 2 ELSE 1 END,
-       (SELECT TOP 1 BasePrice FROM Services ORDER BY NEWID())
-FROM Bookings b INNER JOIN Passengers p ON b.BookingID = p.BookingID ORDER BY NEWID();
+INSERT INTO BookingServices
+(
+    BookingFlightID,
+    BookingID,
+    PassengerID,
+    ServiceID,
+    Quantity,
+    UnitPrice
+)
+SELECT TOP 300
+       bf.BookingFlightID,
+       b.BookingID,
+       p.PassengerID,
+       s.ServiceID,
+       CASE WHEN ABS(CHECKSUM(NEWID())) % 3 = 0 THEN 2 ELSE 1 END AS Quantity,
+       s.BasePrice
+FROM Bookings b
+JOIN BookingFlights bf ON b.BookingID = bf.BookingID
+JOIN Passengers p ON p.BookingID = b.BookingID
+CROSS APPLY (
+    SELECT TOP 1 ServiceID, BasePrice
+    FROM Services
+    ORDER BY NEWID()
+) s
+ORDER BY NEWID();
+
 
 -- =============================================
 -- STEP 12: INSERT PAYMENTS & PAYMENT HISTORY
@@ -735,95 +756,4 @@ DROP TABLE #InternationalNames;
 DROP TABLE #LastNames;
 DROP TABLE #UserAccounts;
 
--- =============================================
--- DATA SUMMARY REPORT
--- =============================================
 
-PRINT N'';
-PRINT N'==============================';
-PRINT N'      DATABASE SUMMARY REPORT';
-PRINT N'==============================';
-PRINT N'';
-
-PRINT 'CORE DATA STATISTICS:';
-PRINT '---';
-
-DECLARE @TotalFlights INT = (SELECT COUNT(*) FROM Flights);
-DECLARE @TotalBookings INT = (SELECT COUNT(*) FROM Bookings);
-DECLARE @TotalTickets INT = (SELECT COUNT(*) FROM Tickets);
-DECLARE @TotalUsers INT = (SELECT COUNT(*) FROM Users);
-DECLARE @TotalPayments INT = (SELECT COUNT(*) FROM Payments);
-
-PRINT '  • Total Flights: ' + CAST(@TotalFlights AS NVARCHAR(10));
-PRINT '  • Total Bookings: ' + CAST(@TotalBookings AS NVARCHAR(10));
-PRINT '  • Total Tickets: ' + CAST(@TotalTickets AS NVARCHAR(10));
-PRINT '  • Total Users: ' + CAST(@TotalUsers AS NVARCHAR(10));
-PRINT '  • Total Payments: ' + CAST(@TotalPayments AS NVARCHAR(10));
-PRINT N'';
-
--- Flight Distribution
-PRINT 'FLIGHT DISTRIBUTION BY STATUS:';
-PRINT '---';
-SELECT 
-    Status,
-    COUNT(*) as FlightCount,
-    CAST(ROUND(COUNT(*) * 100.0 / @TotalFlights, 2) AS NVARCHAR(10)) + '%' as Percentage
-FROM Flights
-GROUP BY Status;
-
-PRINT N'';
-
--- Booking Distribution
-PRINT 'BOOKING DISTRIBUTION BY STATUS:';
-PRINT '---';
-SELECT 
-    Status,
-    COUNT(*) as BookingCount,
-    CAST(ROUND(COUNT(*) * 100.0 / @TotalBookings, 2) AS NVARCHAR(10)) + '%' as Percentage
-FROM Bookings
-GROUP BY Status;
-
-PRINT N'';
-
--- Ticket Distribution (Modified to check Status only, as Price is gone)
-PRINT 'TICKET DISTRIBUTION BY STATUS:';
-PRINT '---';
-SELECT 
-    Status,
-    COUNT(*) as TicketCount,
-    CAST(ROUND(COUNT(*) * 100.0 / @TotalTickets, 2) AS NVARCHAR(10)) + '%' as Percentage
-FROM Tickets
-GROUP BY Status;
-
-PRINT N'';
-
--- User Distribution
-PRINT 'USER DISTRIBUTION BY ROLE:';
-PRINT '---';
-SELECT 
-    r.RoleName,
-    COUNT(*) as UserCount,
-    CAST(ROUND(COUNT(*) * 100.0 / @TotalUsers, 2) AS NVARCHAR(10)) + '%' as Percentage
-FROM Users u
-INNER JOIN UserRoles ur ON u.UserID = ur.UserID
-INNER JOIN Roles r ON ur.RoleID = r.RoleID
-GROUP BY r.RoleName;
-
-PRINT N'';
-
--- Airlines with most flights
-PRINT 'TOP 5 AIRLINES BY FLIGHT COUNT:';
-PRINT '---';
-SELECT TOP 5
-    a.AirlineName,
-    COUNT(f.FlightID) as FlightCount,
-    COUNT(DISTINCT f.FlightDate) as OperatingDays
-FROM Flights f
-INNER JOIN Airlines a ON f.AirlineID = a.AirlineID
-GROUP BY a.AirlineName
-ORDER BY FlightCount DESC;
-
-PRINT N'';
-PRINT N'==============================';
-PRINT N'   DATA IMPORT FINISHED';
-PRINT N'==============================';

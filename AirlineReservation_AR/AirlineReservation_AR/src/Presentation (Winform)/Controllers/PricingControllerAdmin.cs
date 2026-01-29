@@ -84,5 +84,13 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
                           .ToList();
         }
 
+        public async Task<ServiceResponse<(IEnumerable<FlightPricingDtoAdmin> Items, int TotalCount)>> GetPricingsPage(
+            int pageIndex, 
+            int pageSize, 
+            FlightPricingFilterDtoAdmin filter)
+        {
+            return await _service.GetPricingsPageAsync(pageIndex, pageSize, filter);
+        }
+
     }
 }

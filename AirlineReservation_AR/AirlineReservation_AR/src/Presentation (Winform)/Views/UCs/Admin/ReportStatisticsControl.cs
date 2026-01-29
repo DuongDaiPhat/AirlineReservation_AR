@@ -62,11 +62,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             cboReportType.Items.Clear();
             cboReportType.Items.AddRange(new object[]
             {
-                "Tổng quan",
-                "Doanh thu",
-                "Booking",
-                "Khách hàng",
-                "Chuyến bay"
+                "Overview",
+                "Revenue",
+                "Bookings",
+                "Customers",
+                "Flights"
             });
             cboReportType.SelectedIndex = 0;
 
@@ -230,7 +230,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         {
             try
             {
-                string reportType = cboReportType.SelectedItem?.ToString() ?? "Tổng quan";
+                string reportType = cboReportType.SelectedItem?.ToString() ?? "Overview";
                 DateTime fromDate = dtpFromDate.Value;
                 DateTime toDate = guna2DateTimePicker1.Value;
 
@@ -247,16 +247,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
                 switch (reportType)
                 {
-                    case "Doanh thu":
+                    case "Revenue":
                         await LoadRevenueReportAsync(fromDate, toDate);
                         break;
-                    case "Booking":
+                    case "Bookings":
                         await LoadBookingReportAsync(fromDate, toDate);
                         break;
-                    case "Khách hàng":
+                    case "Customers":
                         await LoadCustomerReportAsync(fromDate, toDate);
                         break;
-                    case "Chuyến bay":
+                    case "Flights":
                         await LoadFlightReportAsync(fromDate, toDate);
                         break;
                     default:
@@ -265,12 +265,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 }
 
                 ShowLoading(false);
-                ShowSuccess($"Đã tải báo cáo {reportType} từ {fromDate:dd/MM/yyyy} đến {toDate:dd/MM/yyyy}");
+                ShowSuccess($"Loaded {reportType} report from {fromDate:dd/MM/yyyy} to {toDate:dd/MM/yyyy}");
             }
             catch (Exception ex)
             {
                 ShowLoading(false);
-                ShowError($"Lỗi khi lọc dữ liệu: {ex.Message}");
+                ShowError($"Error filtering data: {ex.Message}");
             }
         }
 
@@ -282,14 +282,14 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 {
                     Filter = "Excel Files|*.xlsx",
                     Title = "Lưu báo cáo",
-                    FileName = $"BaoCao_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx"
+                    FileName = $"Report_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx"
                 };
 
                 if (saveDialog.ShowDialog() == DialogResult.OK)
                 {
                     ShowLoading(true);
 
-                    string reportType = cboReportType.SelectedItem?.ToString() ?? "Tổng quan";
+                    string reportType = cboReportType.SelectedItem?.ToString() ?? "Overview";
                     DateTime fromDate = dtpFromDate.Value;
                     DateTime toDate = guna2DateTimePicker1.Value;
 
@@ -306,7 +306,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                     if (excelData != null && excelData.Length > 0)
                     {
                         await System.IO.File.WriteAllBytesAsync(saveDialog.FileName, excelData);
-                        ShowSuccess($"Đã xuất báo cáo thành công!\n{saveDialog.FileName}");
+                        ShowSuccess($"Report exported successfully!\n{saveDialog.FileName}");
                     }
                     else
                     {

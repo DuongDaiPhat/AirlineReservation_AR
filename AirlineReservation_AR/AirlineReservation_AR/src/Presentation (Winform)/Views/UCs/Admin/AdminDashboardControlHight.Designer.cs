@@ -54,7 +54,7 @@
             labelControlHight.Name = "labelControlHight";
             labelControlHight.Size = new Size(400, 50);
             labelControlHight.TabIndex = 1;
-            labelControlHight.Text = "Dashboard Tổng quan";
+            labelControlHight.Text = "Admin Dashboard";
             labelControlHight.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // picBoxControlHight

@@ -204,5 +204,75 @@ namespace AirlineReservation_AR.src.Application.Services
                 .Take(100) // ✅ GIỚI HẠN 100 kết quả
                 .ToListAsync();
         }
+
+        public async Task<(IEnumerable<FlightPricing> Items, int TotalCount)> GetPricingsByPageAsync(
+            int skip, 
+            int take, 
+            string? route, 
+            string? seatClass, 
+            int? minDiscountPercent)
+        {
+            var query = _context.FlightPricings
+                .Include(fp => fp.Flight)
+                    .ThenInclude(f => f.Airline)
+                .Include(fp => fp.Flight)
+                    .ThenInclude(f => f.Aircraft)
+                        .ThenInclude(a => a.SeatConfigurations)
+                .Include(fp => fp.Flight)
+                    .ThenInclude(f => f.DepartureAirport)
+                    .ThenInclude(a => a.City)
+                .Include(fp => fp.Flight)
+                    .ThenInclude(f => f.ArrivalAirport)
+                    .ThenInclude(a => a.City)
+                .Include(fp => fp.SeatClass)
+                .AsNoTracking() // Read-only for performance
+                .AsQueryable();
+
+            // 1. Filter by Route (Code - Code)
+            if (!string.IsNullOrEmpty(route) && route != "All" && route != "Tất cả")
+            {
+                var routeParts = route.Split(new[] { " - ", "-", "→" }, StringSplitOptions.RemoveEmptyEntries)
+                                      .Select(r => r.Trim())
+                                      .ToArray();
+
+                if (routeParts.Length == 2)
+                {
+                    query = query.Where(fp =>
+                        (fp.Flight.DepartureAirport.IataCode == routeParts[0] &&
+                         fp.Flight.ArrivalAirport.IataCode == routeParts[1]) || 
+                         (fp.Flight.DepartureAirport.City.CityName == routeParts[0] && 
+                          fp.Flight.ArrivalAirport.City.CityName == routeParts[1])
+                         );
+                }
+            }
+
+            // 2. Filter by SeatClass
+            if (!string.IsNullOrEmpty(seatClass) && seatClass != "All" && seatClass != "Tất cả")
+            {
+                query = query.Where(fp => fp.SeatClass.ClassName == seatClass);
+            }
+
+            // 3. Filter by Discount
+            if (minDiscountPercent.HasValue && minDiscountPercent > 0)
+            {
+                 // Calculate: (Original - Price) / Original * 100
+                 query = query.Where(fp =>
+                    fp.Flight.BasePrice > 0 &&
+                    ((double)(fp.Flight.BasePrice - fp.Price) / (double)fp.Flight.BasePrice * 100) >= minDiscountPercent.Value);
+            }
+
+            // 4. Get Total Count (for Pagination)
+            int totalCount = await query.CountAsync();
+
+            // 5. Get Paged Data
+            var items = await query
+                .OrderByDescending(fp => fp.Flight.FlightDate)
+                .ThenBy(fp => fp.Flight.DepartureTime)
+                .Skip(skip)
+                .Take(take)
+                .ToListAsync();
+
+            return (items, totalCount);
+        }
     }
 }
