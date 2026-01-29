@@ -150,8 +150,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
         private void ForgotPS_Click(object sender, EventArgs e)
         {
             var ForgotPasswordForm = new ForgotPassword();
+            ForgotPasswordForm.StartPosition = FormStartPosition.CenterScreen;
             ForgotPasswordForm.ShowDialog();
-       
         }
 
         private void showPassword_Click(object sender, EventArgs e)

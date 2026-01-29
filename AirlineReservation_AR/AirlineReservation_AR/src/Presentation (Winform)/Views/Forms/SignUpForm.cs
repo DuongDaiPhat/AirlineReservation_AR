@@ -126,6 +126,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
                 // Ẩn mật khẩu
                 passwordTB.UseSystemPasswordChar = true;
                 showPassword.Image = Resources.hide;
+                
             }
         }
 
@@ -142,6 +143,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
                 // Ẩn mật khẩu
                 confirmPasswordTB.UseSystemPasswordChar = true;
                 showConfirmedPassword.Image = Resources.hide;
+               
             }
         }
 

@@ -9,7 +9,8 @@ using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
 using AirlineReservation_AR.src.Domain.DTOs;
 using Guna.UI2.WinForms;
-using AR_Winform.Presentation.UControls.User; // IMPORTANT
+using AR_Winform.Presentation.UControls.User;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common; // IMPORTANT
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 {
@@ -408,19 +409,28 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         {
             if (cboFrom.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn điểm đi!");
+                ShowAnnouncement(
+                    "Missing departure city",
+                    "Please select a departure city before searching."
+                );
                 return;
             }
 
             if (cboTo.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn điểm đến!");
+                ShowAnnouncement(
+                    "Missing destination city",
+                    "Please select a destination city before searching."
+                );
                 return;
             }
 
             if (selectedStartDate == null)
             {
-                MessageBox.Show("Vui lòng chọn ngày đi!");
+                ShowAnnouncement(
+                    "Missing departure date",
+                    "Please select a departure date."
+                );
                 return;
             }
 
@@ -428,26 +438,60 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             {
                 if (selectedReturnDate == null)
                 {
-                    MessageBox.Show("Vui lòng chọn ngày về!");
+                    ShowAnnouncement(
+                        "Missing return date",
+                        "Please select a return date for round-trip flights."
+                    );
                     return;
                 }
 
                 if (selectedReturnDate < selectedStartDate)
                 {
-                    MessageBox.Show("Ngày về phải >= ngày đi!");
+                    ShowAnnouncement(
+                        "Invalid return date",
+                        "Return date must be later than or equal to departure date."
+                    );
                     return;
                 }
             }
 
             if (cboSeatClass.SelectedIndex < 0)
             {
-                MessageBox.Show("Vui lòng chọn hạng ghế!");
+                ShowAnnouncement(
+                    "Seat class not selected",
+                    "Please select a seat class."
+                );
                 return;
             }
 
-            if (adult <= 0)
+            if (adult < 1)
             {
-                MessageBox.Show("Phải có ít nhất 1 người lớn!");
+                ShowAnnouncement(
+                    "Invalid passenger count",
+                    "At least one adult passenger is required."
+                );
+                return;
+            }
+
+            // Business rule:
+            // Adults + Children <= 7 (Infants NOT included)
+            int totalPeople = adult + child;
+            if (totalPeople > 7)
+            {
+                ShowAnnouncement(
+                    "Passenger limit exceeded",
+                    "The total number of adults and children must not exceed 7."
+                );
+                return;
+            }
+
+            //  Each adult can accompany only one infant
+            if (infant > adult)
+            {
+                ShowAnnouncement(
+                    "Invalid infant count",
+                    "Each adult may accompany only one infant."
+                );
                 return;
             }
 
@@ -468,6 +512,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             OnSearchSubmit?.Invoke(p);
         }
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             panelStartCalendar.Visible = false;
@@ -477,5 +522,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
         {
             panelReturnCalendar.Visible = false;
         }
+    private void ShowAnnouncement(string title, string message, bool isSuccess = false)
+        {
+            AnnouncementForm announcementForm = new AnnouncementForm();
+            announcementForm.SetAnnouncement(title, message, isSuccess, null);
+            announcementForm.Show();
+        }
     }
-}
+
+    }

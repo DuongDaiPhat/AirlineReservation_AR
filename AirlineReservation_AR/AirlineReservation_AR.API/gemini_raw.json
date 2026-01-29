@@ -4,7 +4,7 @@
       "content": {
         "parts": [
           {
-            "text": "{\"weights\":{\"price\":0.7,\"time\":0.1,\"duration\":0.1,\"transit\":0,\"airline\":0.1},\"preferredAirlines\":[\"bamboo\"]}"
+            "text": "{\"weights\":{\"price\":0.0,\"time\":0.5,\"duration\":0.5,\"transit\":0,\"airline\":0.0},\"preferredAirlines\":[]}"
           }
         ],
         "role": "model"
@@ -14,16 +14,16 @@
     }
   ],
   "usageMetadata": {
-    "promptTokenCount": 273,
-    "candidatesTokenCount": 39,
-    "totalTokenCount": 312,
+    "promptTokenCount": 262,
+    "candidatesTokenCount": 37,
+    "totalTokenCount": 299,
     "promptTokensDetails": [
       {
         "modality": "TEXT",
-        "tokenCount": 273
+        "tokenCount": 262
       }
     ]
   },
   "modelVersion": "gemini-2.5-flash-lite",
-  "responseId": "o8h4af-9Ner92roPsdOOwQs"
+  "responseId": "n3V6aZGeM7ad1e8PgMH62A4"
 }

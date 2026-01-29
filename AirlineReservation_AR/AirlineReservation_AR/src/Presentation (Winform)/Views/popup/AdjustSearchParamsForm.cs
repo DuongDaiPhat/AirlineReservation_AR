@@ -1,4 +1,6 @@
-﻿using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
+using System;
+using System.Windows.Forms;
+using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
@@ -161,7 +163,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
         {
             try
             {
-                // Validate dữ liệu
                 if (cboSeatClass.SelectedValue == null)
                 {
                     AnnouncementForm form = new AnnouncementForm();
@@ -180,9 +181,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
                     return;
                 }
 
-                // Kiểm tra tổng số hành khách
-                int totalPassengers = adult + child + infant;
-                if (totalPassengers > 9)
+                //  Tổng người (chỉ tính người lớn + trẻ em)
+                int totalPeople = adult + child;
+                if (totalPeople > 7)
                 {
                     AnnouncementForm form = new AnnouncementForm();
                     form.SetAnnouncement("Invalid Input", "The number of passenger must be less than 9", false, null);
@@ -191,7 +192,16 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
                     return;
                 }
 
-                // Tạo object mới với dữ liệu đã cập nhật
+                //  Mỗi người lớn chỉ được kèm 1 em bé
+                if (infant > adult)
+                {
+                    AnnouncementForm announcementForm = new AnnouncementForm();
+                    announcementForm.SetAnnouncement("Thông báo", "Số em bé không được vượt quá số người lớn!", false, null);
+                    announcementForm.Show();
+                    return;
+                }
+
+                // Tạo object mới
                 UpdatedParams = new FlightSearchParams
                 {
                     FromCode = _original.FromCode,
@@ -214,5 +224,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
                 form.BringToFront();
             }
         }
+
     }
 }

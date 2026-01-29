@@ -79,8 +79,6 @@
             guna2PictureBox2 = new Guna.UI2.WinForms.Guna2PictureBox();
             guna2HtmlLabel15 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             txtPassport = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            txtFromAirport = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            txtToAirport = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2PictureBox3 = new Guna.UI2.WinForms.Guna2PictureBox();
             guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2PictureBox4 = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -390,30 +388,6 @@
             txtPassport.TabIndex = 19;
             txtPassport.Text = "Booking type: Flights";
             txtPassport.TextAlignment = ContentAlignment.TopRight;
-            // 
-            // txtFromAirport
-            // 
-            txtFromAirport.BackColor = Color.Transparent;
-            txtFromAirport.Font = new Font("Segoe UI", 12.75F);
-            txtFromAirport.Location = new Point(38, 276);
-            txtFromAirport.Margin = new Padding(3, 2, 3, 2);
-            txtFromAirport.Name = "txtFromAirport";
-            txtFromAirport.Size = new Size(136, 25);
-            txtFromAirport.TabIndex = 23;
-            txtFromAirport.Text = "Vietname Airlines";
-            // 
-            // txtToAirport
-            // 
-            txtToAirport.AutoSize = false;
-            txtToAirport.BackColor = Color.Transparent;
-            txtToAirport.Font = new Font("Segoe UI", 12.75F);
-            txtToAirport.Location = new Point(323, 276);
-            txtToAirport.Margin = new Padding(3, 2, 3, 2);
-            txtToAirport.Name = "txtToAirport";
-            txtToAirport.Size = new Size(184, 25);
-            txtToAirport.TabIndex = 24;
-            txtToAirport.Text = "Vietname Airlines";
-            txtToAirport.TextAlignment = ContentAlignment.TopRight;
             // 
             // guna2PictureBox3
             // 
@@ -856,8 +830,6 @@
             Controls.Add(guna2PictureBox4);
             Controls.Add(guna2HtmlLabel1);
             Controls.Add(guna2PictureBox3);
-            Controls.Add(txtToAirport);
-            Controls.Add(txtFromAirport);
             Controls.Add(guna2GradientPanel1);
             Controls.Add(pnlTakeOffTime);
             Controls.Add(txtEstimateTime);
@@ -915,8 +887,6 @@
         private Guna.UI2.WinForms.Guna2GradientPanel guna2GradientPanel1;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel15;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox2;
-        private Guna.UI2.WinForms.Guna2HtmlLabel txtFromAirport;
-        private Guna.UI2.WinForms.Guna2HtmlLabel txtToAirport;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox3;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox4;
