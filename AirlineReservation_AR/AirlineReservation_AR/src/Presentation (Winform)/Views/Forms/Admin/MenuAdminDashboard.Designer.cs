@@ -300,6 +300,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             panel2.Name = "panel2";
             panel2.Size = new Size(240, 80);
             panel2.TabIndex = 3;
+            panel2.Visible = false;
             // 
             // btnBaoCao_thongKe
             // 
@@ -364,6 +365,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             panel6.Name = "panel6";
             panel6.Size = new Size(240, 80);
             panel6.TabIndex = 3;
+            panel6.Visible = false;
             // 
             // btnCaiDat
             // 
@@ -415,6 +417,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             adminDasboardControlSetting.Size = new Size(260, 200);
             adminDasboardControlSetting.TabIndex = 10;
             adminDasboardControlSetting.title = "System Settings";
+            adminDasboardControlSetting.Visible = false;
             adminDasboardControlSetting.Click += adminDasboardControlSmall_click;
             // 
             // adminDasboardControlUsers
@@ -439,13 +442,14 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Vi
             adminDasboardControlBaoCao_ThongKe.Size = new Size(260, 200);
             adminDasboardControlBaoCao_ThongKe.TabIndex = 4;
             adminDasboardControlBaoCao_ThongKe.title = "Reports & Analytics";
+            adminDasboardControlBaoCao_ThongKe.Visible = false;
             adminDasboardControlBaoCao_ThongKe.Click += adminDasboardControlSmall_click;
             // 
             // adminDasboardControlGiaVe_KhuyenMai
             // 
             adminDasboardControlGiaVe_KhuyenMai.dashboardImage = Properties.Resources.selling;
             adminDasboardControlGiaVe_KhuyenMai.description = "Prices, Discount Codes, Promotion Campaigns";
-            adminDasboardControlGiaVe_KhuyenMai.Location = new Point(750, 62);
+            adminDasboardControlGiaVe_KhuyenMai.Location = new Point(30, 356);
             adminDasboardControlGiaVe_KhuyenMai.Margin = new Padding(0);
             adminDasboardControlGiaVe_KhuyenMai.Name = "adminDasboardControlGiaVe_KhuyenMai";
             adminDasboardControlGiaVe_KhuyenMai.Size = new Size(260, 200);

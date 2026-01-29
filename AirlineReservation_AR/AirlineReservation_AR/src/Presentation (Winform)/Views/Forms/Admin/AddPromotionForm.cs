@@ -44,6 +44,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.Forms.Admin
 
         private void InitializeCustomStyles()
         {
+            // Force reset items to avoid Designer mismatch
+            cboDiscountType.Items.Clear();
+            cboDiscountType.Items.AddRange(new object[] { "Percent", "Fixed" });
+            cboDiscountType.SelectedIndex = 0;
+
             // Hover effects for buttons
             btnSave.MouseEnter += (s, e) => btnSave.BackColor = Color.FromArgb(33, 136, 56);
             btnSave.MouseLeave += (s, e) => btnSave.BackColor = Color.FromArgb(40, 167, 69);

@@ -38,6 +38,9 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         private int _promoPageSize = 8;
         private int _totalPromoPages = 1;
         
+        // Concurrency flags
+        private bool _isPromoProcessing = false;
+        private bool _isPricingProcessing = false;
         private readonly ILookupService _lookupService = DIContainer.LookupService;
         
         public PricingPromotionControl()
@@ -93,11 +96,19 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             btnSearchFlights.Click -= BtnSearchFlights_Click;
             txtPromoSearch.TextChanged -= TxtPromoSearch_TextChanged;
             cboPromoStatus.SelectedIndexChanged -= CboPromoStatus_SelectedIndexChanged;
+            cboPromoType.SelectedIndexChanged -= CboPromoType_SelectedIndexChanged;
+            cboPromoSort.SelectedIndexChanged -= CboPromoSort_SelectedIndexChanged;
+            btnRefreshPricing.Click -= BtnRefreshPricing_Click;
+            btnRefreshPromo.Click -= BtnRefreshPromo_Click;
 
             // Đăng ký mới
             btnSearchFlights.Click += BtnSearchFlights_Click;
             txtPromoSearch.TextChanged += TxtPromoSearch_TextChanged;
             cboPromoStatus.SelectedIndexChanged += CboPromoStatus_SelectedIndexChanged;
+            cboPromoType.SelectedIndexChanged += CboPromoType_SelectedIndexChanged;
+            cboPromoSort.SelectedIndexChanged += CboPromoSort_SelectedIndexChanged;
+            btnRefreshPricing.Click += BtnRefreshPricing_Click;
+            btnRefreshPromo.Click += BtnRefreshPromo_Click;
         }
 
         // Event handlers riêng biệt
@@ -114,6 +125,31 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         private void CboPromoStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             ApplyPromoFilters();
+        }
+
+        private void CboPromoType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ApplyPromoFilters();
+        }
+
+        private void CboPromoSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ApplyPromoFilters();
+        }
+
+        private void BtnRefreshPricing_Click(object sender, EventArgs e)
+        {
+            if (cboRoute.Items.Count > 0) cboRoute.SelectedIndex = 0;
+            if (cboSeatClass.Items.Count > 0) cboSeatClass.SelectedIndex = 0;
+            ApplyFlightFilters();
+        }
+
+        private void BtnRefreshPromo_Click(object sender, EventArgs e)
+        {
+            txtPromoSearch.Text = string.Empty;
+            if (cboPromoStatus.Items.Count > 0) cboPromoStatus.SelectedIndex = 0;
+            if (cboPromoType.Items.Count > 0) cboPromoType.SelectedIndex = 0;
+            if (cboPromoSort.Items.Count > 0) cboPromoSort.SelectedIndex = 0;
         }
         private async void LoadDataAsync()
         {
@@ -293,7 +329,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             // FIX: Set BackColor explicitly to prevent transparency overlap issues
             tabFlightPricing.BackColor = Color.White;
             tabPromotions.BackColor = Color.White;
-            tabHistory.BackColor = Color.White;
 
             // FIX: Configure Layout for Grid View (Vertical Scroll)
             flpPricingCards.WrapContents = true;
@@ -333,9 +368,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             flpPromoCards.BackColor = Color.WhiteSmoke;
             flpPromoCards.Padding = new Padding(20);
 
-            // Style cho DataGridView
-            StyleDataGridView();
-
             // Style cho Buttons
             StyleButton(btnSearchFlights, Color.FromArgb(52, 152, 219));
             StyleButton(btnAddPromo, Color.FromArgb(40, 167, 69));
@@ -373,19 +405,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             }
         }
 
-        private void StyleDataGridView()
-        {
-            dgvHistory.EnableHeadersVisualStyles = false;
-            dgvHistory.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(67, 233, 123);
-            dgvHistory.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvHistory.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            dgvHistory.ColumnHeadersHeight = 45;
-            dgvHistory.RowTemplate.Height = 40;
-            dgvHistory.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
-            dgvHistory.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvHistory.AllowUserToAddRows = false;
-            dgvHistory.ReadOnly = true;
-        }
+
         private async Task InitializeFiltersAsync()
         {
             try
@@ -414,13 +434,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 cboSeatClass.DisplayMember = "DisplayName";
                 cboSeatClass.SelectedIndex = 0;
 
-                // Discount filter
-                cboDiscount.Items.AddRange(new object[]
-                {
-                    "All", "Above 10%", "Above 20%", "Above 30%"
-                });
-                cboDiscount.SelectedIndex = 0;
-
                 // Promo Filters
                 txtPromoSearch.PlaceholderText = "Search promo code or name...";
 
@@ -432,7 +445,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
 
                 cboPromoType.Items.AddRange(new object[]
                 {
-                    "All", "Percentage", "Fixed Amount"
+                    "All", "Percent", "Fixed"
                 });
                 cboPromoType.SelectedIndex = 0;
 
@@ -578,8 +591,11 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
         }
         private async void ApplyFlightFilters()
         {
+            if (_isPricingProcessing) return;
+            
             try
             {
+                _isPricingProcessing = true;
                 Cursor = Cursors.WaitCursor;
 
                 // Extract actual filter values from DTO objects
@@ -606,8 +622,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 _currentPricingFilter = new FlightPricingFilterDtoAdmin
                 {
                     Route = routeFilter,
-                    SeatClass = seatClassFilter,
-                    MinDiscountPercent = GetMinDiscountPercent()
+                    SeatClass = seatClassFilter
                 };
 
                 await LoadPricingChunkAsync(reset: true);
@@ -620,12 +635,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
             finally
             {
                 Cursor = Cursors.Default;
+                _isPricingProcessing = false;
             }
         }
         private async void ApplyPromoFilters()
         {
+            // Prevent concurrent execution
+            if (_isPromoProcessing) return;
+
             try
             {
+                _isPromoProcessing = true;
                 Cursor = Cursors.WaitCursor;
 
                 var filter = new PromotionFilterDtoAdmin
@@ -646,31 +666,25 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin
                 }
                 else
                 {
-                    MessageBox.Show(response.Message, "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    // Silent failure or log, avoiding popup spam on search
+                    // Debug.WriteLine(response.Message);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Inspect exception to ignore task canceled or known concurrency issues during rapid typing
+                if (!ex.Message.Contains("second operation")) {
+                     MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             finally
             {
                 Cursor = Cursors.Default;
+                _isPromoProcessing = false;
             }
         }
-        private int? GetMinDiscountPercent()
-        {
-            var selected = cboDiscount.SelectedItem?.ToString();
-            return selected switch
-            {
-                "Above 10%" => 10,
-                "Above 20%" => 20,
-                "Above 30%" => 30,
-                _ => null
-            };
-        }
+
         private bool? GetPromoActiveStatus()
         {
             var selected = cboPromoStatus.SelectedItem?.ToString();

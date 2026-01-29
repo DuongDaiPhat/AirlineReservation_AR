@@ -1,4 +1,6 @@
-﻿namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Views.UCs.Admin
+﻿using AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.Admin;
+
+namespace AirlineReservation_AR.src.AirlineReservation.Presentation__Winform_.Views.UCs.Admin
 {
     partial class UserAccountManagementControl
     {
@@ -46,12 +48,12 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panelFilters = new Guna.UI2.WinForms.Guna2Panel();
-            btnGetBiKhoa = new Guna.UI2.WinForms.Guna2Button();
-            btnGetChuaSacThuc = new Guna.UI2.WinForms.Guna2Button();
-            btnGetKH = new Guna.UI2.WinForms.Guna2Button();
-            btnGetStaff = new Guna.UI2.WinForms.Guna2Button();
-            btnGetAdmin = new Guna.UI2.WinForms.Guna2Button();
-            btnGetAll = new Guna.UI2.WinForms.Guna2Button();
+            btnActionRefresh = new Guna.UI2.WinForms.Guna2Button();
+            btnActionRole = new Guna.UI2.WinForms.Guna2Button();
+
+            btnActionDisable = new Guna.UI2.WinForms.Guna2Button();
+            btnActionEdit = new Guna.UI2.WinForms.Guna2Button();
+            btnActionView = new Guna.UI2.WinForms.Guna2Button();
             cboSort = new Guna.UI2.WinForms.Guna2ComboBox();
             cboXacThuc = new Guna.UI2.WinForms.Guna2ComboBox();
             cboStatus = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -62,7 +64,6 @@
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
-            colActions = new DataGridViewTextBoxColumn();
             colCreatedDate = new DataGridViewTextBoxColumn();
             colLastLogin = new DataGridViewTextBoxColumn();
             colVerified = new DataGridViewTextBoxColumn();
@@ -72,7 +73,10 @@
             colUser = new DataGridViewTextBoxColumn();
             colID = new DataGridViewTextBoxColumn();
             dgvUsers = new DataGridView();
+            panelBottom = new Panel();
+            paginationControl = new PaginationControl();
             panelFilters.SuspendLayout();
+            panelBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvUsers).BeginInit();
             SuspendLayout();
             // 
@@ -80,12 +84,12 @@
             // 
             panelFilters.BackColor = Color.WhiteSmoke;
             panelFilters.BorderColor = Color.Black;
-            panelFilters.Controls.Add(btnGetBiKhoa);
-            panelFilters.Controls.Add(btnGetChuaSacThuc);
-            panelFilters.Controls.Add(btnGetKH);
-            panelFilters.Controls.Add(btnGetStaff);
-            panelFilters.Controls.Add(btnGetAdmin);
-            panelFilters.Controls.Add(btnGetAll);
+            panelFilters.Controls.Add(btnActionRefresh);
+            panelFilters.Controls.Add(btnActionRole);
+
+            panelFilters.Controls.Add(btnActionDisable);
+            panelFilters.Controls.Add(btnActionEdit);
+            panelFilters.Controls.Add(btnActionView);
             panelFilters.Controls.Add(cboSort);
             panelFilters.Controls.Add(cboXacThuc);
             panelFilters.Controls.Add(cboStatus);
@@ -107,107 +111,76 @@
             panelFilters.Size = new Size(1040, 150);
             panelFilters.TabIndex = 0;
             // 
-            // btnGetBiKhoa
+            // btnActionRefresh
             // 
-            btnGetBiKhoa.BorderRadius = 15;
-            btnGetBiKhoa.CustomizableEdges = customizableEdges1;
-            btnGetBiKhoa.DisabledState.BorderColor = Color.DarkGray;
-            btnGetBiKhoa.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnGetBiKhoa.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnGetBiKhoa.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnGetBiKhoa.Font = new Font("Segoe UI", 9F);
-            btnGetBiKhoa.ForeColor = Color.White;
-            btnGetBiKhoa.Location = new Point(774, 97);
-            btnGetBiKhoa.Name = "btnGetBiKhoa";
-            btnGetBiKhoa.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            btnGetBiKhoa.Size = new Size(130, 35);
-            btnGetBiKhoa.TabIndex = 11;
-            btnGetBiKhoa.Text = "Bị khóa";
+            btnActionRefresh.BorderRadius = 15;
+            btnActionRefresh.CustomizableEdges = customizableEdges1;
+            btnActionRefresh.FillColor = Color.Gray;
+            btnActionRefresh.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnActionRefresh.ForeColor = Color.White;
+            btnActionRefresh.Location = new Point(620, 97);
+            btnActionRefresh.Name = "btnActionRefresh";
+            btnActionRefresh.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            btnActionRefresh.Size = new Size(130, 35);
+            btnActionRefresh.TabIndex = 11;
+            btnActionRefresh.Text = "Refresh";
             // 
-            // btnGetChuaSacThuc
+            // btnActionRole
             // 
-            btnGetChuaSacThuc.BorderRadius = 15;
-            btnGetChuaSacThuc.CustomizableEdges = customizableEdges3;
-            btnGetChuaSacThuc.DisabledState.BorderColor = Color.DarkGray;
-            btnGetChuaSacThuc.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnGetChuaSacThuc.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnGetChuaSacThuc.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnGetChuaSacThuc.Font = new Font("Segoe UI", 9F);
-            btnGetChuaSacThuc.ForeColor = Color.White;
-            btnGetChuaSacThuc.Location = new Point(620, 97);
-            btnGetChuaSacThuc.Name = "btnGetChuaSacThuc";
-            btnGetChuaSacThuc.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            btnGetChuaSacThuc.Size = new Size(130, 35);
-            btnGetChuaSacThuc.TabIndex = 2;
-            btnGetChuaSacThuc.Text = "Chưa xác thực";
+            btnActionRole.BorderRadius = 15;
+            btnActionRole.CustomizableEdges = customizableEdges3;
+            btnActionRole.FillColor = Color.FromArgb(156, 39, 176);
+            btnActionRole.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnActionRole.ForeColor = Color.White;
+            btnActionRole.Location = new Point(465, 97);
+            btnActionRole.Name = "btnActionRole";
+            btnActionRole.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btnActionRole.Size = new Size(130, 35);
+            btnActionRole.TabIndex = 2;
+            btnActionRole.Text = "Role";
+
             // 
-            // btnGetKH
+            // btnActionDisable
             // 
-            btnGetKH.BorderRadius = 15;
-            btnGetKH.CustomizableEdges = customizableEdges5;
-            btnGetKH.DisabledState.BorderColor = Color.DarkGray;
-            btnGetKH.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnGetKH.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnGetKH.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnGetKH.Font = new Font("Segoe UI", 9F);
-            btnGetKH.ForeColor = Color.White;
-            btnGetKH.Location = new Point(465, 97);
-            btnGetKH.Name = "btnGetKH";
-            btnGetKH.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            btnGetKH.Size = new Size(130, 35);
-            btnGetKH.TabIndex = 2;
-            btnGetKH.Text = "Khách hàng";
+            btnActionDisable.BorderRadius = 15;
+            btnActionDisable.CustomizableEdges = customizableEdges7;
+            btnActionDisable.FillColor = Color.FromArgb(255, 193, 7);
+            btnActionDisable.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnActionDisable.ForeColor = Color.White;
+            btnActionDisable.Location = new Point(310, 97);
+            btnActionDisable.Name = "btnActionDisable";
+            btnActionDisable.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnActionDisable.Size = new Size(130, 35);
+            btnActionDisable.TabIndex = 10;
+            btnActionDisable.Text = "Disable";
             // 
-            // btnGetStaff
+            // btnActionEdit
             // 
-            btnGetStaff.BorderRadius = 15;
-            btnGetStaff.CustomizableEdges = customizableEdges7;
-            btnGetStaff.DisabledState.BorderColor = Color.DarkGray;
-            btnGetStaff.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnGetStaff.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnGetStaff.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnGetStaff.Font = new Font("Segoe UI", 9F);
-            btnGetStaff.ForeColor = Color.White;
-            btnGetStaff.Location = new Point(310, 97);
-            btnGetStaff.Name = "btnGetStaff";
-            btnGetStaff.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            btnGetStaff.Size = new Size(130, 35);
-            btnGetStaff.TabIndex = 10;
-            btnGetStaff.Text = "Staff";
+            btnActionEdit.BorderRadius = 15;
+            btnActionEdit.CustomizableEdges = customizableEdges9;
+            btnActionEdit.FillColor = Color.FromArgb(40, 167, 69);
+            btnActionEdit.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnActionEdit.ForeColor = Color.White;
+            btnActionEdit.Location = new Point(160, 97);
+            btnActionEdit.Name = "btnActionEdit";
+            btnActionEdit.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            btnActionEdit.Size = new Size(130, 35);
+            btnActionEdit.TabIndex = 9;
+            btnActionEdit.Text = "Edit";
             // 
-            // btnGetAdmin
+            // btnActionView
             // 
-            btnGetAdmin.BorderRadius = 15;
-            btnGetAdmin.CustomizableEdges = customizableEdges9;
-            btnGetAdmin.DisabledState.BorderColor = Color.DarkGray;
-            btnGetAdmin.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnGetAdmin.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnGetAdmin.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnGetAdmin.Font = new Font("Segoe UI", 9F);
-            btnGetAdmin.ForeColor = Color.White;
-            btnGetAdmin.Location = new Point(160, 97);
-            btnGetAdmin.Name = "btnGetAdmin";
-            btnGetAdmin.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            btnGetAdmin.Size = new Size(130, 35);
-            btnGetAdmin.TabIndex = 9;
-            btnGetAdmin.Text = "Admin";
-            // 
-            // btnGetAll
-            // 
-            btnGetAll.BorderRadius = 15;
-            btnGetAll.CustomizableEdges = customizableEdges11;
-            btnGetAll.DisabledState.BorderColor = Color.DarkGray;
-            btnGetAll.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnGetAll.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnGetAll.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnGetAll.Font = new Font("Segoe UI", 9F);
-            btnGetAll.ForeColor = Color.White;
-            btnGetAll.Location = new Point(15, 97);
-            btnGetAll.Name = "btnGetAll";
-            btnGetAll.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            btnGetAll.Size = new Size(130, 35);
-            btnGetAll.TabIndex = 1;
-            btnGetAll.Text = "tất cả";
+            btnActionView.BorderRadius = 15;
+            btnActionView.CustomizableEdges = customizableEdges11;
+            btnActionView.FillColor = Color.FromArgb(0, 123, 255);
+            btnActionView.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnActionView.ForeColor = Color.White;
+            btnActionView.Location = new Point(15, 97);
+            btnActionView.Name = "btnActionView";
+            btnActionView.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            btnActionView.Size = new Size(130, 35);
+            btnActionView.TabIndex = 1;
+            btnActionView.Text = "View";
             // 
             // cboSort
             // 
@@ -315,7 +288,7 @@
             label5.Name = "label5";
             label5.Size = new Size(56, 19);
             label5.TabIndex = 4;
-            label5.Text = "Sắp sếp";
+            label5.Text = "Sort By";
             // 
             // label4
             // 
@@ -326,7 +299,7 @@
             label4.Name = "label4";
             label4.Size = new Size(61, 19);
             label4.TabIndex = 3;
-            label4.Text = "Xác thực";
+            label4.Text = "Verified";
             // 
             // label3
             // 
@@ -337,7 +310,7 @@
             label3.Name = "label3";
             label3.Size = new Size(70, 19);
             label3.TabIndex = 2;
-            label3.Text = "Trạng thái";
+            label3.Text = "Status";
             // 
             // label2
             // 
@@ -348,7 +321,7 @@
             label2.Name = "label2";
             label2.Size = new Size(49, 19);
             label2.TabIndex = 1;
-            label2.Text = "Vai trò";
+            label2.Text = "Role";
             // 
             // label1
             // 
@@ -359,82 +332,83 @@
             label1.Name = "label1";
             label1.Size = new Size(64, 19);
             label1.TabIndex = 0;
-            label1.Text = "Tìm kiếm";
+            label1.Text = "Search";
             // 
             // colActions
             // 
-            colActions.FillWeight = 4.23257971F;
-            colActions.HeaderText = "THAO TÁC";
-            colActions.Name = "colActions";
-            colActions.ReadOnly = true;
             // 
             // colCreatedDate
             // 
-            colCreatedDate.FillWeight = 4.23257971F;
-            colCreatedDate.HeaderText = "NGÀY TẠO";
+            colCreatedDate.HeaderText = "CREATED DATE";
+            colCreatedDate.MinimumWidth = 100;
             colCreatedDate.Name = "colCreatedDate";
             colCreatedDate.ReadOnly = true;
+            colCreatedDate.Width = 100;
             // 
             // colLastLogin
             // 
-            colLastLogin.FillWeight = 4.23257971F;
-            colLastLogin.HeaderText = "ĐĂNG NHẬP CUỐI";
+            colLastLogin.HeaderText = "LAST LOGIN";
+            colLastLogin.MinimumWidth = 100;
             colLastLogin.Name = "colLastLogin";
             colLastLogin.ReadOnly = true;
-            colLastLogin.Width = 140;
+            colLastLogin.Visible = false;
             // 
             // colVerified
             // 
-            colVerified.FillWeight = 4.23257971F;
-            colVerified.HeaderText = "XÁC THỰC";
+            colVerified.HeaderText = "VERIFIED";
+            colVerified.MinimumWidth = 100;
             colVerified.Name = "colVerified";
             colVerified.ReadOnly = true;
+            colVerified.Width = 100;
             // 
             // colStatus
             // 
-            colStatus.FillWeight = 4.23257971F;
-            colStatus.HeaderText = "TRẠNG THÁI";
+            colStatus.HeaderText = "STATUS";
+            colStatus.MinimumWidth = 100;
             colStatus.Name = "colStatus";
             colStatus.ReadOnly = true;
+            colStatus.Width = 100;
             // 
             // colRole
             // 
-            colRole.FillWeight = 4.23257971F;
-            colRole.HeaderText = "VAI TRÒ";
+            colRole.HeaderText = "ROLE";
+            colRole.MinimumWidth = 100;
             colRole.Name = "colRole";
             colRole.ReadOnly = true;
+            colRole.Width = 100;
             // 
             // colPhone
             // 
-            colPhone.FillWeight = 685.2793F;
-            colPhone.HeaderText = "SỐ ĐIỆN THOẠI";
+            colPhone.HeaderText = "PHONE";
+            colPhone.MinimumWidth = 120;
             colPhone.Name = "colPhone";
             colPhone.ReadOnly = true;
-            colPhone.Width = 120;
+            colPhone.Width = 150;
             // 
             // colUser
             // 
-            colUser.FillWeight = 174.495789F;
-            colUser.HeaderText = "NGƯỜI DÙNG";
+            colUser.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colUser.HeaderText = "USER";
             colUser.Name = "colUser";
             colUser.ReadOnly = true;
-            colUser.Width = 220;
+            colUser.Width = 300;
             // 
             // colID
             // 
-            colID.FillWeight = 14.8294735F;
             colID.HeaderText = "ID";
+            colID.MinimumWidth = 60;
             colID.Name = "colID";
             colID.ReadOnly = true;
-            colID.Width = 60;
+            colID.Width = 80;
             // 
             // dgvUsers
             // 
             dgvUsers.AllowUserToAddRows = false;
+            dgvUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dgvUsers.BackgroundColor = Color.White;
             dgvUsers.BorderStyle = BorderStyle.None;
             dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvUsers.Columns.AddRange(new DataGridViewColumn[] { colID, colUser, colPhone, colRole, colStatus, colVerified, colLastLogin, colCreatedDate, colActions });
+            dgvUsers.Columns.AddRange(new DataGridViewColumn[] { colID, colUser, colPhone, colRole, colStatus, colVerified, colLastLogin, colCreatedDate });
             dgvUsers.Location = new Point(0, 200);
             dgvUsers.Margin = new Padding(0);
             dgvUsers.MultiSelect = false;
@@ -447,12 +421,31 @@
             dgvUsers.TabIndex = 1;
             dgvUsers.Dock = DockStyle.Fill;
             // 
+            // panelBottom
+            // 
+            panelBottom.Controls.Add(paginationControl);
+            panelBottom.Dock = DockStyle.Bottom;
+            panelBottom.Location = new Point(0, 600);
+            panelBottom.Name = "panelBottom";
+            panelBottom.Size = new Size(1040, 50);
+            panelBottom.TabIndex = 2;
+            // 
+            // paginationControl
+            // 
+            paginationControl.BackColor = Color.White;
+            paginationControl.Dock = DockStyle.Fill;
+            paginationControl.Location = new Point(0, 0);
+            paginationControl.Name = "paginationControl";
+            paginationControl.Size = new Size(1040, 50);
+            paginationControl.TabIndex = 0;
+            // 
             // UserAccountManagementControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             Controls.Add(dgvUsers);
+            Controls.Add(panelBottom);
             Controls.Add(panelFilters);
             Margin = new Padding(0);
             Name = "UserAccountManagementControl";
@@ -474,13 +467,12 @@
         private Guna.UI2.WinForms.Guna2ComboBox cboSort;
         private Guna.UI2.WinForms.Guna2ComboBox cboXacThuc;
         private Guna.UI2.WinForms.Guna2ComboBox cboStatus;
-        private Guna.UI2.WinForms.Guna2Button btnGetBiKhoa;
-        private Guna.UI2.WinForms.Guna2Button btnGetChuaSacThuc;
-        private Guna.UI2.WinForms.Guna2Button btnGetKH;
-        private Guna.UI2.WinForms.Guna2Button btnGetStaff;
-        private Guna.UI2.WinForms.Guna2Button btnGetAdmin;
-        private Guna.UI2.WinForms.Guna2Button btnGetAll;
-        private DataGridViewTextBoxColumn colActions;
+        private Guna.UI2.WinForms.Guna2Button btnActionRefresh;
+        private Guna.UI2.WinForms.Guna2Button btnActionRole;
+
+        private Guna.UI2.WinForms.Guna2Button btnActionDisable;
+        private Guna.UI2.WinForms.Guna2Button btnActionEdit;
+        private Guna.UI2.WinForms.Guna2Button btnActionView;
         private DataGridViewTextBoxColumn colCreatedDate;
         private DataGridViewTextBoxColumn colLastLogin;
         private DataGridViewTextBoxColumn colVerified;
@@ -490,5 +482,7 @@
         private DataGridViewTextBoxColumn colUser;
         private DataGridViewTextBoxColumn colID;
         private DataGridView dgvUsers;
+        private Panel panelBottom;
+        private PaginationControl paginationControl;
     }
 }

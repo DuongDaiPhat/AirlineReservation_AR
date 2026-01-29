@@ -105,6 +105,26 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
                 return false;
             }
         }
+        public async Task<bool> DeleteUserAsync(Guid userId)
+        {
+            using var _db = DIContainer.CreateDb();
+            var user = await _db.Users
+                .Include(u => u.UserRoles)
+                .FirstOrDefaultAsync(u => u.UserId == userId);
+
+            if (user == null) return false;
+
+            // Delete UserRoles first to fix FK Constraint
+            if (user.UserRoles != null && user.UserRoles.Any())
+            {
+                _db.UserRoles.RemoveRange(user.UserRoles);
+            }
+
+            _db.Users.Remove(user);
+            await _db.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<bool> UpdateAccountAsync(
             Guid userId,
             string fullName,

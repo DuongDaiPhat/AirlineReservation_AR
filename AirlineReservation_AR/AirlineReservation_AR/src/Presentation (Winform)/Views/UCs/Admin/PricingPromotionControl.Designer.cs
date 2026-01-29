@@ -28,34 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges28 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges29 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges30 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges31 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges32 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges33 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges34 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges35 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges36 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             tabMain = new TabControl();
             tabFlightPricing = new TabPage();
             panel1 = new Panel();
             flpPricingCards = new FlowLayoutPanel();
             pnlFlightFilters = new Panel();
             btnSearchFlights = new Guna.UI2.WinForms.Guna2Button();
-            cboDiscount = new Guna.UI2.WinForms.Guna2ComboBox();
             cboSeatClass = new Guna.UI2.WinForms.Guna2ComboBox();
             cboRoute = new Guna.UI2.WinForms.Guna2ComboBox();
-            label3 = new Label();
             label2 = new Label();
             label1 = new Label();
             tabPromotions = new TabPage();
@@ -73,10 +67,10 @@
             pnlPromoTop = new Panel();
             btnAddPromo = new Guna.UI2.WinForms.Guna2Button();
             label8 = new Label();
-            tabHistory = new TabPage();
-            dgvHistory = new DataGridView();
             paginationPricing = new PaginationControl();
             paginationPromo = new PaginationControl();
+            btnRefreshPricing = new Guna.UI2.WinForms.Guna2Button();
+            btnRefreshPromo = new Guna.UI2.WinForms.Guna2Button();
             tabMain.SuspendLayout();
             tabFlightPricing.SuspendLayout();
             panel1.SuspendLayout();
@@ -85,15 +79,12 @@
             panel2.SuspendLayout();
             pnlPromoFilters.SuspendLayout();
             pnlPromoTop.SuspendLayout();
-            tabHistory.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvHistory).BeginInit();
             SuspendLayout();
             // 
             // tabMain
             // 
             tabMain.Controls.Add(tabFlightPricing);
             tabMain.Controls.Add(tabPromotions);
-            tabMain.Controls.Add(tabHistory);
             tabMain.Dock = DockStyle.Fill;
             tabMain.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             tabMain.ItemSize = new Size(150, 40);
@@ -144,11 +135,10 @@
             // 
             // pnlFlightFilters
             // 
+            pnlFlightFilters.Controls.Add(btnRefreshPricing);
             pnlFlightFilters.Controls.Add(btnSearchFlights);
-            pnlFlightFilters.Controls.Add(cboDiscount);
             pnlFlightFilters.Controls.Add(cboSeatClass);
             pnlFlightFilters.Controls.Add(cboRoute);
-            pnlFlightFilters.Controls.Add(label3);
             pnlFlightFilters.Controls.Add(label2);
             pnlFlightFilters.Controls.Add(label1);
             pnlFlightFilters.Dock = DockStyle.Top;
@@ -163,45 +153,41 @@
             // 
             btnSearchFlights.BorderRadius = 10;
             btnSearchFlights.Cursor = Cursors.Hand;
-            btnSearchFlights.CustomizableEdges = customizableEdges19;
+            btnSearchFlights.CustomizableEdges = customizableEdges1;
             btnSearchFlights.DisabledState.BorderColor = Color.DarkGray;
             btnSearchFlights.DisabledState.CustomBorderColor = Color.DarkGray;
             btnSearchFlights.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnSearchFlights.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             btnSearchFlights.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSearchFlights.ForeColor = Color.White;
-            btnSearchFlights.Location = new Point(780, 40);
+            btnSearchFlights.Location = new Point(520, 40);
             btnSearchFlights.Margin = new Padding(0);
             btnSearchFlights.Name = "btnSearchFlights";
-            btnSearchFlights.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            btnSearchFlights.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnSearchFlights.Size = new Size(180, 45);
-            btnSearchFlights.TabIndex = 6;
+            btnSearchFlights.TabIndex = 4;
             btnSearchFlights.Text = "🔍 Search";
             // 
-            // cboDiscount
+            // btnRefreshPricing
             // 
-            cboDiscount.BackColor = Color.Transparent;
-            cboDiscount.BorderRadius = 10;
-            cboDiscount.CustomizableEdges = customizableEdges21;
-            cboDiscount.DrawMode = DrawMode.OwnerDrawFixed;
-            cboDiscount.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboDiscount.FocusedColor = Color.FromArgb(94, 148, 255);
-            cboDiscount.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            cboDiscount.Font = new Font("Segoe UI", 10F);
-            cboDiscount.ForeColor = Color.FromArgb(68, 88, 112);
-            cboDiscount.ItemHeight = 30;
-            cboDiscount.Location = new Point(520, 45);
-            cboDiscount.Margin = new Padding(0);
-            cboDiscount.Name = "cboDiscount";
-            cboDiscount.ShadowDecoration.CustomizableEdges = customizableEdges22;
-            cboDiscount.Size = new Size(160, 36);
-            cboDiscount.TabIndex = 5;
+            btnRefreshPricing.BorderRadius = 10;
+            btnRefreshPricing.Cursor = Cursors.Hand;
+            // btnRefreshPricing.CustomizableEdges = customizableEdges15; // Skip customizable edges if not critical or generate new ones
+            btnRefreshPricing.FillColor = Color.Gray;
+            btnRefreshPricing.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRefreshPricing.ForeColor = Color.White;
+            btnRefreshPricing.Location = new Point(710, 40);
+            btnRefreshPricing.Name = "btnRefreshPricing";
+            // btnRefreshPricing.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            btnRefreshPricing.Size = new Size(100, 45);
+            btnRefreshPricing.TabIndex = 5;
+            btnRefreshPricing.Text = "Refresh";
             // 
             // cboSeatClass
             // 
             cboSeatClass.BackColor = Color.Transparent;
             cboSeatClass.BorderRadius = 10;
-            cboSeatClass.CustomizableEdges = customizableEdges23;
+            cboSeatClass.CustomizableEdges = customizableEdges3;
             cboSeatClass.DrawMode = DrawMode.OwnerDrawFixed;
             cboSeatClass.DropDownStyle = ComboBoxStyle.DropDownList;
             cboSeatClass.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -212,15 +198,15 @@
             cboSeatClass.Location = new Point(280, 45);
             cboSeatClass.Margin = new Padding(0);
             cboSeatClass.Name = "cboSeatClass";
-            cboSeatClass.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            cboSeatClass.ShadowDecoration.CustomizableEdges = customizableEdges4;
             cboSeatClass.Size = new Size(160, 36);
-            cboSeatClass.TabIndex = 4;
+            cboSeatClass.TabIndex = 3;
             // 
             // cboRoute
             // 
             cboRoute.BackColor = Color.Transparent;
             cboRoute.BorderRadius = 10;
-            cboRoute.CustomizableEdges = customizableEdges25;
+            cboRoute.CustomizableEdges = customizableEdges5;
             cboRoute.DrawMode = DrawMode.OwnerDrawFixed;
             cboRoute.DropDownStyle = ComboBoxStyle.DropDownList;
             cboRoute.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -231,18 +217,9 @@
             cboRoute.Location = new Point(40, 45);
             cboRoute.Margin = new Padding(0);
             cboRoute.Name = "cboRoute";
-            cboRoute.ShadowDecoration.CustomizableEdges = customizableEdges26;
+            cboRoute.ShadowDecoration.CustomizableEdges = customizableEdges6;
             cboRoute.Size = new Size(160, 36);
-            cboRoute.TabIndex = 3;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(520, 15);
-            label3.Name = "label3";
-            label3.Size = new Size(76, 19);
-            label3.TabIndex = 2;
-            label3.Text = "Discount Level";
+            cboRoute.TabIndex = 2;
             // 
             // label2
             // 
@@ -289,17 +266,19 @@
             // flpPromoCards
             // 
             flpPromoCards.AutoScroll = true;
+            flpPromoCards.BackColor = Color.WhiteSmoke;
             flpPromoCards.Dock = DockStyle.Fill;
             flpPromoCards.Location = new Point(3, 183);
             flpPromoCards.Margin = new Padding(0);
             flpPromoCards.Name = "flpPromoCards";
             flpPromoCards.Padding = new Padding(20);
-            flpPromoCards.Size = new Size(1026, 466);
+            flpPromoCards.Size = new Size(1026, 416);
             flpPromoCards.TabIndex = 3;
-            flpPromoCards.WrapContents = false;
+            flpPromoCards.WrapContents = true;
             // 
             // pnlPromoFilters
             // 
+            pnlPromoFilters.Controls.Add(btnRefreshPromo);
             pnlPromoFilters.Controls.Add(cboPromoSort);
             pnlPromoFilters.Controls.Add(cboPromoType);
             pnlPromoFilters.Controls.Add(cboPromoStatus);
@@ -318,7 +297,8 @@
             // cboPromoSort
             // 
             cboPromoSort.BackColor = Color.Transparent;
-            cboPromoSort.CustomizableEdges = customizableEdges27;
+            cboPromoSort.BorderRadius = 10;
+            cboPromoSort.CustomizableEdges = customizableEdges7;
             cboPromoSort.DrawMode = DrawMode.OwnerDrawFixed;
             cboPromoSort.DropDownStyle = ComboBoxStyle.DropDownList;
             cboPromoSort.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -326,17 +306,18 @@
             cboPromoSort.Font = new Font("Segoe UI", 10F);
             cboPromoSort.ForeColor = Color.FromArgb(68, 88, 112);
             cboPromoSort.ItemHeight = 30;
-            cboPromoSort.Location = new Point(826, 50);
+            cboPromoSort.Location = new Point(710, 50);
             cboPromoSort.Margin = new Padding(0);
             cboPromoSort.Name = "cboPromoSort";
-            cboPromoSort.ShadowDecoration.CustomizableEdges = customizableEdges28;
-            cboPromoSort.Size = new Size(160, 36);
+            cboPromoSort.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            cboPromoSort.Size = new Size(150, 36);
             cboPromoSort.TabIndex = 7;
             // 
             // cboPromoType
             // 
             cboPromoType.BackColor = Color.Transparent;
-            cboPromoType.CustomizableEdges = customizableEdges29;
+            cboPromoType.BorderRadius = 10;
+            cboPromoType.CustomizableEdges = customizableEdges9;
             cboPromoType.DrawMode = DrawMode.OwnerDrawFixed;
             cboPromoType.DropDownStyle = ComboBoxStyle.DropDownList;
             cboPromoType.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -344,17 +325,18 @@
             cboPromoType.Font = new Font("Segoe UI", 10F);
             cboPromoType.ForeColor = Color.FromArgb(68, 88, 112);
             cboPromoType.ItemHeight = 30;
-            cboPromoType.Location = new Point(584, 50);
+            cboPromoType.Location = new Point(545, 50);
             cboPromoType.Margin = new Padding(0);
             cboPromoType.Name = "cboPromoType";
-            cboPromoType.ShadowDecoration.CustomizableEdges = customizableEdges30;
-            cboPromoType.Size = new Size(160, 36);
+            cboPromoType.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            cboPromoType.Size = new Size(150, 36);
             cboPromoType.TabIndex = 6;
             // 
             // cboPromoStatus
             // 
             cboPromoStatus.BackColor = Color.Transparent;
-            cboPromoStatus.CustomizableEdges = customizableEdges31;
+            cboPromoStatus.BorderRadius = 10;
+            cboPromoStatus.CustomizableEdges = customizableEdges11;
             cboPromoStatus.DrawMode = DrawMode.OwnerDrawFixed;
             cboPromoStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cboPromoStatus.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -362,17 +344,17 @@
             cboPromoStatus.Font = new Font("Segoe UI", 10F);
             cboPromoStatus.ForeColor = Color.FromArgb(68, 88, 112);
             cboPromoStatus.ItemHeight = 30;
-            cboPromoStatus.Location = new Point(342, 50);
+            cboPromoStatus.Location = new Point(380, 50);
             cboPromoStatus.Margin = new Padding(0);
             cboPromoStatus.Name = "cboPromoStatus";
-            cboPromoStatus.ShadowDecoration.CustomizableEdges = customizableEdges32;
-            cboPromoStatus.Size = new Size(160, 36);
+            cboPromoStatus.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            cboPromoStatus.Size = new Size(150, 36);
             cboPromoStatus.TabIndex = 5;
             // 
             // txtPromoSearch
             // 
             txtPromoSearch.BorderRadius = 10;
-            txtPromoSearch.CustomizableEdges = customizableEdges33;
+            txtPromoSearch.CustomizableEdges = customizableEdges13;
             txtPromoSearch.DefaultText = "";
             txtPromoSearch.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtPromoSearch.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -386,14 +368,30 @@
             txtPromoSearch.Name = "txtPromoSearch";
             txtPromoSearch.PlaceholderText = "";
             txtPromoSearch.SelectedText = "";
-            txtPromoSearch.ShadowDecoration.CustomizableEdges = customizableEdges34;
+            txtPromoSearch.ShadowDecoration.CustomizableEdges = customizableEdges14;
             txtPromoSearch.Size = new Size(220, 36);
             txtPromoSearch.TabIndex = 4;
             // 
+            // btnRefreshPromo
+            // 
+            btnRefreshPromo.BorderRadius = 10;
+            btnRefreshPromo.Cursor = Cursors.Hand;
+            // btnRefreshPromo.CustomizableEdges = customizableEdges17;
+            btnRefreshPromo.FillColor = Color.Gray;
+            btnRefreshPromo.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRefreshPromo.ForeColor = Color.White;
+            btnRefreshPromo.Location = new Point(275, 50);
+            btnRefreshPromo.Name = "btnRefreshPromo";
+            // btnRefreshPromo.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            btnRefreshPromo.Size = new Size(90, 36);
+            btnRefreshPromo.TabIndex = 8;
+            btnRefreshPromo.Text = "Refresh";
+            // 
             // label7
             // 
+            // 
             label7.AutoSize = true;
-            label7.Location = new Point(826, 15);
+            label7.Location = new Point(710, 15);
             label7.Name = "label7";
             label7.Size = new Size(63, 19);
             label7.TabIndex = 3;
@@ -402,7 +400,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(342, 15);
+            label6.Location = new Point(380, 15);
             label6.Margin = new Padding(0);
             label6.Name = "label6";
             label6.Size = new Size(76, 19);
@@ -412,7 +410,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(584, 15);
+            label5.Location = new Point(545, 15);
             label5.Name = "label5";
             label5.Size = new Size(100, 19);
             label5.TabIndex = 1;
@@ -440,8 +438,9 @@
             // 
             // btnAddPromo
             // 
+            btnAddPromo.BorderRadius = 10;
             btnAddPromo.Cursor = Cursors.Hand;
-            btnAddPromo.CustomizableEdges = customizableEdges35;
+            btnAddPromo.CustomizableEdges = customizableEdges7;
             btnAddPromo.DisabledState.BorderColor = Color.DarkGray;
             btnAddPromo.DisabledState.CustomBorderColor = Color.DarkGray;
             btnAddPromo.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -450,7 +449,7 @@
             btnAddPromo.ForeColor = Color.White;
             btnAddPromo.Location = new Point(712, 14);
             btnAddPromo.Name = "btnAddPromo";
-            btnAddPromo.ShadowDecoration.CustomizableEdges = customizableEdges36;
+            btnAddPromo.ShadowDecoration.CustomizableEdges = customizableEdges8;
             btnAddPromo.Size = new Size(180, 45);
             btnAddPromo.TabIndex = 1;
             btnAddPromo.Text = "➕ New Promo";
@@ -464,29 +463,6 @@
             label8.Size = new Size(196, 19);
             label8.TabIndex = 0;
             label8.Text = "📊 PROMOTION STATISTICS";
-            // 
-            // tabHistory
-            // 
-            tabHistory.Controls.Add(dgvHistory);
-            tabHistory.Location = new Point(4, 44);
-            tabHistory.Margin = new Padding(0);
-            tabHistory.Name = "tabHistory";
-            tabHistory.Padding = new Padding(3);
-            tabHistory.Size = new Size(1032, 652);
-            tabHistory.TabIndex = 2;
-            tabHistory.Text = "History";
-            tabHistory.UseVisualStyleBackColor = true;
-            // 
-            // dgvHistory
-            // 
-            dgvHistory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvHistory.Dock = DockStyle.Fill;
-            dgvHistory.Location = new Point(3, 3);
-            dgvHistory.Margin = new Padding(0);
-            dgvHistory.Name = "dgvHistory";
-            dgvHistory.RowHeadersWidth = 51;
-            dgvHistory.Size = new Size(1026, 646);
-            dgvHistory.TabIndex = 0;
             // 
             // paginationPricing
             // 
@@ -542,8 +518,6 @@
             pnlPromoFilters.PerformLayout();
             pnlPromoTop.ResumeLayout(false);
             pnlPromoTop.PerformLayout();
-            tabHistory.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvHistory).EndInit();
             ResumeLayout(false);
         }
 
@@ -552,14 +526,11 @@
         private TabControl tabMain;
         private TabPage tabFlightPricing;
         private TabPage tabPromotions;
-        private TabPage tabHistory;
         private Panel pnlFlightFilters;
-        private Label label3;
         private Label label2;
         private Label label1;
         private FlowLayoutPanel flpPricingCards;
         private Guna.UI2.WinForms.Guna2Button btnSearchFlights;
-        private Guna.UI2.WinForms.Guna2ComboBox cboDiscount;
         private Guna.UI2.WinForms.Guna2ComboBox cboSeatClass;
         private Guna.UI2.WinForms.Guna2ComboBox cboRoute;
         private Panel pnlPromoTop;
@@ -573,12 +544,13 @@
         private Label label6;
         private Label label5;
         private Label label4;
-        private DataGridView dgvHistory;
         private Label label8;
         private Guna.UI2.WinForms.Guna2Button btnAddPromo;
         private Panel panel1;
         private Panel panel2;
         private PaginationControl paginationPricing;
         private PaginationControl paginationPromo;
+        private Guna.UI2.WinForms.Guna2Button btnRefreshPricing;
+        private Guna.UI2.WinForms.Guna2Button btnRefreshPromo;
     }
 }

@@ -100,11 +100,12 @@ namespace AirlineReservation_AR.src.Infrastructure.DI
                 .Options;
             _hasher = new PasswordHasher();
 
-            var pricingRepo = new FlightPricingRepositoryAdmin(new AirlineReservationDbContext(DbOptions));
-            var promotionRepo = new PromotionRepositoryAdmin(new AirlineReservationDbContext(DbOptions));
+            var sharedContext = new AirlineReservationDbContext(DbOptions);
+            var pricingRepo = new FlightPricingRepositoryAdmin(sharedContext);
+            var promotionRepo = new PromotionRepositoryAdmin(sharedContext);
 
             _unitOfWorkAdmin = new UnitOfWorkAdmin(
-                new AirlineReservationDbContext(DbOptions),
+                sharedContext,
                 pricingRepo,
                 promotionRepo
             );

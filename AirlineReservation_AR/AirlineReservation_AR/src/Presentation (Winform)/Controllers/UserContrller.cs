@@ -61,5 +61,17 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Controllers
                 ? (true, "Thêm role thành công")
                 : (false, "Không thể thêm — có thể user không tồn tại hoặc đã có role này");
         }
+        public async Task<(bool Success, string Message)> DeleteUserAsync(Guid userId)
+        {
+            try
+            {
+                var result = await _userService.DeleteUserAsync(userId);
+                return result ? (true, "User deleted successfully.") : (false, "User not found.");
+            }
+            catch (Exception)
+            {
+                return (false, "Cannot delete user. Dependent data exists (e.g. Bookings). Please Disable instead.");
+            }
+        }
     }
 }
