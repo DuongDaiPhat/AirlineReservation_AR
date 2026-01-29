@@ -208,7 +208,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             if (!ok)
             {
                 AnnouncementForm announcementForm = new AnnouncementForm();
-                announcementForm.SetAnnouncement("Cập nhật không thành công", "Thông tin không hợp lệ", false, null);
+                announcementForm.SetAnnouncement("Update failed", "Information is invalid", false, null);
                 announcementForm.Show();
                 return;
             }
@@ -223,7 +223,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
 
             AccountUpdated?.Invoke(this, EventArgs.Empty);
             AnnouncementForm announcementForm1 = new AnnouncementForm();
-            announcementForm1.SetAnnouncement("Cập nhật thành công", "Đã cập nhật thông tin tài khoản", true, null);
+            announcementForm1.SetAnnouncement("Update successful", "Account information has been updated", true, null);
             announcementForm1.Show();
         }
 

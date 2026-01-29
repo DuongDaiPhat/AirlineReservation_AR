@@ -54,29 +54,35 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
 
         private async void SignInBtn_Click(object sender, EventArgs e)
         {
-            // 1. Validate thông tin đầu vào
+            // 1. Validate input information
             if (string.IsNullOrWhiteSpace(emailTB.Text) ||
                 string.IsNullOrWhiteSpace(passwordTB.Text))
             {
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đăng nhập không thành công", "Vui lòng nhập email hoặc mật khẩu", false, null);
+                announcementForm1.SetAnnouncement("Login failed", "Please enter email or password", false, null);
                 announcementForm1.Show();
+                announcementForm1.BringToFront();
+
                 return;
             }
 
             if (!validation.IsValidGoogleEmail(emailTB.Text))
             {
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đăng nhập không thành công", "Email không hợp lệ", false, null);
+                announcementForm1.SetAnnouncement("Login failed", "Invalid email", false, null);
                 announcementForm1.Show();
+                announcementForm1.BringToFront();
+
                 return;
             }
 
             if (!validation.IsValidPassword(passwordTB.Text))
             {
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đăng nhập không thành công", "Mật khẩu không hợp lệ", false, null);
+                announcementForm1.SetAnnouncement("Login failed", "Invalid password", false, null);
                 announcementForm1.Show();
+                announcementForm1.BringToFront();
+
                 return;
             }
 
@@ -96,16 +102,17 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             loading.Dispose();
             loading = null;
 
-            // 3.Xử lý kết quả
+            // 3. Process result
             if (result == null)
             {
                 var errorAnnouncement = new AnnouncementForm();
                 errorAnnouncement.SetAnnouncement(
                     "Error",
-                    "Email hoặc mật khẩu không đúng.",
+                    "Email or password is incorrect.",
                     false,
                     null);
                 errorAnnouncement.ShowDialog();
+                errorAnnouncement.BringToFront();
                 return;
             }
 

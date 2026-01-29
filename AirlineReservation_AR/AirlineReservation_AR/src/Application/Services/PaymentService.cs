@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
+﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
 using AirlineReservation_AR.src.Application.Interfaces;
+using AirlineReservation_AR.src.Application.Services;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 {
@@ -44,7 +47,17 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             };
 
             _db.Payments.Add(payment);
-            await _db.SaveChangesAsync();
+            int result = await _db.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogSimpleActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Payments,
+                    OperationAuditLog.create,
+                    payment.PaymentId.ToString());
+            }
             return payment;
         }
 
@@ -81,13 +94,26 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             var payment = await _db.Payments.FindAsync(paymentId);
             if (payment == null) return false;
 
+            var oldStatus = payment.Status;
             payment.ProcessedAt = DateTime.UtcNow;
             if (!string.IsNullOrWhiteSpace(transactionId))
                 payment.TransactionId = transactionId;
             if (!string.IsNullOrWhiteSpace(status))
                 payment.Status = status;
 
-            await _db.SaveChangesAsync();
+            int result = await _db.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Payments,
+                    OperationAuditLog.update,
+                    payment.PaymentId.ToString(),
+                    oldStatus,
+                    status ?? oldStatus);
+            }
             return true;
         }
 
@@ -97,10 +123,23 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             var payment = await _db.Payments.FindAsync(paymentId);
             if (payment == null) return false;
 
+            var oldStatus = payment.Status;
             payment.CompletedAt = DateTime.UtcNow;
             payment.Status = status ?? "Completed";
 
-            await _db.SaveChangesAsync();
+            int result = await _db.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Payments,
+                    OperationAuditLog.update,
+                    payment.PaymentId.ToString(),
+                    oldStatus,
+                    payment.Status);
+            }
             return true;
         }
 
@@ -116,11 +155,24 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             if (currentRefunded + refundAmount > payment.Amount)
                 throw new Exception("Refund amount exceeds original payment.");
 
+            var oldRefundAmount = payment.RefundedAmount;
             payment.RefundedAmount = currentRefunded + refundAmount;
             if (!string.IsNullOrWhiteSpace(status))
                 payment.Status = status;
 
-            await _db.SaveChangesAsync();
+            int result = await _db.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Payments,
+                    OperationAuditLog.update,
+                    payment.PaymentId.ToString(),
+                    $"Refunded: {oldRefundAmount}",
+                    $"Refunded: {payment.RefundedAmount}");
+            }
             return true;
         }
 
@@ -130,12 +182,25 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             var payment = await _db.Payments.FindAsync(paymentId);
             if (payment == null) return false;
 
+            var oldStatus = payment.Status;
             payment.Status = status;
-            await _db.SaveChangesAsync();
+            int result = await _db.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Payments,
+                    OperationAuditLog.update,
+                    payment.PaymentId.ToString(),
+                    oldStatus,
+                    status);
+            }
             return true;
         }
 
-        public int CreatePayment(PaymentCreateDTO dto)
+        public async Task<int> CreatePaymentAsync(PaymentCreateDTO dto)
         {
             using var db = DIContainer.CreateDb();
 
@@ -151,7 +216,17 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             };
 
             db.Payments.Add(payment);
-            db.SaveChanges();
+            int result = db.SaveChanges();
+
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogSimpleActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Payments,
+                    OperationAuditLog.create,
+                    payment.PaymentId.ToString());
+            }
 
             db.PaymentHistories.Add(new PaymentHistory
             {
@@ -198,6 +273,14 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
                 payment.CompletedAt = DateTime.Now;
 
                 db.SaveChanges();
+                
+                // Log payment success
+                AuditLogService
+                    .LogSimpleActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Payments,
+                    "success",
+                    payment.PaymentId.ToString()).Wait();
             }
             else if (payment.Status == "Failed" || payment.Status == "Canceled")
             {
@@ -207,6 +290,14 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
                 payment.CompletedAt = DateTime.Now;
 
                 db.SaveChanges();
+                
+                // Log payment failure
+                AuditLogService
+                    .LogSimpleActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Payments,
+                    "failed",
+                    payment.PaymentId.ToString()).Wait();
             }
         }
         public void MarkPaymentSuccess(int bookingId, string momoTransId)
@@ -215,6 +306,8 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
             var payment = db.Payments.First(p => p.BookingId == bookingId);
             payment.CompletedAt = DateTime.Now;
+            var oldStatus = payment.Status;
+            payment.Status = "Success";
 
             // 2. Log history
             db.PaymentHistories.Add(new PaymentHistory
@@ -248,7 +341,19 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
                 });
             }
 
-            db.SaveChanges();
+            int result = db.SaveChanges();
+            
+            if (result > 0)
+            {
+                AuditLogService
+                    .LogActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Payments,
+                    OperationAuditLog.update,
+                    payment.PaymentId.ToString(),
+                    oldStatus,
+                    "Success").Wait();
+            }
         }
 
         public void MarkPaymentFailed(int bookingId, string? reason = null)
@@ -256,6 +361,7 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             using var db = DIContainer.CreateDb();
 
             var payment = db.Payments.First(p => p.BookingId == bookingId);
+            var oldStatus = payment.Status;
             var booking = db.Bookings.First(b => b.BookingId == bookingId);
 
             payment.Status = "Failed";
@@ -271,7 +377,19 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
 
             booking.Status = "Canceled";
 
-            db.SaveChanges();
+            int result = db.SaveChanges();
+            
+            if (result > 0)
+            {
+                AuditLogService
+                    .LogActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.Payments,
+                    OperationAuditLog.update,
+                    payment.PaymentId.ToString(),
+                    oldStatus,
+                    "Failed").Wait();
+            }
         }
     }
 }

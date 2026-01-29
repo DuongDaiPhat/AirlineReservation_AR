@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
+using AirlineReservation_AR.src.Application.Services;
+using AirlineReservation_AR.src.Infrastructure.DI;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
@@ -38,7 +42,17 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             };
 
             _db.FlightPricings.Add(pricing);
-            await _db.SaveChangesAsync();
+            int result = await _db.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogSimpleActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.FlightPricing,
+                    OperationAuditLog.create,
+                    pricing.PricingId.ToString());
+            }
 
             return pricing;
         }
@@ -81,14 +95,29 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             var pricing = await _db.FlightPricings.FindAsync(pricingId);
             if (pricing == null) return false;
 
+            var oldPrice = pricing.Price;
+            var oldBookedSeats = pricing.BookedSeats;
+
             if (price.HasValue)
                 pricing.Price = price.Value;
 
             if (bookedSeats.HasValue)
                 pricing.BookedSeats = bookedSeats.Value;
 
-            await _db.SaveChangesAsync();
-            return true;
+            int result = await _db.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.FlightPricing,
+                    OperationAuditLog.update,
+                    pricingId.ToString(),
+                    $"Price: {oldPrice}, Booked: {oldBookedSeats}",
+                    $"Price: {pricing.Price}, Booked: {pricing.BookedSeats}");
+            }
+            return result > 0;
         }
 
         public async Task<bool> DeleteAsync(int pricingId)
@@ -97,8 +126,18 @@ namespace AirlineReservation_AR.src.AirlineReservation.Application.Services
             if (pricing == null) return false;
 
             _db.FlightPricings.Remove(pricing);
-            await _db.SaveChangesAsync();
-            return true;
+            int result = await _db.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                await AuditLogService
+                    .LogSimpleActionAsync(
+                    DIContainer.CurrentUser?.UserId,
+                    TableNameAuditLog.FlightPricing,
+                    OperationAuditLog.delete,
+                    pricingId.ToString());
+            }
+            return result > 0;
         }
     }
 }

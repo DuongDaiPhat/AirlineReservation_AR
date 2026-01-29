@@ -1,8 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.Views.Forms.Common;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
+using System;
+using System.Windows.Forms;
 
 namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
 {
@@ -59,6 +60,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
             {
                 MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
         }
 
@@ -115,8 +117,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
                 }
                 else
                 {
-                    MessageBox.Show("Số em bé không được vượt quá số người lớn!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    AnnouncementForm form = new AnnouncementForm();
+                    form.SetAnnouncement("Invalid Input", "The number of infant must be less than adult", false, null);
+                    form.Show();
+                    form.BringToFront();
                 }
             };
 
@@ -160,15 +164,19 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
                 // Validate dữ liệu
                 if (cboSeatClass.SelectedValue == null)
                 {
-                    MessageBox.Show("Vui lòng chọn hạng ghế!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    AnnouncementForm form = new AnnouncementForm();
+                    form.SetAnnouncement("Announcement", "Please select seat class", false, null);
+                    form.Show();
+                    form.BringToFront();
                     return;
                 }
 
                 if (adult < 1)
                 {
-                    MessageBox.Show("Phải có ít nhất 1 người lớn!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    AnnouncementForm form = new AnnouncementForm();
+                    form.SetAnnouncement("Invalid Input", "Require at least one adult", false, null);
+                    form.Show();
+                    form.BringToFront();
                     return;
                 }
 
@@ -176,8 +184,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
                 int totalPassengers = adult + child + infant;
                 if (totalPassengers > 9)
                 {
-                    MessageBox.Show("Tổng số hành khách không được vượt quá 9 người!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    AnnouncementForm form = new AnnouncementForm();
+                    form.SetAnnouncement("Invalid Input", "The number of passenger must be less than 9", false, null);
+                    form.Show();
+                    form.BringToFront();
                     return;
                 }
 
@@ -198,8 +208,10 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi lưu dữ liệu: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AnnouncementForm form = new AnnouncementForm();
+                form.SetAnnouncement("Error", "Save data error", false, null);
+                form.Show();
+                form.BringToFront();
             }
         }
     }

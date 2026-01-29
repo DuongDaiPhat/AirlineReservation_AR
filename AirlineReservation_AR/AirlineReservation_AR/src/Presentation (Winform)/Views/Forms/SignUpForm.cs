@@ -1,4 +1,8 @@
-﻿using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
+﻿using AirlineReservation_AR.Properties;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
+using AirlineReservation_AR.src.AirlineReservation.Shared.Utils;
+using AirlineReservation_AR.src.Infrastructure.DI;
+using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
@@ -9,9 +13,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AirlineReservation_AR.Properties;
-using AirlineReservation_AR.src.Presentation__Winform_.Controllers;
-using AirlineReservation_AR.src.Infrastructure.DI;
 //using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 //using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
 
@@ -54,8 +55,10 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             if (emailTB.Text == "" && userNameTB.Text == "" && numberTB.Text == "" && passwordTB.Text == "" && confirmPasswordTB.Text == "")
             {
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Vui lòng điền đầy đủ thông tin", false, null);
+                announcementForm1.SetAnnouncement("Registration failed", $"Please fill in all information", false, null);
                 announcementForm1.Show();
+                announcementForm1.BringToFront();
+
                 return;
             }
             if (!validation.IsValidGoogleEmail(emailTB.Text)) return;
@@ -64,12 +67,14 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             if (!Equals(passwordTB.Text, confirmPasswordTB.Text))
             {
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Mật khẩu không đồng bộ", false, null);
+                announcementForm1.SetAnnouncement("Registration failed", $"Passwords do not match", false, null);
                 announcementForm1.Show();
+                announcementForm1.BringToFront();
+
                 return;
             }
 
-            // 1. Tạo User mới
+            // 1. Create new User
             var user = await _controller.RegisterAsync(
                 userNameTB.Text,
                 emailTB.Text,
@@ -78,11 +83,10 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
 
             if (user == null)
             {
-                MessageBox.Show("Đăng ký thất bại! Vui lòng thử lại.",
-                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Sđt, Email hoặc tên tài khoản đã được sử dụng", false, null);
+                announcementForm1.SetAnnouncement("Registration failed", $"Phone number, Email or username has already been used", false, null);
                 announcementForm1.Show();
+                announcementForm1.BringToFront();
                 return;
             }
 
@@ -91,13 +95,17 @@ namespace AirlineReservation_AR.src.AirlineReservation.Presentation__WinForms_.V
             {
 
                 AnnouncementForm announcementForm1 = new AnnouncementForm();
-                announcementForm1.SetAnnouncement("Đăng ký không thành công", $"Lý do: {addRole.Message}", false, null);
+                announcementForm1.SetAnnouncement("Registration failed", $"Reason: {addRole.Message}", false, null);
                 announcementForm1.Show();
+                announcementForm1.BringToFront();
+
             }
 
             AnnouncementForm announcementForm = new AnnouncementForm();
-            announcementForm.SetAnnouncement("Đăng ký thành công", "Hãy đăng nhập để tiếp tục", true, null);
+            announcementForm.SetAnnouncement("Registration successful", "Please login to continue", true, null);
             announcementForm.Show();
+            announcementForm.BringToFront();
+
 
             //Điều hướng sang SignIn
             SignInForm signin = new SignInForm();

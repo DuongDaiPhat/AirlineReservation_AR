@@ -120,7 +120,7 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.popup
         private void guna2Button5_Click(object sender, EventArgs e)
         {
             AnnouncementForm announcementForm = new AnnouncementForm();
-            announcementForm.SetAnnouncement("Bạn có chắc muốn hủy chọn chuyến bay này", "Xin vui lòng xác nhận hủy hoặc tắt thông báo này để tiếp tục", false, null);
+            announcementForm.SetAnnouncement("Are you sure you want to cancel the selection of this flight", "Please confirm cancellation or close this notification to continue", false, null);
             announcementForm.setClose();
             announcementForm.OnComplete += () =>
             {

@@ -98,7 +98,7 @@ namespace MomoQR
 
                 if (string.IsNullOrEmpty(payUrl))
                 {
-                    MessageBox.Show("API không trả về payUrl. Thanh toán không thể tiếp tục!");
+                    MessageBox.Show("API did not return payUrl. Payment cannot continue!");
                     return;
                 }
 
@@ -112,7 +112,7 @@ namespace MomoQR
             {
                 CloseLoading();
                 AnnouncementForm announcementForm = new AnnouncementForm();
-                announcementForm.SetAnnouncement("Lỗi thanh toán", ex.Message, false, null);
+                announcementForm.SetAnnouncement("Payment error", ex.Message, false, null);
                 announcementForm.Show();
                 return;
             }
@@ -120,7 +120,7 @@ namespace MomoQR
             {
                 CloseLoading();
                 AnnouncementForm announcementForm = new AnnouncementForm();
-                announcementForm.SetAnnouncement("Lỗi thanh toán", ex.Message, false, null);
+                announcementForm.SetAnnouncement("Payment error", ex.Message, false, null);
                 announcementForm.Show();
                 return;
             }
@@ -162,8 +162,8 @@ namespace MomoQR
                 CloseLoading();
                 AnnouncementForm announcementForm = new AnnouncementForm();
                 announcementForm.SetAnnouncement(
-                    "Thanh toán thành công",
-                    "Bạn đã thanh toán thành công bằng MoMo!",
+                    "Payment successful",
+                    "You have successfully paid with MoMo!",
                     true,
                     null);
                 announcementForm.Show();
@@ -173,12 +173,12 @@ namespace MomoQR
             else if (payment.Status == "Failed" || payment.Status == "Canceled")
             {
                 paymentCheckTimer.Stop();
-                _controller.MarkFailed(_bookingId, "MoMo trả về thất bại");
+                _controller.MarkFailed(_bookingId, "MoMo payment failed");
                 CloseLoading();
                 AnnouncementForm announcementForm = new AnnouncementForm();
                 announcementForm.SetAnnouncement(
-                    "Thanh toán thất bại",
-                    "Thanh toán MoMo của bạn đã thất bại hoặc bị hủy.",
+                    "Payment failed",
+                    "Your MoMo payment has failed or been cancelled.",
                     false,
                     null);
                 announcementForm.Show();
@@ -220,7 +220,7 @@ namespace MomoQR
             {
                 CloseLoading();
                 AnnouncementForm announcementForm = new AnnouncementForm();
-                announcementForm.SetAnnouncement("Lỗi áp dụng mã giảm giá", "Mã giảm giá không tồn tại.", false, null);
+                announcementForm.SetAnnouncement("Promotional code application error", "Promotional code does not exist.", false, null);
                 announcementForm.Show();
                 return;
             }
@@ -244,7 +244,7 @@ namespace MomoQR
             {
                 CloseLoading();
                 AnnouncementForm announcementForm = new AnnouncementForm();
-                announcementForm.SetAnnouncement("Lỗi áp dụng mã giảm giá", ex.Message, false, null);
+                announcementForm.SetAnnouncement("Promotional code application error", ex.Message, false, null);
                 announcementForm.Show();
                 return;
             }

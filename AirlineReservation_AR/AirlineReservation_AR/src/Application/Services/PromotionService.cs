@@ -1,7 +1,9 @@
 ﻿using AirlineReservation_AR.src.AirlineReservation.Domain.Entities;
 using AirlineReservation_AR.src.AirlineReservation.Domain.Services;
 using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Context;
+using AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services;
 using AirlineReservation_AR.src.Application.Interfaces;
+using AirlineReservation_AR.src.Application.Services;
 using AirlineReservation_AR.src.Domain.DTOs;
 using AirlineReservation_AR.src.Infrastructure.DI;
 using AirlineReservation_AR.src.Shared.Helper;
@@ -45,7 +47,17 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
                 };
                 promotion.UsageCount += 1;
                 _db.BookingPromotions.Add(bookingPromotion);
-                _db.SaveChanges();
+                int result = _db.SaveChanges();
+                
+                if (result > 0)
+                {
+                    AuditLogService
+                        .LogSimpleActionAsync(
+                        DIContainer.CurrentUser?.UserId,
+                        "Promotions",
+                        "apply",
+                        bookingId.ToString()).Wait();
+                }
                 return true;
             }
             catch (Exception ex)
@@ -126,6 +138,14 @@ namespace AirlineReservation_AR.src.AirlineReservation.Infrastructure.Services
             {
                 discount = promotion.DiscountValue;
             }
+
+            // Log discount calculation
+            AuditLogService
+                .LogSimpleActionAsync(
+                DIContainer.CurrentUser?.UserId,
+                "Promotions",
+                "calculate",
+                bookingId.ToString()).Wait();
 
             return discount;
 
