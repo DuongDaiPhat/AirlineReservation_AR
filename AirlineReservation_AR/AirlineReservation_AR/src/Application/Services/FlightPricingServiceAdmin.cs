@@ -140,6 +140,30 @@ namespace AirlineReservation_AR.src.Application.Services
             }
         }
 
+        public async Task<ServiceResponse<(IEnumerable<FlightPricingDtoAdmin> Items, int TotalCount)>> GetPricingsPageAsync(int pageIndex, int pageSize, FlightPricingFilterDtoAdmin filter)
+        {
+            try
+            {
+                if (pageIndex < 1) pageIndex = 1;
+                int skip = (pageIndex - 1) * pageSize;
+
+                var result = await _unitOfWork.FlightPricings.GetPricingsByPageAsync(
+                    skip, 
+                    pageSize, 
+                    filter?.Route, 
+                    filter?.SeatClass, 
+                    filter?.MinDiscountPercent);
+
+                var dtos = result.Items.Select(MapToDto).ToList();
+                return ServiceResponse<(IEnumerable<FlightPricingDtoAdmin> Items, int TotalCount)>.SuccessResponse((dtos, result.TotalCount));
+            }
+            catch (Exception ex)
+            {
+                return ServiceResponse<(IEnumerable<FlightPricingDtoAdmin> Items, int TotalCount)>.ErrorResponse(
+                    "Lỗi phân trang", new List<string> { ex.Message });
+            }
+        }
+
         private FlightPricingDtoAdmin MapToDto(FlightPricing pricing)
         {
             var flight = pricing.Flight;

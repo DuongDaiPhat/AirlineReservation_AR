@@ -60,8 +60,8 @@ namespace AirlineReservation_AR.src.Application.Services
             {
                 searchTerm = searchTerm.ToLower();
                 query = query.Where(p =>
-                    p.PromoCode.ToLower().Contains(searchTerm) ||
-                    p.PromoName.ToLower().Contains(searchTerm));
+                    (p.PromoCode != null && p.PromoCode.ToLower().Contains(searchTerm)) ||
+                    (p.PromoName != null && p.PromoName.ToLower().Contains(searchTerm)));
             }
 
             // Filter by status
@@ -70,10 +70,17 @@ namespace AirlineReservation_AR.src.Application.Services
                 query = query.Where(p => p.IsActive == isActive.Value);
             }
 
-            // Filter by type
-            if (!string.IsNullOrEmpty(discountType) && discountType != "Tất cả")
+            // Filter by type - Handle both English and Vietnamese
+            if (!string.IsNullOrEmpty(discountType) && 
+                discountType != "Tất cả" && 
+                discountType != "All")
             {
-                var type = discountType == "Phần trăm" ? "Percent" : "Fixed";
+                string type = discountType switch
+                {
+                    "Phần trăm" or "Percent" => "Percent",
+                    "Cố định" or "Fixed" => "Fixed",
+                    _ => discountType // Use as-is if already Percent/Fixed
+                };
                 query = query.Where(p => p.DiscountType == type);
             }
 

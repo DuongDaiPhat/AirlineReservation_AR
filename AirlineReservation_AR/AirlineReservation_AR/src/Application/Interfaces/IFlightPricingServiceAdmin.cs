@@ -15,6 +15,7 @@ namespace AirlineReservation_AR.src.Application.Interfaces
         Task<ServiceResponse<FlightPricingDtoAdmin>> CreatePricingAsync(CreateFlightPricingDtoAdmin dto);
         Task<ServiceResponse<FlightPricingDtoAdmin>> UpdatePricingAsync(UpdateFlightPricingDtoAdmin dto);
         Task<ServiceResponse<bool>> DeletePricingAsync(int pricingId);
+        Task<ServiceResponse<(IEnumerable<FlightPricingDtoAdmin> Items, int TotalCount)>> GetPricingsPageAsync(int pageIndex, int pageSize, FlightPricingFilterDtoAdmin filter);
         public class ServiceResponse<T>
         {
             public bool Success { get; set; }
