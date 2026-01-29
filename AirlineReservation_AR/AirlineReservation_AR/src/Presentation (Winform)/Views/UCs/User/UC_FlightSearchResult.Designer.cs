@@ -128,14 +128,12 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(components);
             pnlFlowResuilt = new Guna.UI2.WinForms.Guna2Panel();
             ChatBox = new Guna.UI2.WinForms.Guna2Panel();
-            flowChat = new BetterFlowLayoutPanel();
             guna2PictureBox4 = new Guna.UI2.WinForms.Guna2PictureBox();
             CallAI = new PictureBox();
             txtAI = new Guna.UI2.WinForms.Guna2TextBox();
             guna2GradientPanel1 = new Guna.UI2.WinForms.Guna2GradientPanel();
             label3 = new Label();
             AIClick = new PictureBox();
-            flowFlightCards = new BetterFlowLayoutPanel();
             flowResults = new FlowLayoutPanel();
             pnlLeftFilters.SuspendLayout();
             panel1.SuspendLayout();
@@ -859,7 +857,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             pnlFlowResuilt.BorderRadius = 16;
             pnlFlowResuilt.Controls.Add(ChatBox);
             pnlFlowResuilt.Controls.Add(AIClick);
-            pnlFlowResuilt.Controls.Add(flowFlightCards);
             pnlFlowResuilt.CustomizableEdges = customizableEdges48;
             pnlFlowResuilt.Location = new Point(26, 15);
             pnlFlowResuilt.Margin = new Padding(3, 2, 3, 2);
@@ -878,7 +875,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             ChatBox.BackColor = Color.Transparent;
             ChatBox.BorderRadius = 20;
             ChatBox.BorderThickness = 1;
-            ChatBox.Controls.Add(flowChat);
             ChatBox.Controls.Add(guna2PictureBox4);
             ChatBox.Controls.Add(CallAI);
             ChatBox.Controls.Add(txtAI);
@@ -890,17 +886,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             ChatBox.ShadowDecoration.CustomizableEdges = customizableEdges47;
             ChatBox.Size = new Size(322, 295);
             ChatBox.TabIndex = 0;
-            // 
-            // flowChat
-            // 
-            flowChat.AutoScroll = true;
-            flowChat.BackColor = Color.WhiteSmoke;
-            flowChat.FlowDirection = FlowDirection.TopDown;
-            flowChat.Location = new Point(0, 55);
-            flowChat.Name = "flowChat";
-            flowChat.Size = new Size(322, 180);
-            flowChat.TabIndex = 34;
-            flowChat.Visible = false;
             // 
             // guna2PictureBox4
             // 
@@ -985,16 +970,6 @@ namespace AirlineReservation_AR.src.Presentation__Winform_.Views.UCs.User
             AIClick.TabIndex = 0;
             AIClick.TabStop = false;
             AIClick.Click += AIClick_Click;
-            // 
-            // flowFlightCards
-            // 
-            flowFlightCards.AutoScroll = true;
-            flowFlightCards.BackColor = Color.Transparent;
-            flowFlightCards.Location = new Point(0, 42);
-            flowFlightCards.Margin = new Padding(3, 2, 3, 2);
-            flowFlightCards.Name = "flowFlightCards";
-            flowFlightCards.Size = new Size(1151, 670);
-            flowFlightCards.TabIndex = 0;
             // 
             // flowResults
             // 
